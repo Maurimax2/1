@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#060703">
+    <meta name="description" content="MAURIMAX IPTV - البث المباشر بدقة 4K بدون تقطيع في موريتانيا">
+    <title>MAURIMAX IPTV</title>
+
+    <!-- Font Preconnect for Instant Loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;800;900&family=Readex+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           MAURIMAX ULTRA-LIGHTWEIGHT HIGH-PERFORMANCE STYLESHEET
+           ========================================================================== */
+        :root {
+            --purple: #8b12e0;
+            --purple-glow: rgba(139, 18, 224, 0.4);
+            --orange: #FF5500;
+            --orange-bright: #ff7722;
+            --orange-glow: rgba(255, 85, 0, 0.45);
+            
+            --bg-dark: #060703;
+            --bg-card: rgba(18, 20, 14, 0.75);
+            --bg-glass: rgba(12, 14, 9, 0.85);
+            
+            --text-main: #ffffff;
+            --text-muted: #9aa0a6;
+            --border-purple: rgba(139, 18, 224, 0.35);
+            --border-orange: rgba(255, 85, 0, 0.4);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+
+            --radius-sm: 12px;
+            --radius-md: 20px;
+            --radius-lg: 28px;
+            --easing: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Reset & Native Touch Behavior */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Readex Pro', 'Outfit', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Ambient Glow Backgrounds */
+        .ambient-glow {
+            position: fixed;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            filter: blur(140px);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.22;
+            will-change: transform;
+        }
+        .glow-purple { top: -60px; right: -60px; background: var(--purple); }
+        .glow-orange { bottom: 10%; left: -80px; background: var(--orange); }
+
+        /* Navigation Bar */
+        .top-bar {
+            background: rgba(6, 7, 3, 0.88);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .brand-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            user-select: none;
+            min-height: 48px;
+        }
+
+        .logo-img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(139, 18, 224, 0.35));
+        }
+
+        .brand-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+        .brand-title span { color: var(--orange); }
+
+        .top-actions { display: flex; align-items: center; gap: 10px; }
+
+        .btn-touch {
+            min-height: 44px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            transition: transform 0.2s var(--easing), background 0.2s ease, box-shadow 0.2s ease;
+            text-decoration: none;
+        }
+        .btn-touch:active { transform: scale(0.96); }
+
+        .lang-btn {
+            background: rgba(139, 18, 224, 0.15);
+            border: 1px solid var(--border-purple);
+            color: #fff;
+        }
+        .lang-btn:hover { background: var(--purple); }
+
+        .menu-trigger {
+            background: rgba(255, 85, 0, 0.12);
+            border: 1px solid var(--border-orange);
+            color: #fff;
+            box-shadow: 0 0 12px rgba(255, 85, 0, 0.2);
+        }
+        .menu-trigger:hover { background: var(--orange); }
+
+        /* Slide-Out Sidebar Drawer */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 290px;
+            height: 100vh;
+            background: rgba(6, 7, 3, 0.96);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 1001;
+            transition: transform 0.35s var(--easing);
+            border-left: 1px solid var(--border-subtle);
+            box-shadow: -10px 0 40px rgba(0,0,0,0.9);
+            will-change: transform;
+        }
+        body[dir="ltr"] .sidebar {
+            right: auto;
+            left: -320px;
+            border-left: none;
+            border-right: 1px solid var(--border-subtle);
+        }
+        .sidebar.active { transform: translate3d(-320px, 0, 0); }
+        body[dir="ltr"] .sidebar.active { transform: translate3d(320px, 0, 0); }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            min-height: 44px;
+            min-width: 44px;
+        }
+        body[dir="ltr"] .close-sidebar { left: auto; right: 20px; }
+
+        .menu { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 30px; }
+        .menu-btn {
+            width: 100%;
+            min-height: 48px;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid transparent;
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 700;
+            text-align: inherit;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+        .menu-btn.active, .menu-btn:hover {
+            background: rgba(139, 18, 224, 0.2);
+            color: #fff;
+            border-color: var(--purple);
+        }
+
+        .wa-btn {
+            background: linear-gradient(135deg, var(--orange), var(--orange-bright));
+            color: #fff;
+            min-height: 50px;
+            border-radius: 35px;
+            font-weight: 800;
+            box-shadow: 0 0 20px var(--orange-glow);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .overlay.active { display: block; opacity: 1; }
+
+        /* Main Container & Page Views */
+        .main {
+            padding: 15px 12px 60px;
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .page { display: none; }
+        .page.active {
+            display: block;
+            animation: pageFadeIn 0.3s var(--easing);
+        }
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: translate3d(0, 12px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+        }
+
+        .title {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        /* Hero Showcase Section */
+        .hero-box {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .stream-frame {
+            position: relative;
+            width: 100%;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.95);
+        }
+
+        .big-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .live-tag {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            background: rgba(6, 7, 3, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 85, 0, 0.5);
+            color: #fff;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        body[dir="ltr"] .live-tag { right: auto; left: 14px; }
+        .pulse-dot {
+            width: 8px; height: 8px;
+            background: var(--orange);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--orange);
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 800px;
+        }
+
+        .hero-btns-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .btn-action-primary {
+            background: linear-gradient(135deg, var(--orange), var(--orange-bright));
+            color: #fff;
+            min-height: 52px;
+            padding: 12px 32px;
+            border-radius: 35px;
+            font-size: 16px;
+            font-weight: 800;
+            box-shadow: 0 0 25px var(--orange-glow);
+        }
+
+        .btn-action-secondary {
+            background: rgba(139, 18, 224, 0.2);
+            color: #fff;
+            border: 1px solid var(--purple);
+            min-height: 52px;
+            padding: 12px 32px;
+            border-radius: 35px;
+            font-size: 16px;
+            font-weight: 800;
+            box-shadow: 0 0 20px var(--purple-glow);
+        }
+
+        /* Offer Cards Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(15px);
+            border-radius: var(--radius-md);
+            padding: 22px;
+            border: 1.5px solid var(--border-purple);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 0 18px rgba(139, 18, 224, 0.2);
+            transition: transform 0.25s var(--easing), border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: var(--orange);
+            box-shadow: 0 0 30px var(--orange-glow);
+        }
+
+        .card-img-wrap {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            margin-bottom: 14px;
+            background: #000;
+        }
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .price {
+            font-family: 'Outfit', sans-serif;
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--orange);
+            margin: 8px 0;
+            text-shadow: 0 0 12px rgba(255, 85, 0, 0.3);
+        }
+        .price span {
+            font-family: 'Readex Pro', sans-serif;
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        /* Info Container */
+        .info-container {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-purple);
+            border-radius: var(--radius-md);
+            padding: 28px 20px;
+            box-shadow: 0 0 25px rgba(139, 18, 224, 0.25);
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .info-section-title {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--orange);
+            margin: 24px 0 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .info-list li {
+            font-size: 15px;
+            line-height: 1.7;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 14px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .disclaimer-box {
+            background: rgba(255, 85, 0, 0.08);
+            border: 1.5px solid var(--orange);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        .disclaimer-box h4 {
+            color: var(--orange);
+            font-size: 18px;
+            margin-bottom: 6px;
+            font-weight: 800;
+        }
+
+        /* FAQ List */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-purple);
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            text-align: inherit;
+        }
+
+        .faq-card h4 {
+            color: var(--orange);
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .faq-card p {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 16px;
+        }
+        .modal.active { display: flex; }
+
+        .modal-body {
+            background: var(--bg-glass);
+            border: 1.5px solid var(--orange);
+            padding: 28px 22px;
+            border-radius: var(--radius-lg);
+            width: 100%;
+            max-width: 440px;
+            position: relative;
+            color: #fff;
+            box-shadow: 0 0 35px var(--orange-glow);
+            animation: modalPop 0.3s var(--easing);
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: scale(0.94); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .close {
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            min-height: 44px; min-width: 44px;
+        }
+        body[dir="ltr"] .close { left: auto; right: 16px; }
+
+        .form-group { margin-bottom: 14px; text-align: inherit; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-purple);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+        }
+        .form-control:focus { border-color: var(--orange); }
+
+        /* Language Modal Overlay */
+        .lang-modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(6, 7, 3, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .lang-modal-body {
+            background: var(--bg-glass);
+            border: 1.5px solid var(--purple);
+            padding: 35px 24px;
+            border-radius: var(--radius-lg);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 0 35px var(--purple-glow);
+        }
+
+        .lang-choice-btn {
+            width: 100%;
+            min-height: 52px;
+            margin-top: 12px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .lang-ar { background: linear-gradient(135deg, var(--orange), var(--orange-bright)); color: #fff; box-shadow: 0 0 20px var(--orange-glow); }
+        .lang-fr { background: rgba(139, 18, 224, 0.25); color: #fff; border: 1.5px solid var(--purple); }
+
+        /* Inline SVG Icons Utility */
+        .icon-svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .main { padding: 10px 8px 40px; }
+            .title { font-size: 24px; }
+            .price { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Ambient Neon Light Nodes -->
+    <div class="ambient-glow glow-purple"></div>
+    <div class="ambient-glow glow-orange"></div>
+
+    <!-- First Visit Language Chooser Modal -->
+    <div class="lang-modal-overlay" id="langModal">
+        <div class="lang-modal-body">
+            <img src="https://i.ibb.co/67YM3kDw/IMG-3771.png" style="height:55px; margin-bottom:15px;" alt="MAURIMAX">
+            <h2 style="font-size:22px; font-weight:800; margin-bottom:6px;">مرحباً بكم في MAURIMAX</h2>
+            <p style="color:var(--text-muted); font-size:14px; margin-bottom:20px;">اختر اللغة للمتابعة / Choisissez votre langue</p>
+            
+            <button class="lang-choice-btn lang-ar" onclick="setLanguage('ar')">
+                🇸🇦 العربية (Arabic)
+            </button>
+            <button class="lang-choice-btn lang-fr" onclick="setLanguage('fr')">
+                🇫🇷 Français (French)
+            </button>
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header class="top-bar">
+        <div class="brand-top" onclick="nav('home')">
+            <img src="https://i.ibb.co/67YM3kDw/IMG-3771.png" alt="MAURIMAX Logo" class="logo-img">
+            <div class="brand-title">MAURI<span>MAX</span></div>
+        </div>
+
+        <div class="top-actions">
+            <button class="lang-btn btn-touch" onclick="toggleLanguage()" id="topLangBtn">FR 🇫🇷</button>
+            <button class="menu-trigger btn-touch" onclick="openSidebar()">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                <span data-key="menuBtn">القائمة</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Overlay Backdrop -->
+    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+    <!-- Slide-Out Sidebar Drawer -->
+    <aside class="sidebar" id="sidebar">
+        <div>
+            <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close">&times;</button>
+            
+            <div class="brand-top" onclick="nav('home')" style="margin-bottom:25px;">
+                <img src="https://i.ibb.co/67YM3kDw/IMG-3771.png" alt="MAURIMAX Logo" class="logo-img">
+                <div class="brand-title">MAURI<span>MAX</span></div>
+            </div>
+
+            <ul class="menu">
+                <li><button class="menu-btn active" onclick="nav('home', this)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> <span data-key="navHome">الرئيسية</span></button></li>
+                <li><button class="menu-btn" onclick="nav('offers', this)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> <span data-key="navOffers">باقات IPTV</span></button></li>
+                <li><button class="menu-btn" onclick="nav('info', this)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> <span data-key="navInfo">معلومات الاشتراك</span></button></li>
+                <li><button class="menu-btn" onclick="nav('faq', this)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg> <span data-key="navFaq">الأسئلة الشائعة</span></button></li>
+            </ul>
+        </div>
+
+        <a href="https://wa.me/22246261721" target="_blank" class="wa-btn btn-touch">
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
+            <span data-key="waDirect">الواتساب المباشر</span>
+        </a>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main">
+
+        <!-- PAGE 1: HOME -->
+        <div id="page-home" class="page active">
+            <div class="hero-box">
+                <div class="stream-frame">
+                    <img src="https://i.ibb.co/Dgr1BpqZ/3-A6-C40-A8-FA78-48-E8-8-CA2-B93885836018.jpg" alt="MAURIMAX Stream Showcase" class="big-img" decoding="async">
+                    <div class="live-tag">
+                        <div class="pulse-dot"></div>
+                        <span>4K LIVE STREAMING</span>
+                    </div>
+                </div>
+
+                <div class="hero-content">
+                    <h1 class="title" style="margin-bottom:12px;" data-key="heroTitle">MAURIMAX IPTV <br><span style="color:var(--orange);">بث مباشر بدون تقطيع</span></h1>
+                    <p style="color:var(--text-muted); margin-bottom:20px; font-size:16px; line-height:1.7;" data-key="heroSub">
+                        شاهد جميع القنوات الرياضية العالمية، الدوري الإسباني، الإنجليزي، ودوري أبطال أوروبا بجودة 4K عالية الثبات.
+                    </p>
+                    
+                    <div class="hero-btns-group">
+                        <button class="btn-action-primary btn-touch" onclick="nav('offers')">
+                            <span data-key="btnSeeOffers">استعرض باقات الاشتراك</span>
+                        </button>
+                        <button class="btn-action-secondary btn-touch" onclick="nav('info')">
+                            <span data-key="btnSeeInfo">معلومات الاشتراك</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 2: SUBSCRIPTION INFO -->
+        <div id="page-info" class="page">
+            <h1 class="title" data-key="infoPageTitle">معلومات وتفاصيل اشتراك MAURIMAX</h1>
+            
+            <div class="info-container">
+                <p style="font-size:16px; line-height:1.8; color:var(--text-main); margin-bottom:20px;" data-key="infoIntro">
+                    اشتراك MAURIMAX يقدم لك آلاف القنوات التلفزيونية والأفلام والمسلسلات والبرامج الرياضية مباشرة على جهازك الذكي. سواء كنت ترغب في مشاهدة أحدث الأفلام، أو متابعة مباريات كرة القدم، أو الاستمتاع بمسلسلاتك المفضلة، فإن اشتراك MAURIMAX يوفر لك كل ذلك وأكثر.
+                </p>
+
+                <div class="info-section-title">
+                    <span data-key="whyTitle">لماذا تختار اشتراك MAURIMAX؟</span>
+                </div>
+                <ul class="info-list">
+                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why1T">1. محتوى متنوع:</strong> <span data-key="why1D">استمتع بآلاف القنوات من مختلف الدول واللغات، بما في ذلك قنوات الرياضة، الأخبار، الأفلام، المسلسلات، وبرامج الأطفال.</span></div></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why2T">2. جودة عالية:</strong> <span data-key="why2D">استمتع بجودة صورة وصوت عالية الوضوح (4K / Full HD)، مما يمنحك تجربة مشاهدة استثنائية وبثابت ممتاز.</span></div></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why3T">3. سهولة الاستخدام:</strong> <span data-key="why3D">يعمل الاشتراك على معظم الأجهزة الذكية، بما في ذلك الهواتف الذكية، الأجهزة اللوحية، أجهزة TV Box، وشاشات التلفزيون الذكية.</span></div></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why4T">4. تحديثات مستمرة:</strong> <span data-key="why4D">يتم تحديث المحتوى بشكل مستمر، مما يضمن لك الوصول إلى أحدث الأفلام والمسلسلات والبرامج التلفزيونية فور نزولها.</span></div></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why5T">5. دعم فني:</strong> <span data-key="why5D">فريق الدعم الفني لدينا متاح لمساعدتك وإجابة استفساراتك طوال فترة اشتراكك.</span></div></li>
+                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why6T">6. سعر مغري:</strong> <span data-key="why6D">استفد من عروضنا المميزة بأفضل الأسعار التنافسية.</span></div></li>
+                </ul>
+
+                <div class="info-section-title">
+                    <span data-key="getTitle">ما الذي ستحصل عليه؟</span>
+                </div>
+                <ul class="info-list">
+                    <li><i class="fa-solid fa-check"></i> <span data-key="get1">بيانات الاشتراك [ اليوزر والباسورد وطريقة التفعيل ] ستصلك برسالة فورية بعد الدفع.</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-key="get2">يدعم جميع الأجهزة الذكية بنظام أندرويد و iOS وآبل TV وويندوز وشاشات تلفزيون ال جي وسامسونج.</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-key="get3">باقات متنوعة من القنوات والمسلسلات متجددة يومياً.</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-key="get4">تحديثات مستمرة وسريعة في القنوات ومكتبة الأفلام والمسلسلات.</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-key="get5">جودات متعددة وثبات عالي جداً في البث بدون تقطيع.</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-key="get6">أضخم مكتبة أفلام ومسلسلات أكثر عدداً من أي باقة أخرى.</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-key="get7">إمكانية المتابعة من جهاز واحد في وقت واحد (مع دعم التنقل بين أكثر من جهاز).</span></li>
+                    <li><i class="fa-solid fa-check"></i> <span data-key="get8">الدعم الفني متاح لاستفساراتكم طيلة فترة اشتراككم معنا.</span></li>
+                </ul>
+
+                <div class="disclaimer-box">
+                    <h4 data-key="noticeTitle">⚠️ تنبيه هام</h4>
+                    <p style="font-size:15px; color:#fff; line-height:1.7;" data-key="noticeText">
+                        لا تجعل الترفيه يلهيك عن واجباتك الدينية والدنيوية. نحن لا نتحمّل أي استخدام غير أخلاقي للمحتوى أمام اللّٰه.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 3: OFFERS PAGE -->
+        <div id="page-offers" class="page">
+            <h1 class="title" data-key="offersTitle">باقات اشتراك MAURIMAX</h1>
+            <div class="grid">
+                <!-- OFFER 1 -->
+                <div class="card">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/C3GcT9xc/95-A6-E020-FB60-4-C72-B990-A5071-F8-F6-AE8.jpg" alt="1 Month" class="card-img" loading="lazy">
+                    </div>
+                    <h3 style="color:#fff; font-size:19px;" data-key="o1">اشتراك 1 شهر</h3>
+                    <div class="price">350 <span>MRU</span></div>
+                    <button class="btn-touch btn-buy" onclick="openCheckout('o1', '350 MRU')">
+                        <span data-key="btnBuy">اشترك الآن</span>
+                    </button>
+                </div>
+
+                <!-- OFFER 2 -->
+                <div class="card">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/23pjHGG8/4-C0-BA6-D5-1-EFB-43-B5-980-B-824-EAAB62129.jpg" alt="3 Months" class="card-img" loading="lazy">
+                    </div>
+                    <h3 style="color:#fff; font-size:19px;" data-key="o2">اشتراك 3 أشهر</h3>
+                    <div class="price">700 <span>MRU</span></div>
+                    <button class="btn-touch btn-buy" onclick="openCheckout('o2', '700 MRU')">
+                        <span data-key="btnBuy">اشترك الآن</span>
+                    </button>
+                </div>
+
+                <!-- OFFER 3 -->
+                <div class="card" style="border-color:var(--orange); box-shadow: var(--glow-orange);">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/5W9S50G6/B6-EB8-D5-D-562-C-487-E-B3-C2-51-E1-D5-E385-D6.jpg" alt="6 Months" class="card-img" loading="lazy">
+                    </div>
+                    <h3 style="color:#fff; font-size:19px;" data-key="o3">اشتراك 6 أشهر 🔥</h3>
+                    <div class="price">1000 <span>MRU</span></div>
+                    <button class="btn-touch btn-buy" onclick="openCheckout('o3', '1000 MRU')">
+                        <span data-key="btnBuy">اشترك الآن</span>
+                    </button>
+                </div>
+
+                <!-- OFFER 4 -->
+                <div class="card">
+                    <div class="card-img-wrap">
+                        <img src="https://i.ibb.co/HLtQR3t7/3-BD73-C76-847-B-44-B3-A372-F204-B3-BC9-DFA.jpg" alt="12 Months" class="card-img" loading="lazy">
+                    </div>
+                    <h3 style="color:#fff; font-size:19px;" data-key="o4">اشتراك 12 شهراً</h3>
+                    <div class="price">1500 <span>MRU</span></div>
+                    <button class="btn-touch btn-buy" onclick="openCheckout('o4', '1500 MRU')">
+                        <span data-key="btnBuy">اشترك الآن</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE 4: FAQ -->
+        <div id="page-faq" class="page">
+            <h1 class="title" data-key="faqTitle">الأسئلة الشائعة</h1>
+            
+            <div class="faq-list">
+                <div class="faq-card">
+                    <h4><span data-key="faqQ1">كيف أحصل على بيانات الاشتراك بعد الطلب؟</span></h4>
+                    <p data-key="faqA1">بعد تأكيد الطلب والدفع، يتم إرسال بيانات السيرفر (اسم المستخدم وكلمة المرور ورابط التفعيل) فورياً عبر محادثة الواتساب المباشرة.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4><span data-key="faqQ2">ما هي سرعة الإنترنت المطلوبة لعمل البث بدون تقطيع؟</span></h4>
+                    <p data-key="faqA2">نوصي بسرعة إنترنت لا تقل عن 8-10 ميجابت/ثانية لتشغيل جودات HD، و20 ميجابت/ثانية لتشغيل بث 4K Ultra HD بسلاسة تامة بدون أي تقطيع.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4><span data-key="faqQ3">هل يمكنني تشغيل الاشتراك على أكثر من جهاز في نفس الوقت؟</span></h4>
+                    <p data-key="faqA3">الاشتراك يعمل على جهاز واحد في وقت واحد، ولكن يمكنك تثبيت الخدمة ونقل بيانات الاشتراك بين أجهزتك المختلفة (تلفزيون، هاتف، كمبيوتر) بحرية.</p>
+                </div>
+
+                <div class="faq-card">
+                    <h4><span data-key="faqQ5">ما هي طرق الدفع المحلية المتاحة؟</span></h4>
+                    <p data-key="faqA5">نوفر طرق دفع محلية سهلة وسريعة مثل Bankily (بانكيلي)، Masrivi (مسرفي)، Sadad (سداد)، أو التحويل المباشر عبر الواتساب.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="orderModal">
+        <div class="modal-body">
+            <button class="close" onclick="closeM()" aria-label="Close">&times;</button>
+            <h3 style="margin-bottom:6px; color:var(--orange); font-size:22px; font-weight:800;" data-key="modalTitle">إتمام طلب الاشتراك</h3>
+            <p id="modalPlanSummary" style="color:var(--text-muted); font-size:14px; margin-bottom:20px; font-weight:600;"></p>
+
+            <form onsubmit="sendCheckoutOrder(event)">
+                <div class="form-group">
+                    <label data-key="lblPlan">الباقة المختارة</label>
+                    <input type="text" id="chkPlan" class="form-control" readonly style="color:var(--orange); font-weight:800;">
+                </div>
+
+                <div class="form-group">
+                    <label data-key="lblName">الاسم الكامل</label>
+                    <input type="text" id="chkName" class="form-control" placeholder="أدخل اسمك الكريم" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-key="lblPhone">رقم الواتساب</label>
+                    <input type="tel" id="chkPhone" class="form-control" placeholder="مثال: 46261721" required>
+                </div>
+
+                <div class="form-group">
+                    <label data-key="lblDevice">نوع الجهاز المستخدَم</label>
+                    <select id="chkDevice" class="form-control"></select>
+                </div>
+
+                <button type="submit" class="btn-touch btn-buy" style="margin-top:15px;">
+                    <span data-key="btnConfirm">تأكيد الطلب عبر الواتساب</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Core -->
+    <script>
+        const MY_WHATSAPP_NUMBER = "22246261721"; 
+        let currentLang = "ar";
+        let rawSelectedPlanKey = "o1";
+        let rawSelectedPrice = "350 MRU";
+
+        const DEVICES = {
+            ar: [
+                "هاتف أندرويد",
+                "شاشة سمارت (Samsung / LG)",
+                "Android TV / TV Box",
+                "Amazon Fire TV Stick",
+                "آيفون / آيباد / Apple TV",
+                "كمبيوتر / Windows / Mac"
+            ],
+            fr: [
+                "Téléphone Android",
+                "Smart TV (Samsung / LG)",
+                "Android TV / TV Box",
+                "Amazon Fire TV Stick",
+                "iPhone / iPad / Apple TV",
+                "Ordinateur / Windows / Mac"
+            ]
+        };
+
+        const TRANSLATIONS = {
+            ar: {
+                menuBtn: "القائمة",
+                navHome: "الرئيسية",
+                navOffers: "باقات IPTV",
+                navInfo: "معلومات الاشتراك",
+                navFaq: "الأسئلة الشائعة",
+                waDirect: "الواتساب المباشر",
+                heroTitle: "MAURIMAX IPTV <br><span style='color:var(--orange);'>بث مباشر بدون تقطيع</span>",
+                heroSub: "شاهد جميع القنوات الرياضية العالمية، الدوري الإسباني، الإنجليزي، ودوري أبطال أوروبا بجودة 4K عالية الثبات.",
+                btnSeeOffers: "استعرض باقات الاشتراك",
+                btnSeeInfo: "معلومات الاشتراك",
+                infoPageTitle: "معلومات وتفاصيل اشتراك MAURIMAX",
+                infoIntro: "اشتراك MAURIMAX يقدم لك آلاف القنوات التلفزيونية والأفلام والمسلسلات والبرامج الرياضية مباشرة على جهازك الذكي. سواء كنت ترغب في مشاهدة أحدث الأفلام، أو متابعة مباريات كرة القدم، أو الاستمتاع بمسلسلاتك المفضلة، فإن اشتراك MAURIMAX يوفر لك كل ذلك وأكثر.",
+                whyTitle: "لماذا تختار اشتراك MAURIMAX؟",
+                why1T: "1. محتوى متنوع:", why1D: "استمتع بآلاف القنوات من مختلف الدول واللغات، بما في ذلك قنوات الرياضة، الأخبار، الأفلام، المسلسلات، وبرامج الأطفال.",
+                why2T: "2. جودة عالية:", why2D: "استمتع بجودة صورة وصوت عالية الوضوح (4K / Full HD)، مما يمنحك تجربة مشاهدة استثنائية وبثابت ممتاز.",
+                why3T: "3. سهولة الاستخدام:", why3D: "يعمل الاشتراك على معظم الأجهزة الذكية، بما في ذلك الهواتف الذكية، الأجهزة اللوحية، أجهزة TV Box، وشاشات التلفزيون الذكية.",
+                why4T: "4. تحديثات مستمرة:", why4D: "يتم تحديث المحتوى بشكل مستمر، مما يضمن لك الوصول إلى أحدث الأفلام والمسلسلات والبرامج التلفزيونية فور نزولها.",
+                why5T: "5. دعم فني:", why5D: "فريق الدعم الفني لدينا متاح لمساعدتك وإجابة استفساراتك طوال فترة اشتراكك.",
+                why6T: "6. سعر مغري:", why6D: "استفد من عروضنا المميزة بأفضل الأسعار التنافسية.",
+                getTitle: "ما الذي ستحصل عليه؟",
+                get1: "بيانات الاشتراك [ اليوزر والباسورد وطريقة التفعيل ] ستصلك برسالة فورية بعد الدفع.",
+                get2: "يدعم جميع الأجهزة الذكية بنظام أندرويد و iOS وآبل TV وويندوز وشاشات تلفزيون ال جي وسامسونج.",
+                get3: "باقات متنوعة من القنوات والمسلسلات متجددة يومياً.",
+                get4: "تحديثات مستمرة وسريعة في القنوات ومكتبة الأفلام والمسلسلات.",
+                get5: "جودات متعددة وثبات عالي جداً في البث بدون تقطيع.",
+                get6: "أضخم مكتبة أفلام ومسلسلات أكثر عدداً من أي باقة أخرى.",
+                get7: "إمكانية المتابعة من جهاز واحد في وقت واحد (مع دعم التنقل بين أكثر من جهاز).",
+                get8: "الدعم الفني متاح لاستفساراتكم طيلة فترة اشتراككم معنا.",
+                noticeTitle: "⚠️ تنبيه هام",
+                noticeText: "لا تجعل الترفيه يلهيك عن واجباتك الدينية والدنيوية. نحن لا نتحمّل أي استخدام غير أخلاقي للمحتوى أمام اللّٰه.",
+                offersTitle: "باقات اشتراك MAURIMAX",
+                btnBuy: "اشترك الآن",
+                o1: "اشتراك 1 شهر", o2: "اشتراك 3 أشهر", o3: "اشتراك 6 أشهر 🔥", o4: "اشتراك 12 شهراً",
+                faqTitle: "الأسئلة الشائعة",
+                faqQ1: "كيف أحصل على بيانات الاشتراك بعد الطلب؟",
+                faqA1: "بعد تأكيد الطلب والدفع، يتم إرسال بيانات السيرفر (اسم المستخدم وكلمة المرور ورابط التفعيل) فورياً عبر محادثة الواتساب المباشرة.",
+                faqQ2: "ما هي سرعة الإنترنت المطلوبة لعمل البث بدون تقطيع؟",
+                faqA2: "نوصي بسرعة إنترنت لا تقل عن 8-10 ميجابت/ثانية لتشغيل جودات HD، و20 ميجابت/ثانية لتشغيل بث 4K Ultra HD بسلاسة تامة بدون أي تقطيع.",
+                faqQ3: "هل يمكنني تشغيل الاشتراك على أكثر من جهاز في نفس الوقت؟",
+                faqA3: "الاشتراك يعمل على جهاز واحد في وقت واحد، ولكن يمكنك تثبيت الخدمة ونقل بيانات الاشتراك بين أجهزتك المختلفة (تلفزيون، هاتف، كمبيوتر) بحرية.",
+                faqQ5: "ما هي طرق الدفع المحلية المتاحة؟",
+                faqA5: "نوفر طرق دفع محلية سهلة وسريعة مثل Bankily (بانكيلي)، Masrivi (مسرفي)، Sadad (سداد)، أو التحويل المباشر عبر الواتساب.",
+                modalTitle: "إتمام طلب الاشتراك",
+                lblPlan: "الباقة المختارة",
+                lblName: "الاسم الكامل",
+                namePlaceholder: "أدخل اسمك الكريم",
+                phonePlaceholder: "مثال: 46261721",
+                lblPhone: "رقم الواتساب",
+                lblDevice: "نوع الجهاز المستخدَم",
+                btnConfirm: "تأكيد الطلب عبر الواتساب"
+            },
+            fr: {
+                menuBtn: "Menu",
+                navHome: "Accueil",
+                navOffers: "Offres IPTV",
+                navInfo: "Infos Abonnement",
+                navFaq: "FAQ",
+                waDirect: "WhatsApp Direct",
+                heroTitle: "MAURIMAX IPTV <br><span style='color:var(--orange);'>Direct 4K Sans Coupure</span>",
+                heroSub: "Regardez toutes les chaînes sportives mondiales, la Liga, la Premier League et la Ligue des Champions en haute qualité 4K ultra stable.",
+                btnSeeOffers: "Voir les Offres",
+                btnSeeInfo: "Informations d'Abonnement",
+                infoPageTitle: "Informations & Détails MAURIMAX",
+                infoIntro: "L'abonnement MAURIMAX vous offre des milliers de chaînes TV, films, séries et événements sportifs en direct sur votre appareil connecté. Que vous souhaitiez regarder les derniers films, suivre les matchs de football ou profiter de vos séries préférées, MAURIMAX vous offre tout cela et plus encore.",
+                whyTitle: "Pourquoi choisir MAURIMAX ?",
+                why1T: "1. Contenu Varié :", why1D: "Profitez de milliers de chaînes de différents pays (Sports, Actualités, Films, Séries et Enfants).",
+                why2T: "2. Haute Qualité :", why2D: "Profitez d'une qualité d'image et de son HD (4K / Full HD) offrant une expérience fluide sans coupure.",
+                why3T: "3. Facilité d'utilisation :", why3D: "Compatible avec la plupart des appareils intelligents (Smartphones, Tablettes, TV Box et Smart TV).",
+                why4T: "4. Mises à jour régulières :", why4D: "Le contenu est continuellement mis à jour pour vous garantir l'accès aux derniers films et séries dès leur sortie.",
+                why5T: "5. Support Technique :", why5D: "Notre équipe de support est disponible pour vous assister à tout moment pendant votre abonnement.",
+                why6T: "6. Prix Attractif :", why6D: "Profitez de nos offres promotionnelles aux meilleurs prix du marché.",
+                getTitle: "Ce que vous obtiendrez :",
+                get1: "Vos identifiants [Nom d'utilisateur, mot de passe et méthode d'activation] reçus instantanément après paiement.",
+                get2: "Compatible avec Android, iOS, Apple TV, Windows, ainsi que les Smart TV LG et Samsung.",
+                get3: "Packs complets de chaînes et contenus mis à jour quotidiennement.",
+                get4: "Mises à jour rapides et constantes de la liste des chaînes et des films VOD.",
+                get5: "Qualités multiples et stabilité extrême lors de la diffusion des matchs.",
+                get6: "Une bibliothèque géante de films et séries plus vaste que tout autre forfait.",
+                get7: "Visionnage sur 1 appareil à la fois (avec possibilité de passer d'un appareil à un autre).",
+                get8: "Support client dédié disponible pendant toute la durée de votre abonnement.",
+                noticeTitle: "⚠️ Avertissement Important",
+                noticeText: "Ne laissez pas le divertissement vous distraire de vos devoirs religieux et quotidiens. Nous ne portons aucune responsabilité quant à l'utilisation immorale du contenu.",
+                offersTitle: "Forfaits d'Abonnement MAURIMAX",
+                btnBuy: "S'abonner",
+                o1: "Abonnement 1 Mois", o2: "Abonnement 3 Mois", o3: "Abonnement 6 Mois 🔥", o4: "Abonnement 12 Mois",
+                faqTitle: "Foire Aux Questions (FAQ)",
+                faqQ1: "Comment recevoir mes identifiants après la commande ?",
+                faqA1: "Après la confirmation et le paiement, vos identifiants (Nom d'utilisateur, mot de passe et lien d'activation) vous seront envoyés instantanément via WhatsApp.",
+                faqQ2: "Quelle est la vitesse internet requise pour le streaming 4K ?",
+                faqA2: "Nous recommandons une vitesse minimale de 8-10 Mbps pour la HD, et 20 Mbps pour la 4K Ultra HD sans aucune interruption.",
+                faqQ3: "Puis-je utiliser l'abonnement sur plusieurs appareils en même temps ?",
+                faqA3: "L'abonnement fonctionne sur 1 seul appareil à la fois. Vous pouvez toutefois passer d'un appareil à un autre (TV, Téléphone, PC) librement.",
+                faqQ5: "Quels sont les modes de paiement locaux disponibles ?",
+                faqA5: "Nous acceptons les modes de paiement locaux faciles tels que Bankily, Masrivi, Sadad, ou le virement bancaire direct via WhatsApp.",
+                modalTitle: "Finaliser la commande",
+                lblPlan: "Offre sélectionnée",
+                lblName: "Nom complet",
+                namePlaceholder: "Saisissez votre nom complet",
+                phonePlaceholder: "Ex: 46261721",
+                lblPhone: "Numéro WhatsApp",
+                lblDevice: "Appareil utilisé",
+                btnConfirm: "Confirmer via WhatsApp"
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+            document.getElementById('langModal').style.display = 'none';
+            document.getElementById('topLangBtn').innerText = lang === 'ar' ? 'FR 🇫🇷' : 'AR 🇸🇦';
+
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (TRANSLATIONS[lang][key]) {
+                    el.innerHTML = TRANSLATIONS[lang][key];
+                }
+            });
+
+            document.getElementById('chkName').placeholder = TRANSLATIONS[lang].namePlaceholder;
+            document.getElementById('chkPhone').placeholder = TRANSLATIONS[lang].phonePlaceholder;
+
+            const devSelect = document.getElementById('chkDevice');
+            devSelect.innerHTML = '';
+            DEVICES[lang].forEach(dev => {
+                const opt = document.createElement('option');
+                opt.value = dev;
+                opt.innerText = dev;
+                devSelect.appendChild(opt);
+            });
+
+            if(document.getElementById('orderModal').classList.contains('active')) {
+                updateModalPlanText();
+            }
+        }
+
+        function toggleLanguage() {
+            setLanguage(currentLang === 'ar' ? 'fr' : 'ar');
+        }
+
+        function openSidebar() {
+            document.getElementById('sidebar').classList.add('active');
+            document.getElementById('overlay').classList.add('active');
+        }
+
+        function closeSidebar() {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+        }
+
+        function nav(pageId, btnEl) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById('page-' + pageId).classList.add('active');
+            if(btnEl) btnEl.classList.add('active');
+            
+            closeSidebar();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openCheckout(planKey, price) {
+            rawSelectedPlanKey = planKey;
+            rawSelectedPrice = price;
+            updateModalPlanText();
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function updateModalPlanText() {
+            const translatedPlanName = TRANSLATIONS[currentLang][rawSelectedPlanKey] || rawSelectedPlanKey;
+            const fullPlanStr = translatedPlanName + " — " + rawSelectedPrice;
+            document.getElementById('chkPlan').value = fullPlanStr;
+            document.getElementById('modalPlanSummary').innerText = fullPlanStr;
+        }
+
+        function closeM() {
+            document.getElementById('orderModal').classList.remove('active');
+        }
+
+        function sendCheckoutOrder(e) {
+            e.preventDefault();
+            const plan = document.getElementById('chkPlan').value;
+            const name = document.getElementById('chkName').value.trim();
+            const phone = document.getElementById('chkPhone').value.trim();
+            const device = document.getElementById('chkDevice').value;
+
+            let message = "";
+            if (currentLang === 'fr') {
+                message = `Bonjour 👋\nJe souhaite finaliser ma commande d'abonnement *MAURIMAX IPTV* :\n\n📌 *Offre :* ${plan}\n👤 *Nom :* ${name}\n📱 *Appareil :* ${device}\n📞 *Téléphone :* ${phone}\n\nMerci de me fournir les détails de paiement et de me confirmer l'activation.`;
+            } else {
+                message = `السلام عليكم 👋🏼\nأود إتمام طلب اشتراك جديد في *MAURIMAX IPTV*:\n\n📌 *الباقة:* ${plan}\n👤 *الاسم:* ${name}\n📱 *نوع الجهاز:* ${device}\n📞 *رقم الهاتـف:* ${phone}\n\nيرجى تزويدي بطريقة الدفع وتأكيد التفعيل.`;
+            }
+
+            const targetUrl = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+            window.open(targetUrl, '_blank');
+            closeM();
+        }
+    </script>
+</body>
+</html>
