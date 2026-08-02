@@ -5,12 +5,13 @@ const { esc, icon } = require('./lib/html.js');
 function links(lang) {
   const dir = site.languages.find((l) => l.code === lang).dir; // '' | 'fr/' | 'it/'
   const base = dir ? '../' : ''; // path back to the site root from this page
-  const url = (key) => (key === 'home' ? './' : site.pages[key]);
+  // Relative hrefs name index.html explicitly so the site also works when the
+  // folder is opened straight from disk (file://), not only over HTTP.
+  const url = (key) => site.pages[key];
   const abs = (key) => `${site.domain}/${dir}${key === 'home' ? '' : site.pages[key]}`;
   const other = (key, code) => {
     const d = site.languages.find((l) => l.code === code).dir;
-    const target = key === 'home' ? '' : site.pages[key];
-    return `${base}${d}${target}` || './';
+    return `${base}${d}${site.pages[key]}`;
   };
   return { dir, base, url, abs, other };
 }
