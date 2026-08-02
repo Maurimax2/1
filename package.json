@@ -1,0 +1,12 @@
+{
+  "name": "travel-and-trips-in-mauritania",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Multilingual luxury travel website for Travel and Trips in Mauritania",
+  "scripts": {
+    "build": "node src/build.js",
+    "images": "python3 tools/process-images.py",
+    "serve": "npx http-server -p 8099 -s ."
+  },
+  "license": "UNLICENSED"
+}

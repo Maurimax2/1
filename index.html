@@ -1,1102 +1,702 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="theme-color" content="#060703">
-    <meta name="description" content="MAURIMAX IPTV - البث المباشر بدقة 4K بدون تقطيع في موريتانيا">
-    <title>MAURIMAX IPTV</title>
-
-    <!-- Font Preconnect for Instant Loading -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;800;900&family=Readex+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <style>
-        /* ==========================================================================
-           MAURIMAX ULTRA-LIGHTWEIGHT HIGH-PERFORMANCE STYLESHEET
-           ========================================================================== */
-        :root {
-            --purple: #8b12e0;
-            --purple-glow: rgba(139, 18, 224, 0.4);
-            --orange: #FF5500;
-            --orange-bright: #ff7722;
-            --orange-glow: rgba(255, 85, 0, 0.45);
-            
-            --bg-dark: #060703;
-            --bg-card: rgba(18, 20, 14, 0.75);
-            --bg-glass: rgba(12, 14, 9, 0.85);
-            
-            --text-main: #ffffff;
-            --text-muted: #9aa0a6;
-            --border-purple: rgba(139, 18, 224, 0.35);
-            --border-orange: rgba(255, 85, 0, 0.4);
-            --border-subtle: rgba(255, 255, 255, 0.08);
-
-            --radius-sm: 12px;
-            --radius-md: 20px;
-            --radius-lg: 28px;
-            --easing: cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Reset & Native Touch Behavior */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        html, body {
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            font-family: 'Readex Pro', 'Outfit', system-ui, -apple-system, sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            text-rendering: optimizeLegibility;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Ambient Glow Backgrounds */
-        .ambient-glow {
-            position: fixed;
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            filter: blur(140px);
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.22;
-            will-change: transform;
-        }
-        .glow-purple { top: -60px; right: -60px; background: var(--purple); }
-        .glow-orange { bottom: 10%; left: -80px; background: var(--orange); }
-
-        /* Navigation Bar */
-        .top-bar {
-            background: rgba(6, 7, 3, 0.88);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            position: sticky;
-            top: 0;
-            z-index: 900;
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border-subtle);
-        }
-
-        .brand-top {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            user-select: none;
-            min-height: 48px;
-        }
-
-        .logo-img {
-            height: 40px;
-            width: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 0 10px rgba(139, 18, 224, 0.35));
-        }
-
-        .brand-title {
-            font-family: 'Outfit', sans-serif;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            color: #fff;
-        }
-        .brand-title span { color: var(--orange); }
-
-        .top-actions { display: flex; align-items: center; gap: 10px; }
-
-        .btn-touch {
-            min-height: 44px;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            border: none;
-            transition: transform 0.2s var(--easing), background 0.2s ease, box-shadow 0.2s ease;
-            text-decoration: none;
-        }
-        .btn-touch:active { transform: scale(0.96); }
-
-        .lang-btn {
-            background: rgba(139, 18, 224, 0.15);
-            border: 1px solid var(--border-purple);
-            color: #fff;
-        }
-        .lang-btn:hover { background: var(--purple); }
-
-        .menu-trigger {
-            background: rgba(255, 85, 0, 0.12);
-            border: 1px solid var(--border-orange);
-            color: #fff;
-            box-shadow: 0 0 12px rgba(255, 85, 0, 0.2);
-        }
-        .menu-trigger:hover { background: var(--orange); }
-
-        /* Slide-Out Sidebar Drawer */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -320px;
-            width: 290px;
-            height: 100vh;
-            background: rgba(6, 7, 3, 0.96);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            z-index: 1001;
-            transition: transform 0.35s var(--easing);
-            border-left: 1px solid var(--border-subtle);
-            box-shadow: -10px 0 40px rgba(0,0,0,0.9);
-            will-change: transform;
-        }
-        body[dir="ltr"] .sidebar {
-            right: auto;
-            left: -320px;
-            border-left: none;
-            border-right: 1px solid var(--border-subtle);
-        }
-        .sidebar.active { transform: translate3d(-320px, 0, 0); }
-        body[dir="ltr"] .sidebar.active { transform: translate3d(320px, 0, 0); }
-
-        .close-sidebar {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 24px;
-            cursor: pointer;
-            padding: 8px;
-            min-height: 44px;
-            min-width: 44px;
-        }
-        body[dir="ltr"] .close-sidebar { left: auto; right: 20px; }
-
-        .menu { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 30px; }
-        .menu-btn {
-            width: 100%;
-            min-height: 48px;
-            padding: 12px 16px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid transparent;
-            color: var(--text-muted);
-            font-size: 15px;
-            font-weight: 700;
-            text-align: inherit;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: background 0.2s ease, border-color 0.2s ease;
-        }
-        .menu-btn.active, .menu-btn:hover {
-            background: rgba(139, 18, 224, 0.2);
-            color: #fff;
-            border-color: var(--purple);
-        }
-
-        .wa-btn {
-            background: linear-gradient(135deg, var(--orange), var(--orange-bright));
-            color: #fff;
-            min-height: 50px;
-            border-radius: 35px;
-            font-weight: 800;
-            box-shadow: 0 0 20px var(--orange-glow);
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .overlay.active { display: block; opacity: 1; }
-
-        /* Main Container & Page Views */
-        .main {
-            padding: 15px 12px 60px;
-            max-width: 1280px;
-            margin: 0 auto;
-            width: 100%;
-            position: relative;
-            z-index: 10;
-        }
-
-        .page { display: none; }
-        .page.active {
-            display: block;
-            animation: pageFadeIn 0.3s var(--easing);
-        }
-        @keyframes pageFadeIn {
-            from { opacity: 0; transform: translate3d(0, 12px, 0); }
-            to { opacity: 1; transform: translate3d(0, 0, 0); }
-        }
-
-        .title {
-            font-size: 28px;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        /* Hero Showcase Section */
-        .hero-box {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            align-items: center;
-            text-align: center;
-        }
-
-        .stream-frame {
-            position: relative;
-            width: 100%;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            aspect-ratio: 16 / 9;
-            background: #000;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.95);
-        }
-
-        .big-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .live-tag {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            background: rgba(6, 7, 3, 0.85);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 85, 0, 0.5);
-            color: #fff;
-            padding: 5px 14px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        body[dir="ltr"] .live-tag { right: auto; left: 14px; }
-        .pulse-dot {
-            width: 8px; height: 8px;
-            background: var(--orange);
-            border-radius: 50%;
-            box-shadow: 0 0 10px var(--orange);
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-
-        .hero-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 800px;
-        }
-
-        .hero-btns-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 15px;
-        }
-
-        .btn-action-primary {
-            background: linear-gradient(135deg, var(--orange), var(--orange-bright));
-            color: #fff;
-            min-height: 52px;
-            padding: 12px 32px;
-            border-radius: 35px;
-            font-size: 16px;
-            font-weight: 800;
-            box-shadow: 0 0 25px var(--orange-glow);
-        }
-
-        .btn-action-secondary {
-            background: rgba(139, 18, 224, 0.2);
-            color: #fff;
-            border: 1px solid var(--purple);
-            min-height: 52px;
-            padding: 12px 32px;
-            border-radius: 35px;
-            font-size: 16px;
-            font-weight: 800;
-            box-shadow: 0 0 20px var(--purple-glow);
-        }
-
-        /* Offer Cards Grid */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-        }
-
-        .card {
-            background: var(--bg-card);
-            backdrop-filter: blur(15px);
-            border-radius: var(--radius-md);
-            padding: 22px;
-            border: 1.5px solid var(--border-purple);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 0 18px rgba(139, 18, 224, 0.2);
-            transition: transform 0.25s var(--easing), border-color 0.25s ease, box-shadow 0.25s ease;
-        }
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: var(--orange);
-            box-shadow: 0 0 30px var(--orange-glow);
-        }
-
-        .card-img-wrap {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            margin-bottom: 14px;
-            background: #000;
-        }
-        .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .price {
-            font-family: 'Outfit', sans-serif;
-            font-size: 36px;
-            font-weight: 900;
-            color: var(--orange);
-            margin: 8px 0;
-            text-shadow: 0 0 12px rgba(255, 85, 0, 0.3);
-        }
-        .price span {
-            font-family: 'Readex Pro', sans-serif;
-            font-size: 16px;
-            color: var(--text-muted);
-        }
-
-        /* Info Container */
-        .info-container {
-            background: var(--bg-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--border-purple);
-            border-radius: var(--radius-md);
-            padding: 28px 20px;
-            box-shadow: 0 0 25px rgba(139, 18, 224, 0.25);
-            max-width: 960px;
-            margin: 0 auto;
-        }
-
-        .info-section-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--orange);
-            margin: 24px 0 14px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .info-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .info-list li {
-            font-size: 15px;
-            line-height: 1.7;
-            background: rgba(255, 255, 255, 0.03);
-            padding: 14px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .disclaimer-box {
-            background: rgba(255, 85, 0, 0.08);
-            border: 1.5px solid var(--orange);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            margin-top: 30px;
-            text-align: center;
-        }
-        .disclaimer-box h4 {
-            color: var(--orange);
-            font-size: 18px;
-            margin-bottom: 6px;
-            font-weight: 800;
-        }
-
-        /* FAQ List */
-        .faq-list {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .faq-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-purple);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            text-align: inherit;
-        }
-
-        .faq-card h4 {
-            color: var(--orange);
-            font-size: 17px;
-            font-weight: 800;
-            margin-bottom: 8px;
-        }
-
-        .faq-card p {
-            color: var(--text-muted);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        /* Modals */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.92);
-            backdrop-filter: blur(10px);
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 16px;
-        }
-        .modal.active { display: flex; }
-
-        .modal-body {
-            background: var(--bg-glass);
-            border: 1.5px solid var(--orange);
-            padding: 28px 22px;
-            border-radius: var(--radius-lg);
-            width: 100%;
-            max-width: 440px;
-            position: relative;
-            color: #fff;
-            box-shadow: 0 0 35px var(--orange-glow);
-            animation: modalPop 0.3s var(--easing);
-        }
-
-        @keyframes modalPop {
-            from { opacity: 0; transform: scale(0.94); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        .close {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 24px;
-            cursor: pointer;
-            padding: 8px;
-            min-height: 44px; min-width: 44px;
-        }
-        body[dir="ltr"] .close { left: auto; right: 16px; }
-
-        .form-group { margin-bottom: 14px; text-align: inherit; }
-        .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text-muted); }
-        .form-control {
-            width: 100%;
-            padding: 14px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-purple);
-            border-radius: 12px;
-            color: #fff;
-            font-size: 15px;
-            outline: none;
-        }
-        .form-control:focus { border-color: var(--orange); }
-
-        /* Language Modal Overlay */
-        .lang-modal-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background: rgba(6, 7, 3, 0.98);
-            backdrop-filter: blur(15px);
-            z-index: 3000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .lang-modal-body {
-            background: var(--bg-glass);
-            border: 1.5px solid var(--purple);
-            padding: 35px 24px;
-            border-radius: var(--radius-lg);
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 0 35px var(--purple-glow);
-        }
-
-        .lang-choice-btn {
-            width: 100%;
-            min-height: 52px;
-            margin-top: 12px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 800;
-            cursor: pointer;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .lang-ar { background: linear-gradient(135deg, var(--orange), var(--orange-bright)); color: #fff; box-shadow: 0 0 20px var(--orange-glow); }
-        .lang-fr { background: rgba(139, 18, 224, 0.25); color: #fff; border: 1.5px solid var(--purple); }
-
-        /* Inline SVG Icons Utility */
-        .icon-svg {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-            display: inline-block;
-            vertical-align: middle;
-        }
-
-        @media (max-width: 768px) {
-            .main { padding: 10px 8px 40px; }
-            .title { font-size: 24px; }
-            .price { font-size: 32px; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Travel and Trips in Mauritania — Sahara &amp; Iron Ore Train</title>
+<meta name="description" content="Private, locally guided journeys through the Sahara, the ancient cities of Chinguetti and Ouadane, the legendary iron ore train and the Banc d’Arguin.">
+<link rel="canonical" href="https://travelandtripsinmauritania.com/">
+<link rel="alternate" hreflang="en" href="https://travelandtripsinmauritania.com/">
+<link rel="alternate" hreflang="fr" href="https://travelandtripsinmauritania.com/fr/">
+<link rel="alternate" hreflang="it" href="https://travelandtripsinmauritania.com/it/">
+<link rel="alternate" hreflang="x-default" href="https://travelandtripsinmauritania.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Travel and Trips in Mauritania">
+<meta property="og:title" content="Travel and Trips in Mauritania — Sahara &amp; Iron Ore Train">
+<meta property="og:description" content="Private, locally guided journeys through the Sahara, the ancient cities of Chinguetti and Ouadane, the legendary iron ore train and the Banc d’Arguin.">
+<meta property="og:image" content="https://travelandtripsinmauritania.com/assets/img/train-riders-1440.webp">
+<meta property="og:url" content="https://travelandtripsinmauritania.com/">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0A0908">
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/img/logo.svg">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/cormorant-garamond-300-normal-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="assets/fonts/inter-400-normal-latin.woff2">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/main.css">
+<noscript><style>
+.reveal,.hero__sub,.hero__cta,.hero__scroll{opacity:1!important;transform:none!important}
+[data-split] .w>i,.hero__line .w>i{opacity:1!important;transform:none!important}
+.pic img{opacity:1!important;transform:none!important}
+</style></noscript>
+<link rel="preload" as="image" fetchpriority="high" imagesrcset="assets/img/train-riders-480.webp 480w, assets/img/train-riders-960.webp 960w, assets/img/train-riders-1440.webp 1440w, assets/img/train-riders-1500.webp 1500w" imagesizes="100vw">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TravelAgency","name":"Travel and Trips in Mauritania","url":"https://travelandtripsinmauritania.com","image":"https://travelandtripsinmauritania.com/assets/img/train-riders-1440.webp","email":"travelandtripsinmauritania7@gmail.com","telephone":"+22241860533","address":{"@type":"PostalAddress","addressLocality":"Nouakchott","addressCountry":"MR"},"areaServed":"Mauritania","knowsLanguage":["en","fr","it","ar"],"sameAs":["https://www.facebook.com/share/199kd24vvK/","https://www.instagram.com/travel_and_trips_in_mauritnia?igsh=NzRreGxucTZhOWRn"],"description":"Private, locally guided journeys through the Sahara, the ancient cities of Chinguetti and Ouadane, the legendary iron ore train and the Banc d’Arguin."}</script>
 </head>
-<body>
+<body class="page-home" data-lang="en" data-base="">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="./" aria-label="Travel and Trips in Mauritania">
+      <img src="assets/img/logo.svg" alt="" width="48" height="48">
+      <span class="nav__logo-txt"><b>Travel and Trips</b><i>in Mauritania</i></span>
+    </a>
 
-    <!-- Ambient Neon Light Nodes -->
-    <div class="ambient-glow glow-purple"></div>
-    <div class="ambient-glow glow-orange"></div>
+    <nav class="nav__links" aria-label="Main menu"><ul><li><a class="nav__link is-active" href="./">Home</a></li><li><a class="nav__link" href="experiences.html">Experiences</a></li><li><a class="nav__link" href="destinations.html">Destinations</a></li><li><a class="nav__link" href="gallery.html">Gallery</a></li><li><a class="nav__link" href="about.html">About Us</a></li><li><a class="nav__link" href="travel-guide.html">Travel Guide</a></li><li><a class="nav__link" href="contact.html">Contact</a></li></ul></nav>
 
-    <!-- First Visit Language Chooser Modal -->
-    <div class="lang-modal-overlay" id="langModal">
-        <div class="lang-modal-body">
-            <img src="https://i.ibb.co/67YM3kDw/IMG-3771.png" style="height:55px; margin-bottom:15px;" alt="MAURIMAX">
-            <h2 style="font-size:22px; font-weight:800; margin-bottom:6px;">مرحباً بكم في MAURIMAX</h2>
-            <p style="color:var(--text-muted); font-size:14px; margin-bottom:20px;">اختر اللغة للمتابعة / Choisissez votre langue</p>
-            
-            <button class="lang-choice-btn lang-ar" onclick="setLanguage('ar')">
-                🇸🇦 العربية (Arabic)
-            </button>
-            <button class="lang-choice-btn lang-fr" onclick="setLanguage('fr')">
-                🇫🇷 Français (French)
-            </button>
-        </div>
+    <div class="nav__actions">
+      <div class="lang" data-lang-switch>
+        <button class="lang__btn" aria-expanded="false" aria-haspopup="true">
+          <svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M3 12h18M12 3c2.5 2.6 2.5 15.4 0 18-2.5-2.6-2.5-15.4 0-18Z" fill="none" stroke="currentColor" stroke-width="1.3"/></svg><span>EN</span>
+          <svg class="ico lang__chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <ul class="lang__menu"><li><a href="./" hreflang="en" class="is-active"><span>EN</span>English</a></li><li><a href="fr/" hreflang="fr" class=""><span>FR</span>Français</a></li><li><a href="it/" hreflang="it" class=""><span>IT</span>Italiano</a></li></ul>
+      </div>
+      <a class="nav__wa" href="https://wa.me/22241860533?text=Hello%2C%20I%20would%20like%20information%20about%20your%20journeys%20in%20Mauritania." target="_blank" rel="noopener">
+        <svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.82 2.42 8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg><span>WhatsApp</span>
+      </a>
+      <button class="burger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mnav" id="mobile-menu" hidden>
+  <nav class="mnav__links" aria-label="Main menu"><ul><li><a class="mnav__link is-active" href="./">Home</a></li><li><a class="mnav__link" href="experiences.html">Experiences</a></li><li><a class="mnav__link" href="destinations.html">Destinations</a></li><li><a class="mnav__link" href="gallery.html">Gallery</a></li><li><a class="mnav__link" href="about.html">About Us</a></li><li><a class="mnav__link" href="travel-guide.html">Travel Guide</a></li><li><a class="mnav__link" href="contact.html">Contact</a></li></ul></nav>
+  <div class="mnav__foot">
+    <ul class="mnav__lang"><li><a href="./" hreflang="en" class="is-active"><span>EN</span>English</a></li><li><a href="fr/" hreflang="fr" class=""><span>FR</span>Français</a></li><li><a href="it/" hreflang="it" class=""><span>IT</span>Italiano</a></li></ul>
+    <a class="btn btn--solid" href="https://wa.me/22241860533?text=Hello%2C%20I%20would%20like%20information%20about%20your%20journeys%20in%20Mauritania." target="_blank" rel="noopener">
+      <span>Talk to us on WhatsApp</span><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.82 2.42 8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+    </a>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ══ HERO ══ -->
+<section class="hero" data-hero>
+  <div class="hero__media" data-parallax="0.25" aria-label="Hero photographs"><div class="hero__slide is-active" data-slide="0">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoPABQAPt1cpkyopSOiMAgBEBuJZQC7ACHaBdf743rLjxgAAP7tUhUsO4BEq87mAqSyWfUpfycJa2UrHt2TKwYts0gVYPKMZarPD/3hiIrLZYRLRZAtUPp+l+iqngDSoyafwAAA);--pos:50% 44%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/train-riders-480.webp 480w, assets/img/train-riders-960.webp 960w, assets/img/train-riders-1440.webp 1440w, assets/img/train-riders-1500.webp 1500w" sizes="100vw">
+<img src="assets/img/train-riders.jpg" alt="Riding the Iron Ore Train" width="1500" height="2000"
+ fetchpriority="high" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+    </div><div class="hero__slide" data-slide="1">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBQCdASoUAAsAPt1apkyopSOiMAgBEBuJbACdMoRwN6BvAMlAA5/TJjC1Vy0JxjLAAOAw7S0Ffo114vKizTrlY4ylTjlT5WksgPOIyGlirGlV6agj4OXkmP1qIeXlb+b4o8UQuW7gaHAA);--pos:50% 55%;--ratio:1.7778">
+<picture>
+<source type="image/webp" data-srcset="assets/img/camel-caravan-dune-480.webp 480w, assets/img/camel-caravan-dune-960.webp 960w, assets/img/camel-caravan-dune-1440.webp 1440w, assets/img/camel-caravan-dune-2000.webp 2000w" sizes="100vw">
+<img data-src="assets/img/camel-caravan-dune.jpg" alt="The Caravan Still Walks" width="2048" height="1152"
+ decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+    </div><div class="hero__slide" data-slide="2">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoUAA8APt1apkyopSOiMAgBEBuJQBYdgoJtvEKXj2xAAP0b7dEzx2O3v9nNtztek/d42HwZaGnthZS3WofYwNyJRelxTBJ0CAAAAA==);--pos:50% 55%;--ratio:1.3333">
+<picture>
+<source type="image/webp" data-srcset="assets/img/camels-atlantic-480.webp 480w, assets/img/camels-atlantic-960.webp 960w, assets/img/camels-atlantic-1440.webp 1440w, assets/img/camels-atlantic-2000.webp 2000w" sizes="100vw">
+<img data-src="assets/img/camels-atlantic.jpg" alt="Where the Sahara Meets the Ocean" width="4000" height="3000"
+ decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+    </div><div class="hero__slide" data-slide="3">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAABQBACdASoPABQAPt1apkyopSOiMAgBEBuJZACdMoFWAAUzlcLLJqDukR3gAN1JYaDpYWs57nyE/8dfhTL/pidIdPY+x2CNQ6Pep0AdK3rYu/H+DH985gXtCIM+pLDmAAA=);--pos:50% 45%;--ratio:0.7500">
+<picture>
+<source type="image/webp" data-srcset="assets/img/chinguetti-minaret-480.webp 480w, assets/img/chinguetti-minaret-960.webp 960w, assets/img/chinguetti-minaret-1440.webp 1440w, assets/img/chinguetti-minaret-1536.webp 1536w" sizes="100vw">
+<img data-src="assets/img/chinguetti-minaret.jpg" alt="The Seventh City of Islam" width="1536" height="2048"
+ decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+    </div><div class="hero__slide" data-slide="4">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoPABQAPt1apkyopSOiMAgBEBuJagCdMoR3AClZqona4nI9PAAA/H98bV13rGnz0H2x1PJy+2pvo/mtFxeeRMkDBZfQK76KGjHiXS7mk4Cqco1dN3UtvhFgZOdRs7eKckkOVxPeSKAAAA==);--pos:50% 50%;--ratio:0.7500">
+<picture>
+<source type="image/webp" data-srcset="assets/img/dune-sunset-crew-480.webp 480w, assets/img/dune-sunset-crew-720.webp 720w" sizes="100vw">
+<img data-src="assets/img/dune-sunset-crew.jpg" alt="The Hour Before Dinner" width="720" height="960"
+ decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+    </div></div>
+  <div class="hero__veil"></div>
+
+  <div class="hero__inner">
+    <h1 class="hero__title">
+      <span class="hero__line"><span class="w" style="--i:0"><i>Discover</i></span> <span class="w" style="--i:1"><i>Mauritania</i></span></span>
+      <span class="hero__line hero__line--alt"><span class="w" style="--i:0"><i>Beyond</i></span> <span class="w" style="--i:1"><i>the</i></span> <span class="w" style="--i:2"><i>Ordinary</i></span></span>
+    </h1>
+    <p class="hero__sub">Experience ancient cities, endless deserts, and unforgettable journeys with local experts.</p>
+    <div class="hero__cta">
+      <a class="btn btn--solid" href="experiences.html"><span>Explore Experiences</span><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="btn btn--glass" href="https://wa.me/22241860533?text=Hello%2C%20I%20would%20like%20to%20plan%20an%20adventure%20in%20Mauritania%20with%20you." target="_blank" rel="noopener"><span>Plan Your Adventure</span><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.82 2.42 8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg></a>
+    </div>
+  </div>
+
+  <div class="hero__dots"><button class="hero__dot is-active" data-dot="0"
+      aria-label="Riding the Iron Ore Train"><span></span></button><button class="hero__dot" data-dot="1"
+      aria-label="The Caravan Still Walks"><span></span></button><button class="hero__dot" data-dot="2"
+      aria-label="Where the Sahara Meets the Ocean"><span></span></button><button class="hero__dot" data-dot="3"
+      aria-label="The Seventh City of Islam"><span></span></button><button class="hero__dot" data-dot="4"
+      aria-label="The Hour Before Dinner"><span></span></button></div>
+  <a class="hero__scroll" href="#intro"><span>Scroll to begin</span><i></i></a>
+</section>
+
+<!-- ══ INTRO ══ -->
+<section class="intro" id="intro">
+  <div class="intro__grid">
+    <div class="intro__text">
+      <p class="eyebrow reveal">The last great silence</p>
+      <h2 class="intro__title reveal" data-split>A country the world has not learned to visit yet.</h2>
+      <p class="intro__p reveal" style="--d:0ms">Mauritania is the size of Egypt and receives fewer visitors in a year than a single European museum receives in a week. Ninety percent of it is Sahara. The rest is Atlantic coastline, oasis valleys and towns of dry stone that were writing manuscripts on astronomy while Europe was still building cathedrals.</p><p class="intro__p reveal" style="--d:80ms">There are no crowds here, no souvenir streets, no queue at the viewpoint. There is a country that still belongs entirely to the people who live in it — and a handful of us who know how to take you through it properly.</p>
+    </div>
+    <div class="intro__media reveal" data-parallax="0.08">
+      <figure class="pic " style="background-image:url(data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAABQBACdASoPABQAPt1apkyopSOiMAgBEBuJZACdMoACw/IhIh8Qt4WXJKIAAP6CHGYaF5eEUEq9PhLXEO5kKYH7p8TGjib1JdjpWhIXjpehSux99/uiluCffIW64O2wrzHNVDS6y9lTjqPt1MIWIh/wnznN31TBuTVOXVMwcfHgAA==);--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/ouadane-archway-480.webp 480w, assets/img/ouadane-archway-960.webp 960w, assets/img/ouadane-archway-1200.webp 1200w" sizes="(max-width:900px) 90vw, 38vw">
+<img src="assets/img/ouadane-archway.jpg" alt="Doorways of Dry Stone" width="1200" height="1600"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      <p class="intro__cap">Ouadane, Adrar Region</p>
+    </div>
+  </div>
+
+  <ul class="stats">
+    <li class="stats__item reveal" style="--d:0ms">
+      <span class="stats__n">1 200 000</span><span class="stats__l">km² of desert, coast and silence</span></li><li class="stats__item reveal" style="--d:90ms">
+      <span class="stats__n">2</span><span class="stats__l">UNESCO World Heritage sites</span></li><li class="stats__item reveal" style="--d:180ms">
+      <span class="stats__n">704 km</span><span class="stats__l">of iron ore railway across the Sahara</span></li><li class="stats__item reveal" style="--d:270ms">
+      <span class="stats__n">13th c.</span><span class="stats__l">the age of the libraries of Chinguetti</span></li>
+  </ul>
+</section>
+
+<!-- ══ WHY US ══ -->
+<section class="why">
+  
+<header class="shead  ">
+  <p class="eyebrow reveal">Why travel with us</p>
+  <h2 class="shead__title reveal" data-split>Built by Mauritanians, for travellers who want the real thing.</h2>
+  
+</header>
+  <div class="why__list" data-hoverimg>
+    <article class="why__row reveal" style="--d:0ms" data-img="plateau-two-travellers">
+      <span class="why__n">01</span>
+      <h3 class="why__t">Local experts</h3>
+      <p class="why__d">We are from here. Our team lives between Nouakchott and the Adrar, and the routes we run are the ones we grew up on — not itineraries bought from a wholesaler.</p>
+      <div class="why__thumb">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoPABQAPt1apkyopSOiMAgBEBuJYgCdACHYm6UMUWQXg1eAAPF7e90pmYvNViFmZyIVF6joAJxIn6R2rSvSVL9tNdMd0l3EqCJvIOsujaB8AA==);--pos:50% 50%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/plateau-two-travellers-480.webp 480w, assets/img/plateau-two-travellers-750.webp 750w" sizes="320px">
+<img src="assets/img/plateau-two-travellers.jpg" alt="Local experts" width="750" height="1000"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+    </article><article class="why__row reveal" style="--d:70ms" data-img="acacia-lunch">
+      <span class="why__n">02</span>
+      <h3 class="why__t">Authentic experiences</h3>
+      <p class="why__d">You sleep where the nomads sleep, eat what the family cooks, and drink the three glasses of tea properly. Nothing is staged for the camera, because nothing needs to be.</p>
+      <div class="why__thumb">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRp4AAABXRUJQVlA4IJIAAABQBACdASoPABQAPt1apkyopSOiMAgBEBuJbACdMoQMCgABaHow4Uq5A6pIAP1G4MkattCUM0vSA1lZM8AxwdnHiN5/cqkaBrTwlbRazWTMVnZsR/NinC+j4+g4ocTVcsYItswyD0U5P73msu9DC5R1HAuTivvAeDNNnEDU6mGwTIayg6T0v2fvl9uXGJyPkXcAAA==);--pos:50% 45%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/acacia-lunch-480.webp 480w, assets/img/acacia-lunch-810.webp 810w" sizes="320px">
+<img src="assets/img/acacia-lunch.jpg" alt="Authentic experiences" width="810" height="1080"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+    </article><article class="why__row reveal" style="--d:140ms" data-img="lone-vehicle-plain">
+      <span class="why__n">03</span>
+      <h3 class="why__t">Personalized journeys</h3>
+      <p class="why__d">Every trip is private and rebuilt around you: two people or twelve, five days or three weeks, hard adventure or slow comfort. Tell us what you want to feel.</p>
+      <div class="why__thumb">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRkwAAABXRUJQVlA4IEAAAADQAgCdASoLABQAPt1cpkyopSOiMAgBEBuJQBadBg2AAP7gVfygY/6p+/2N9hNWPXGC6Ta3GkYa+LK9oH5qGAAA);--pos:50% 45%;--ratio:0.5625">
+<picture>
+<source type="image/webp" srcset="assets/img/lone-vehicle-plain-480.webp 480w, assets/img/lone-vehicle-plain-960.webp 960w, assets/img/lone-vehicle-plain-1080.webp 1080w" sizes="320px">
+<img src="assets/img/lone-vehicle-plain.jpg" alt="Personalized journeys" width="1080" height="1920"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+    </article><article class="why__row reveal" style="--d:210ms" data-img="guide-and-traveller-ridge">
+      <span class="why__n">04</span>
+      <h3 class="why__t">Professional guides</h3>
+      <p class="why__d">Licensed desert guides and drivers who have crossed this country for decades, speaking English, French, Italian, Arabic and Hassaniya, with satellite communication on every departure.</p>
+      <div class="why__thumb">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQBACdASoPABQAPt1cp0yopSOiMAgBEBuJYwCdACHUt4wtaNlSk/q3oAD+sXQKTSmTRodRYu/3HL5rEk40/UkhglJLGoxwUhpF6CPetG1/Fr/xl4qQMCoSNAAAAA==);--pos:50% 44%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/guide-and-traveller-ridge-480.webp 480w, assets/img/guide-and-traveller-ridge-960.webp 960w, assets/img/guide-and-traveller-ridge-1440.webp 1440w, assets/img/guide-and-traveller-ridge-2000.webp 2000w" sizes="320px">
+<img src="assets/img/guide-and-traveller-ridge.jpg" alt="Professional guides" width="3000" height="4000"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+    </article>
+    <div class="why__float" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ══ FEATURED EXPERIENCES ══ -->
+<section class="feat">
+  
+<header class="shead  ">
+  <p class="eyebrow reveal">Signature journeys</p>
+  <h2 class="shead__title reveal" data-split>Five ways to meet Mauritania.</h2>
+  <p class="shead__sub reveal">Each one is private, guided by our own team, and can be extended, shortened or combined.</p>
+</header>
+  <div class="feat__grid"><article class="expcard expcard--feature reveal" style="--d:0ms">
+  <a class="expcard__link" href="experiences.html#iron-ore-train" aria-label="Iron Ore Train Adventure">
+    <div class="expcard__media">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoPABQAPt1cpkyopSOiMAgBEBuJZQC7ACHaBdf743rLjxgAAP7tUhUsO4BEq87mAqSyWfUpfycJa2UrHt2TKwYts0gVYPKMZarPD/3hiIrLZYRLRZAtUPp+l+iqngDSoyafwAAA);--pos:50% 44%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/train-riders-480.webp 480w, assets/img/train-riders-960.webp 960w, assets/img/train-riders-1440.webp 1440w, assets/img/train-riders-1500.webp 1500w" sizes="(max-width:900px) 100vw, 62vw">
+<img src="assets/img/train-riders.jpg" alt="Iron Ore Train Adventure" width="1500" height="2000"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      <span class="expcard__num">01</span>
+    </div>
+    <div class="expcard__body">
+      <p class="expcard__meta"><span>Choum → Nouadhibou</span><i></i><span>3 days / 2 nights</span></p>
+      <h3 class="expcard__title">Iron Ore Train Adventure</h3>
+      <p class="expcard__txt">Climb onto an open ore wagon at sunset and cross the Sahara on the most legendary railway in Africa.</p>
+      <span class="link">Explore experience<svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+  </a>
+</article><article class="expcard  reveal" style="--d:90ms">
+  <a class="expcard__link" href="experiences.html#sahara-expedition" aria-label="Sahara Desert Expedition">
+    <div class="expcard__media">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBQCdASoUAAsAPt1apkyopSOiMAgBEBuJbACdMoRwN6BvAMlAA5/TJjC1Vy0JxjLAAOAw7S0Ffo114vKizTrlY4ylTjlT5WksgPOIyGlirGlV6agj4OXkmP1qIeXlb+b4o8UQuW7gaHAA);--pos:50% 55%;--ratio:1.7778">
+<picture>
+<source type="image/webp" srcset="assets/img/camel-caravan-dune-480.webp 480w, assets/img/camel-caravan-dune-960.webp 960w, assets/img/camel-caravan-dune-1440.webp 1440w, assets/img/camel-caravan-dune-2000.webp 2000w" sizes="(max-width:900px) 100vw, 33vw">
+<img src="assets/img/camel-caravan-dune.jpg" alt="Sahara Desert Expedition" width="2048" height="1152"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      <span class="expcard__num">02</span>
+    </div>
+    <div class="expcard__body">
+      <p class="expcard__meta"><span>Adrar Region, central Mauritania</span><i></i><span>5 – 9 days</span></p>
+      <h3 class="expcard__title">Sahara Desert Expedition</h3>
+      <p class="expcard__txt">A guided crossing of the great ergs of the Adrar, sleeping under the stars and walking with camel caravans.</p>
+      <span class="link">Explore experience<svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+  </a>
+</article><article class="expcard  reveal" style="--d:180ms">
+  <a class="expcard__link" href="experiences.html#chinguetti-heritage" aria-label="Chinguetti Heritage Journey">
+    <div class="expcard__media">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAABQBACdASoPABQAPt1apkyopSOiMAgBEBuJZACdMoFWAAUzlcLLJqDukR3gAN1JYaDpYWs57nyE/8dfhTL/pidIdPY+x2CNQ6Pep0AdK3rYu/H+DH985gXtCIM+pLDmAAA=);--pos:50% 45%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/chinguetti-minaret-480.webp 480w, assets/img/chinguetti-minaret-960.webp 960w, assets/img/chinguetti-minaret-1440.webp 1440w, assets/img/chinguetti-minaret-1536.webp 1536w" sizes="(max-width:900px) 100vw, 33vw">
+<img src="assets/img/chinguetti-minaret.jpg" alt="Chinguetti Heritage Journey" width="1536" height="2048"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      <span class="expcard__num">03</span>
+    </div>
+    <div class="expcard__body">
+      <p class="expcard__meta"><span>Chinguetti, Adrar Region</span><i></i><span>2 – 3 days</span></p>
+      <h3 class="expcard__title">Chinguetti Heritage Journey</h3>
+      <p class="expcard__txt">Two days inside a 13th-century caravan town where families still keep manuscripts their ancestors carried across the desert.</p>
+      <span class="link">Explore experience<svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+  </a>
+</article><article class="expcard  reveal" style="--d:270ms">
+  <a class="expcard__link" href="experiences.html#ouadane-ancient-city" aria-label="Ouadane Ancient City">
+    <div class="expcard__media">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAABQBACdASoPABQAPt1apkyopSOiMAgBEBuJZACdMoACw/IhIh8Qt4WXJKIAAP6CHGYaF5eEUEq9PhLXEO5kKYH7p8TGjib1JdjpWhIXjpehSux99/uiluCffIW64O2wrzHNVDS6y9lTjqPt1MIWIh/wnznN31TBuTVOXVMwcfHgAA==);--pos:50% 50%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/ouadane-archway-480.webp 480w, assets/img/ouadane-archway-960.webp 960w, assets/img/ouadane-archway-1200.webp 1200w" sizes="(max-width:900px) 100vw, 33vw">
+<img src="assets/img/ouadane-archway.jpg" alt="Ouadane Ancient City" width="1200" height="1600"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      <span class="expcard__num">04</span>
+    </div>
+    <div class="expcard__body">
+      <p class="expcard__meta"><span>Ouadane, Adrar Region</span><i></i><span>2 days</span></p>
+      <h3 class="expcard__title">Ouadane Ancient City</h3>
+      <p class="expcard__txt">The most dramatic of Mauritania’s ksour: a ruined city of stone streets clinging to a cliff, founded in 1147.</p>
+      <span class="link">Explore experience<svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+  </a>
+</article><article class="expcard  reveal" style="--d:360ms">
+  <a class="expcard__link" href="experiences.html#banc-darguin" aria-label="Banc d’Arguin Discovery">
+    <div class="expcard__media">
+      <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoUAA8APt1apkyopSOiMAgBEBuJQBYdgoJtvEKXj2xAAP0b7dEzx2O3v9nNtztek/d42HwZaGnthZS3WofYwNyJRelxTBJ0CAAAAA==);--pos:50% 55%;--ratio:1.3333">
+<picture>
+<source type="image/webp" srcset="assets/img/camels-atlantic-480.webp 480w, assets/img/camels-atlantic-960.webp 960w, assets/img/camels-atlantic-1440.webp 1440w, assets/img/camels-atlantic-2000.webp 2000w" sizes="(max-width:900px) 100vw, 33vw">
+<img src="assets/img/camels-atlantic.jpg" alt="Banc d’Arguin Discovery" width="4000" height="3000"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      <span class="expcard__num">05</span>
+    </div>
+    <div class="expcard__body">
+      <p class="expcard__meta"><span>Banc d’Arguin National Park, Atlantic coast</span><i></i><span>2 – 4 days</span></p>
+      <h3 class="expcard__title">Banc d’Arguin Discovery</h3>
+      <p class="expcard__txt">A UNESCO sanctuary of sandbanks and shallows hosting millions of migratory birds — and camels on the beach.</p>
+      <span class="link">Explore experience<svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+  </a>
+</article></div>
+  <div class="feat__more reveal">
+    <a class="btn btn--ghost" href="experiences.html"><span>View all experiences</span><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+</section>
+
+<!-- ══ DESTINATIONS PREVIEW ══ -->
+<section class="dprev">
+  <div class="dprev__head">
+    
+<header class="shead  ">
+  <p class="eyebrow reveal">Where we go</p>
+  <h2 class="shead__title reveal" data-split>Seven places worth crossing a continent for.</h2>
+  
+</header>
+    <a class="link link--lg reveal" href="destinations.html">Explore destinations<svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+  <div class="dprev__rail" data-drag><a class="dcard reveal" style="--d:0ms" href="destinations.html#chinguetti">
+      <div class="dcard__media">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAABQBACdASoPABQAPt1apkyopSOiMAgBEBuJZACdMoFWAAUzlcLLJqDukR3gAN1JYaDpYWs57nyE/8dfhTL/pidIdPY+x2CNQ6Pep0AdK3rYu/H+DH985gXtCIM+pLDmAAA=);--pos:50% 45%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/chinguetti-minaret-480.webp 480w, assets/img/chinguetti-minaret-960.webp 960w, assets/img/chinguetti-minaret-1440.webp 1440w, assets/img/chinguetti-minaret-1536.webp 1536w" sizes="(max-width:700px) 76vw, 30vw">
+<img src="assets/img/chinguetti-minaret.jpg" alt="Chinguetti" width="1536" height="2048"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+      <div class="dcard__body">
+        <span class="dcard__n">01</span>
+        <h3>Chinguetti</h3>
+        <p>The seventh city of Islam</p>
+      </div>
+    </a><a class="dcard reveal" style="--d:60ms" href="destinations.html#ouadane">
+      <div class="dcard__media">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAABQBACdASoPABQAPt1apkyopSOiMAgBEBuJZACdMoACw/IhIh8Qt4WXJKIAAP6CHGYaF5eEUEq9PhLXEO5kKYH7p8TGjib1JdjpWhIXjpehSux99/uiluCffIW64O2wrzHNVDS6y9lTjqPt1MIWIh/wnznN31TBuTVOXVMwcfHgAA==);--pos:50% 50%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/ouadane-archway-480.webp 480w, assets/img/ouadane-archway-960.webp 960w, assets/img/ouadane-archway-1200.webp 1200w" sizes="(max-width:700px) 76vw, 30vw">
+<img src="assets/img/ouadane-archway.jpg" alt="Ouadane" width="1200" height="1600"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+      <div class="dcard__body">
+        <span class="dcard__n">02</span>
+        <h3>Ouadane</h3>
+        <p>The stone city of 1147</p>
+      </div>
+    </a><a class="dcard reveal" style="--d:120ms" href="destinations.html#adrar">
+      <div class="dcard__media">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBACdASoPABQAPt1apkyopSOiMAgBEBuJQBOmUABp2W+4xsc4+mEO3AD+3rJrU98HL4+9IiMN7SXRGviSGTVV4GLmTlp/7EbnYoZH9S4a5C+CYptXwXfx9iApfhhpEK2lu1Yr89VvNAAA);--pos:50% 50%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/terjit-oasis-canyon-480.webp 480w, assets/img/terjit-oasis-canyon-810.webp 810w" sizes="(max-width:700px) 76vw, 30vw">
+<img src="assets/img/terjit-oasis-canyon.jpg" alt="Adrar Region" width="810" height="1080"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+      <div class="dcard__body">
+        <span class="dcard__n">03</span>
+        <h3>Adrar Region</h3>
+        <p>Plateaux, canyons and palm valleys</p>
+      </div>
+    </a><a class="dcard reveal" style="--d:180ms" href="destinations.html#sahara">
+      <div class="dcard__media">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBQCdASoUAAsAPt1apkyopSOiMAgBEBuJbACdMoRwN6BvAMlAA5/TJjC1Vy0JxjLAAOAw7S0Ffo114vKizTrlY4ylTjlT5WksgPOIyGlirGlV6agj4OXkmP1qIeXlb+b4o8UQuW7gaHAA);--pos:50% 55%;--ratio:1.7778">
+<picture>
+<source type="image/webp" srcset="assets/img/camel-caravan-dune-480.webp 480w, assets/img/camel-caravan-dune-960.webp 960w, assets/img/camel-caravan-dune-1440.webp 1440w, assets/img/camel-caravan-dune-2000.webp 2000w" sizes="(max-width:700px) 76vw, 30vw">
+<img src="assets/img/camel-caravan-dune.jpg" alt="The Sahara Desert" width="2048" height="1152"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+      <div class="dcard__body">
+        <span class="dcard__n">04</span>
+        <h3>The Sahara Desert</h3>
+        <p>Ergs, silence and nomad camps</p>
+      </div>
+    </a><a class="dcard reveal" style="--d:240ms" href="destinations.html#iron-ore-route">
+      <div class="dcard__media">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAABwAwCdASoPABQALqVut1ujKKioiICkSzgABc6rEspxOg5F3RAA/vYL7txXmFDuvX4ZojGSyMhaytne62F9qafVRJadCLOjSRm5mCWICAA=);--pos:50% 70%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/iron-ore-train-mono-480.webp 480w, assets/img/iron-ore-train-mono-960.webp 960w, assets/img/iron-ore-train-mono-1440.webp 1440w, assets/img/iron-ore-train-mono-1500.webp 1500w" sizes="(max-width:700px) 76vw, 30vw">
+<img src="assets/img/iron-ore-train-mono.jpg" alt="Iron Ore Train Route" width="1500" height="2000"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+      <div class="dcard__body">
+        <span class="dcard__n">05</span>
+        <h3>Iron Ore Train Route</h3>
+        <p>704 km of rail across the desert</p>
+      </div>
+    </a><a class="dcard reveal" style="--d:300ms" href="destinations.html#banc-darguin">
+      <div class="dcard__media">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACQAwCdASoUAAsAPt1cpkyopSOiMAgBEBuJY1TUgARgcP+BTIQAAPhX/2KCSFTS1pxG8RpyNYEgw5/ieAq/wbB4iDb3nba2zF7gH5RmaRuog2EVfgonNQ3TCAAAAA==);--pos:50% 50%;--ratio:1.7778">
+<picture>
+<source type="image/webp" srcset="assets/img/arguin-pelicans-480.webp 480w, assets/img/arguin-pelicans-960.webp 960w, assets/img/arguin-pelicans-1440.webp 1440w, assets/img/arguin-pelicans-1600.webp 1600w" sizes="(max-width:700px) 76vw, 30vw">
+<img src="assets/img/arguin-pelicans.jpg" alt="Banc d’Arguin National Park" width="1600" height="900"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+      <div class="dcard__body">
+        <span class="dcard__n">06</span>
+        <h3>Banc d’Arguin National Park</h3>
+        <p>Two million birds between desert and ocean</p>
+      </div>
+    </a><a class="dcard reveal" style="--d:360ms" href="destinations.html#nouakchott">
+      <div class="dcard__media">
+        <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADwAwCdASoUAA8APt1apkyopSOiMAgBEBuJYgCdIIjCaz7tnlyMitYAAMqgHHb4Er9zlc5lRn9cwTjJgDFbR+VQigAcNY1TjplvibcW44OOHdkBgBuUDUt+AAA=);--pos:50% 60%;--ratio:1.3333">
+<picture>
+<source type="image/webp" srcset="assets/img/nouakchott-fish-market-480.webp 480w, assets/img/nouakchott-fish-market-960.webp 960w, assets/img/nouakchott-fish-market-1440.webp 1440w, assets/img/nouakchott-fish-market-2000.webp 2000w" sizes="(max-width:700px) 76vw, 30vw">
+<img src="assets/img/nouakchott-fish-market.jpg" alt="Nouakchott" width="4000" height="3000"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+      </div>
+      <div class="dcard__body">
+        <span class="dcard__n">07</span>
+        <h3>Nouakchott</h3>
+        <p>The capital on the sand</p>
+      </div>
+    </a></div>
+</section>
+
+<!-- ══ TRAVELLER MOMENTS ══ -->
+<section class="moments">
+  
+<header class="shead  ">
+  <p class="eyebrow reveal">Traveller moments</p>
+  <h2 class="shead__title reveal" data-split>Photographs from the people who came with us.</h2>
+  <p class="shead__sub reveal">Not one of these images is a stock photo. Every frame on this website was taken on one of our journeys.</p>
+</header>
+  <div class="moments__grid"><button class="tile tile--m0 reveal" style="--d:0ms;"
+  data-photo="dune-joy" aria-label="Nothing but Sand and Sky">
+  <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADwAwCdASoUAA8APt1cp0yopSOiMAgBEBuJYgCdMoADTMx08kv/JdQ6AP6xOpguJAoRezJmRZHetGyucxGornmlbYcGLY90FUUYgU3qJ5LemOb2AzSYe7iKWiuOYAAA);--pos:50% 60%;--ratio:1.3333">
+<picture>
+<source type="image/webp" srcset="assets/img/dune-joy-480.webp 480w, assets/img/dune-joy-960.webp 960w, assets/img/dune-joy-1440.webp 1440w, assets/img/dune-joy-2000.webp 2000w" sizes="(max-width:700px) 50vw, 25vw">
+<img src="assets/img/dune-joy.jpg" alt="Nothing but Sand and Sky" width="2000" height="1500"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+  <span class="tile__cap">
+    <span class="tile__loc">Erg of the Adrar, Mauritania</span>
+    <span class="tile__title">Nothing but Sand and Sky</span>
+  </span>
+  <span class="tile__zoom"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</button><button class="tile tile--m1 reveal" style="--d:70ms;"
+  data-photo="acacia-lunch" aria-label="Lunch in the Shade">
+  <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRp4AAABXRUJQVlA4IJIAAABQBACdASoPABQAPt1apkyopSOiMAgBEBuJbACdMoQMCgABaHow4Uq5A6pIAP1G4MkattCUM0vSA1lZM8AxwdnHiN5/cqkaBrTwlbRazWTMVnZsR/NinC+j4+g4ocTVcsYItswyD0U5P73msu9DC5R1HAuTivvAeDNNnEDU6mGwTIayg6T0v2fvl9uXGJyPkXcAAA==);--pos:50% 45%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/acacia-lunch-480.webp 480w, assets/img/acacia-lunch-810.webp 810w" sizes="(max-width:700px) 50vw, 25vw">
+<img src="assets/img/acacia-lunch.jpg" alt="Lunch in the Shade" width="810" height="1080"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+  <span class="tile__cap">
+    <span class="tile__loc">Under an acacia, on the piste</span>
+    <span class="tile__title">Lunch in the Shade</span>
+  </span>
+  <span class="tile__zoom"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</button><button class="tile tile--m2 reveal" style="--d:140ms;"
+  data-photo="train-arms-open" aria-label="The Moment the Sky Turns">
+  <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAABQAwCdASoQABQAPt1apkyopSOiMAgBEBuJZgCdABuWeFMFRAD+sY7V9beoMpl+WqTTdWwkdfoANJUjtib5Az7fpiDM3Y7FdLDjdJVIvJT3aYJw06ZZlhC0zEzpZNDRlXoGUZpl2/uyrvctCdpR8mdiKpe3p2GFCsgUg2AA);--pos:50% 45%;--ratio:0.8173">
+<picture>
+<source type="image/webp" srcset="assets/img/train-arms-open-480.webp 480w, assets/img/train-arms-open-720.webp 720w" sizes="(max-width:700px) 50vw, 25vw">
+<img src="assets/img/train-arms-open.jpg" alt="The Moment the Sky Turns" width="720" height="881"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+  <span class="tile__cap">
+    <span class="tile__loc">Somewhere between Choum and Nouadhibou</span>
+    <span class="tile__title">The Moment the Sky Turns</span>
+  </span>
+  <span class="tile__zoom"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</button><button class="tile tile--m3 reveal" style="--d:210ms;"
+  data-photo="terjit-oasis-canyon" aria-label="Palms in a Crack of Rock">
+  <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBACdASoPABQAPt1apkyopSOiMAgBEBuJQBOmUABp2W+4xsc4+mEO3AD+3rJrU98HL4+9IiMN7SXRGviSGTVV4GLmTlp/7EbnYoZH9S4a5C+CYptXwXfx9iApfhhpEK2lu1Yr89VvNAAA);--pos:50% 50%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/terjit-oasis-canyon-480.webp 480w, assets/img/terjit-oasis-canyon-810.webp 810w" sizes="(max-width:700px) 50vw, 25vw">
+<img src="assets/img/terjit-oasis-canyon.jpg" alt="Palms in a Crack of Rock" width="810" height="1080"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+  <span class="tile__cap">
+    <span class="tile__loc">Terjit-style oasis canyon, Adrar</span>
+    <span class="tile__title">Palms in a Crack of Rock</span>
+  </span>
+  <span class="tile__zoom"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</button><button class="tile tile--m4 reveal" style="--d:280ms;"
+  data-photo="summit-arms-raised" aria-label="Made It">
+  <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAwCdASoPABQAPt1apkyopSOiMAgBEBuJZQAAUnD+LgPy1HyLU4AA/llmmo5JRAJwPrT+51ac62SQVZdhfacVGA2ghHqhULwvai1S+Zp+Y7AHuomXwAAA);--pos:50% 50%;--ratio:0.7500">
+<picture>
+<source type="image/webp" srcset="assets/img/summit-arms-raised-480.webp 480w, assets/img/summit-arms-raised-750.webp 750w" sizes="(max-width:700px) 50vw, 25vw">
+<img src="assets/img/summit-arms-raised.jpg" alt="Made It" width="750" height="1000"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+  <span class="tile__cap">
+    <span class="tile__loc">Rocky summit at sunset, Adrar</span>
+    <span class="tile__title">Made It</span>
+  </span>
+  <span class="tile__zoom"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</button><button class="tile tile--m5 reveal" style="--d:350ms;"
+  data-photo="nouakchott-fish-market" aria-label="The Beach That Feeds a Nation">
+  <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADwAwCdASoUAA8APt1apkyopSOiMAgBEBuJYgCdIIjCaz7tnlyMitYAAMqgHHb4Er9zlc5lRn9cwTjJgDFbR+VQigAcNY1TjplvibcW44OOHdkBgBuUDUt+AAA=);--pos:50% 60%;--ratio:1.3333">
+<picture>
+<source type="image/webp" srcset="assets/img/nouakchott-fish-market-480.webp 480w, assets/img/nouakchott-fish-market-960.webp 960w, assets/img/nouakchott-fish-market-1440.webp 1440w, assets/img/nouakchott-fish-market-2000.webp 2000w" sizes="(max-width:700px) 50vw, 25vw">
+<img src="assets/img/nouakchott-fish-market.jpg" alt="The Beach That Feeds a Nation" width="4000" height="3000"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+  <span class="tile__cap">
+    <span class="tile__loc">Port de Pêche, Nouakchott</span>
+    <span class="tile__title">The Beach That Feeds a Nation</span>
+  </span>
+  <span class="tile__zoom"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</button><button class="tile tile--m6 reveal" style="--d:0ms;"
+  data-photo="desert-campfire" aria-label="Fire, Tea, Silence">
+  <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAACQAwCdASoLABQAPt0+s1SooiWjmAEQG4lsAABc6f7ihUKXYaMAAP72gqHbId14tYGqmMVmOpO3M2YanMgGCoyJeX/1tlE9v9fRFIHX4PoVgogBhnOt1AboAk9XGHOgWullI60bqw5GDbk48OZMvugA);--pos:50% 50%;--ratio:0.5622">
+<picture>
+<source type="image/webp" srcset="assets/img/desert-campfire-480.webp 480w, assets/img/desert-campfire-506.webp 506w" sizes="(max-width:700px) 50vw, 25vw">
+<img src="assets/img/desert-campfire.jpg" alt="Fire, Tea, Silence" width="506" height="900"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+  <span class="tile__cap">
+    <span class="tile__loc">Bivouac in the Sahara</span>
+    <span class="tile__title">Fire, Tea, Silence</span>
+  </span>
+  <span class="tile__zoom"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</button><button class="tile tile--m7 reveal" style="--d:70ms;"
+  data-photo="atlantic-sunset-group" aria-label="The Group Photo That Means Something">
+  <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAACwAwCdASoUAA8APt1cpkyopSOiMAgBEBuJZQAAW7fE41mdyeJI6AD+1w9acmRqRK7EcZKiQvvAa6E2q9KejNDUoWfgcpjWIBy3TfnigrDAPLzGireN4vsQsvdmd1bbQAA=);--pos:50% 50%;--ratio:1.3333">
+<picture>
+<source type="image/webp" srcset="assets/img/atlantic-sunset-group-480.webp 480w, assets/img/atlantic-sunset-group-960.webp 960w, assets/img/atlantic-sunset-group-1280.webp 1280w" sizes="(max-width:700px) 50vw, 25vw">
+<img src="assets/img/atlantic-sunset-group.jpg" alt="The Group Photo That Means Something" width="1280" height="960"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+  <span class="tile__cap">
+    <span class="tile__loc">Atlantic beach, Nouakchott</span>
+    <span class="tile__title">The Group Photo That Means Something</span>
+  </span>
+  <span class="tile__zoom"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</button></div>
+  <div class="moments__more reveal">
+    <a class="btn btn--ghost" href="gallery.html"><span>Open the full gallery</span><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="testi">
+  <div class="testi__inner">
+    <p class="eyebrow reveal">In their words</p>
+    <h2 class="testi__title reveal" data-split>What travellers say when they get home.</h2>
+    <div class="testi__stage" data-quotes>
+      <svg class="ico testi__mark" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.6 5.5C6.2 7 4.4 9.7 4.4 13.4c0 3.2 1.7 5.1 4.2 5.1 2.1 0 3.6-1.5 3.6-3.5 0-1.9-1.3-3.3-3.1-3.3-.4 0-.8.1-1 .2.4-1.7 1.9-3.3 3.9-4.3Zm9.9 0C16.1 7 14.3 9.7 14.3 13.4c0 3.2 1.7 5.1 4.2 5.1 2.1 0 3.6-1.5 3.6-3.5 0-1.9-1.3-3.3-3.1-3.3-.4 0-.8.1-1 .2.4-1.7 1.9-3.3 3.9-4.3Z"/></svg>
+      <figure class="quote is-active" data-quote="0">
+      <blockquote>Twelve hours on the ore train, a night under more stars than I have ever seen, and a team that made all of it feel completely safe. The most extraordinary week of my travelling life.</blockquote>
+      <figcaption><span class="quote__n">Claire</span><span class="quote__c">France</span></figcaption>
+    </figure><figure class="quote" data-quote="1">
+      <blockquote>I had no idea a country like this still existed. Chinguetti at sunrise, empty dunes, and guides who treated us like family from the first hour.</blockquote>
+      <figcaption><span class="quote__n">Marco</span><span class="quote__c">Italy</span></figcaption>
+    </figure><figure class="quote" data-quote="2">
+      <blockquote>Organised perfectly and never over-organised. They understood exactly the kind of trip we wanted and then quietly made it happen.</blockquote>
+      <figcaption><span class="quote__n">Daniel</span><span class="quote__c">United Kingdom</span></figcaption>
+    </figure>
+    </div>
+    <div class="testi__dots"><button class="quote__dot is-active" data-qdot="0" aria-label="Claire"></button><button class="quote__dot" data-qdot="1" aria-label="Marco"></button><button class="quote__dot" data-qdot="2" aria-label="Daniel"></button></div>
+  </div>
+</section>
+
+<!-- ══ FINAL CTA ══ -->
+<section class="fcta">
+  <div class="fcta__media" data-parallax="0.15">
+    <figure class="pic pic--fill" style="background-image:url(data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoUAA8APt1apkyopSOiMAgBEBuJQBYdgoJtvEKXj2xAAP0b7dEzx2O3v9nNtztek/d42HwZaGnthZS3WofYwNyJRelxTBJ0CAAAAA==);--pos:50% 60%;--ratio:1.3333">
+<picture>
+<source type="image/webp" srcset="assets/img/camels-atlantic-480.webp 480w, assets/img/camels-atlantic-960.webp 960w, assets/img/camels-atlantic-1440.webp 1440w, assets/img/camels-atlantic-2000.webp 2000w" sizes="100vw">
+<img src="assets/img/camels-atlantic.jpg" alt="Where the Sahara Meets the Ocean" width="4000" height="3000"
+ loading="lazy" decoding="async" onload="this.closest('.pic').classList.add('is-loaded')">
+</picture>
+</figure>
+  </div>
+  <div class="fcta__inner">
+    <h2 class="fcta__title reveal" data-split>Your Mauritanian adventure begins here.</h2>
+    <p class="fcta__sub reveal">Tell us when you want to travel and what you want to see. We will design the journey, answer every question, and take care of everything from the moment you land.</p>
+    <div class="fcta__btns reveal">
+      <a class="btn btn--solid" href="https://wa.me/22241860533?text=Hello%2C%20I%20would%20like%20to%20start%20planning%20my%20journey%20to%20Mauritania." target="_blank" rel="noopener"><span>Plan your adventure</span><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.82 2.42 8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg></a>
+      <a class="btn btn--glass" href="experiences.html"><span>See all experiences</span><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12h15m0 0-6-6m6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+    </div>
+  </div>
+</section>
+
+</main>
+<div class="lb" id="lightbox" hidden role="dialog" aria-modal="true" aria-label="Photograph viewer">
+  <button class="lb__close" aria-label="Close"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+  <button class="lb__nav lb__nav--prev" aria-label="Previous"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button class="lb__nav lb__nav--next" aria-label="Next"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <div class="lb__stage"><img class="lb__img" alt=""
+   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"></div>
+  <div class="lb__meta">
+    <p class="lb__loc"></p>
+    <h3 class="lb__title"></h3>
+    <p class="lb__desc"></p>
+    <p class="lb__story"></p>
+    <p class="lb__count"><span class="lb__i"></span> of <span class="lb__n"></span></p>
+  </div>
+</div>
+<script id="lb-data" type="application/json">[{"s":"dune-joy","l":"Erg of the Adrar, Mauritania","t":"Nothing but Sand and Sky","d":"Two travellers, one horizon, and not another footprint for a hundred kilometres.","st":"This is the feeling people come to Mauritania for: standing in an emptiness so complete that it stops being frightening and starts being freeing.","w":2000,"h":1500,"ws":[480,960,1440,2000]},{"s":"acacia-lunch","l":"Under an acacia, on the piste","t":"Lunch in the Shade","d":"Watermelon, rice, grilled meat and shade — the four luxuries of a desert afternoon.","st":"Every crossing pauses at the hottest hour. The cooking is done on the spot by our team, and the acacia becomes a dining room for as long as we need it.","w":810,"h":1080,"ws":[480,810]},{"s":"train-arms-open","l":"Somewhere between Choum and Nouadhibou","t":"The Moment the Sky Turns","d":"Arms wide open on a moving wagon as the desert sun goes down behind the horizon.","st":"There is one hour on this journey when the light becomes impossible — the ore turns copper, the wind drops, and everybody on board stands up at the same time.","w":720,"h":881,"ws":[480,720]},{"s":"terjit-oasis-canyon","l":"Terjit-style oasis canyon, Adrar","t":"Palms in a Crack of Rock","d":"A hidden gorge where warm springs feed a forest of date palms between two cliffs.","st":"You smell the water before you see it. After days of dry air, walking into this canyon feels physically impossible — and then you are standing in it.","w":810,"h":1080,"ws":[480,810]},{"s":"summit-arms-raised","l":"Rocky summit at sunset, Adrar","t":"Made It","d":"Arms up on a summit of black stone, with the whole plateau turning orange below.","st":"The climbs here are short but the reward is disproportionate: 360 degrees of emptiness, and the certainty that nobody else is looking at it.","w":750,"h":1000,"ws":[480,750]},{"s":"nouakchott-fish-market","l":"Port de Pêche, Nouakchott","t":"The Beach That Feeds a Nation","d":"Hundreds of painted pirogues land the day’s catch straight onto the sand.","st":"Every afternoon the Atlantic gives back what it owes, and one of the most photogenic markets in West Africa erupts on the beach for two loud, brilliant hours.","w":4000,"h":3000,"ws":[480,960,1440,2000]},{"s":"desert-campfire","l":"Bivouac in the Sahara","t":"Fire, Tea, Silence","d":"Three glasses of mint tea poured from height, and a fire that keeps the night at arm’s length.","st":"Mauritanian tea is never rushed: the first glass bitter as life, the second sweet as love, the third gentle as death. The whole ceremony takes an hour, and nobody minds.","w":506,"h":900,"ws":[480,506]},{"s":"atlantic-sunset-group","l":"Atlantic beach, Nouakchott","t":"The Group Photo That Means Something","d":"Twelve travellers and their guides, feet in the ocean, at the end of a week in the Sahara.","st":"Most of our groups arrive not knowing each other. They leave planning the next trip together — that is the part we are quietly proudest of.","w":1280,"h":960,"ws":[480,960,1280]}]</script>
+<footer class="foot">
+  <div class="foot__top">
+    <div class="foot__brand">
+      <img src="assets/img/logo.svg" alt="" width="64" height="64">
+      <p class="foot__tag">Private, locally guided journeys through the Sahara, the ancient cities and the Atlantic coast of Mauritania.</p>
     </div>
 
-    <!-- Top Navigation Bar -->
-    <header class="top-bar">
-        <div class="brand-top" onclick="nav('home')">
-            <img src="https://i.ibb.co/67YM3kDw/IMG-3771.png" alt="MAURIMAX Logo" class="logo-img">
-            <div class="brand-title">MAURI<span>MAX</span></div>
+    <div class="foot__cols">
+      <div class="foot__col">
+        <h3>Explore</h3>
+        <ul>
+          <li><a href="experiences.html">Experiences</a></li>
+          <li><a href="destinations.html">Destinations</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="travel-guide.html">Travel Guide</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Company</h3>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://maps.app.goo.gl/8rbUargmPxPnHndn6" target="_blank" rel="noopener">Nouakchott, Mauritania</a></li>
+        </ul>
+      </div>
+      <div class="foot__col">
+        <h3>Contact</h3>
+        <ul>
+          <li><a href="https://wa.me/22241860533?text=Hello%2C%20I%20would%20like%20information%20about%20your%20journeys%20in%20Mauritania." target="_blank" rel="noopener">WhatsApp +222 41 86 05 33</a></li>
+          <li><a href="mailto:travelandtripsinmauritania7@gmail.com">travelandtripsinmauritania7@gmail.com</a></li>
+        </ul>
+        <div class="foot__social">
+          <a href="https://www.facebook.com/share/199kd24vvK/" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.5 21v-8h2.7l.4-3.1h-3.1V7.9c0-.9.25-1.5 1.55-1.5H16.7V3.6c-.3-.04-1.3-.13-2.47-.13-2.45 0-4.13 1.5-4.13 4.24V9.9H7.4V13h2.7v8z"/></svg></a>
+          <a href="https://www.instagram.com/travel_and_trips_in_mauritnia?igsh=NzRreGxucTZhOWRn" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="17.2" cy="6.8" r="1.2"/></svg></a>
+          <a href="https://wa.me/22241860533?text=Hello%2C%20I%20would%20like%20information%20about%20your%20journeys%20in%20Mauritania." target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.82 2.42 8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg></a>
         </div>
-
-        <div class="top-actions">
-            <button class="lang-btn btn-touch" onclick="toggleLanguage()" id="topLangBtn">FR 🇫🇷</button>
-            <button class="menu-trigger btn-touch" onclick="openSidebar()">
-                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
-                <span data-key="menuBtn">القائمة</span>
-            </button>
-        </div>
-    </header>
-
-    <!-- Overlay Backdrop -->
-    <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-    <!-- Slide-Out Sidebar Drawer -->
-    <aside class="sidebar" id="sidebar">
-        <div>
-            <button class="close-sidebar" onclick="closeSidebar()" aria-label="Close">&times;</button>
-            
-            <div class="brand-top" onclick="nav('home')" style="margin-bottom:25px;">
-                <img src="https://i.ibb.co/67YM3kDw/IMG-3771.png" alt="MAURIMAX Logo" class="logo-img">
-                <div class="brand-title">MAURI<span>MAX</span></div>
-            </div>
-
-            <ul class="menu">
-                <li><button class="menu-btn active" onclick="nav('home', this)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg> <span data-key="navHome">الرئيسية</span></button></li>
-                <li><button class="menu-btn" onclick="nav('offers', this)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> <span data-key="navOffers">باقات IPTV</span></button></li>
-                <li><button class="menu-btn" onclick="nav('info', this)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> <span data-key="navInfo">معلومات الاشتراك</span></button></li>
-                <li><button class="menu-btn" onclick="nav('faq', this)"><svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg> <span data-key="navFaq">الأسئلة الشائعة</span></button></li>
-            </ul>
-        </div>
-
-        <a href="https://wa.me/22246261721" target="_blank" class="wa-btn btn-touch">
-            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0012.04 2z"/></svg>
-            <span data-key="waDirect">الواتساب المباشر</span>
-        </a>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="main">
-
-        <!-- PAGE 1: HOME -->
-        <div id="page-home" class="page active">
-            <div class="hero-box">
-                <div class="stream-frame">
-                    <img src="https://i.ibb.co/Dgr1BpqZ/3-A6-C40-A8-FA78-48-E8-8-CA2-B93885836018.jpg" alt="MAURIMAX Stream Showcase" class="big-img" decoding="async">
-                    <div class="live-tag">
-                        <div class="pulse-dot"></div>
-                        <span>4K LIVE STREAMING</span>
-                    </div>
-                </div>
-
-                <div class="hero-content">
-                    <h1 class="title" style="margin-bottom:12px;" data-key="heroTitle">MAURIMAX IPTV <br><span style="color:var(--orange);">بث مباشر بدون تقطيع</span></h1>
-                    <p style="color:var(--text-muted); margin-bottom:20px; font-size:16px; line-height:1.7;" data-key="heroSub">
-                        شاهد جميع القنوات الرياضية العالمية، الدوري الإسباني، الإنجليزي، ودوري أبطال أوروبا بجودة 4K عالية الثبات.
-                    </p>
-                    
-                    <div class="hero-btns-group">
-                        <button class="btn-action-primary btn-touch" onclick="nav('offers')">
-                            <span data-key="btnSeeOffers">استعرض باقات الاشتراك</span>
-                        </button>
-                        <button class="btn-action-secondary btn-touch" onclick="nav('info')">
-                            <span data-key="btnSeeInfo">معلومات الاشتراك</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE 2: SUBSCRIPTION INFO -->
-        <div id="page-info" class="page">
-            <h1 class="title" data-key="infoPageTitle">معلومات وتفاصيل اشتراك MAURIMAX</h1>
-            
-            <div class="info-container">
-                <p style="font-size:16px; line-height:1.8; color:var(--text-main); margin-bottom:20px;" data-key="infoIntro">
-                    اشتراك MAURIMAX يقدم لك آلاف القنوات التلفزيونية والأفلام والمسلسلات والبرامج الرياضية مباشرة على جهازك الذكي. سواء كنت ترغب في مشاهدة أحدث الأفلام، أو متابعة مباريات كرة القدم، أو الاستمتاع بمسلسلاتك المفضلة، فإن اشتراك MAURIMAX يوفر لك كل ذلك وأكثر.
-                </p>
-
-                <div class="info-section-title">
-                    <span data-key="whyTitle">لماذا تختار اشتراك MAURIMAX؟</span>
-                </div>
-                <ul class="info-list">
-                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why1T">1. محتوى متنوع:</strong> <span data-key="why1D">استمتع بآلاف القنوات من مختلف الدول واللغات، بما في ذلك قنوات الرياضة، الأخبار، الأفلام، المسلسلات، وبرامج الأطفال.</span></div></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why2T">2. جودة عالية:</strong> <span data-key="why2D">استمتع بجودة صورة وصوت عالية الوضوح (4K / Full HD)، مما يمنحك تجربة مشاهدة استثنائية وبثابت ممتاز.</span></div></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why3T">3. سهولة الاستخدام:</strong> <span data-key="why3D">يعمل الاشتراك على معظم الأجهزة الذكية، بما في ذلك الهواتف الذكية، الأجهزة اللوحية، أجهزة TV Box، وشاشات التلفزيون الذكية.</span></div></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why4T">4. تحديثات مستمرة:</strong> <span data-key="why4D">يتم تحديث المحتوى بشكل مستمر، مما يضمن لك الوصول إلى أحدث الأفلام والمسلسلات والبرامج التلفزيونية فور نزولها.</span></div></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why5T">5. دعم فني:</strong> <span data-key="why5D">فريق الدعم الفني لدينا متاح لمساعدتك وإجابة استفساراتك طوال فترة اشتراكك.</span></div></li>
-                    <li><i class="fa-solid fa-circle-check"></i> <div><strong data-key="why6T">6. سعر مغري:</strong> <span data-key="why6D">استفد من عروضنا المميزة بأفضل الأسعار التنافسية.</span></div></li>
-                </ul>
-
-                <div class="info-section-title">
-                    <span data-key="getTitle">ما الذي ستحصل عليه؟</span>
-                </div>
-                <ul class="info-list">
-                    <li><i class="fa-solid fa-check"></i> <span data-key="get1">بيانات الاشتراك [ اليوزر والباسورد وطريقة التفعيل ] ستصلك برسالة فورية بعد الدفع.</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-key="get2">يدعم جميع الأجهزة الذكية بنظام أندرويد و iOS وآبل TV وويندوز وشاشات تلفزيون ال جي وسامسونج.</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-key="get3">باقات متنوعة من القنوات والمسلسلات متجددة يومياً.</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-key="get4">تحديثات مستمرة وسريعة في القنوات ومكتبة الأفلام والمسلسلات.</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-key="get5">جودات متعددة وثبات عالي جداً في البث بدون تقطيع.</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-key="get6">أضخم مكتبة أفلام ومسلسلات أكثر عدداً من أي باقة أخرى.</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-key="get7">إمكانية المتابعة من جهاز واحد في وقت واحد (مع دعم التنقل بين أكثر من جهاز).</span></li>
-                    <li><i class="fa-solid fa-check"></i> <span data-key="get8">الدعم الفني متاح لاستفساراتكم طيلة فترة اشتراككم معنا.</span></li>
-                </ul>
-
-                <div class="disclaimer-box">
-                    <h4 data-key="noticeTitle">⚠️ تنبيه هام</h4>
-                    <p style="font-size:15px; color:#fff; line-height:1.7;" data-key="noticeText">
-                        لا تجعل الترفيه يلهيك عن واجباتك الدينية والدنيوية. نحن لا نتحمّل أي استخدام غير أخلاقي للمحتوى أمام اللّٰه.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE 3: OFFERS PAGE -->
-        <div id="page-offers" class="page">
-            <h1 class="title" data-key="offersTitle">باقات اشتراك MAURIMAX</h1>
-            <div class="grid">
-                <!-- OFFER 1 -->
-                <div class="card">
-                    <div class="card-img-wrap">
-                        <img src="https://i.ibb.co/C3GcT9xc/95-A6-E020-FB60-4-C72-B990-A5071-F8-F6-AE8.jpg" alt="1 Month" class="card-img" loading="lazy">
-                    </div>
-                    <h3 style="color:#fff; font-size:19px;" data-key="o1">اشتراك 1 شهر</h3>
-                    <div class="price">350 <span>MRU</span></div>
-                    <button class="btn-touch btn-buy" onclick="openCheckout('o1', '350 MRU')">
-                        <span data-key="btnBuy">اشترك الآن</span>
-                    </button>
-                </div>
-
-                <!-- OFFER 2 -->
-                <div class="card">
-                    <div class="card-img-wrap">
-                        <img src="https://i.ibb.co/23pjHGG8/4-C0-BA6-D5-1-EFB-43-B5-980-B-824-EAAB62129.jpg" alt="3 Months" class="card-img" loading="lazy">
-                    </div>
-                    <h3 style="color:#fff; font-size:19px;" data-key="o2">اشتراك 3 أشهر</h3>
-                    <div class="price">700 <span>MRU</span></div>
-                    <button class="btn-touch btn-buy" onclick="openCheckout('o2', '700 MRU')">
-                        <span data-key="btnBuy">اشترك الآن</span>
-                    </button>
-                </div>
-
-                <!-- OFFER 3 -->
-                <div class="card" style="border-color:var(--orange); box-shadow: var(--glow-orange);">
-                    <div class="card-img-wrap">
-                        <img src="https://i.ibb.co/5W9S50G6/B6-EB8-D5-D-562-C-487-E-B3-C2-51-E1-D5-E385-D6.jpg" alt="6 Months" class="card-img" loading="lazy">
-                    </div>
-                    <h3 style="color:#fff; font-size:19px;" data-key="o3">اشتراك 6 أشهر 🔥</h3>
-                    <div class="price">1000 <span>MRU</span></div>
-                    <button class="btn-touch btn-buy" onclick="openCheckout('o3', '1000 MRU')">
-                        <span data-key="btnBuy">اشترك الآن</span>
-                    </button>
-                </div>
-
-                <!-- OFFER 4 -->
-                <div class="card">
-                    <div class="card-img-wrap">
-                        <img src="https://i.ibb.co/HLtQR3t7/3-BD73-C76-847-B-44-B3-A372-F204-B3-BC9-DFA.jpg" alt="12 Months" class="card-img" loading="lazy">
-                    </div>
-                    <h3 style="color:#fff; font-size:19px;" data-key="o4">اشتراك 12 شهراً</h3>
-                    <div class="price">1500 <span>MRU</span></div>
-                    <button class="btn-touch btn-buy" onclick="openCheckout('o4', '1500 MRU')">
-                        <span data-key="btnBuy">اشترك الآن</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- PAGE 4: FAQ -->
-        <div id="page-faq" class="page">
-            <h1 class="title" data-key="faqTitle">الأسئلة الشائعة</h1>
-            
-            <div class="faq-list">
-                <div class="faq-card">
-                    <h4><span data-key="faqQ1">كيف أحصل على بيانات الاشتراك بعد الطلب؟</span></h4>
-                    <p data-key="faqA1">بعد تأكيد الطلب والدفع، يتم إرسال بيانات السيرفر (اسم المستخدم وكلمة المرور ورابط التفعيل) فورياً عبر محادثة الواتساب المباشرة.</p>
-                </div>
-
-                <div class="faq-card">
-                    <h4><span data-key="faqQ2">ما هي سرعة الإنترنت المطلوبة لعمل البث بدون تقطيع؟</span></h4>
-                    <p data-key="faqA2">نوصي بسرعة إنترنت لا تقل عن 8-10 ميجابت/ثانية لتشغيل جودات HD، و20 ميجابت/ثانية لتشغيل بث 4K Ultra HD بسلاسة تامة بدون أي تقطيع.</p>
-                </div>
-
-                <div class="faq-card">
-                    <h4><span data-key="faqQ3">هل يمكنني تشغيل الاشتراك على أكثر من جهاز في نفس الوقت؟</span></h4>
-                    <p data-key="faqA3">الاشتراك يعمل على جهاز واحد في وقت واحد، ولكن يمكنك تثبيت الخدمة ونقل بيانات الاشتراك بين أجهزتك المختلفة (تلفزيون، هاتف، كمبيوتر) بحرية.</p>
-                </div>
-
-                <div class="faq-card">
-                    <h4><span data-key="faqQ5">ما هي طرق الدفع المحلية المتاحة؟</span></h4>
-                    <p data-key="faqA5">نوفر طرق دفع محلية سهلة وسريعة مثل Bankily (بانكيلي)، Masrivi (مسرفي)، Sadad (سداد)، أو التحويل المباشر عبر الواتساب.</p>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Checkout Modal -->
-    <div class="modal" id="orderModal">
-        <div class="modal-body">
-            <button class="close" onclick="closeM()" aria-label="Close">&times;</button>
-            <h3 style="margin-bottom:6px; color:var(--orange); font-size:22px; font-weight:800;" data-key="modalTitle">إتمام طلب الاشتراك</h3>
-            <p id="modalPlanSummary" style="color:var(--text-muted); font-size:14px; margin-bottom:20px; font-weight:600;"></p>
-
-            <form onsubmit="sendCheckoutOrder(event)">
-                <div class="form-group">
-                    <label data-key="lblPlan">الباقة المختارة</label>
-                    <input type="text" id="chkPlan" class="form-control" readonly style="color:var(--orange); font-weight:800;">
-                </div>
-
-                <div class="form-group">
-                    <label data-key="lblName">الاسم الكامل</label>
-                    <input type="text" id="chkName" class="form-control" placeholder="أدخل اسمك الكريم" required>
-                </div>
-
-                <div class="form-group">
-                    <label data-key="lblPhone">رقم الواتساب</label>
-                    <input type="tel" id="chkPhone" class="form-control" placeholder="مثال: 46261721" required>
-                </div>
-
-                <div class="form-group">
-                    <label data-key="lblDevice">نوع الجهاز المستخدَم</label>
-                    <select id="chkDevice" class="form-control"></select>
-                </div>
-
-                <button type="submit" class="btn-touch btn-buy" style="margin-top:15px;">
-                    <span data-key="btnConfirm">تأكيد الطلب عبر الواتساب</span>
-                </button>
-            </form>
-        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- JavaScript Application Core -->
-    <script>
-        const MY_WHATSAPP_NUMBER = "22246261721"; 
-        let currentLang = "ar";
-        let rawSelectedPlanKey = "o1";
-        let rawSelectedPrice = "350 MRU";
+  <div class="foot__bar">
+    <p>© 2026 Travel and Trips in Mauritania. All rights reserved.</p>
+    <p class="foot__note">Every photograph on this site was taken on our own journeys.</p>
+  </div>
+</footer>
 
-        const DEVICES = {
-            ar: [
-                "هاتف أندرويد",
-                "شاشة سمارت (Samsung / LG)",
-                "Android TV / TV Box",
-                "Amazon Fire TV Stick",
-                "آيفون / آيباد / Apple TV",
-                "كمبيوتر / Windows / Mac"
-            ],
-            fr: [
-                "Téléphone Android",
-                "Smart TV (Samsung / LG)",
-                "Android TV / TV Box",
-                "Amazon Fire TV Stick",
-                "iPhone / iPad / Apple TV",
-                "Ordinateur / Windows / Mac"
-            ]
-        };
-
-        const TRANSLATIONS = {
-            ar: {
-                menuBtn: "القائمة",
-                navHome: "الرئيسية",
-                navOffers: "باقات IPTV",
-                navInfo: "معلومات الاشتراك",
-                navFaq: "الأسئلة الشائعة",
-                waDirect: "الواتساب المباشر",
-                heroTitle: "MAURIMAX IPTV <br><span style='color:var(--orange);'>بث مباشر بدون تقطيع</span>",
-                heroSub: "شاهد جميع القنوات الرياضية العالمية، الدوري الإسباني، الإنجليزي، ودوري أبطال أوروبا بجودة 4K عالية الثبات.",
-                btnSeeOffers: "استعرض باقات الاشتراك",
-                btnSeeInfo: "معلومات الاشتراك",
-                infoPageTitle: "معلومات وتفاصيل اشتراك MAURIMAX",
-                infoIntro: "اشتراك MAURIMAX يقدم لك آلاف القنوات التلفزيونية والأفلام والمسلسلات والبرامج الرياضية مباشرة على جهازك الذكي. سواء كنت ترغب في مشاهدة أحدث الأفلام، أو متابعة مباريات كرة القدم، أو الاستمتاع بمسلسلاتك المفضلة، فإن اشتراك MAURIMAX يوفر لك كل ذلك وأكثر.",
-                whyTitle: "لماذا تختار اشتراك MAURIMAX؟",
-                why1T: "1. محتوى متنوع:", why1D: "استمتع بآلاف القنوات من مختلف الدول واللغات، بما في ذلك قنوات الرياضة، الأخبار، الأفلام، المسلسلات، وبرامج الأطفال.",
-                why2T: "2. جودة عالية:", why2D: "استمتع بجودة صورة وصوت عالية الوضوح (4K / Full HD)، مما يمنحك تجربة مشاهدة استثنائية وبثابت ممتاز.",
-                why3T: "3. سهولة الاستخدام:", why3D: "يعمل الاشتراك على معظم الأجهزة الذكية، بما في ذلك الهواتف الذكية، الأجهزة اللوحية، أجهزة TV Box، وشاشات التلفزيون الذكية.",
-                why4T: "4. تحديثات مستمرة:", why4D: "يتم تحديث المحتوى بشكل مستمر، مما يضمن لك الوصول إلى أحدث الأفلام والمسلسلات والبرامج التلفزيونية فور نزولها.",
-                why5T: "5. دعم فني:", why5D: "فريق الدعم الفني لدينا متاح لمساعدتك وإجابة استفساراتك طوال فترة اشتراكك.",
-                why6T: "6. سعر مغري:", why6D: "استفد من عروضنا المميزة بأفضل الأسعار التنافسية.",
-                getTitle: "ما الذي ستحصل عليه؟",
-                get1: "بيانات الاشتراك [ اليوزر والباسورد وطريقة التفعيل ] ستصلك برسالة فورية بعد الدفع.",
-                get2: "يدعم جميع الأجهزة الذكية بنظام أندرويد و iOS وآبل TV وويندوز وشاشات تلفزيون ال جي وسامسونج.",
-                get3: "باقات متنوعة من القنوات والمسلسلات متجددة يومياً.",
-                get4: "تحديثات مستمرة وسريعة في القنوات ومكتبة الأفلام والمسلسلات.",
-                get5: "جودات متعددة وثبات عالي جداً في البث بدون تقطيع.",
-                get6: "أضخم مكتبة أفلام ومسلسلات أكثر عدداً من أي باقة أخرى.",
-                get7: "إمكانية المتابعة من جهاز واحد في وقت واحد (مع دعم التنقل بين أكثر من جهاز).",
-                get8: "الدعم الفني متاح لاستفساراتكم طيلة فترة اشتراككم معنا.",
-                noticeTitle: "⚠️ تنبيه هام",
-                noticeText: "لا تجعل الترفيه يلهيك عن واجباتك الدينية والدنيوية. نحن لا نتحمّل أي استخدام غير أخلاقي للمحتوى أمام اللّٰه.",
-                offersTitle: "باقات اشتراك MAURIMAX",
-                btnBuy: "اشترك الآن",
-                o1: "اشتراك 1 شهر", o2: "اشتراك 3 أشهر", o3: "اشتراك 6 أشهر 🔥", o4: "اشتراك 12 شهراً",
-                faqTitle: "الأسئلة الشائعة",
-                faqQ1: "كيف أحصل على بيانات الاشتراك بعد الطلب؟",
-                faqA1: "بعد تأكيد الطلب والدفع، يتم إرسال بيانات السيرفر (اسم المستخدم وكلمة المرور ورابط التفعيل) فورياً عبر محادثة الواتساب المباشرة.",
-                faqQ2: "ما هي سرعة الإنترنت المطلوبة لعمل البث بدون تقطيع؟",
-                faqA2: "نوصي بسرعة إنترنت لا تقل عن 8-10 ميجابت/ثانية لتشغيل جودات HD، و20 ميجابت/ثانية لتشغيل بث 4K Ultra HD بسلاسة تامة بدون أي تقطيع.",
-                faqQ3: "هل يمكنني تشغيل الاشتراك على أكثر من جهاز في نفس الوقت؟",
-                faqA3: "الاشتراك يعمل على جهاز واحد في وقت واحد، ولكن يمكنك تثبيت الخدمة ونقل بيانات الاشتراك بين أجهزتك المختلفة (تلفزيون، هاتف، كمبيوتر) بحرية.",
-                faqQ5: "ما هي طرق الدفع المحلية المتاحة؟",
-                faqA5: "نوفر طرق دفع محلية سهلة وسريعة مثل Bankily (بانكيلي)، Masrivi (مسرفي)، Sadad (سداد)، أو التحويل المباشر عبر الواتساب.",
-                modalTitle: "إتمام طلب الاشتراك",
-                lblPlan: "الباقة المختارة",
-                lblName: "الاسم الكامل",
-                namePlaceholder: "أدخل اسمك الكريم",
-                phonePlaceholder: "مثال: 46261721",
-                lblPhone: "رقم الواتساب",
-                lblDevice: "نوع الجهاز المستخدَم",
-                btnConfirm: "تأكيد الطلب عبر الواتساب"
-            },
-            fr: {
-                menuBtn: "Menu",
-                navHome: "Accueil",
-                navOffers: "Offres IPTV",
-                navInfo: "Infos Abonnement",
-                navFaq: "FAQ",
-                waDirect: "WhatsApp Direct",
-                heroTitle: "MAURIMAX IPTV <br><span style='color:var(--orange);'>Direct 4K Sans Coupure</span>",
-                heroSub: "Regardez toutes les chaînes sportives mondiales, la Liga, la Premier League et la Ligue des Champions en haute qualité 4K ultra stable.",
-                btnSeeOffers: "Voir les Offres",
-                btnSeeInfo: "Informations d'Abonnement",
-                infoPageTitle: "Informations & Détails MAURIMAX",
-                infoIntro: "L'abonnement MAURIMAX vous offre des milliers de chaînes TV, films, séries et événements sportifs en direct sur votre appareil connecté. Que vous souhaitiez regarder les derniers films, suivre les matchs de football ou profiter de vos séries préférées, MAURIMAX vous offre tout cela et plus encore.",
-                whyTitle: "Pourquoi choisir MAURIMAX ?",
-                why1T: "1. Contenu Varié :", why1D: "Profitez de milliers de chaînes de différents pays (Sports, Actualités, Films, Séries et Enfants).",
-                why2T: "2. Haute Qualité :", why2D: "Profitez d'une qualité d'image et de son HD (4K / Full HD) offrant une expérience fluide sans coupure.",
-                why3T: "3. Facilité d'utilisation :", why3D: "Compatible avec la plupart des appareils intelligents (Smartphones, Tablettes, TV Box et Smart TV).",
-                why4T: "4. Mises à jour régulières :", why4D: "Le contenu est continuellement mis à jour pour vous garantir l'accès aux derniers films et séries dès leur sortie.",
-                why5T: "5. Support Technique :", why5D: "Notre équipe de support est disponible pour vous assister à tout moment pendant votre abonnement.",
-                why6T: "6. Prix Attractif :", why6D: "Profitez de nos offres promotionnelles aux meilleurs prix du marché.",
-                getTitle: "Ce que vous obtiendrez :",
-                get1: "Vos identifiants [Nom d'utilisateur, mot de passe et méthode d'activation] reçus instantanément après paiement.",
-                get2: "Compatible avec Android, iOS, Apple TV, Windows, ainsi que les Smart TV LG et Samsung.",
-                get3: "Packs complets de chaînes et contenus mis à jour quotidiennement.",
-                get4: "Mises à jour rapides et constantes de la liste des chaînes et des films VOD.",
-                get5: "Qualités multiples et stabilité extrême lors de la diffusion des matchs.",
-                get6: "Une bibliothèque géante de films et séries plus vaste que tout autre forfait.",
-                get7: "Visionnage sur 1 appareil à la fois (avec possibilité de passer d'un appareil à un autre).",
-                get8: "Support client dédié disponible pendant toute la durée de votre abonnement.",
-                noticeTitle: "⚠️ Avertissement Important",
-                noticeText: "Ne laissez pas le divertissement vous distraire de vos devoirs religieux et quotidiens. Nous ne portons aucune responsabilité quant à l'utilisation immorale du contenu.",
-                offersTitle: "Forfaits d'Abonnement MAURIMAX",
-                btnBuy: "S'abonner",
-                o1: "Abonnement 1 Mois", o2: "Abonnement 3 Mois", o3: "Abonnement 6 Mois 🔥", o4: "Abonnement 12 Mois",
-                faqTitle: "Foire Aux Questions (FAQ)",
-                faqQ1: "Comment recevoir mes identifiants après la commande ?",
-                faqA1: "Après la confirmation et le paiement, vos identifiants (Nom d'utilisateur, mot de passe et lien d'activation) vous seront envoyés instantanément via WhatsApp.",
-                faqQ2: "Quelle est la vitesse internet requise pour le streaming 4K ?",
-                faqA2: "Nous recommandons une vitesse minimale de 8-10 Mbps pour la HD, et 20 Mbps pour la 4K Ultra HD sans aucune interruption.",
-                faqQ3: "Puis-je utiliser l'abonnement sur plusieurs appareils en même temps ?",
-                faqA3: "L'abonnement fonctionne sur 1 seul appareil à la fois. Vous pouvez toutefois passer d'un appareil à un autre (TV, Téléphone, PC) librement.",
-                faqQ5: "Quels sont les modes de paiement locaux disponibles ?",
-                faqA5: "Nous acceptons les modes de paiement locaux faciles tels que Bankily, Masrivi, Sadad, ou le virement bancaire direct via WhatsApp.",
-                modalTitle: "Finaliser la commande",
-                lblPlan: "Offre sélectionnée",
-                lblName: "Nom complet",
-                namePlaceholder: "Saisissez votre nom complet",
-                phonePlaceholder: "Ex: 46261721",
-                lblPhone: "Numéro WhatsApp",
-                lblDevice: "Appareil utilisé",
-                btnConfirm: "Confirmer via WhatsApp"
-            }
-        };
-
-        function setLanguage(lang) {
-            currentLang = lang;
-            document.body.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
-            document.getElementById('langModal').style.display = 'none';
-            document.getElementById('topLangBtn').innerText = lang === 'ar' ? 'FR 🇫🇷' : 'AR 🇸🇦';
-
-            document.querySelectorAll('[data-key]').forEach(el => {
-                const key = el.getAttribute('data-key');
-                if (TRANSLATIONS[lang][key]) {
-                    el.innerHTML = TRANSLATIONS[lang][key];
-                }
-            });
-
-            document.getElementById('chkName').placeholder = TRANSLATIONS[lang].namePlaceholder;
-            document.getElementById('chkPhone').placeholder = TRANSLATIONS[lang].phonePlaceholder;
-
-            const devSelect = document.getElementById('chkDevice');
-            devSelect.innerHTML = '';
-            DEVICES[lang].forEach(dev => {
-                const opt = document.createElement('option');
-                opt.value = dev;
-                opt.innerText = dev;
-                devSelect.appendChild(opt);
-            });
-
-            if(document.getElementById('orderModal').classList.contains('active')) {
-                updateModalPlanText();
-            }
-        }
-
-        function toggleLanguage() {
-            setLanguage(currentLang === 'ar' ? 'fr' : 'ar');
-        }
-
-        function openSidebar() {
-            document.getElementById('sidebar').classList.add('active');
-            document.getElementById('overlay').classList.add('active');
-        }
-
-        function closeSidebar() {
-            document.getElementById('sidebar').classList.remove('active');
-            document.getElementById('overlay').classList.remove('active');
-        }
-
-        function nav(pageId, btnEl) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
-            
-            document.getElementById('page-' + pageId).classList.add('active');
-            if(btnEl) btnEl.classList.add('active');
-            
-            closeSidebar();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function openCheckout(planKey, price) {
-            rawSelectedPlanKey = planKey;
-            rawSelectedPrice = price;
-            updateModalPlanText();
-            document.getElementById('orderModal').classList.add('active');
-        }
-
-        function updateModalPlanText() {
-            const translatedPlanName = TRANSLATIONS[currentLang][rawSelectedPlanKey] || rawSelectedPlanKey;
-            const fullPlanStr = translatedPlanName + " — " + rawSelectedPrice;
-            document.getElementById('chkPlan').value = fullPlanStr;
-            document.getElementById('modalPlanSummary').innerText = fullPlanStr;
-        }
-
-        function closeM() {
-            document.getElementById('orderModal').classList.remove('active');
-        }
-
-        function sendCheckoutOrder(e) {
-            e.preventDefault();
-            const plan = document.getElementById('chkPlan').value;
-            const name = document.getElementById('chkName').value.trim();
-            const phone = document.getElementById('chkPhone').value.trim();
-            const device = document.getElementById('chkDevice').value;
-
-            let message = "";
-            if (currentLang === 'fr') {
-                message = `Bonjour 👋\nJe souhaite finaliser ma commande d'abonnement *MAURIMAX IPTV* :\n\n📌 *Offre :* ${plan}\n👤 *Nom :* ${name}\n📱 *Appareil :* ${device}\n📞 *Téléphone :* ${phone}\n\nMerci de me fournir les détails de paiement et de me confirmer l'activation.`;
-            } else {
-                message = `السلام عليكم 👋🏼\nأود إتمام طلب اشتراك جديد في *MAURIMAX IPTV*:\n\n📌 *الباقة:* ${plan}\n👤 *الاسم:* ${name}\n📱 *نوع الجهاز:* ${device}\n📞 *رقم الهاتـف:* ${phone}\n\nيرجى تزويدي بطريقة الدفع وتأكيد التفعيل.`;
-            }
-
-            const targetUrl = `https://wa.me/${MY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(targetUrl, '_blank');
-            closeM();
-        }
-    </script>
+<a class="wa-float" href="https://wa.me/22241860533?text=Hello%2C%20I%20would%20like%20information%20about%20your%20journeys%20in%20Mauritania." target="_blank" rel="noopener" aria-label="WhatsApp">
+  <svg class="ico " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.46 1.32 4.96L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 18.15a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 5.82 2.42 8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.17c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.24-.64.8-.79.97-.14.16-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.01-.38.11-.5.11-.11.25-.29.37-.43.13-.15.17-.25.25-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.43.06-.66.31-.22.25-.87.85-.87 2.07 0 1.22.89 2.4 1.02 2.56.12.17 1.75 2.67 4.23 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.47-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.15-1.18-.06-.11-.22-.17-.47-.29Z"/></svg>
+</a>
+<script src="assets/js/app.js" defer></script>
 </body>
 </html>
