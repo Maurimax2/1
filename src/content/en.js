@@ -1,0 +1,765 @@
+/**
+ * English source copy. French and Italian files mirror this exact shape;
+ * the build fails loudly if a key goes missing.
+ *
+ * NOTE FOR THE CLIENT: the `testimonials` entries are placeholders written to
+ * show the layout. Replace them with real traveller reviews before launch.
+ */
+module.exports = {
+  code: 'en',
+  htmlLang: 'en',
+
+  nav: {
+    home: 'Home',
+    experiences: 'Experiences',
+    destinations: 'Destinations',
+    gallery: 'Gallery',
+    about: 'About Us',
+    guide: 'Travel Guide',
+    contact: 'Contact',
+    cta: 'WhatsApp',
+    menu: 'Menu',
+    close: 'Close',
+    language: 'Language',
+  },
+
+  ui: {
+    explore: 'Explore',
+    exploreExperience: 'Explore experience',
+    book: 'Book this experience',
+    plan: 'Plan your adventure',
+    viewAll: 'View all experiences',
+    viewGallery: 'Open the gallery',
+    location: 'Location',
+    duration: 'Duration',
+    season: 'Best season',
+    group: 'Group',
+    highlights: 'Highlights',
+    journey: 'What travellers experience',
+    photos: 'Photographs',
+    story: 'The story',
+    history: 'History',
+    whyVisit: 'Why visit',
+    moments: 'Best moments',
+    info: 'Travel information',
+    close: 'Close',
+    prev: 'Previous',
+    next: 'Next',
+    scroll: 'Scroll',
+    readMore: 'Read more',
+    all: 'All',
+    talkToUs: 'Talk to us on WhatsApp',
+    writeUs: 'Write to us',
+  },
+
+  meta: {
+    home: {
+      title: 'Travel and Trips in Mauritania — Sahara & Iron Ore Train',
+      desc: 'Private, locally guided journeys through the Sahara, the ancient cities of Chinguetti and Ouadane, the legendary iron ore train and the Banc d’Arguin.',
+    },
+    experiences: {
+      title: 'Experiences — Iron Ore Train, Sahara & Ancient Cities',
+      desc: 'Five signature journeys in Mauritania: the iron ore train, a Sahara desert expedition, Chinguetti, Ouadane and the Banc d’Arguin National Park. Private departures, local guides.',
+    },
+    destinations: {
+      title: 'Destinations — Chinguetti, Ouadane, Adrar, Banc d’Arguin',
+      desc: 'Where to go in Mauritania: the Adrar plateau, the UNESCO ksour of Chinguetti and Ouadane, the Sahara, the iron ore railway, Banc d’Arguin and Nouakchott.',
+    },
+    gallery: {
+      title: 'Gallery — Photographs from our journeys in Mauritania',
+      desc: 'A cinematic photo journey through Mauritania: the iron ore train, desert crossings, ancient cities, Atlantic landscapes and the travellers who came with us.',
+    },
+    about: {
+      title: 'About Us — A Mauritanian Travel Company',
+      desc: 'We are a local Mauritanian travel company designing private journeys for international travellers, with our own guides, drivers and desert crews.',
+    },
+    guide: {
+      title: 'Mauritania Travel Guide — Visas, Safety, When to Visit',
+      desc: 'Practical, honest advice for travelling in Mauritania: visas, the best season, safety, culture, transport, money and the questions travellers ask us most.',
+    },
+    contact: {
+      title: 'Contact — Plan your journey to Mauritania',
+      desc: 'Talk to a local expert on WhatsApp, by email or through our inquiry form. We answer every message personally, usually within a few hours.',
+    },
+  },
+
+  hero: {
+    line1: 'Discover Mauritania',
+    line2: 'Beyond the Ordinary',
+    sub: 'Experience ancient cities, endless deserts, and unforgettable journeys with local experts.',
+    cta1: 'Explore Experiences',
+    cta2: 'Plan Your Adventure',
+    scroll: 'Scroll to begin',
+    waMsg: 'Hello, I would like to plan an adventure in Mauritania with you.',
+  },
+
+  home: {
+    intro: {
+      eyebrow: 'The last great silence',
+      title: 'A country the world has not learned to visit yet.',
+      body: [
+        'Mauritania is the size of Egypt and receives fewer visitors in a year than a single European museum receives in a week. Ninety percent of it is Sahara. The rest is Atlantic coastline, oasis valleys and towns of dry stone that were writing manuscripts on astronomy while Europe was still building cathedrals.',
+        'There are no crowds here, no souvenir streets, no queue at the viewpoint. There is a country that still belongs entirely to the people who live in it — and a handful of us who know how to take you through it properly.',
+      ],
+      stats: [
+        { n: '1 200 000', l: 'km² of desert, coast and silence' },
+        { n: '2', l: 'UNESCO World Heritage sites' },
+        { n: '704 km', l: 'of iron ore railway across the Sahara' },
+        { n: '13th c.', l: 'the age of the libraries of Chinguetti' },
+      ],
+    },
+
+    why: {
+      eyebrow: 'Why travel with us',
+      title: 'Built by Mauritanians, for travellers who want the real thing.',
+      items: [
+        {
+          t: 'Local experts',
+          d: 'We are from here. Our team lives between Nouakchott and the Adrar, and the routes we run are the ones we grew up on — not itineraries bought from a wholesaler.',
+          img: 'plateau-two-travellers',
+        },
+        {
+          t: 'Authentic experiences',
+          d: 'You sleep where the nomads sleep, eat what the family cooks, and drink the three glasses of tea properly. Nothing is staged for the camera, because nothing needs to be.',
+          img: 'acacia-lunch',
+        },
+        {
+          t: 'Personalized journeys',
+          d: 'Every trip is private and rebuilt around you: two people or twelve, five days or three weeks, hard adventure or slow comfort. Tell us what you want to feel.',
+          img: 'lone-vehicle-plain',
+        },
+        {
+          t: 'Professional guides',
+          d: 'Licensed desert guides and drivers who have crossed this country for decades, speaking English, French, Italian, Arabic and Hassaniya, with satellite communication on every departure.',
+          img: 'guide-and-traveller-ridge',
+        },
+      ],
+    },
+
+    featured: {
+      eyebrow: 'Signature journeys',
+      title: 'Five ways to meet Mauritania.',
+      sub: 'Each one is private, guided by our own team, and can be extended, shortened or combined.',
+    },
+
+    destPreview: {
+      eyebrow: 'Where we go',
+      title: 'Seven places worth crossing a continent for.',
+      cta: 'Explore destinations',
+    },
+
+    moments: {
+      eyebrow: 'Traveller moments',
+      title: 'Photographs from the people who came with us.',
+      sub: 'Not one of these images is a stock photo. Every frame on this website was taken on one of our journeys.',
+      cta: 'Open the full gallery',
+    },
+
+    testimonials: {
+      eyebrow: 'In their words',
+      title: 'What travellers say when they get home.',
+      items: [
+        { q: 'Twelve hours on the ore train, a night under more stars than I have ever seen, and a team that made all of it feel completely safe. The most extraordinary week of my travelling life.', n: 'Claire', c: 'France' },
+        { q: 'I had no idea a country like this still existed. Chinguetti at sunrise, empty dunes, and guides who treated us like family from the first hour.', n: 'Marco', c: 'Italy' },
+        { q: 'Organised perfectly and never over-organised. They understood exactly the kind of trip we wanted and then quietly made it happen.', n: 'Daniel', c: 'United Kingdom' },
+      ],
+    },
+
+    finalCta: {
+      title: 'Your Mauritanian adventure begins here.',
+      sub: 'Tell us when you want to travel and what you want to see. We will design the journey, answer every question, and take care of everything from the moment you land.',
+      cta1: 'Plan your adventure',
+      cta2: 'See all experiences',
+      waMsg: 'Hello, I would like to start planning my journey to Mauritania.',
+    },
+  },
+
+  experiencesPage: {
+    hero: {
+      eyebrow: 'Signature journeys',
+      title: 'Experiences',
+      sub: 'Five journeys, each one private, each one led by our own guides. Choose one, or let us build a route that joins them together.',
+    },
+    outro: {
+      title: 'None of these are quite right?',
+      sub: 'Then we will design something else. Most of our travellers end up with a route that exists only for them.',
+      cta: 'Design a private journey',
+      waMsg: 'Hello, I would like to design a private custom journey in Mauritania.',
+    },
+  },
+
+  experiences: [
+    {
+      id: 'iron-ore-train',
+      title: 'Iron Ore Train Adventure',
+      tagline: 'Twelve hours on the longest train on earth.',
+      short: 'Climb onto an open ore wagon at sunset and cross the Sahara on the most legendary railway in Africa.',
+      location: 'Choum → Nouadhibou',
+      duration: '3 days / 2 nights',
+      season: 'October — April',
+      group: 'Private, 2 – 12 travellers',
+      hero: 'train-riders',
+      gallery: ['iron-ore-train-mono', 'train-arms-open', 'train-night-rest', 'train-night-portrait'],
+      story: [
+        'Once a day, a train up to three kilometres long leaves the mines of Zouérat carrying iron ore towards the Atlantic. It has no ticket office, no seats and no schedule you can trust — and it is one of the last free journeys left on this planet.',
+        'We meet the train where the desert meets the line, load blankets, mats, water and food onto an empty wagon, and climb up. Then the Sahara begins to move past you: ochre, then rose, then violet, then a black sky with more stars than you have ever been shown.',
+        'By morning you are at the ocean in Nouadhibou, covered in dust, unable to stop grinning. Our guides ride with you the entire way.',
+      ],
+      highlights: [
+        'A full night crossing on an open ore wagon, guided end to end',
+        'Sunset and sunrise over the Sahara from the top of the train',
+        'Warm bedding, wind protection, hot food and tea provided',
+        'Transfer to and from the line by private 4×4',
+        'Arrival at Nouadhibou and the Atlantic coast',
+      ],
+      journey: [
+        { t: 'Afternoon — Meeting the line', d: 'We drive out to the railway near Choum, prepare the wagon, and wait for the sound that arrives long before the train does.' },
+        { t: 'Sunset — Departure', d: 'You climb aboard as the light turns. The first hour on the moving ore is the one everybody remembers for the rest of their life.' },
+        { t: 'Night — The stars', d: 'Wrapped in blankets, tea in hand, crossing hundreds of kilometres of absolute darkness with the Milky Way overhead.' },
+        { t: 'Morning — The ocean', d: 'Arrival in Nouadhibou, a hot shower, a long breakfast and the Atlantic in front of you.' },
+      ],
+      waMsg: 'Hello, I am interested in the Iron Ore Train Adventure from your website.',
+    },
+    {
+      id: 'sahara-expedition',
+      title: 'Sahara Desert Expedition',
+      tagline: 'Dunes, bivouacs and a horizon that never arrives.',
+      short: 'A guided crossing of the great ergs of the Adrar, sleeping under the stars and walking with camel caravans.',
+      location: 'Adrar Region, central Mauritania',
+      duration: '5 – 9 days',
+      season: 'November — March',
+      group: 'Private, 2 – 10 travellers',
+      hero: 'camel-caravan-dune',
+      gallery: ['dune-joy', 'dune-sunset-crew', 'desert-campfire', 'dune-descent', 'lone-vehicle-plain', 'flag-and-camels'],
+      story: [
+        'This is the Sahara people imagine before they have seen it: dunes the colour of embers, black stone plateaux, dry riverbeds full of acacia, and a silence so complete that you hear your own pulse at night.',
+        'We travel by 4×4 and on foot, with camels carrying the camp when you want to walk. Every evening the crew builds a bivouac on the sand, cooks over wood, and pours the three glasses of tea while the light goes.',
+        'There is no route sold to a hundred groups a season. We choose the dunes according to the wind, the month and what kind of traveller you are.',
+      ],
+      highlights: [
+        'Nights bivouacking on the dunes, no other camp in sight',
+        'Walking a stage with a camel caravan and its handlers',
+        'Oasis canyons, palm gardens and natural springs',
+        'Cooking on wood, Mauritanian tea ceremony, nomadic hospitality',
+        'Sunrise from the top of an erg with nobody else on it',
+      ],
+      journey: [
+        { t: 'Day 1 — Into the Adrar', d: 'Six hours north from Nouakchott through changing colour, from grey plain to red plateau to the first true dunes.' },
+        { t: 'Days 2–4 — The great ergs', d: 'Crossing sand seas by vehicle and on foot, with long pauses for shade, tea and swimming in oasis springs.' },
+        { t: 'Evenings — Camp', d: 'Fire, food cooked in front of you, mattresses on the sand and a sky that makes everybody go quiet.' },
+        { t: 'Final day — Return', d: 'Back through the palm valleys with a stop at an oasis village, or continue directly to Chinguetti and Ouadane.' },
+      ],
+      waMsg: 'Hello, I am interested in the Sahara Desert Expedition from your website.',
+    },
+    {
+      id: 'chinguetti-heritage',
+      title: 'Chinguetti Heritage Journey',
+      tagline: 'The seventh city of Islam, and the libraries in its sand.',
+      short: 'Two days inside a 13th-century caravan town where families still keep manuscripts their ancestors carried across the desert.',
+      location: 'Chinguetti, Adrar Region',
+      duration: '2 – 3 days',
+      season: 'October — April',
+      group: 'Private, 2 – 12 travellers',
+      hero: 'chinguetti-minaret',
+      gallery: ['ruins-gathering', 'oasis-stone-wall', 'palm-grove', 'terjit-oasis-canyon'],
+      story: [
+        'Chinguetti was founded in the 13th century as a gathering point for caravans heading to Mecca, and it became one of the great centres of learning in the Sahara. Scholars came here to study astronomy, mathematics, law and medicine.',
+        'Today the old town is half-buried in sand, and the manuscripts are still here — kept in family libraries, wrapped in cloth, shown to you by the descendants of the people who wrote them.',
+        'We walk the old quarter in the low light of morning, meet a librarian, drink tea in a courtyard, and climb the dunes above the town for sunset.',
+      ],
+      highlights: [
+        'The stone minaret of the Old Mosque, in use since the 13th century',
+        'A private visit to one of the family manuscript libraries',
+        'The sand-buried streets of the old ksar at first light',
+        'Sunset from the dunes that are slowly taking the town back',
+        'Tea and conversation with families who have lived here for centuries',
+      ],
+      journey: [
+        { t: 'Arrival — The new town', d: 'We settle in, eat, and wait for the heat to break before walking into the old quarter.' },
+        { t: 'Golden hour — The old ksar', d: 'Narrow stone streets, doorways, the mosque, and the sound of the town from inside its walls.' },
+        { t: 'The libraries', d: 'A private reading of manuscripts written by hand seven centuries ago, explained by the family that guards them.' },
+        { t: 'Dawn — The dunes', d: 'Climbing above the town to watch the sun arrive over an erg that stretches to the horizon.' },
+      ],
+      waMsg: 'Hello, I am interested in the Chinguetti Heritage Journey from your website.',
+    },
+    {
+      id: 'ouadane-ancient-city',
+      title: 'Ouadane Ancient City',
+      tagline: 'A thousand years of dry stone above a green valley.',
+      short: 'The most dramatic of Mauritania’s ksour: a ruined city of stone streets clinging to a cliff, founded in 1147.',
+      location: 'Ouadane, Adrar Region',
+      duration: '2 days',
+      season: 'October — April',
+      group: 'Private, 2 – 12 travellers',
+      hero: 'ouadane-archway',
+      gallery: ['ruins-gathering', 'adrar-road-mesa', 'terjit-oasis-canyon', 'oasis-stone-wall'],
+      story: [
+        'Ouadane was built in 1147 on the caravan road that carried gold north and salt south. At its height it was one of the wealthiest towns in the Sahara. Then the routes moved, and the desert began to take it back.',
+        'What remains is extraordinary: stepped alleys of dry stone, doorways and staircases still standing, an entire lower town in ruins above a valley of date palms.',
+        'It is a two-hour drive across black plateau from Chinguetti, and almost nobody goes. Most days, you will have the whole city to yourselves.',
+      ],
+      highlights: [
+        'The abandoned lower town, built without a single drop of mortar',
+        'The old mosque and the caravan quarter',
+        'The drive across the Adrar plateau to reach it',
+        'The date palm valley below the ruins',
+        'Sunset over the ksar with no other visitors present',
+      ],
+      journey: [
+        { t: 'Morning — Across the plateau', d: 'A slow drive through black rock desert and dry valleys, with stops for rock formations and old wells.' },
+        { t: 'Afternoon — The ruins', d: 'A guided walk through the lower town with a local historian, from the mosque up to the highest terraces.' },
+        { t: 'Evening — The valley', d: 'Tea above the palm gardens as the stone turns the colour of the sun.' },
+        { t: 'Optional — Guelb er Richat', d: 'Extend one day to reach the Richat Structure, the 40 km “Eye of the Sahara”, visible from space.' },
+      ],
+      waMsg: 'Hello, I am interested in the Ouadane Ancient City experience from your website.',
+    },
+    {
+      id: 'banc-darguin',
+      title: 'Banc d’Arguin Discovery',
+      tagline: 'Where the Sahara walks into the Atlantic.',
+      short: 'A UNESCO sanctuary of sandbanks and shallows hosting millions of migratory birds — and camels on the beach.',
+      location: 'Banc d’Arguin National Park, Atlantic coast',
+      duration: '2 – 4 days',
+      season: 'November — April',
+      group: 'Private, 2 – 10 travellers',
+      hero: 'camels-atlantic',
+      gallery: ['arguin-pelicans', 'arguin-birds-shore', 'beach-convoy', 'beach-arrival', 'atlantic-sunset-group', 'nouakchott-fish-market'],
+      story: [
+        'Banc d’Arguin is one of the most important bird sites on earth, a World Heritage park where the desert simply runs out into cold Atlantic water. Two million migratory birds winter here.',
+        'We travel the coast with Imraguen fishing families, sail a traditional lanche across the shallows, and drive the hard sand of the tideline with the ocean on one side and dunes on the other.',
+        'It is the softest, strangest landscape in Mauritania — and it is the reason so many travellers extend their trip.',
+      ],
+      highlights: [
+        'Pelicans, flamingos, terns and waders in enormous numbers',
+        'Sailing with Imraguen fishermen in a traditional lanche',
+        'Driving the tideline where the Sahara meets the ocean',
+        'Camels walking the surf, the image everyone comes home with',
+        'Fresh fish grilled on the beach at sunset',
+      ],
+      journey: [
+        { t: 'Departure — North along the coast', d: 'Leaving Nouakchott on the coastal route, with a stop at the fishing beach and its hundreds of painted pirogues.' },
+        { t: 'The park — Sandbanks and birds', d: 'Entering the reserve, sailing out over the shallows and watching flocks lift in their thousands.' },
+        { t: 'Imraguen villages', d: 'Time with the only people permitted to fish inside the park, using methods unchanged for generations.' },
+        { t: 'Sunset — The beach camp', d: 'Grilled fish, a fire on the sand and the Atlantic going dark in front of the dunes.' },
+      ],
+      waMsg: 'Hello, I am interested in the Banc d’Arguin Discovery from your website.',
+    },
+  ],
+
+  destinationsPage: {
+    hero: {
+      eyebrow: 'Where we go',
+      title: 'Destinations',
+      sub: 'Seven landscapes that together explain what Mauritania is: the desert, the stone cities that grew inside it, and the ocean that finally stops it.',
+    },
+  },
+
+  destinations: [
+    {
+      id: 'chinguetti',
+      name: 'Chinguetti',
+      sub: 'The seventh city of Islam',
+      img: 'chinguetti-minaret',
+      photos: ['ruins-gathering', 'oasis-stone-wall', 'palm-grove'],
+      story: 'A caravan town half-swallowed by the dunes, where stone houses, a 13th-century minaret and thousands of hand-written manuscripts survive under the sand. UNESCO World Heritage since 1996.',
+      history: 'Founded around 1264 as a staging post for pilgrims and traders crossing to Mecca, Chinguetti became a centre of Islamic scholarship so important that Mauritania was once known simply as “the land of Chinguetti”. Its libraries hold works on astronomy, jurisprudence, grammar and medicine copied by hand across seven centuries.',
+      why: [
+        'The oldest continuously used mosque minaret in the country',
+        'Family libraries where manuscripts are still kept and read',
+        'An old quarter being slowly reclaimed by the erg',
+      ],
+      moments: [
+        'The call to prayer echoing off stone walls at first light',
+        'Turning the page of a 700-year-old astronomy manuscript',
+        'Sunset from the dunes with the whole town below you',
+      ],
+      info: [
+        ['Getting there', '1 hour from Atar by 4×4; Atar is reachable by road or by seasonal flight'],
+        ['Time needed', '1 – 2 nights'],
+        ['Best season', 'October to April'],
+        ['Pair it with', 'Ouadane, the Adrar dunes, the Richat Structure'],
+      ],
+    },
+    {
+      id: 'ouadane',
+      name: 'Ouadane',
+      sub: 'The stone city of 1147',
+      img: 'ouadane-archway',
+      photos: ['ruins-gathering', 'adrar-road-mesa', 'terjit-oasis-canyon'],
+      story: 'A ruined medieval town of dry-stone streets built on a cliff above a palm valley — the most spectacular of Mauritania’s four ancient ksour, and the emptiest.',
+      history: 'Founded in 1147 by Berber traders, Ouadane grew rich on the gold, salt and date trade and once housed thousands of people. When the caravan routes shifted in the 16th century the town began to empty, and the lower city was gradually abandoned to the desert. It has been UNESCO listed since 1996.',
+      why: [
+        'An entire abandoned town built without mortar, still standing',
+        'The gateway to the Richat Structure, the “Eye of the Sahara”',
+        'Almost no other visitors, on almost any day of the year',
+      ],
+      moments: [
+        'Walking up the stepped alleys as the stone turns gold',
+        'Standing on the highest terrace above the palm valley',
+        'The two-hour drive across black plateau to get there',
+      ],
+      info: [
+        ['Getting there', '2 – 3 hours from Chinguetti across the plateau by 4×4'],
+        ['Time needed', '1 night'],
+        ['Best season', 'October to April'],
+        ['Pair it with', 'The Richat Structure, Chinguetti, the great ergs'],
+      ],
+    },
+    {
+      id: 'adrar',
+      name: 'Adrar Region',
+      sub: 'Plateaux, canyons and palm valleys',
+      img: 'terjit-oasis-canyon',
+      photos: ['adrar-road-mesa', 'palm-grove', 'plateau-two-travellers', 'oasis-stone-wall'],
+      story: 'The heart of Saharan Mauritania: a high plateau of black rock cut by canyons, with hidden oases of date palms and warm springs at the bottom of the gorges.',
+      history: 'The Adrar has been inhabited for thousands of years — neolithic tools and rock engravings are still found on its plateaux. It was the cradle of the caravan cities and remains the cultural centre of the Mauritanian Sahara, with Atar as its capital.',
+      why: [
+        'Oasis canyons where warm springs feed palm forests',
+        'The most dramatic desert scenery in the country',
+        'The base for Chinguetti, Ouadane and the great dunes',
+      ],
+      moments: [
+        'Swimming in a spring at the bottom of a gorge after a day of dust',
+        'The first sight of green from the top of a canyon wall',
+        'Date harvest in the palm gardens in July',
+      ],
+      info: [
+        ['Getting there', '6 hours by road from Nouakchott, or a seasonal flight to Atar'],
+        ['Time needed', '3 – 7 days'],
+        ['Best season', 'November to March'],
+        ['Pair it with', 'Everything — this is where most journeys are built'],
+      ],
+    },
+    {
+      id: 'sahara',
+      name: 'The Sahara Desert',
+      sub: 'Ergs, silence and nomad camps',
+      img: 'camel-caravan-dune',
+      photos: ['dune-joy', 'dune-sunset-crew', 'desert-campfire', 'lone-vehicle-plain'],
+      story: 'Ninety percent of Mauritania is desert, and a large part of it has never been mapped in any detail. This is where the journeys go quiet.',
+      history: 'The Sahara was green as recently as 6,000 years ago; rock paintings of cattle and giraffes survive in the interior. The nomadic culture that replaced it — camel caravans, tents, the tea ceremony, poetry recited at night — is still alive here in a way it no longer is in most of North Africa.',
+      why: [
+        'Dunes and sand seas with no other group in sight',
+        'Nights under a sky with zero light pollution',
+        'Camel caravans that still work the old routes',
+      ],
+      moments: [
+        'The moment the engines stop and you hear absolutely nothing',
+        'Walking barefoot on a dune crest at sunrise',
+        'The third glass of tea, an hour after the first',
+      ],
+      info: [
+        ['Getting there', 'By 4×4 with a licensed desert guide — always'],
+        ['Time needed', '2 – 9 days'],
+        ['Best season', 'November to March'],
+        ['Pair it with', 'Chinguetti, Ouadane, the ore train'],
+      ],
+    },
+    {
+      id: 'iron-ore-route',
+      name: 'Iron Ore Train Route',
+      sub: '704 km of rail across the desert',
+      img: 'iron-ore-train-mono',
+      photos: ['train-riders', 'train-arms-open', 'train-night-rest'],
+      story: 'One line, one direction, up to 220 wagons: the railway that carries iron from Zouérat to the Atlantic, and carries travellers who ask nicely.',
+      history: 'Built between 1960 and 1963 to move ore from the mines of Zouérat to the port of Nouadhibou, the line crosses 704 kilometres of open Sahara. It was engineered to survive sand, heat and total isolation, and it has run almost without interruption for sixty years.',
+      why: [
+        'One of the world’s last genuinely free legendary journeys',
+        'Sunset, night and sunrise from an open ore wagon',
+        'A crossing of the empty quarter of the Sahara',
+      ],
+      moments: [
+        'Hearing the train before you can see it',
+        'The first hour, standing up, with the wind and the light',
+        'Arriving at the ocean covered in iron dust',
+      ],
+      info: [
+        ['Getting there', 'We meet the line near Choum, by 4×4 from Atar'],
+        ['Time needed', '2 – 3 days including transfers'],
+        ['Best season', 'October to April — never in summer'],
+        ['Pair it with', 'Nouadhibou, Banc d’Arguin, the Adrar'],
+      ],
+    },
+    {
+      id: 'banc-darguin',
+      name: 'Banc d’Arguin National Park',
+      sub: 'Two million birds between desert and ocean',
+      img: 'arguin-pelicans',
+      photos: ['arguin-birds-shore', 'camels-atlantic', 'beach-convoy'],
+      story: 'A 12,000 km² World Heritage park of sandbanks, shallow water and dunes, where the Sahara ends in the Atlantic and migratory birds arrive in their millions.',
+      history: 'Created in 1976 and UNESCO listed in 1989, the park protects the wintering grounds of birds from as far away as Siberia. The Imraguen people, the only community allowed to fish inside it, still use traditional sailing lanches and a fishing method assisted by wild dolphins.',
+      why: [
+        'One of the richest bird sites on the planet',
+        'Sailing with Imraguen fishermen',
+        'Camels walking the surf line at low tide',
+      ],
+      moments: [
+        'Thousands of pelicans lifting off at once',
+        'Driving the wet sand with the ocean beside the wheels',
+        'Fish grilled on the beach as the sun goes down',
+      ],
+      info: [
+        ['Getting there', '3 – 4 hours north of Nouakchott by 4×4, permit required'],
+        ['Time needed', '2 – 4 days'],
+        ['Best season', 'November to April for migratory birds'],
+        ['Pair it with', 'Nouadhibou, the ore train, Nouakchott'],
+      ],
+    },
+    {
+      id: 'nouakchott',
+      name: 'Nouakchott',
+      sub: 'The capital on the sand',
+      img: 'nouakchott-fish-market',
+      photos: ['atlantic-sunset-group', 'beach-arrival', 'ocean-silhouettes'],
+      story: 'A city that was a village of a few hundred people in 1958 and is now home to a third of the country — flat, low, sand-coloured, and far more interesting than it first looks.',
+      history: 'Chosen as the capital at independence in 1960 precisely because it belonged to nobody, Nouakchott grew explosively as drought pushed nomadic families off the land. Its fishing beach, camel market and craft centres are the best introduction to modern Mauritanian life.',
+      why: [
+        'The Port de Pêche, one of West Africa’s great spectacles',
+        'Markets, silverwork and the national museum',
+        'The gateway to everywhere else in the country',
+      ],
+      moments: [
+        'Hundreds of pirogues landing the catch onto the sand',
+        'Sunset on the Atlantic beach with the whole city out walking',
+        'Your first glass of Mauritanian tea',
+      ],
+      info: [
+        ['Getting there', 'International flights to Nouakchott–Oumtounsy (NKC)'],
+        ['Time needed', '1 day at the start or end of a journey'],
+        ['Best season', 'Year-round; coastal air stays mild'],
+        ['Pair it with', 'Banc d’Arguin, the Adrar, the ore train'],
+      ],
+    },
+  ],
+
+  galleryPage: {
+    hero: {
+      eyebrow: 'Photographs',
+      title: 'Gallery',
+      sub: 'Every photograph on this website was taken on one of our journeys, by our guides and by the travellers who came with us.',
+      scroll: 'Begin the journey',
+    },
+    chapters: {
+      train: { n: '01', t: 'Iron Ore Train', d: 'Twelve hours on an open wagon, from the mines of Zouérat to the Atlantic.' },
+      desert: { n: '02', t: 'Desert Journeys', d: 'Ergs, bivouacs, caravans, and the silence people cross a continent to hear.' },
+      culture: { n: '03', t: 'Culture', d: 'Stone cities, family libraries, shared meals and eight centuries of hospitality.' },
+      landscapes: { n: '04', t: 'Landscapes', d: 'Canyons, oases, sandbanks and the place where the Sahara falls into the ocean.' },
+      travellers: { n: '05', t: 'Travellers', d: 'The people who came with us, and what this country did to them.' },
+    },
+    ui: { openImage: 'Open photograph', of: 'of', jump: 'Jump to chapter' },
+  },
+
+  aboutPage: {
+    hero: {
+      eyebrow: 'Who we are',
+      title: 'A Mauritanian company, in a country that needed one.',
+      sub: 'We built Travel and Trips in Mauritania so that travellers arriving here would meet the country through the people who actually live in it.',
+      img: 'flag-and-camels',
+    },
+    story: {
+      eyebrow: 'Our story',
+      title: 'It started with guests who kept asking to come back.',
+      body: [
+        'We are guides, drivers and desert crew from Nouakchott and the Adrar. For years we worked the desert routes for other people’s agencies, watching travellers arrive with almost no idea what was waiting for them — and leave saying it was the best journey of their lives.',
+        'So we built our own company: local, small, and answerable directly to the traveller. No call centre, no subcontracting, no itinerary bought from a wholesaler. When you write to us, you are writing to the people who will be with you in the desert.',
+        'Today we host travellers from France, Italy, the United Kingdom, Germany, Spain and beyond, in English, French, Italian, Arabic and Hassaniya. Almost all of them arrive knowing very little about Mauritania. That is exactly the part we love.',
+      ],
+      img: 'guide-and-traveller-ridge',
+    },
+    pillars: {
+      eyebrow: 'What we stand for',
+      title: 'Four things we refuse to compromise on.',
+      items: [
+        { t: 'Local, always', d: 'Every guide, driver, cook and camel handler on our journeys is Mauritanian. The money you spend stays in the communities you travel through.' },
+        { t: 'Small groups', d: 'Private departures only, from two travellers upwards. We do not sell seats on someone else’s bus.' },
+        { t: 'Honest planning', d: 'If a route is too hard for your dates, your fitness or the season, we say so before you book — not after.' },
+        { t: 'Respect first', d: 'We travel through people’s homes, not through a set. We ask before photographing, we pay fairly, and we leave nothing behind.' },
+      ],
+    },
+    guides: {
+      eyebrow: 'Our guides',
+      title: 'The reason travellers write to us afterwards.',
+      body: [
+        'Our desert guides have crossed this country for decades. They navigate by memory, land and sky, know which valley has water in March, which family to visit in Chinguetti, and which dune to climb an hour before sunset.',
+        'They are licensed, trained in first aid, and carry satellite communication on every departure. And they will make you laugh for a week.',
+      ],
+      img: 'plateau-two-travellers',
+      stats: [
+        { n: '5', l: 'languages spoken by our team' },
+        { n: '100%', l: 'Mauritanian guides and crew' },
+        { n: '24/7', l: 'support while you are in the country' },
+      ],
+    },
+    safety: {
+      eyebrow: 'Travelling safely',
+      title: 'What we do so that you can relax.',
+      items: [
+        'All travel in the desert is with licensed guides and maintained 4×4 vehicles, never alone.',
+        'Satellite phone or beacon on every desert departure, and a daily check-in with our office.',
+        'Routes planned inside the regions officially open to tourism, updated continuously.',
+        'Airport pickup on arrival, and a local contact reachable at any hour of your trip.',
+        'First-aid trained crew, water reserves and full recovery equipment carried on every vehicle.',
+      ],
+      img: 'beach-convoy',
+    },
+    mission: {
+      eyebrow: 'Our mission',
+      quote: 'To show Mauritania to the world without changing what makes it worth showing.',
+      body: 'We want travellers to arrive curious and leave connected — and we want the villages, guides and families who host them to be better off because they came.',
+      cta: 'Plan your journey with us',
+      waMsg: 'Hello, I read about your team and I would like to plan a journey in Mauritania.',
+    },
+  },
+
+  guidePage: {
+    hero: {
+      eyebrow: 'Before you come',
+      title: 'Mauritania Travel Guide',
+      sub: 'Everything travellers ask us, answered honestly. If something here is still unclear, message us — we answer personally.',
+      img: 'adrar-road-mesa',
+    },
+    sections: [
+      {
+        id: 'when',
+        t: 'Best time to visit Mauritania',
+        body: [
+          'The season runs from **October to April**. Days are 22–32 °C, nights in the desert drop to 8–15 °C, and the light is at its best. December and January are the coolest and the most popular months.',
+          'From **May to September** the interior regularly exceeds 45 °C and desert travel becomes genuinely unpleasant and, in places, unsafe. We do not run desert expeditions in July or August.',
+          'The **harmattan**, a dry dust wind, can reduce visibility for a few days between December and February. The coast stays milder and windier all year, so Banc d’Arguin and Nouakchott remain comfortable outside the deep summer.',
+        ],
+      },
+      {
+        id: 'visa',
+        t: 'Visas and entry',
+        body: [
+          'Most European and North American travellers can obtain a **visa on arrival** at Nouakchott–Oumtounsy International Airport and at the main land borders. It is issued on the spot, typically valid for 30 days, and paid in **cash euros**.',
+          'You will need a passport valid for at least six months, an onward or return ticket, and an address in the country — we provide a confirmation letter for every traveller we host.',
+          'Rules and fees can change without much notice, and some nationalities need a visa in advance. Send us your passport nationality when you enquire and we will confirm the current requirement before you book anything.',
+        ],
+      },
+      {
+        id: 'pack',
+        t: 'What to pack',
+        body: [
+          '**Clothing.** Light, loose, covering layers for the day; a warm fleece or jacket and long trousers for desert nights, which are genuinely cold from December to February. A scarf or *chèche* is the single most useful item you will own — for sun, dust and wind.',
+          '**Feet.** Closed walking shoes plus sandals for camp and sand. Bring more socks than you think.',
+          '**Sun and dust.** High-factor sunscreen, lip balm, sunglasses, and a dust-proof bag or dry bag for cameras — the fine sand gets everywhere.',
+          '**Practical.** Headlamp, power bank (there is no electricity in the bivouac), universal adapter, refillable bottle, personal medication, wet wipes, and a small first-aid kit. We carry water, bedding, mattresses and all camp equipment.',
+          '**Money.** Bring euros in cash. Cards are accepted almost nowhere outside a few hotels in Nouakchott, and ATMs are unreliable. The local currency is the ouguiya (MRU).',
+        ],
+      },
+      {
+        id: 'safety',
+        t: 'Safety in Mauritania',
+        body: [
+          'Mauritania is calm, and the regions travellers visit — Nouakchott, the Atlantic coast, the Adrar, the railway corridor — are considered stable and are regularly travelled by European visitors. Violent crime against tourists is very rare, and the culture of hospitality towards guests is extremely strong.',
+          'The real risks here are environmental, not political: heat, dehydration, soft sand and distance from medical help. That is why desert travel is done with licensed guides and properly equipped vehicles, never independently.',
+          'We keep our routes inside the zones officially open to tourism, avoid the eastern border regions entirely, carry satellite communication, and check in with our office every day. Take normal travel insurance that covers desert travel, and follow your own government’s current advice before you book.',
+        ],
+      },
+      {
+        id: 'culture',
+        t: 'Culture and traditions',
+        body: [
+          'Mauritania is an Islamic republic, and daily life follows it: five prayers, Friday as the day of rest, **no alcohol anywhere in the country**, and a month of fasting during Ramadan when eating and drinking in public during daylight is not done.',
+          'Dress modestly — shoulders and knees covered for everyone. Women do not need to cover their hair, though a scarf is useful and appreciated in villages and mosques.',
+          'Greet people before asking anything: a handshake and a few words about health and family come before business. Always accept tea if it is offered; the three glasses take an hour and refusing them is the one thing that genuinely surprises people.',
+          '**Photography.** Ask before photographing anyone, especially women, and accept no as an answer. Never photograph military posts, checkpoints or government buildings. Your guide will tell you when it is fine.',
+          'Eat and pass with the right hand. And if you are invited into someone’s home, you will be fed far more than you can manage — that is not optional.',
+        ],
+      },
+      {
+        id: 'transport',
+        t: 'Getting around',
+        body: [
+          '**Flights.** Nouakchott–Oumtounsy (NKC) is the main gateway, with connections from Paris, Casablanca, Istanbul, Madrid and Dakar. Seasonal charters sometimes fly directly to Atar in winter.',
+          '**By road.** The Nouakchott–Atar road is tarmac and takes around six hours. Beyond it, everything is piste and requires 4×4. Distances are long and fuel stations are far apart.',
+          '**The ore train.** Free, unforgettable and completely unregulated. We ride it with equipment, food and guides — it is not something to attempt alone.',
+          '**With us.** All our journeys use private, maintained 4×4 vehicles with experienced desert drivers, including airport transfers at any hour.',
+        ],
+      },
+    ],
+    faqTitle: 'Frequently asked questions',
+    faq: [
+      { q: 'Is Mauritania safe for tourists?', a: 'Yes, in the regions we travel. Nouakchott, the coast, the Adrar and the railway corridor are calm and regularly visited by European travellers. We use licensed guides, keep to zones open to tourism, carry satellite communication and check in daily. Always read your own government’s current advice as well.' },
+      { q: 'Do I need a visa?', a: 'Most nationalities receive a visa on arrival at Nouakchott airport, paid in cash euros, usually valid 30 days. Send us your nationality when you enquire and we will confirm the current rules and provide your invitation letter.' },
+      { q: 'When is the best time to come?', a: 'October to April. December and January are coolest. We do not run desert trips in July and August, when the interior passes 45 °C.' },
+      { q: 'Can I really ride the iron ore train?', a: 'Yes. Travellers ride on top of the ore in the open wagons, free of charge. We supply bedding, wind protection, food, water and guides, and we accompany you the whole way.' },
+      { q: 'Is it suitable for people who are not adventurers?', a: 'Many of our travellers are in their sixties and seventies. Journeys can be built around comfortable lodges, short drives and gentle walks — or around dunes and open wagons. Tell us which you are.' },
+      { q: 'Can I travel as a solo traveller, or as a woman alone?', a: 'Yes. We host solo travellers regularly, including women travelling alone, and every departure is private with our own team. Mauritania is a conservative but very hospitable country; your guide handles the local context.' },
+      { q: 'How do I pay?', a: 'There is no payment on this website. We agree the itinerary and price with you directly on WhatsApp or by email, and settle it in cash euros on arrival or by bank transfer in advance, whichever you prefer.' },
+      { q: 'What languages do your guides speak?', a: 'English, French, Italian, Arabic and Hassaniya. Tell us your language when you enquire and we will assign the right guide.' },
+      { q: 'Is there mobile signal and internet?', a: 'In towns, yes, and it is cheap. In the deep desert and on the train, no — which is part of the point. We carry satellite communication for emergencies.' },
+      { q: 'What about food and dietary needs?', a: 'Meals are cooked fresh by our crew: grilled meat and fish, rice, vegetables, bread, fruit. Vegetarian and other requirements are easy if you tell us in advance.' },
+    ],
+    cta: {
+      title: 'Still have a question?',
+      sub: 'Message us directly. A real person from our team in Mauritania will answer you, usually within a few hours.',
+      cta: 'Ask us on WhatsApp',
+      waMsg: 'Hello, I have a question about travelling in Mauritania.',
+    },
+  },
+
+  contactPage: {
+    hero: {
+      eyebrow: 'Get in touch',
+      title: 'Let’s plan your journey.',
+      sub: 'Tell us who is travelling, roughly when, and what you would love to see. We will come back with a route, a price and honest advice — no obligation.',
+      img: 'dune-sunset-crew',
+    },
+    methods: {
+      whatsapp: { t: 'WhatsApp', d: 'The fastest way to reach us. We answer personally, usually within a few hours.', a: 'Start a conversation' },
+      email: { t: 'Email', d: 'For detailed itineraries, documents and group bookings.', a: 'Write to us' },
+      phone: { t: 'Phone', d: 'Call us directly during Mauritanian office hours (GMT).', a: 'Call now' },
+      location: { t: 'Where we are', d: 'Nouakchott, Mauritania — with teams in Atar and Nouadhibou.', a: 'Open in Google Maps' },
+    },
+    form: {
+      eyebrow: 'Inquiry',
+      title: 'Tell us about your trip.',
+      sub: 'This form opens WhatsApp with your message ready to send, so nothing gets lost in a spam folder.',
+      name: 'Your name',
+      namePh: 'Anna Rossi',
+      email: 'Email',
+      emailPh: 'you@example.com',
+      country: 'Country',
+      countryPh: 'Italy',
+      people: 'Travellers',
+      dates: 'Approximate dates',
+      datesPh: 'February 2027, about 10 days',
+      interest: 'What interests you most',
+      interestOptions: ['Iron Ore Train Adventure', 'Sahara Desert Expedition', 'Chinguetti Heritage Journey', 'Ouadane Ancient City', 'Banc d’Arguin Discovery', 'A custom private journey', 'I am not sure yet'],
+      message: 'Anything else we should know',
+      messagePh: 'Fitness level, comfort preferences, dietary needs, special occasions…',
+      submit: 'Send via WhatsApp',
+      submitAlt: 'or send the same message by email',
+      required: 'Please fill in your name and what interests you.',
+      intro: 'Hello, I would like to plan a journey in Mauritania.',
+    },
+    promise: {
+      t: 'What happens next',
+      items: [
+        'We reply personally — never an automated response.',
+        'We propose a route, a rhythm and a clear price with nothing hidden.',
+        'We adjust it with you until it is right. There is no deposit until you are happy.',
+      ],
+    },
+  },
+
+  footer: {
+    tagline: 'Private, locally guided journeys through the Sahara, the ancient cities and the Atlantic coast of Mauritania.',
+    explore: 'Explore',
+    company: 'Company',
+    contact: 'Contact',
+    follow: 'Follow the journey',
+    rights: 'All rights reserved.',
+    built: 'Every photograph on this site was taken on our own journeys.',
+    waMsg: 'Hello, I would like information about your journeys in Mauritania.',
+  },
+
+  a11y: {
+    skip: 'Skip to content',
+    heroSlides: 'Hero photographs',
+    lightbox: 'Photograph viewer',
+    menu: 'Main menu',
+  },
+};
