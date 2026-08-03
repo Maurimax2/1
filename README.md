@@ -12,7 +12,7 @@ install, nothing to pay for. It deploys anywhere that can serve files
 
 ## How it is put together
 
-The 21 HTML pages at the top of the repository are **generated**. Never edit
+The 24 HTML pages at the top of the repository are **generated**. Never edit
 them by hand — edit the sources in `src/` and run the build.
 
 ```
@@ -40,7 +40,7 @@ tools/
 ```
 
 Output: `index.html`, `experiences.html`, `destinations.html`, `gallery.html`,
-`about.html`, `travel-guide.html`, `contact.html` — in English at the root,
+`about.html`, `reviews.html`, `travel-guide.html`, `contact.html` — in English at the root,
 French under `/fr/`, Italian under `/it/` — plus `sitemap.xml`, `robots.txt`
 and `404.html`.
 
@@ -58,7 +58,7 @@ The build refuses to finish if `fr.js` or `it.js` is missing a key that
 
 **Change the WhatsApp number, email or socials**
 `src/data/site.js` — one place, used by every button, link and booking
-message on all 21 pages. Then `npm run build`.
+message on all 24 pages. Then `npm run build`.
 
 **Change the domain used in canonical URLs / sitemap**
 `src/data/site.js` → `domain`. It is currently
@@ -71,9 +71,14 @@ publish on.
 seasons and itineraries for the five experiences live there too.
 
 **Add reviews**
-`src/data/reviews.js`. Real reviews only: they are stored once and shown
-verbatim in every language, never translated and never edited, because they
-are someone else's words. The section is hidden while the list is empty.
+`src/data/reviews.js`. Real reviews only: stored once and shown verbatim in
+every language, never translated and never edited, because they are someone
+else's words. Truncated Google reviews carry `truncated: true`, which renders
+an ellipsis and a link rather than inventing the missing sentences. A review
+with `rating: null` shows no stars — used when the star count contradicts the
+text and only the reviewer can correct it on Google. Reviewer photos live in
+`assets/img/reviewers/`; reviewers without a photo get a coloured initial
+matching their Google avatar. The section hides itself when the list is empty.
 
 **Blank fields are deliberate.** Durations, seasons, group sizes, highlights,
 itineraries, the About page sections and the contact promises were removed

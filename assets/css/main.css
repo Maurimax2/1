@@ -1271,3 +1271,202 @@ body.lb-open { overflow: hidden; }
 }
 .testi__inner > .link { margin-top: 2rem; }
 .exp__cols--one { grid-template-columns: minmax(0, 46rem); }
+
+/* ══════════════════════════════════════════════════════════════════════
+   GOOGLE REVIEWS
+   Real cards, real avatars, real depth. Nothing here is decorative filler.
+   ══════════════════════════════════════════════════════════════════════ */
+.rsec { padding: var(--sp) 0; overflow: hidden; }
+.rsec__head {
+  max-width: var(--maxw); margin: 0 auto clamp(2.5rem, 5vw, 4rem); padding: 0 var(--pad);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 2.5rem; flex-wrap: wrap;
+}
+.rsec__title { font-family: var(--serif); font-size: var(--fs-h2); max-width: 16ch; }
+
+/* aggregate panel */
+.ragg {
+  display: flex; align-items: center; gap: clamp(1.2rem, 3vw, 2.5rem);
+  padding: 1.2rem 1.6rem; border: 1px solid var(--line); border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(8px);
+}
+.ragg__score { display: flex; flex-direction: column; gap: 0.35rem; }
+.ragg__n {
+  font-family: var(--serif); font-size: 2.6rem; line-height: 1; color: var(--gold);
+  font-variant-numeric: lining-nums;
+}
+.ragg__c { font-size: 0.76rem; letter-spacing: 0.1em; color: var(--fg-dim); }
+.ragg__link {
+  display: inline-flex; align-items: center; gap: 0.6rem; font-size: 0.82rem;
+  padding-left: clamp(1rem, 3vw, 2rem); border-left: 1px solid var(--line);
+  transition: color 0.35s;
+}
+.ragg__link:hover { color: var(--gold-2); }
+.ragg__link .ico { width: 1em; height: 1em; }
+.gmark { width: 20px; height: 20px; flex: none; }
+.ragg__g { width: 24px; height: 24px; }
+
+.rstars { display: inline-flex; gap: 2px; }
+.rstars svg { width: 15px; height: 15px; fill: rgba(150, 140, 125, 0.35); }
+.rstars svg.is-on { fill: #fbbc04; }
+
+/* the card */
+.rsec__rail {
+  display: flex; gap: clamp(1rem, 1.8vw, 1.6rem);
+  padding: 1.5rem var(--pad) 2.5rem;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  scrollbar-width: none; cursor: grab; perspective: 1400px;
+}
+.rsec__rail::-webkit-scrollbar { display: none; }
+.rsec__rail.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+
+.rcard { flex: 0 0 clamp(290px, 30vw, 420px); scroll-snap-align: center; }
+.rcard__inner {
+  height: 100%; display: flex; flex-direction: column;
+  background: #fffdf9; color: #17130f; border-radius: 18px;
+  padding: clamp(1.5rem, 2.4vw, 2.1rem);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2), 0 18px 40px -18px rgba(0, 0, 0, 0.55);
+  transform-style: preserve-3d;
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+.rcard[data-tilt]:hover .rcard__inner { box-shadow: 0 6px 10px rgba(0, 0, 0, 0.22), 0 40px 70px -26px rgba(0, 0, 0, 0.7); }
+.rcard__head { display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1rem; }
+.ravatar { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; flex: none; background: #eee; }
+.ravatar--letter {
+  display: grid; place-items: center; background: var(--c); color: #fff;
+  font-size: 1.25rem; font-weight: 400; line-height: 1;
+}
+.rcard__who { flex: 1; min-width: 0; }
+.rcard__who h3 {
+  font-family: var(--sans); font-size: 0.98rem; font-weight: 500; letter-spacing: 0;
+  display: flex; align-items: center; gap: 0.35rem; color: #17130f;
+}
+.rcard__who p { font-size: 0.78rem; color: rgba(23, 19, 15, 0.55); margin-top: 2px; }
+.lguide svg { width: 15px; height: 15px; display: block; }
+.rcard__g { opacity: 0.9; }
+.rcard__rating { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.9rem; }
+.rcard__date { font-size: 0.78rem; color: rgba(23, 19, 15, 0.5); }
+.rcard__text {
+  font-family: var(--serif); font-size: clamp(1.02rem, 1.35vw, 1.24rem);
+  line-height: 1.5; color: #241d17; flex: 1;
+}
+.rmore { color: rgba(23, 19, 15, 0.4); }
+.rcard__photos {
+  display: flex; align-items: center; gap: 0.45rem; margin-top: 1rem;
+  font-size: 0.74rem; letter-spacing: 0.08em; color: rgba(23, 19, 15, 0.5);
+}
+.rcard__photos .ico { width: 0.85em; height: 0.85em; }
+.rcard__reply {
+  margin-top: 1.1rem; padding-left: 0.9rem; border-left: 2px solid rgba(23, 19, 15, 0.12);
+  font-size: 0.86rem; color: rgba(23, 19, 15, 0.62);
+}
+.rcard__reply-who { font-weight: 500; color: rgba(23, 19, 15, 0.8); margin-bottom: 0.15rem; }
+.rcard__src {
+  display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.3rem;
+  font-size: 0.74rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: #1a73e8; transition: gap 0.35s var(--ease);
+}
+.rcard__src:hover { gap: 0.7rem; }
+.rcard__src .ico { width: 0.9em; height: 0.9em; }
+
+.rsec__ctrl {
+  max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad);
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.rnav {
+  width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line);
+  display: grid; place-items: center; color: var(--fg);
+  transition: background-color 0.4s, border-color 0.4s, transform 0.4s var(--ease);
+}
+.rnav:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--gold); }
+.rnav[data-rprev] { transform: rotate(180deg); }
+.rsec__ctrl .link { margin-left: auto; }
+
+@media (max-width: 700px) {
+  .rsec__head { flex-direction: column; align-items: flex-start; }
+  .rcard { flex-basis: 82vw; }
+  .rnav { width: 42px; height: 42px; }
+}
+
+/* ── the reviews page: big cards, floating ─────────────────────────── */
+.rwall { padding: var(--sp) var(--pad); max-width: var(--maxw); margin: 0 auto; }
+.rwall .ragg { display: inline-flex; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.rwall__grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: clamp(1.2rem, 2.6vw, 2.6rem); align-items: start; perspective: 1600px;
+}
+.rfloat { will-change: transform; }
+.rfloat--0 { margin-top: 0; }
+.rfloat--1 { margin-top: clamp(1.5rem, 5vw, 4.5rem); }
+.rfloat--2 { margin-top: clamp(0.5rem, 2vw, 2rem); }
+.rcard--lg { flex: none; width: 100%; }
+.rcard--lg .rcard__inner { padding: clamp(1.8rem, 3vw, 2.8rem); border-radius: 22px; }
+.rcard--lg .rcard__text { font-size: clamp(1.15rem, 1.7vw, 1.5rem); }
+.rcard--lg .ravatar { width: 58px; height: 58px; }
+.rcard--lg .ravatar--letter { font-size: 1.5rem; }
+.rcard--lg .rcard__who h3 { font-size: 1.1rem; }
+
+@media (max-width: 800px) {
+  .rwall__grid { grid-template-columns: 1fr; }
+  .rfloat { margin-top: 0 !important; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   PRICE + TOUR DETAIL
+   ══════════════════════════════════════════════════════════════════════ */
+.expcard__price {
+  position: absolute; z-index: 2; top: 1.1rem; right: 1.2rem;
+  padding: 0.4rem 0.85rem; border-radius: 100px;
+  background: rgba(10, 9, 8, 0.55); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 0.78rem; letter-spacing: 0.06em; color: #fff;
+  font-variant-numeric: lining-nums;
+}
+.exp__price { display: flex; align-items: baseline; gap: 0.55rem; margin-top: 1.2rem; }
+.exp__price b {
+  font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+  color: var(--gold-2); font-variant-numeric: lining-nums;
+}
+.exp__price span { font-size: 0.78rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255, 255, 255, 0.7); }
+.exp__audience {
+  margin-top: 1.6rem; padding-left: 1rem; border-left: 2px solid var(--gold);
+  font-style: italic; color: var(--fg-soft); font-family: var(--serif); font-size: 1.1rem;
+}
+.exp__extras {
+  max-width: var(--maxw); margin: 0 auto; padding: clamp(2rem, 4vw, 3.5rem) var(--pad) 0;
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(2rem, 5vw, 5rem);
+}
+.exp__bring p { color: var(--fg-dim); }
+@media (max-width: 900px) { .exp__extras { grid-template-columns: 1fr; } }
+
+/* ══════════════════════════════════════════════════════════════════════
+   MAP
+   ══════════════════════════════════════════════════════════════════════ */
+.cmap {
+  display: grid; grid-template-columns: minmax(280px, 36%) 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem); align-items: center;
+  max-width: var(--maxw); margin: 0 auto; padding: var(--sp) var(--pad);
+}
+.cmap__title { font-family: var(--serif); font-size: var(--fs-h2); margin-bottom: 1.2rem; }
+.cmap__sub { color: var(--fg-dim); margin-bottom: 2rem; }
+.cmap__facts { display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2.2rem; }
+.cmap__facts li { display: flex; align-items: center; gap: 0.8rem; font-size: 0.94rem; color: var(--fg-soft); }
+.cmap__facts .ico { color: var(--gold); }
+.cmap__frame {
+  position: relative; border-radius: 18px; overflow: hidden;
+  border: 1px solid var(--line);
+  /* fallback if the embed is blocked or slow: the real place, not a grey box */
+  background: var(--ink-3) url('../img/nouakchott-fish-market-960.webp') center/cover;
+  box-shadow: 0 30px 70px -35px rgba(0, 0, 0, 0.9);
+}
+.cmap__frame iframe {
+  display: block; width: 100%; height: clamp(340px, 52vh, 560px); border: 0;
+  filter: grayscale(0.35) contrast(1.05) brightness(0.94);
+  transition: filter 0.7s var(--ease-2);
+}
+.cmap__frame:hover iframe { filter: none; }
+.cmap__glow {
+  position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 90px rgba(10, 9, 8, 0.55);
+  border-radius: inherit;
+}
+@media (max-width: 900px) { .cmap { grid-template-columns: 1fr; } }

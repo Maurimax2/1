@@ -31,6 +31,7 @@ module.exports = {
     experiences: 'experiences.html',
     destinations: 'destinations.html',
     gallery: 'gallery.html',
+    reviews: 'reviews.html',
     about: 'about.html',
     guide: 'travel-guide.html',
     contact: 'contact.html',

@@ -1,11 +1,11 @@
 const site = require('../data/site.js');
-const reviews = require('../data/reviews.js');
+const { reviews, reviewCard, aggregate } = require('../lib/reviews.js');
 const { pic, icon } = require('../lib/html.js');
 const { photo } = require('../data/photos.js');
 const { sectionHead, expCard, photoTile, lightbox } = require('../lib/components.js');
 
-const HERO_SLIDES = ['train-riders', 'camel-caravan-dune', 'camels-atlantic', 'chinguetti-minaret', 'dune-sunset-crew'];
-const MOMENTS = ['dune-joy', 'acacia-lunch', 'train-arms-open', 'terjit-oasis-canyon', 'summit-arms-raised', 'nouakchott-fish-market', 'desert-campfire', 'atlantic-sunset-group'];
+const HERO_SLIDES = ['train-riders', 'golden-dunes', 'camel-silhouette', 'chinguetti-minaret', 'camels-atlantic'];
+const MOMENTS = ['dune-summit-people', 'desert-tea', 'train-arms-open', 'oasis-rest-cliff', 'milky-way-acacia', 'nouakchott-fish-market', 'camp-sunrise', 'dune-meets-ocean'];
 
 const split = (text) =>
   text
@@ -64,38 +64,28 @@ module.exports = function home(t, L) {
     })
   ).join('');
 
-  /* ── 7. Reviews — real ones only; hidden while none are on file ──── */
-  const stars = (n) =>
-    `<span class="stars" aria-label="${n}/5">${'★'.repeat(n)}${'☆'.repeat(5 - n)}</span>`;
-
-  const quotes = reviews.items
-    .map(
-      (r, i) => `<figure class="quote${i === 0 ? ' is-active' : ''}" data-quote="${i}" lang="${r.lang || 'en'}">
-      ${r.rating ? stars(r.rating) : ''}
-      <blockquote>${r.text}</blockquote>
-      <figcaption><span class="quote__n">${r.name}</span><span class="quote__c">${[r.country, r.date].filter(Boolean).join(' · ')}</span></figcaption>
-    </figure>`
-    )
-    .join('');
-
-  const quoteDots = reviews.items
-    .map((r, i) => `<button class="quote__dot${i === 0 ? ' is-active' : ''}" data-qdot="${i}" aria-label="${r.name}"></button>`)
-    .join('');
-
-  const reviewsSection = reviews.items.length
-    ? `<section class="testi">
-  <div class="testi__inner">
-    <p class="eyebrow reveal">${t.home.reviews.eyebrow}</p>
-    <h2 class="testi__title reveal" data-split>${t.home.reviews.title}</h2>
-    <div class="testi__stage" data-quotes>
-      ${icon('quote', 'testi__mark')}
-      ${quotes}
+  /* ── 7. Reviews — a swipeable rail of the real Google cards ───────── */
+  const reviewsSection = !reviews.items.length
+    ? ''
+    : `<section class="rsec">
+  <div class="rsec__head">
+    <div>
+      <p class="eyebrow reveal">${t.home.reviews.eyebrow}</p>
+      <h2 class="rsec__title reveal" data-split>${t.home.reviews.title}</h2>
     </div>
-    <div class="testi__dots">${quoteDots}</div>
-    <a class="link reveal" href="${reviews.source}" target="_blank" rel="noopener">${t.home.reviews.cta}${icon('arrow')}</a>
+    ${aggregate(t, L)}
   </div>
-</section>`
-    : '';
+
+  <div class="rsec__rail" data-rrail data-drag>
+    ${reviews.items.map((r, i) => reviewCard(r, t, L, { index: i })).join('')}
+  </div>
+
+  <div class="rsec__ctrl">
+    <button class="rnav" data-rprev aria-label="${t.reviewsUi.prev}">${icon('chevron')}</button>
+    <button class="rnav" data-rnext aria-label="${t.reviewsUi.next}">${icon('chevron')}</button>
+    <a class="link link--lg" href="${L.url('reviews')}">${t.home.reviews.cta}${icon('arrow')}</a>
+  </div>
+</section>`;
 
   return `
 <main id="main">

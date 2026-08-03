@@ -33,6 +33,14 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://travelandtripsinmauritania.com/reviews.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://travelandtripsinmauritania.com/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://travelandtripsinmauritania.com/fr/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://travelandtripsinmauritania.com/it/reviews.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://travelandtripsinmauritania.com/about.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://travelandtripsinmauritania.com/about.html"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://travelandtripsinmauritania.com/fr/about.html"/>
@@ -89,6 +97,14 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://travelandtripsinmauritania.com/fr/reviews.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://travelandtripsinmauritania.com/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://travelandtripsinmauritania.com/fr/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://travelandtripsinmauritania.com/it/reviews.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://travelandtripsinmauritania.com/fr/about.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://travelandtripsinmauritania.com/about.html"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://travelandtripsinmauritania.com/fr/about.html"/>
@@ -141,6 +157,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://travelandtripsinmauritania.com/gallery.html"/>
     <xhtml:link rel="alternate" hreflang="fr" href="https://travelandtripsinmauritania.com/fr/gallery.html"/>
     <xhtml:link rel="alternate" hreflang="it" href="https://travelandtripsinmauritania.com/it/gallery.html"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://travelandtripsinmauritania.com/it/reviews.html</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://travelandtripsinmauritania.com/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://travelandtripsinmauritania.com/fr/reviews.html"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://travelandtripsinmauritania.com/it/reviews.html"/>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>

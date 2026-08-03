@@ -252,6 +252,64 @@
     });
   }
 
+  /* ── Review rail: arrows + pointer tilt ──────────────────────────── */
+  function reviewRail() {
+    const rail = $('[data-rrail]');
+    if (rail) {
+      const step = () => {
+        const card = $('.rcard', rail);
+        return card ? card.offsetWidth + 20 : rail.clientWidth * 0.8;
+      };
+      $('[data-rnext]')?.addEventListener('click', () => rail.scrollBy({ left: step(), behavior: 'smooth' }));
+      $('[data-rprev]')?.addEventListener('click', () => rail.scrollBy({ left: -step(), behavior: 'smooth' }));
+    }
+
+    if (REDUCED || window.matchMedia('(hover: none)').matches) return;
+
+    $$('[data-tilt]').forEach((card) => {
+      const inner = $('.rcard__inner', card);
+      if (!inner) return;
+      let raf;
+      card.addEventListener('pointermove', (e) => {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          inner.style.transform =
+            `rotateY(${(px * 7).toFixed(2)}deg) rotateX(${(-py * 7).toFixed(2)}deg) translateZ(14px)`;
+        });
+      });
+      card.addEventListener('pointerleave', () => {
+        cancelAnimationFrame(raf);
+        inner.style.transform = '';
+      });
+    });
+  }
+
+  /* ── Reviews page: gentle float as the column scrolls ────────────── */
+  function floatCards() {
+    if (REDUCED) return;
+    const cards = $$('.rfloat');
+    if (!cards.length) return;
+    let ticking = false;
+    const update = () => {
+      const vh = window.innerHeight;
+      cards.forEach((c, i) => {
+        const r = c.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        const p = (r.top + r.height / 2 - vh / 2) / vh; // -1 … 1
+        const drift = (i % 2 === 0 ? -1 : 1) * p * 16;
+        c.style.transform = `translate3d(0, ${drift.toFixed(1)}px, 0)`;
+      });
+      ticking = false;
+    };
+    addEventListener('scroll', () => {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+  }
+
   /* ── Testimonials ─────────────────────────────────────────────────── */
   function testimonials() {
     const stage = $('[data-quotes]');
@@ -475,6 +533,8 @@
     hoverImage();
     dragRail();
     testimonials();
+    reviewRail();
+    floatCards();
     lightbox();
     contactForm();
     faq();

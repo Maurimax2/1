@@ -107,15 +107,28 @@ module.exports = function contact(t, L) {
 </section>
 
 <section class="cmap">
-  <a class="cmap__link" href="${site.maps}" target="_blank" rel="noopener">
-    ${pic({ slug: 'nouakchott-fish-market', alt: site.city, base: L.base, pos: '50% 62%', sizes: '100vw', cls: 'pic--fill' })}
-    <span class="cmap__veil"></span>
-    <span class="cmap__txt">
-      ${icon('pin')}
-      <strong>${site.city}, ${site.country}</strong>
-      <em>${m.location.a}</em>
-    </span>
-  </a>
+  <div class="cmap__panel">
+    <p class="eyebrow reveal">${c.map.t}</p>
+    <h2 class="cmap__title reveal" data-split>${site.city}, ${site.country}</h2>
+    <p class="cmap__sub reveal">${c.map.d}</p>
+    <ul class="cmap__facts reveal">
+      <li>${icon('pin')}<span>${site.city}, ${site.country}</span></li>
+      <li>${icon('whatsapp')}<span>${site.phoneDisplay}</span></li>
+      <li>${icon('mail')}<span>${site.email}</span></li>
+    </ul>
+    <a class="btn btn--ghost reveal" href="${site.maps}" target="_blank" rel="noopener">
+      <span>${m.location.a}</span>${icon('arrow')}
+    </a>
+  </div>
+
+  <div class="cmap__frame reveal">
+    <iframe
+      src="https://www.google.com/maps?q=Travel+and+Trips+in+Mauritania,+Nouakchott,+Mauritania&hl=${t.code}&z=12&output=embed"
+      title="${site.name} — ${site.city}"
+      loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+      allowfullscreen></iframe>
+    <span class="cmap__glow" aria-hidden="true"></span>
+  </div>
 </section>
 
 </main>`;

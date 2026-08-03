@@ -79,7 +79,7 @@ ${extra}
 
 function nav(t, page, lang) {
   const L = links(lang);
-  const items = ['home', 'experiences', 'destinations', 'gallery', 'about', 'guide', 'contact'];
+  const items = ['home', 'experiences', 'destinations', 'gallery', 'reviews', 'about', 'guide', 'contact'];
 
   const navLinks = (cls) =>
     items
@@ -152,6 +152,7 @@ function footer(t, lang) {
           <li><a href="${L.url('experiences')}">${t.nav.experiences}</a></li>
           <li><a href="${L.url('destinations')}">${t.nav.destinations}</a></li>
           <li><a href="${L.url('gallery')}">${t.nav.gallery}</a></li>
+          <li><a href="${L.url('reviews')}">${t.nav.reviews}</a></li>
           <li><a href="${L.url('guide')}">${t.nav.guide}</a></li>
         </ul>
       </div>

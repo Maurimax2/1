@@ -57,6 +57,40 @@ CATALOG = {
 }
 
 
+# ── Second batch: photographs sent by the client on WhatsApp, already
+#    renamed to their slug, so the mapping is an identity here.
+CATALOG["adrar-canyon"] = "adrar-canyon"
+CATALOG["auberge-garden"] = "auberge-garden"
+CATALOG["auberge-tower"] = "auberge-tower"
+CATALOG["beach-walk-sunset"] = "beach-walk-sunset"
+CATALOG["camel-silhouette"] = "camel-silhouette"
+CATALOG["camp-dinner-sunrise"] = "camp-dinner-sunrise"
+CATALOG["camp-sunrise"] = "camp-sunrise"
+CATALOG["desert-tea"] = "desert-tea"
+CATALOG["dune-branch"] = "dune-branch"
+CATALOG["dune-meets-ocean"] = "dune-meets-ocean"
+CATALOG["dune-summit-people"] = "dune-summit-people"
+CATALOG["erg-palm-line"] = "erg-palm-line"
+CATALOG["eye-rock"] = "eye-rock"
+CATALOG["golden-dunes"] = "golden-dunes"
+CATALOG["group-lunch-desert"] = "group-lunch-desert"
+CATALOG["lone-walker-dunes"] = "lone-walker-dunes"
+CATALOG["milky-way-acacia"] = "milky-way-acacia"
+CATALOG["night-tent-stars"] = "night-tent-stars"
+CATALOG["oasis-palms-dunes"] = "oasis-palms-dunes"
+CATALOG["oasis-rest-cliff"] = "oasis-rest-cliff"
+CATALOG["ore-train-aerial"] = "ore-train-aerial"
+CATALOG["ore-train-sunset"] = "ore-train-sunset"
+CATALOG["ore-train-wagons"] = "ore-train-wagons"
+CATALOG["ore-train-yard"] = "ore-train-yard"
+CATALOG["ouadane-doorway-valley"] = "ouadane-doorway-valley"
+CATALOG["palms-in-dunes"] = "palms-in-dunes"
+CATALOG["palms-sunset"] = "palms-sunset"
+CATALOG["plateau-road"] = "plateau-road"
+CATALOG["red-hills-road"] = "red-hills-road"
+CATALOG["sand-canyon"] = "sand-canyon"
+
+
 def lqip(im):
     """A ~20px blurred placeholder, inlined as a data URI."""
     tiny = im.copy()
@@ -69,12 +103,19 @@ def lqip(im):
 def main(src_dir):
     os.makedirs(OUT_DIR, exist_ok=True)
     os.makedirs(os.path.dirname(MANIFEST), exist_ok=True)
+
+    # Photos arrive in batches from different folders, so the manifest is
+    # merged rather than rewritten: entries whose source is absent survive.
     manifest = {}
+    if os.path.exists(MANIFEST):
+        with open(MANIFEST) as fh:
+            manifest = json.load(fh)
 
     for stem, slug in sorted(CATALOG.items(), key=lambda kv: kv[1]):
         path = os.path.join(src_dir, stem + ".jpg")
         if not os.path.exists(path):
-            print("  missing:", stem)
+            if slug not in manifest:
+                print("  missing:", stem)
             continue
 
         im = ImageOps.exif_transpose(Image.open(path)).convert("RGB")

@@ -23,6 +23,7 @@ function expCard(exp, t, L, { feature = false, index = 0 } = {}) {
         cls: 'pic--fill',
       })}
       <span class="expcard__num">${String(index + 1).padStart(2, '0')}</span>
+      ${exp.price ? `<span class="expcard__price">${exp.price}</span>` : ''}
     </div>
     <div class="expcard__body">
       <p class="expcard__meta"><span>${exp.location}</span>${exp.duration ? `<i></i><span>${exp.duration}</span>` : ''}</p>

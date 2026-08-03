@@ -18,6 +18,24 @@ function metaBlock(e, t) {
     </dl></aside>`;
 }
 
+/** What the price covers, and what the traveller carries. */
+function includedBlock(e, t) {
+  const inc = e.included.length
+    ? `<div class="exp__inc reveal">
+      <h3 class="minihead">${t.ui.included}</h3>
+      <ul class="ticks">${e.included.map((x) => `<li>${x}</li>`).join('')}</ul>
+    </div>`
+    : '';
+  const bring = e.bring
+    ? `<div class="exp__bring reveal">
+      <h3 class="minihead">${t.ui.bring}</h3>
+      <p>${e.bring}</p>
+    </div>`
+    : '';
+  if (!inc && !bring) return '';
+  return `<div class="exp__extras">${inc}${bring}</div>`;
+}
+
 /** Highlights + itinerary, each shown only when there is something to show. */
 function colsBlock(e, t) {
   const hl = e.highlights.length
@@ -79,12 +97,14 @@ module.exports = function experiences(t, L) {
       <span class="exp__num">${String(i + 1).padStart(2, '0')}</span>
       <h2 class="exp__title reveal" data-split>${e.title}</h2>
       <p class="exp__tag reveal">${e.tagline}</p>
+      ${e.price ? `<p class="exp__price reveal"><b>${e.price}</b><span>${e.priceNote}</span></p>` : ''}
     </div>
   </div>
 
   <div class="exp__body">
     <div class="exp__story">
       ${e.story.map((p, k) => `<p class="reveal" style="--d:${k * 70}ms">${p}</p>`).join('')}
+      ${e.audience ? `<p class="exp__audience reveal">${e.audience}</p>` : ''}
       <div class="exp__cta reveal">
         ${bookBtn(t.ui.book, e.waMsg)}
       </div>
@@ -94,6 +114,8 @@ module.exports = function experiences(t, L) {
   </div>
 
   ${colsBlock(e, t)}
+
+  ${includedBlock(e, t)}
 
   <div class="exp__strip">
     <h3 class="minihead reveal">${t.ui.photos}</h3>

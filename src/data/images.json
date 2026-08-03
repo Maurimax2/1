@@ -8,6 +8,17 @@
    810
   ]
  },
+ "adrar-canyon": {
+  "h": 1200,
+  "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAQBACdASoUAA8APt1cpkyopSOiMAgBEBuJbACdMoMYADvLevNWyh71AAD8f/2vEhenLA8wCW1NrXpi3s5mTbh2vtB190YY3upL3vJWCXVK+17asKZBpFJiMKL7XQkgFTlNfRWIAAA=",
+  "w": 1600,
+  "widths": [
+   480,
+   960,
+   1440,
+   1600
+  ]
+ },
  "adrar-road-mesa": {
   "h": 1600,
   "lqip": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAACQBACdASoPABQAPt1cpkyopSOiMAgBEBuJaACdMoKAAAsPb5VcoIG9YSo+isAA/maKrw6ro6USpWpQg3FDQjfxlZem+oTAuLjmqDhsPVMAUyQ+k7wnBcAsn1Wzt1R+F9dvzHGL5N/LrBedvwS68DLhasZpQp5syr8kee3AAAA=",
@@ -50,6 +61,26 @@
    1280
   ]
  },
+ "auberge-garden": {
+  "h": 607,
+  "lqip": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAABwBACdASoUAAsAPt1apkyopSOiMAgBEBuJaACdMoADgdKDsxn6lcSMbCngAAD+hnUBAMlHbTLiu0GjdAQrWjIe98vF5Qs1A9lInYZ7NSKwcC54m9+9KijAnolidOS4Zj8Z0GPVQKOtjpvI97TcGCwtmPFQRMlE7K0bcM7DbcrNN9GA9jGTwVAA",
+  "w": 1080,
+  "widths": [
+   480,
+   960,
+   1080
+  ]
+ },
+ "auberge-tower": {
+  "h": 607,
+  "lqip": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAAAQBACdASoUAAsAPt1apkyopSOiMAgBEBuJZgCsMoAluhT3l8ay8kunkAD9AvRRgFofbhso90Z7YHhcjNEx+7B/Do5jAmuozdnf7fyKiCSh6DUfze8TrHbFZMl6nR/mmjctoGNF7tQ0jZ5YaVQ2LDJCKSutnPMftm5zknlGtZYT1XyzzOaQAAAA",
+  "w": 1080,
+  "widths": [
+   480,
+   960,
+   1080
+  ]
+ },
  "beach-arrival": {
   "h": 1280,
   "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBACdASoPABQAPt1apkyopSOiMAgBEBuJQBOmUI4E0ABpZKE8IJMTAAD93kHUVmlt0AATqHxwRtP/a3Y1sg8k35VYBMqcy1Uv98IFHEEj5yZRw53CtQISIAEmEMozfqyke3Dd9dSgsNAA",
@@ -68,6 +99,15 @@
    960
   ]
  },
+ "beach-walk-sunset": {
+  "h": 800,
+  "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoPABQAPt1apkyopSOiMAgBEBuJYgCdMoR4GBZJbIQAAP1kp6sJZ8EIPu1NCcIQ1iDd7EIpPwBKJu5OnXAOXwD99SBbLLrO5OAAAA==",
+  "w": 600,
+  "widths": [
+   480,
+   600
+  ]
+ },
  "camel-caravan-dune": {
   "h": 1152,
   "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAQBQCdASoUAAsAPt1apkyopSOiMAgBEBuJbACdMoRwN6BvAMlAA5/TJjC1Vy0JxjLAAOAw7S0Ffo114vKizTrlY4ylTjlT5WksgPOIyGlirGlV6agj4OXkmP1qIeXlb+b4o8UQuW7gaHAA",
@@ -79,6 +119,16 @@
    2000
   ]
  },
+ "camel-silhouette": {
+  "h": 1340,
+  "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoQABQAPt1apkyopSOiMAgBEBuJYgCdMoACECiQ3Ts7f24AAPznn0u7Wo1NpLteyeerwq9CfXwo9aEFPxQRm3x2dSSkSQ0n63AxirHmKuqy7CL3Sf2LNV+JjRnKsL/E8b005hwAAAA=",
+  "w": 1080,
+  "widths": [
+   480,
+   960,
+   1080
+  ]
+ },
  "camels-atlantic": {
   "h": 3000,
   "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoUAA8APt1apkyopSOiMAgBEBuJQBYdgoJtvEKXj2xAAP0b7dEzx2O3v9nNtztek/d42HwZaGnthZS3WofYwNyJRelxTBJ0CAAAAA==",
@@ -88,6 +138,25 @@
    960,
    1440,
    2000
+  ]
+ },
+ "camp-dinner-sunrise": {
+  "h": 1080,
+  "lqip": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAwBACdASoPABQAPt1apkyopSOiMAgBEBuJZACdIKnDAxZU6vKwHfBTJJAA/rYcD9Z2ktv9jYfFHOygj9upsQzTh6rxcCFYuc6JQLOuaOY3Z1kBmXdLy1Leq7+4OuijRI0JGxGqoIbwiCvEP686kqrQ54qcN2GJoZkjsYYAAAA=",
+  "w": 810,
+  "widths": [
+   480,
+   810
+  ]
+ },
+ "camp-sunrise": {
+  "h": 1600,
+  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAwCdASoPABQAPt1apkyopSOiMAgBEBuJZACdMoKAAAs5hWgD/dgA/ueFuX3w38f9EvrHWd6XN5SsZepD3fZYwQUMFcVH6BR+G29OmY6iGBQtygAAAA==",
+  "w": 1200,
+  "widths": [
+   480,
+   960,
+   1200
   ]
  },
  "chinguetti-minaret": {
@@ -110,6 +179,24 @@
    506
   ]
  },
+ "desert-tea": {
+  "h": 1472,
+  "lqip": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAABQBACdASoLABQAPt1apkyopSOiMAgBEBuJZgCdMoRwN0AAJ7mrSa4o9E0AAP50hTuZMljqfYPV8M+P5hbiTbbHAR/BCr2dKuaW6YYQ/x3I2PjXcQmgZXzJ/LCfM7Pa7BD8fNZnU1pG/3kwNu6/P9gVLOLr6GfzR+zgAA==",
+  "w": 828,
+  "widths": [
+   480,
+   828
+  ]
+ },
+ "dune-branch": {
+  "h": 960,
+  "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAABQAwCdASoPABQAPt1apkyopSOiMAgBEBuJYgCdAB08Ei5pQAD+cNGLjkBP/1kr4kUSzsEO6FlmxlnHaIDiPNSGNJJI0MIyLKIwmBh+AAA=",
+  "w": 720,
+  "widths": [
+   480,
+   720
+  ]
+ },
  "dune-descent": {
   "h": 1080,
   "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAABQAwCdASoLABQAPt1apkyopSOiMAgBEBuJbACdACHGoeWQAAD9yyZ5PJvMA9P8XA50Nn/i46u3SUgjhVwLWSRGTOC/0EOXr9DpTL5D+cPa7ZAA",
@@ -130,6 +217,24 @@
    2000
   ]
  },
+ "dune-meets-ocean": {
+  "h": 405,
+  "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoUAAsAPt1cp0yopSOiMAgBEBuJZgCdMoADTrdD5ID960lewADeZQYNnIv7UWYBuGqUSqG7IRLm+vYXkQn4dhJWxyWCFvL196FN2jw4xmD7YRtgAAA=",
+  "w": 720,
+  "widths": [
+   480,
+   720
+  ]
+ },
+ "dune-summit-people": {
+  "h": 480,
+  "lqip": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAADQBACdASoUAA0APt1cp0yopSOiMAgBEBuJbACdMoKBXb/92q/oABL/LDBp/niW+AD+wCpV4WiD7jBzWa3u3N6MUiWq9rMTxM+zSLb4nkLd7QeFr2WWDqRKTLupar1MUSVW+a57xyCHlPxBwB7uM5nhqZsUpQriJLR2voDUPmDjqgAA",
+  "w": 720,
+  "widths": [
+   480,
+   720
+  ]
+ },
  "dune-sunset-crew": {
   "h": 960,
   "lqip": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoPABQAPt1apkyopSOiMAgBEBuJagCdMoR3AClZqona4nI9PAAA/H98bV13rGnz0H2x1PJy+2pvo/mtFxeeRMkDBZfQK76KGjHiXS7mk4Cqco1dN3UtvhFgZOdRs7eKckkOVxPeSKAAAA==",
@@ -139,9 +244,46 @@
    720
   ]
  },
+ "erg-palm-line": {
+  "h": 750,
+  "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAwBACdASoUAA8APt1cpkyopSOiMAgBEBuJZACdMoADYVgit0XgzXFvKiAA/q59hwUm3KHH7ARLt20tvWeSgEWxuZZMPZNsjlv+FYm5C9XAHtGkrWUCM34mQfZ1AAAA",
+  "w": 1000,
+  "widths": [
+   480,
+   960,
+   1000
+  ]
+ },
+ "eye-rock": {
+  "h": 540,
+  "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAABwBACdASoUAA8APt1apkyopSOiMAgBEBuJQBOmUGMACSk//WP9vS2gUCkvAAD+7+7GuqpXKWQtKw9eFwLm60+D0x1w/jWJb0QBLabYq0v+MpBeV3qW5wDxg6EBNbfZNwWuGlX/wnv4EJsUZQuj3dcmsyTHSwwA",
+  "w": 720,
+  "widths": [
+   480,
+   720
+  ]
+ },
  "flag-and-camels": {
   "h": 1080,
   "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAwCdASoLABQAPt1apkyopSOiMAgBEBuJZACdMoR3ABt3abJfv00AAGCRZE+DLmoEjuuI1rvYVUu76cqH3kSNGkxoSfwkJQLJRC5TIAA=",
+  "w": 607,
+  "widths": [
+   480,
+   607
+  ]
+ },
+ "golden-dunes": {
+  "h": 483,
+  "lqip": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAABwBACdASoUAA0APt1cpkyopSOiMAgBEBuJbACdMoR3Ff/gPIYwMwVGHAfXoAD+7tLwJeOcaYmX6Eehv5s9l9/ERWkb9PNuESRx95TN74C7njD4SQYYCkR646okPQKx5KQ44gofw9MIUovMoa0UEC0zUXp4tNvVXf5a1C3gFJITAAAA",
+  "w": 720,
+  "widths": [
+   480,
+   720
+  ]
+ },
+ "group-lunch-desert": {
+  "h": 1080,
+  "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAQBACdASoLABQAPt1apkyopSOiMAgBEBuJZgCdACFrgmrshsyfA5pTQAD+aMZnEEaO+5pFrRYRQ4+HRqc65GJ7gksgFB8cjdrYM1sdBVO4t8p/rBLb2JPHm1bFk1qnQmbouD6bJ03LYXA9YKpvt1HkYvU9uSGutueWXNNdKAJAAA==",
   "w": 607,
   "widths": [
    480,
@@ -180,6 +322,34 @@
    1080
   ]
  },
+ "lone-walker-dunes": {
+  "h": 1600,
+  "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAwAwCdASoPABQAPt1apkyopSOiMAgBEBuJQBOgBEBCiQeAAP7DsfWInCRM28JSu9p2NH94m88QHmn5FtxYAA==",
+  "w": 1200,
+  "widths": [
+   480,
+   960,
+   1200
+  ]
+ },
+ "milky-way-acacia": {
+  "h": 477,
+  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQBACdASoUAA0APt1apkyopSOiMAgBEBuJQBYdg9H7nicLbxU2j8dpgAD+7NfMmULFWk0AKCwZdA4+hlAzcQLOsg4GF6EKS/3wTjJQnVIAoMUBqAAAAA==",
+  "w": 715,
+  "widths": [
+   480,
+   715
+  ]
+ },
+ "night-tent-stars": {
+  "h": 894,
+  "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAwBACdASoQABQAPt1apkyopSOiMAgBEBuJZACdDBAAmhE2NXUu24Zf9oAA/v6gBg0uU+Y2dokkqHSTOny8lDqMIZfAYqOMW2LeJ0gXJtz1rZX5GW8EjLvCDaMUxZNUeR0Fm8fwAAA=",
+  "w": 715,
+  "widths": [
+   480,
+   715
+  ]
+ },
  "nouakchott-fish-market": {
   "h": 3000,
   "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADwAwCdASoUAA8APt1apkyopSOiMAgBEBuJYgCdIIjCaz7tnlyMitYAAMqgHHb4Er9zlc5lRn9cwTjJgDFbR+VQigAcNY1TjplvibcW44OOHdkBgBuUDUt+AAA=",
@@ -189,6 +359,24 @@
    960,
    1440,
    2000
+  ]
+ },
+ "oasis-palms-dunes": {
+  "h": 536,
+  "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAwCdASoUAA8APt1cp0yopSOiMAgBEBuJZgCdABuVla473H4hV2gYAP32kYB1oLCxkMZSHlEa2E/M+tbcfFgzdARaHN2QsTVEOPCcdy9XQ2w2jqGeXA5d3h+RGZ4mwxjOPjgAAAA=",
+  "w": 715,
+  "widths": [
+   480,
+   715
+  ]
+ },
+ "oasis-rest-cliff": {
+  "h": 800,
+  "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAABwBACdASoPABQAPt1apkyopSOiMAgBEBuJZACdMoR3AB+Ls0X2IelLs0tyAAD+5z+INa88ufk1XzjjletY3WNlKMN95xWJBZZ9pZJhpTIVibiZTyXmJau8Xj69mimDivXYCI4gcZAu9S5j95T/nRT/PBLWpgJLu15Y6tnEmwAAAA==",
+  "w": 600,
+  "widths": [
+   480,
+   600
   ]
  },
  "oasis-stone-wall": {
@@ -209,6 +397,44 @@
    607
   ]
  },
+ "ore-train-aerial": {
+  "h": 720,
+  "lqip": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAAAwBQCdASoUABQAPt1UqUyopCQiMBgMARAbiWQAnTLjeWgVTUNUKtDVL23zvnhWzwTNOAD+sASEAMlXyEPaYN6vbAMq0t6360AFtKcaivzpVNNP9D7zyRgh9LRy5uQtwM9jmGsZkb6xpA83lpvzNT0OMxIdcBlytoGmFrW61193gAAA",
+  "w": 720,
+  "widths": [
+   480,
+   720
+  ]
+ },
+ "ore-train-sunset": {
+  "h": 1536,
+  "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAADwAwCdASoUAA8APt1cp0yopSOiMAgBEBuJQBOgBDaFWoixtkMX/5EAAP7UqUYe2uX+ypFvDF6/t/mKlrbjR4c1RdW6J2GArbb1mT4i8yLxz7owFTeMQbk26yECE2AA",
+  "w": 2048,
+  "widths": [
+   480,
+   960,
+   1440,
+   2000
+  ]
+ },
+ "ore-train-wagons": {
+  "h": 894,
+  "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAwBACdASoQABQAPt1cpkyopSOiMAgBEBuJYwCdMoR4GCkxw10yXjbFQcAA/sO7GN46U1sdXfZ6dlPpbZtAiGMOuKSSsnF8bumC8hiqBbgg/iCTbAwJIZ1bSFf9m1j1zgAAAA==",
+  "w": 715,
+  "widths": [
+   480,
+   715
+  ]
+ },
+ "ore-train-yard": {
+  "h": 894,
+  "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAACwAwCdASoQABQAPt1cpkyopSOiMAgBEBuJQBOmUI8DBTunVR2SWAD+sfYY2thtMAz/cvc/QTapPLXcNVh6+MGwiEhd0van5lX+pbXAQYsnl/bxLvFXiGK1YXUTLIUvdaLEEPLdyQAAAA==",
+  "w": 715,
+  "widths": [
+   480,
+   715
+  ]
+ },
  "ouadane-archway": {
   "h": 1600,
   "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAABQBACdASoPABQAPt1apkyopSOiMAgBEBuJZACdMoACw/IhIh8Qt4WXJKIAAP6CHGYaF5eEUEq9PhLXEO5kKYH7p8TGjib1JdjpWhIXjpehSux99/uiluCffIW64O2wrzHNVDS6y9lTjqPt1MIWIh/wnznN31TBuTVOXVMwcfHgAA==",
@@ -217,6 +443,17 @@
    480,
    960,
    1200
+  ]
+ },
+ "ouadane-doorway-valley": {
+  "h": 2000,
+  "lqip": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAAAQBACdASoPABQAPt1apkyopSOiMAgBEBuJagCdMoADUFCdzPVg4V12AAD6Xno6BjyaT/74DNpmz0omEeiJHsus0nYE8zolz/PBVu5o6bYvqBi/dee6WvinhwoDvYaS5cxu+W4q9pGBPy4MyBVI92AzuWDRCGGzFt99E6waykpqDvowbWgAg1OAU+AAAA==",
+  "w": 1500,
+  "widths": [
+   480,
+   960,
+   1440,
+   1500
   ]
  },
  "palm-grove": {
@@ -228,6 +465,36 @@
    828
   ]
  },
+ "palms-in-dunes": {
+  "h": 1200,
+  "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoUAA8APt1apkyopSOiMAgBEBuJagCdMoR8eCnHSwKCIRn7oAD+kB0KxmNqFI1lwp6bCd90hGfd1ln1lfvioncEHwBa42nBIO2mM0g8NniJQ7q36NhZPwqSCKA6OAAA",
+  "w": 1600,
+  "widths": [
+   480,
+   960,
+   1440,
+   1600
+  ]
+ },
+ "palms-sunset": {
+  "h": 542,
+  "lqip": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAABwAwCdASoUAA8APt1apkyopSOiMAgBEBuJbACdMoABlQbvSRAA/UWC3sKkSYZNk479ryXEUPP0bLMen52om6fGvhCVnDstc50u2T7tpUg9t+uC6qylbkpY7E6Kr8LOgpRrG7+oCZPUn+Q7Wi2ijTxPT3N+do0J1MpH+lbUgm0QljZ5sHEAAA==",
+  "w": 720,
+  "widths": [
+   480,
+   720
+  ]
+ },
+ "plateau-road": {
+  "h": 722,
+  "lqip": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAABwBACdASoUAA0APt1cpkyopSOiMAgBEBuJZgCdMoMh+n/AeUJtRwoiGW3mwAD8j3qGW6i8SEjGVdBMINynl88PdbO9x+5Zhq7TqNGTOvOVIUUyGI3ZtRXqzTZ92ZSUfhpLIlDsDWlaShEvvSdQAA==",
+  "w": 1080,
+  "widths": [
+   480,
+   960,
+   1080
+  ]
+ },
  "plateau-two-travellers": {
   "h": 1000,
   "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADwAwCdASoPABQAPt1apkyopSOiMAgBEBuJYgCdACHYm6UMUWQXg1eAAPF7e90pmYvNViFmZyIVF6joAJxIn6R2rSvSVL9tNdMd0l3EqCJvIOsujaB8AA==",
@@ -237,6 +504,15 @@
    750
   ]
  },
+ "red-hills-road": {
+  "h": 960,
+  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAwCdASoPABQAPt1cpkyopSOiMAgBEBuJQBUehDs3D3hz7CRzwAD+7UZWNDUpiFmh2JxA0UoCyJabJpCPhR2zrvPjdBH4Tqs7uzzbF0soURF/GyAAAA==",
+  "w": 720,
+  "widths": [
+   480,
+   720
+  ]
+ },
  "ruins-gathering": {
   "h": 960,
   "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAACQAwCdASoPABQAPt1apkyopSOiMAgBEBuJagCsLwABc3L5NwAAAMrExlprLBW5DK6JrC+tUDMJ+QtShB/dt4gxeq0NrO5REbXHa4vC6pFIVLOGdZ4sQMiMd/uLGgS/x9TbHC9eKzVcPRQX9gjUTV3tnwAAAA==",
@@ -244,6 +520,17 @@
   "widths": [
    480,
    720
+  ]
+ },
+ "sand-canyon": {
+  "h": 1200,
+  "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAQBACdASoUAA8APt1cpkyopSOiMAgBEBuJbACdMoMYADvLevNWyh71AAD8f/2vEhenLA8wCW1NrXpi3s5mTbh2vtB190YY3upL3vJWCXVK+17asKZBpFJiMKL7XQkgFTlNfRWIAAA=",
+  "w": 1600,
+  "widths": [
+   480,
+   960,
+   1440,
+   1600
   ]
  },
  "summit-arms-raised": {

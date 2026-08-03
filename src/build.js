@@ -26,6 +26,7 @@ const PAGES = {
   experiences: require('./pages/experiences.js'),
   destinations: require('./pages/destinations.js'),
   gallery: require('./pages/gallery.js'),
+  reviews: require('./pages/reviews.js'),
   about: require('./pages/about.js'),
   guide: require('./pages/guide.js'),
   contact: require('./pages/contact.js'),
