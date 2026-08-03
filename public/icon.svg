@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0%" stop-color="#6b1839"/><stop offset="100%" stop-color="#4a1030"/>
+    </linearGradient>
+    <linearGradient id="dune" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff4d5f"/><stop offset="100%" stop-color="#ef2b47"/>
+    </linearGradient>
+    <clipPath id="scr"><rect x="9.5" y="16.5" width="45" height="33" rx="6.5"/></clipPath>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="#050505"/>
+  <path d="M24.5 4.5 L33.5 17 M39.5 4.5 L30.5 17" stroke="#101c18" stroke-width="3.4" stroke-linecap="round"/>
+  <g clip-path="url(#scr)">
+    <rect x="9.5" y="16.5" width="45" height="33" fill="url(#sky)"/>
+    <circle cx="20.5" cy="23.5" r="0.85" fill="#f4917a"/>
+    <circle cx="29.5" cy="26" r="0.7" fill="#f4917a" opacity="0.8"/>
+    <circle cx="45.5" cy="26" r="6" fill="#f4917a"/>
+    <circle cx="42.8" cy="23.6" r="5.9" fill="#6b1839"/>
+    <path d="M9.5 49.5 L23 32 L30 49.5 Z" fill="url(#dune)"/>
+    <path d="M15 49.5 L29.5 27 L44 49.5 Z" fill="#101c18"/>
+    <path d="M34 49.5 L45 36.5 L54.5 45 L54.5 49.5 Z" fill="url(#dune)"/>
+    <path d="M9.5 43.5 C17 39.5 22 46.5 30 44 C38.5 41.3 46 47.5 54.5 43 L54.5 49.5 L9.5 49.5 Z" fill="#ef2b47"/>
+    <path d="M9.5 45.8 C18 41.6 24 48.5 33 45.6 C41 43 47.5 48.6 54.5 45.4" fill="none" stroke="#101c18" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+  <rect x="7" y="14" width="50" height="38" rx="9" fill="none" stroke="#101c18" stroke-width="5"/>
+  <rect x="24" y="54.5" width="16" height="4.6" rx="2.3" fill="#101c18"/>
+  <path d="M27.5 52 L27.5 55 L36.5 55 L36.5 52 Z" fill="#101c18"/>
+</svg>

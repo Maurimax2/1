@@ -1,0 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #050505;
+    --electric: 47 123 255;
+    --neon: 168 85 247;
+    --cyan: 34 211 238;
+    color-scheme: dark;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Fixed header offset for anchor jumps */
+    scroll-padding-top: 96px;
+    /*
+     * `clip` rather than `hidden`: oversized decorative glows must never widen
+     * the initial containing block (which makes mobile browsers zoom out), but
+     * we also must not turn the root into a scroll container — that would break
+     * `position: sticky` further down the tree.
+     */
+    overflow-x: clip;
+  }
+
+  body {
+    @apply bg-void text-white/80 font-sans antialiased;
+    background-color: #050505;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: rgba(47, 123, 255, 0.35);
+    color: #fff;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-white;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Focus ring — visible for keyboard users only */
+  :focus-visible {
+    outline: 2px solid rgba(91, 157, 255, 0.9);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #08080b;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(#1e3a8a, #6d28d9);
+    border-radius: 99px;
+    border: 2px solid #08080b;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(#2f7bff, #a855f7);
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-[1280px] px-5 sm:px-8 lg:px-12;
+  }
+
+  /* ——— Glassmorphism primitives ——— */
+  .glass {
+    background: linear-gradient(
+      160deg,
+      rgba(255, 255, 255, 0.075) 0%,
+      rgba(255, 255, 255, 0.028) 40%,
+      rgba(255, 255, 255, 0.012) 100%
+    );
+    backdrop-filter: blur(22px) saturate(150%);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow:
+      0 24px 70px -34px rgba(0, 0, 0, 0.95),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-strong {
+    background: linear-gradient(
+      160deg,
+      rgba(20, 22, 34, 0.85) 0%,
+      rgba(9, 10, 16, 0.82) 100%
+    );
+    backdrop-filter: blur(30px) saturate(160%);
+    -webkit-backdrop-filter: blur(30px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Gradient hairline border that survives rounded corners */
+  .hairline {
+    position: relative;
+  }
+  .hairline::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      140deg,
+      rgba(255, 255, 255, 0.28),
+      rgba(255, 255, 255, 0.02) 35%,
+      rgba(168, 85, 247, 0.28) 75%,
+      rgba(47, 123, 255, 0.35)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /*
+   * `box-decoration-break: clone` is load-bearing: without it a gradient span
+   * that wraps onto a second line slices one background box across both
+   * fragments, and whichever fragment falls outside the painted area renders
+   * invisible. Cloning gives every line its own full gradient.
+   */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(
+      100deg,
+      #ffffff 0%,
+      #cfe0ff 28%,
+      #5b9dff 52%,
+      #c084fc 74%,
+      #ffffff 100%
+    );
+    background-size: 220% auto;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+    animation: gradient-pan 9s ease infinite;
+  }
+
+  .text-gradient-static {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(100deg, #5b9dff, #c084fc);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.22em] text-white/60 backdrop-blur-xl;
+  }
+
+  /* Rotating conic border (used on the sale banner + best-offer card) */
+  .animated-border {
+    position: relative;
+    isolation: isolate;
+  }
+  .animated-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      transparent 0%,
+      #2f7bff 12%,
+      #a855f7 26%,
+      #22d3ee 38%,
+      transparent 55%,
+      transparent 100%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: border-spin 6s linear infinite;
+    pointer-events: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Horizontal rails snap on touch, free-scroll with the arrows on desktop */
+  .rail {
+    @apply flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scroll-smooth;
+  }
+  .rail > * {
+    @apply snap-start shrink-0;
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+}
+
+@layer utilities {
+  .perspective {
+    perspective: 1200px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  .drag-none {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+}
+
+/* Custom property so the conic border can be animated */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* ——— Reduced motion: strip everything decorative ——— */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
