@@ -7,7 +7,9 @@ const WHATSAPP_NUMBER = '22241860533'; // +222 41 86 05 33
 module.exports = {
   name: 'Travel and Trips in Mauritania',
   shortName: 'Travel & Trips',
-  domain: 'https://travelandtripsinmauritania.com',
+  // Live domain. Swap to https://travelandtripsinmauritania.com once its DNS
+  // points at GitHub Pages, and update CNAME to match at the same time.
+  domain: 'https://maurimax.store',
   email: 'travelandtripsinmauritania7@gmail.com',
   phoneDisplay: '+222 41 86 05 33',
   whatsapp: WHATSAPP_NUMBER,
