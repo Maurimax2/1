@@ -46,7 +46,7 @@ git add -A && git commit -m "..." && git push
 
 | What | File |
 | --- | --- |
-| Prices, plans, TV boxes | `lib/products.ts` |
+| Prices, plans, the two devices | `lib/products.ts` |
 | Categories & football leagues | `lib/products.ts` |
 | WhatsApp number, Snapchat, tagline | `lib/site.ts` |
 | Colours, fonts, animations | `tailwind.config.ts`, `app/globals.css` |
@@ -61,11 +61,13 @@ git add -A && git commit -m "..." && git push
 | 6 Months | 2000 MRU | project brief |
 | 12 Months + 3 free | 3000 MRU | project brief |
 | MOORTV Stick 4K | 3000 MRU, 1 year included | the brand's own flyer |
-| Box 4K / Cinema Pro / Family Bundle / Remote | 4000 / 6500 / 5500 / 500 MRU | **placeholders — confirm or remove** |
+| MOORTV Box 4K | 4500 MRU, 1 year included | **placeholder — confirm** |
 
 The 2024 flyer advertised 800 / 1200 / 2000 MRU for the three subscription
-tiers. The brief's newer ladder is what the site uses; change `lib/products.ts`
-if that is wrong.
+tiers; the brief's newer ladder is what the site uses. The Box price is the one
+number nobody has specified — it only had to sit above the Stick. Change it in
+`lib/products.ts` (`device-box-4k`), and update the FAQ answer "Should I buy
+the Stick or the Box?" which quotes both prices.
 
 ---
 

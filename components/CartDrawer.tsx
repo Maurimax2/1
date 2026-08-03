@@ -13,9 +13,6 @@ const TONES: Record<string, [string, string]> = {
   best: ['#ef2b47', '#6b1839'],
   stick: ['#ef2b47', '#6b1839'],
   box: ['#2f7bff', '#7c3aed'],
-  pro: ['#a855f7', '#1450d8'],
-  bundle: ['#22d3ee', '#2f7bff'],
-  remote: ['#f4917a', '#6b1839'],
 };
 
 export function CartDrawer() {

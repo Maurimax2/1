@@ -14,7 +14,7 @@ const FAQS = [
   },
   {
     q: 'Which devices does MOORTV work on?',
-    a: 'Smart TVs (Samsung, LG, Android TV), Android phones and boxes, iPhone and iPad, Windows and Mac laptops, and our own MOORTV Stick. One subscription covers your household — we will help you set up each device.',
+    a: 'Smart TVs (Samsung, LG, Android TV), Android phones and boxes, iPhone and iPad, Windows and Mac laptops, and our own MOORTV Stick or Box. One subscription covers your household — we will help you set up each device.',
   },
   {
     q: 'What is included in the library?',
@@ -25,8 +25,8 @@ const FAQS = [
     a: 'For 4K we recommend around 25 Mbps. Full HD works comfortably from about 10 Mbps, and the stream adapts automatically if your connection dips, so playback keeps going.',
   },
   {
-    q: 'What is the difference between a subscription and a TV stick?',
-    a: 'A subscription is the service itself, for devices you already own. The MOORTV Stick is hardware — 3000 MRU including a full year of subscription — which turns any HDMI screen into a smart TV, already configured.',
+    q: 'Should I buy the Stick or the Box?',
+    a: 'Both come with a full year of MOORTV included and both output 4K. The Stick (3000 MRU) is pocket-sized, plugs straight into HDMI and runs on WiFi — perfect for a second TV or for travelling. The Box (4500 MRU) has more memory and a wired ethernet port, so it is the safer choice for your main TV and for big live matches.',
   },
   {
     q: 'How do I pay?',

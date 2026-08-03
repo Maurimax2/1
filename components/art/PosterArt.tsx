@@ -420,51 +420,12 @@ function Composition({ variant, id, a, b }: { variant: string; id: string; a: st
       );
 
     /* ——— Devices ——— */
+    /* ——— Hardware ——— */
     case 'box':
-    case 'pro':
-    case 'bundle':
-      return <BoxArt id={id} a={a} b={b} twin={variant === 'bundle'} tall={variant === 'pro'} />;
+      return <BoxArt id={id} a={a} b={b} />;
 
     case 'stick':
-      return (
-        <g>
-          <circle cx="200" cy="250" r="140" fill={a} opacity="0.3" filter={`url(#${id}-soft)`} />
-          <g transform="rotate(-14 200 260)">
-            <rect x="118" y="222" width="180" height="66" rx="20" fill="#0c0d14" stroke={white} strokeOpacity="0.35" />
-            <rect x="298" y="240" width="34" height="30" rx="6" fill="#8b8f9c" />
-            <circle cx="160" cy="255" r="9" fill={b} />
-            <rect x="182" y="248" width="70" height="6" rx="3" fill="#fff" opacity="0.25" />
-            <rect x="182" y="262" width="42" height="6" rx="3" fill="#fff" opacity="0.15" />
-          </g>
-        </g>
-      );
-
-    case 'remote':
-      return (
-        <g>
-          <circle cx="200" cy="250" r="130" fill={b} opacity="0.28" filter={`url(#${id}-soft)`} />
-          <g transform="rotate(10 200 270)">
-            <rect x="152" y="90" width="96" height="360" rx="46" fill="#0c0d14" stroke={white} strokeOpacity="0.35" />
-            <circle cx="200" cy="150" r="17" fill={a} />
-            <circle cx="200" cy="240" r="42" fill="none" stroke="#fff" strokeOpacity="0.35" strokeWidth="9" />
-            <circle cx="200" cy="240" r="15" fill="#fff" opacity="0.85" />
-            {[0, 1, 2].map((r) =>
-              [0, 1, 2].map((c) => (
-                <rect
-                  key={`${r}-${c}`}
-                  x={168 + c * 24}
-                  y={310 + r * 34}
-                  width="18"
-                  height="18"
-                  rx="9"
-                  fill="#fff"
-                  opacity="0.22"
-                />
-              )),
-            )}
-          </g>
-        </g>
-      );
+      return <StickArt id={id} a={a} b={b} />;
 
     default:
       return (
@@ -476,55 +437,146 @@ function Composition({ variant, id, a, b }: { variant: string; id: string; a: st
   }
 }
 
-function BoxArt({
-  id,
-  a,
-  b,
-  twin,
-  tall,
-}: {
-  id: string;
-  a: string;
-  b: string;
-  twin?: boolean;
-  tall?: boolean;
-}) {
-  const white = 'rgba(255,255,255,0.9)';
-  const h = tall ? 116 : 88;
+/**
+ * The MOORTV voice remote, drawn once and reused by both hardware shots:
+ * power + mouse keys, D-pad with OK, back/home, volume with mic between,
+ * and a row of app shortcut buttons — matching the remote we actually ship.
+ */
+function Remote({ accent }: { accent: string }) {
+  const shell = 'rgba(255,255,255,0.16)';
 
   return (
     <g>
-      <circle cx="200" cy="220" r="150" fill={a} opacity="0.3" filter={`url(#${id}-soft)`} />
-      <ellipse cx="200" cy="404" rx="150" ry="26" fill="#000" opacity="0.5" />
+      {/* Shell */}
+      <rect x="0" y="0" width="96" height="300" rx="46" fill="#0b0c12" />
+      <rect x="0.9" y="0.9" width="94.2" height="298.2" rx="45.1" fill="none" stroke={shell} strokeWidth="1.8" />
+      {/* Specular edge */}
+      <path d="M14 26 A40 40 0 0 1 48 3" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2.4" strokeLinecap="round" />
 
-      {twin && (
-        <g transform="translate(-58 38) scale(0.82)" opacity="0.7">
-          <rect x="88" y={330 - h} width="224" height={h} rx="18" fill="#101119" stroke={white} strokeOpacity="0.3" />
-          <rect x="106" y={330 - h + 18} width="52" height="8" rx="4" fill={b} />
-        </g>
-      )}
+      {/* Power / mouse */}
+      <circle cx="27" cy="34" r="10.5" fill="none" stroke={accent} strokeWidth="2.2" />
+      <path d="M27 28.5v6" stroke={accent} strokeWidth="2.2" strokeLinecap="round" />
+      <circle cx="69" cy="34" r="10.5" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2.2" />
+      <rect x="65.5" y="29.5" width="7" height="9" rx="3.5" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1.6" />
 
-      <g transform={twin ? 'translate(40 0)' : undefined}>
-        {/* Body */}
-        <rect x="88" y={356 - h} width="224" height={h} rx="20" fill="#0d0e16" stroke={white} strokeOpacity="0.35" />
-        {/* Top face highlight */}
-        <rect x="88" y={356 - h} width="224" height="18" rx="9" fill="#fff" opacity="0.06" />
-        {/* Front detailing */}
-        <rect x="112" y={356 - h + 26} width="64" height="8" rx="4" fill={b} />
-        <circle cx="284" cy={356 - 20} r="6" fill="#22d3ee" />
-        <rect x="112" y={356 - 26} width="120" height="6" rx="3" fill="#fff" opacity="0.18" />
-        {tall && <rect x="112" y={356 - h + 46} width="42" height="6" rx="3" fill="#fff" opacity="0.14" />}
-        {/* Glow strip beneath */}
-        <rect x="112" y={358} width="176" height="4" rx="2" fill={a} opacity="0.9" />
+      {/* D-pad */}
+      <circle cx="48" cy="108" r="38" fill="#12141d" stroke="rgba(255,255,255,0.14)" strokeWidth="1.6" />
+      <circle cx="48" cy="108" r="17" fill="#1b1e29" stroke="rgba(255,255,255,0.26)" strokeWidth="1.4" />
+      <text x="48" y="113" textAnchor="middle" fill="rgba(255,255,255,0.82)" fontSize="12" fontWeight="700" letterSpacing="0.5">
+        OK
+      </text>
+      <path d="M48 76 l6 8 h-12 Z" fill="rgba(255,255,255,0.5)" />
+      <path d="M48 140 l6 -8 h-12 Z" fill="rgba(255,255,255,0.5)" />
+      <path d="M16 108 l8 -6 v12 Z" fill="rgba(255,255,255,0.5)" />
+      <path d="M80 108 l-8 -6 v12 Z" fill="rgba(255,255,255,0.5)" />
+
+      {/* Back / home */}
+      <circle cx="27" cy="172" r="11" fill="#14161f" stroke="rgba(255,255,255,0.16)" strokeWidth="1.4" />
+      <path d="M31 168 a5 5 0 1 0 -4 8" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="1.8" strokeLinecap="round" />
+      <circle cx="69" cy="172" r="11" fill="#14161f" stroke="rgba(255,255,255,0.16)" strokeWidth="1.4" />
+      <path d="M64 173 l5 -5 l5 5 v5 h-10 Z" fill="none" stroke="rgba(255,255,255,0.55)" strokeWidth="1.6" strokeLinejoin="round" />
+
+      {/* Volume − / mic / volume + */}
+      <circle cx="20" cy="214" r="10" fill="#14161f" stroke="rgba(255,255,255,0.14)" strokeWidth="1.3" />
+      <path d="M16 214h8" stroke="rgba(255,255,255,0.5)" strokeWidth="1.7" strokeLinecap="round" />
+      <circle cx="48" cy="214" r="14" fill={accent} />
+      <rect x="44.5" y="207" width="7" height="11" rx="3.5" fill="#fff" />
+      <path d="M42 216.5a6 6 0 0 0 12 0M48 222.5v3" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+      <circle cx="76" cy="214" r="10" fill="#14161f" stroke="rgba(255,255,255,0.14)" strokeWidth="1.3" />
+      <path d="M72 214h8M76 210v8" stroke="rgba(255,255,255,0.5)" strokeWidth="1.7" strokeLinecap="round" />
+
+      {/* App shortcut keys */}
+      <rect x="12" y="248" width="33" height="15" rx="7.5" fill="rgba(255,255,255,0.13)" />
+      <rect x="51" y="248" width="33" height="15" rx="7.5" fill="rgba(255,255,255,0.09)" />
+      <rect x="12" y="270" width="33" height="15" rx="7.5" fill="rgba(255,255,255,0.09)" />
+      <rect x="51" y="270" width="33" height="15" rx="7.5" fill="rgba(255,255,255,0.13)" />
+    </g>
+  );
+}
+
+/** MOORTV Stick 4K — HDMI streaming stick shown with its remote. */
+function StickArt({ id, a, b }: { id: string; a: string; b: string }) {
+  return (
+    <g>
+      <circle cx="210" cy="250" r="165" fill={a} opacity="0.34" filter={`url(#${id}-soft)`} />
+      <ellipse cx="212" cy="452" rx="150" ry="24" fill="#000" opacity="0.55" />
+
+      {/* Remote, angled left */}
+      <g transform="translate(104 176) rotate(-9) scale(0.78)">
+        <Remote accent={b} />
       </g>
 
-      {/* Floating remote */}
-      <g transform="translate(292 176) rotate(16)" opacity="0.95">
-        <rect x="0" y="0" width="46" height="150" rx="22" fill="#12131c" stroke={white} strokeOpacity="0.3" />
-        <circle cx="23" cy="26" r="7" fill={b} />
-        <circle cx="23" cy="66" r="15" fill="none" stroke="#fff" strokeOpacity="0.3" strokeWidth="4" />
-        <rect x="13" y="98" width="20" height="6" rx="3" fill="#fff" opacity="0.2" />
-        <rect x="13" y="114" width="20" height="6" rx="3" fill="#fff" opacity="0.2" />
+      {/* The stick itself, angled right */}
+      <g transform="translate(252 180) rotate(11) scale(0.94)">
+        {/* HDMI plug: metal shroud, contact slot, then the plastic collar */}
+        <path d="M14 0 h44 l-3 13 h-38 Z" fill="#7d838e" />
+        <path d="M14 0 h44 l-1 4 h-42 Z" fill="#a4aab5" />
+        <rect x="23" y="3.5" width="26" height="4.5" rx="1.2" fill="#2b2e36" />
+        <rect x="12" y="12" width="48" height="11" rx="3" fill="#15171f" />
+
+        {/* Body — narrow, as a real stick is */}
+        <rect x="1" y="21" width="70" height="182" rx="17" fill="#0b0c12" />
+        <rect x="1.9" y="21.9" width="68.2" height="180.2" rx="16.1" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.7" />
+        {/* Glossy upper section, matte below — the real unit's two-tone finish */}
+        <path d="M1 40 h70 v40 h-70 Z" fill="rgba(255,255,255,0.075)" />
+        <path d="M1 80 q35 14 70 0 v6 q-35 14 -70 0 Z" fill="rgba(255,255,255,0.035)" />
+        {/* Edge highlight */}
+        <path d="M10 196 A16 16 0 0 1 3 182 V74" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.9" strokeLinecap="round" />
+        {/* Status LED */}
+        <circle cx="36" cy="166" r="4.2" fill="#22d3ee" />
+        <circle cx="36" cy="166" r="9" fill="#22d3ee" opacity="0.3" />
+      </g>
+    </g>
+  );
+}
+
+/** MOORTV Box 4K — Android set-top box in three-quarter view, with remote. */
+function BoxArt({ id, a, b }: { id: string; a: string; b: string }) {
+  return (
+    <g>
+      <circle cx="196" cy="240" r="168" fill={a} opacity="0.34" filter={`url(#${id}-soft)`} />
+      <ellipse cx="200" cy="418" rx="162" ry="26" fill="#000" opacity="0.55" />
+
+      {/* ——— Set-top box, slight three-quarter perspective ——— */}
+      <g>
+        {/* Top face */}
+        <path d="M62 300 L108 250 L318 250 L272 300 Z" fill="#15171f" />
+        <path d="M62 300 L108 250 L318 250 L272 300 Z" fill="none" stroke="rgba(255,255,255,0.16)" strokeWidth="1.6" />
+        {/* Sheen across the top */}
+        <path d="M78 282 L118 262 L214 262 L174 282 Z" fill="rgba(255,255,255,0.07)" />
+        {/* Embossed mark on the lid */}
+        <circle cx="196" cy="274" r="15" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="1.6" />
+        <path d="M190 267 l12 7 l-12 7 Z" fill="rgba(255,255,255,0.3)" />
+
+        {/* Front face */}
+        <path d="M62 300 L272 300 L272 372 L62 372 Z" fill="#0b0c12" />
+        <path d="M62 300 L272 300 L272 372 L62 372 Z" fill="none" stroke="rgba(255,255,255,0.14)" strokeWidth="1.6" />
+        {/* Right face */}
+        <path d="M272 300 L318 250 L318 322 L272 372 Z" fill="#070810" />
+        <path d="M272 300 L318 250 L318 322 L272 372 Z" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="1.5" />
+
+        {/* Front: display window + power LED */}
+        <rect x="84" y="326" width="86" height="20" rx="6" fill="rgba(255,255,255,0.05)" />
+        <rect x="93" y="333" width="52" height="6" rx="3" fill="rgba(255,255,255,0.28)" />
+        <circle cx="246" cy="336" r="5" fill="#22d3ee" />
+        <circle cx="246" cy="336" r="11" fill="#22d3ee" opacity="0.25" />
+
+        {/* Rear ports along the right face: HDMI, USB, ethernet, power */}
+        <path d="M283 288 l22 -24 v13 l-22 24 Z" fill="rgba(255,255,255,0.2)" />
+        <path d="M283 312 l22 -24 v9 l-22 24 Z" fill="rgba(255,255,255,0.14)" />
+        <path d="M283 332 l22 -24 v11 l-22 24 Z" fill="rgba(255,255,255,0.14)" />
+
+        {/* Feet */}
+        <rect x="76" y="372" width="26" height="7" rx="3" fill="#05060a" />
+        <rect x="232" y="372" width="26" height="7" rx="3" fill="#05060a" />
+
+        {/* Underglow */}
+        <rect x="82" y="376" width="170" height="4" rx="2" fill={b} opacity="0.85" />
+      </g>
+
+      {/* Remote leaning in front, right */}
+      <g transform="translate(272 196) rotate(15) scale(0.68)">
+        <Remote accent={b} />
       </g>
     </g>
   );

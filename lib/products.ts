@@ -85,92 +85,48 @@ export const PLANS: Product[] = [
 ];
 
 /**
- * Hardware.
+ * Hardware — two products, both shipping with a full year of MOORTV.
  *
- * `box-stick-4k` is the real advertised product: 3000 MRU, TV stick + voice
- * remote with a full year of MOORTV included. The remaining SKUs are sensible
- * companions — confirm names and prices before going live.
+ * The stick is the real advertised item: 3000 MRU with a year included.
+ * The box price is a placeholder set above the stick; confirm it before launch.
  */
 export const DEVICES: Product[] = [
   {
-    id: 'box-stick-4k',
+    id: 'device-stick-4k',
     kind: 'device',
     name: 'MOORTV Stick 4K',
     nameAr: 'عصا موور تي في',
     blurb:
-      'Turn any screen into a smart TV. Plug into HDMI, connect WiFi, and you are watching in under a minute.',
+      'Turn any screen into a smart TV. Plug it into HDMI, connect WiFi, and you are watching in under a minute.',
     price: 3000,
     art: 'stick',
     badge: 'Best Seller',
-    featured: true,
     features: [
       '1 full year of MOORTV included',
-      '4K Ultra HD output',
-      'Voice remote with OK / Home keys',
+      '4K Ultra HD',
+      'Voice remote in the box',
       'WiFi — no cables to run',
+      'Pocket-sized, travels with you',
     ],
   },
   {
-    id: 'box-android-4k',
+    id: 'device-box-4k',
     kind: 'device',
     name: 'MOORTV Box 4K',
     nameAr: 'جهاز موور تي في',
     blurb:
-      'The full Android TV box. More power, more storage and an ethernet port for flawless 4K football.',
-    price: 4000,
+      'The full Android TV box. More power, more storage and a wired ethernet port for flawless 4K football.',
+    price: 4500,
     art: 'box',
+    badge: 'Most Powerful',
+    featured: true,
     features: [
       '1 full year of MOORTV included',
-      '4K HDR • 4GB RAM',
+      '4K HDR • 4GB RAM • 32GB storage',
       'WiFi + Ethernet port',
-      'Voice remote included',
+      'Voice remote in the box',
+      'Never buffers on big matches',
     ],
-  },
-  {
-    id: 'box-cinema-pro',
-    kind: 'device',
-    name: 'MOORTV Cinema Pro',
-    nameAr: 'سينما برو',
-    blurb:
-      'For the home theatre. Top-tier decoding, 8GB RAM and gigabit ethernet — nothing ever buffers.',
-    price: 6500,
-    compareAt: 7500,
-    art: 'pro',
-    badge: 'Premium',
-    features: [
-      '1 full year of MOORTV included',
-      '4K HDR10+ • 8GB RAM',
-      'Gigabit Ethernet',
-      'Backlit air-mouse remote',
-    ],
-  },
-  {
-    id: 'box-family-bundle',
-    kind: 'device',
-    name: 'Family Bundle',
-    nameAr: 'عرض العائلة',
-    blurb:
-      'Two sticks, two rooms, two full years. The easiest way to cover the whole house at once.',
-    price: 5500,
-    compareAt: 6000,
-    art: 'bundle',
-    features: [
-      '2 × 1 year of MOORTV included',
-      '2 × 4K sticks',
-      'Two voice remotes',
-      'Free setup assistance',
-    ],
-  },
-  {
-    id: 'box-remote',
-    kind: 'device',
-    name: 'Voice Remote',
-    nameAr: 'جهاز تحكم',
-    blurb:
-      'A spare remote with voice search, OK pad and dedicated app keys. Ships ready-paired.',
-    price: 500,
-    art: 'remote',
-    features: ['Voice search built in', 'OK / Home / Back keys', 'Works with every MOORTV device', 'Ships ready-paired'],
   },
 ];
 
