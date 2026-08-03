@@ -47,12 +47,16 @@ module.exports = function contact(t, L) {
     <h2 class="cform__title reveal" data-split>${c.form.title}</h2>
     <p class="cform__sub reveal">${c.form.sub}</p>
 
-    <div class="promise reveal">
+    ${
+      c.promise.items.length
+        ? `<div class="promise reveal">
       <h3 class="minihead">${c.promise.t}</h3>
       <ol class="promise__list">
         ${c.promise.items.map((p) => `<li>${p}</li>`).join('')}
       </ol>
-    </div>
+    </div>`
+        : ''
+    }
   </div>
 
   <form class="cform__form reveal" data-wa-form

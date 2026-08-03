@@ -70,10 +70,16 @@ publish on.
 `src/content/en.js` and its French and Italian twins. Prices, durations,
 seasons and itineraries for the five experiences live there too.
 
-**Replace the testimonials**
-`home.testimonials.items` in each of the three content files. The three
-currently in place are placeholders written to show the layout — replace
-them with real traveller reviews before launch.
+**Add reviews**
+`src/data/reviews.js`. Real reviews only: they are stored once and shown
+verbatim in every language, never translated and never edited, because they
+are someone else's words. The section is hidden while the list is empty.
+
+**Blank fields are deliberate.** Durations, seasons, group sizes, highlights,
+itineraries, the About page sections and the contact promises were removed
+because nobody had confirmed them. Every one of those blocks disappears from
+the site while empty and reappears as soon as it is filled in — so the site
+never states something the company has not confirmed.
 
 **Add new photographs**
 

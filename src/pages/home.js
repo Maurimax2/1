@@ -1,4 +1,5 @@
 const site = require('../data/site.js');
+const reviews = require('../data/reviews.js');
 const { pic, icon } = require('../lib/html.js');
 const { photo } = require('../data/photos.js');
 const { sectionHead, expCard, photoTile, lightbox } = require('../lib/components.js');
@@ -63,19 +64,38 @@ module.exports = function home(t, L) {
     })
   ).join('');
 
-  /* ── 7. Testimonials ─────────────────────────────────────────────── */
-  const quotes = t.home.testimonials.items
+  /* ── 7. Reviews — real ones only; hidden while none are on file ──── */
+  const stars = (n) =>
+    `<span class="stars" aria-label="${n}/5">${'★'.repeat(n)}${'☆'.repeat(5 - n)}</span>`;
+
+  const quotes = reviews.items
     .map(
-      (q, i) => `<figure class="quote${i === 0 ? ' is-active' : ''}" data-quote="${i}">
-      <blockquote>${q.q}</blockquote>
-      <figcaption><span class="quote__n">${q.n}</span><span class="quote__c">${q.c}</span></figcaption>
+      (r, i) => `<figure class="quote${i === 0 ? ' is-active' : ''}" data-quote="${i}" lang="${r.lang || 'en'}">
+      ${r.rating ? stars(r.rating) : ''}
+      <blockquote>${r.text}</blockquote>
+      <figcaption><span class="quote__n">${r.name}</span><span class="quote__c">${[r.country, r.date].filter(Boolean).join(' · ')}</span></figcaption>
     </figure>`
     )
     .join('');
 
-  const quoteDots = t.home.testimonials.items
-    .map((q, i) => `<button class="quote__dot${i === 0 ? ' is-active' : ''}" data-qdot="${i}" aria-label="${q.n}"></button>`)
+  const quoteDots = reviews.items
+    .map((r, i) => `<button class="quote__dot${i === 0 ? ' is-active' : ''}" data-qdot="${i}" aria-label="${r.name}"></button>`)
     .join('');
+
+  const reviewsSection = reviews.items.length
+    ? `<section class="testi">
+  <div class="testi__inner">
+    <p class="eyebrow reveal">${t.home.reviews.eyebrow}</p>
+    <h2 class="testi__title reveal" data-split>${t.home.reviews.title}</h2>
+    <div class="testi__stage" data-quotes>
+      ${icon('quote', 'testi__mark')}
+      ${quotes}
+    </div>
+    <div class="testi__dots">${quoteDots}</div>
+    <a class="link reveal" href="${reviews.source}" target="_blank" rel="noopener">${t.home.reviews.cta}${icon('arrow')}</a>
+  </div>
+</section>`
+    : '';
 
   return `
 <main id="main">
@@ -126,7 +146,7 @@ module.exports = function home(t, L) {
 </section>
 
 <!-- ══ WHY US ══ -->
-<section class="why">
+${!t.home.why.items.length ? '' : `<section class="why">
   ${sectionHead({ eyebrow: t.home.why.eyebrow, title: t.home.why.title })}
   <div class="why__list" data-hoverimg>
     ${t.home.why.items
@@ -143,7 +163,7 @@ module.exports = function home(t, L) {
       .join('')}
     <div class="why__float" aria-hidden="true"></div>
   </div>
-</section>
+</section>`}
 
 <!-- ══ FEATURED EXPERIENCES ══ -->
 <section class="feat">
@@ -172,18 +192,8 @@ module.exports = function home(t, L) {
   </div>
 </section>
 
-<!-- ══ TESTIMONIALS ══ -->
-<section class="testi">
-  <div class="testi__inner">
-    <p class="eyebrow reveal">${t.home.testimonials.eyebrow}</p>
-    <h2 class="testi__title reveal" data-split>${t.home.testimonials.title}</h2>
-    <div class="testi__stage" data-quotes>
-      ${icon('quote', 'testi__mark')}
-      ${quotes}
-    </div>
-    <div class="testi__dots">${quoteDots}</div>
-  </div>
-</section>
+<!-- ══ REVIEWS ══ -->
+${reviewsSection}
 
 <!-- ══ FINAL CTA ══ -->
 <section class="fcta">

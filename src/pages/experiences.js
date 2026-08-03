@@ -3,6 +3,50 @@ const { photo } = require('../data/photos.js');
 const { lightbox, bookBtn, ghostBtn } = require('../lib/components.js');
 const site = require('../data/site.js');
 
+/** Facts panel: only rows the client has actually confirmed are rendered. */
+function metaBlock(e, t) {
+  const rows = [
+    [t.ui.location, e.location],
+    [t.ui.duration, e.duration],
+    [t.ui.season, e.season],
+    [t.ui.group, e.group],
+  ].filter(([, v]) => v);
+
+  if (!rows.length) return '';
+  return `<aside class="exp__meta reveal"><dl>
+      ${rows.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}
+    </dl></aside>`;
+}
+
+/** Highlights + itinerary, each shown only when there is something to show. */
+function colsBlock(e, t) {
+  const hl = e.highlights.length
+    ? `<div class="exp__hl reveal">
+      <h3 class="minihead">${t.ui.highlights}</h3>
+      <ul class="ticks">${e.highlights.map((h) => `<li>${h}</li>`).join('')}</ul>
+    </div>`
+    : '';
+
+  const jr = e.journey.length
+    ? `<div class="exp__journey reveal">
+      <h3 class="minihead">${t.ui.journey}</h3>
+      <ol class="steps">
+        ${e.journey
+          .map(
+            (s, k) => `<li class="steps__item" style="--d:${k * 70}ms">
+          <span class="steps__n">${String(k + 1).padStart(2, '0')}</span>
+          <div><h4>${s.t}</h4><p>${s.d}</p></div>
+        </li>`
+          )
+          .join('')}
+      </ol>
+    </div>`
+    : '';
+
+  if (!hl && !jr) return '';
+  return `<div class="exp__cols${hl && jr ? '' : ' exp__cols--one'}">${hl}${jr}</div>`;
+}
+
 module.exports = function experiences(t, L) {
   const all = [];
 
@@ -46,38 +90,10 @@ module.exports = function experiences(t, L) {
       </div>
     </div>
 
-    <aside class="exp__meta reveal">
-      <dl>
-        <div><dt>${t.ui.location}</dt><dd>${e.location}</dd></div>
-        <div><dt>${t.ui.duration}</dt><dd>${e.duration}</dd></div>
-        <div><dt>${t.ui.season}</dt><dd>${e.season}</dd></div>
-        <div><dt>${t.ui.group}</dt><dd>${e.group}</dd></div>
-      </dl>
-    </aside>
+    ${metaBlock(e, t)}
   </div>
 
-  <div class="exp__cols">
-    <div class="exp__hl reveal">
-      <h3 class="minihead">${t.ui.highlights}</h3>
-      <ul class="ticks">
-        ${e.highlights.map((h) => `<li>${h}</li>`).join('')}
-      </ul>
-    </div>
-
-    <div class="exp__journey reveal">
-      <h3 class="minihead">${t.ui.journey}</h3>
-      <ol class="steps">
-        ${e.journey
-          .map(
-            (s, k) => `<li class="steps__item" style="--d:${k * 70}ms">
-          <span class="steps__n">${String(k + 1).padStart(2, '0')}</span>
-          <div><h4>${s.t}</h4><p>${s.d}</p></div>
-        </li>`
-          )
-          .join('')}
-      </ol>
-    </div>
-  </div>
+  ${colsBlock(e, t)}
 
   <div class="exp__strip">
     <h3 class="minihead reveal">${t.ui.photos}</h3>
@@ -92,7 +108,7 @@ module.exports = function experiences(t, L) {
       (e, i) => `<a class="expnav__item reveal" style="--d:${i * 60}ms" href="#${e.id}">
     <span class="expnav__n">${String(i + 1).padStart(2, '0')}</span>
     <span class="expnav__t">${e.title}</span>
-    <span class="expnav__d">${e.duration}</span>
+    ${e.duration ? `<span class="expnav__d">${e.duration}</span>` : ''}
   </a>`
     )
     .join('');

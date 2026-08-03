@@ -25,7 +25,7 @@ function expCard(exp, t, L, { feature = false, index = 0 } = {}) {
       <span class="expcard__num">${String(index + 1).padStart(2, '0')}</span>
     </div>
     <div class="expcard__body">
-      <p class="expcard__meta"><span>${exp.location}</span><i></i><span>${exp.duration}</span></p>
+      <p class="expcard__meta"><span>${exp.location}</span>${exp.duration ? `<i></i><span>${exp.duration}</span>` : ''}</p>
       <h3 class="expcard__title">${exp.title}</h3>
       <p class="expcard__txt">${exp.short}</p>
       <span class="link">${t.ui.exploreExperience}${icon('arrow')}</span>

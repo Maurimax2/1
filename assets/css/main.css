@@ -1260,3 +1260,14 @@ body.lb-open { overflow: hidden; }
 .stats__n, .lb__count, .infolist dt, .dcard__n, .gnav__n, .quote blockquote, .gsec__body p {
   font-variant-numeric: lining-nums; font-feature-settings: 'lnum' 1;
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   REVIEWS
+   Real reviews only — shown in the language they were written in.
+   ══════════════════════════════════════════════════════════════════════ */
+.stars {
+  display: block; margin-bottom: 1.4rem;
+  color: var(--gold); font-size: 1.05rem; letter-spacing: 0.22em;
+}
+.testi__inner > .link { margin-top: 2rem; }
+.exp__cols--one { grid-template-columns: minmax(0, 46rem); }
