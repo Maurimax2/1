@@ -2,12 +2,14 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Sora, Noto_Kufi_Arabic } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/lib/cart';
+import { LanguageProvider } from '@/lib/i18n';
 import { Nav } from '@/components/Nav';
 import { CartDrawer } from '@/components/CartDrawer';
 import { Preloader } from '@/components/Preloader';
 import { FloatingWhatsApp } from '@/components/FloatingWhatsApp';
 import { Footer } from '@/components/sections/Footer';
 import { SITE } from '@/lib/site';
+import { SkipLink } from '@/components/SkipLink';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -30,38 +32,44 @@ const kufi = Noto_Kufi_Arabic({
 });
 
 const description =
+  'موور تي في — أكبر منصة ترفيهية في موريتانيا. أكثر من 20,000 فيلم و10,000 مسلسل و9,000 قناة مباشرة بجودة 4K، وكل الدوريات الكروية الكبرى. اشتراك واحد لكل أجهزتك.';
+
+const descriptionEn =
   'MOORTV — Mauritania’s largest entertainment platform. 20,000+ movies, 10,000+ TV shows and 9,000+ live channels in 4K, plus every major football league. One subscription, every device.';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.domain),
   title: {
-    default: 'MOORTV — Everything You Love. One Subscription.',
+    default: 'موور تي في | MOORTV — كل ما تحب. اشتراك واحد.',
     template: '%s · MOORTV',
   },
   description,
   keywords: [
+    'موور تي في',
     'MOORTV',
-    'IPTV Mauritania',
     'اشتراك موور تي في',
+    'أفلام ومسلسلات موريتانيا',
+    'قنوات مباشرة موريتانيا',
+    'اشتراك رياضي موريتانيا',
+    'جهاز تلفاز ذكي نواكشوط',
+    'IPTV Mauritania',
     'streaming Mauritania',
-    'live football Mauritania',
     '4K IPTV',
-    'Nouakchott streaming',
   ],
   applicationName: SITE.name,
   authors: [{ name: SITE.name }],
   openGraph: {
     type: 'website',
-    locale: 'en_US',
-    alternateLocale: ['ar_MR'],
+    locale: 'ar_MR',
+    alternateLocale: ['en_US'],
     url: SITE.domain,
     siteName: SITE.name,
-    title: 'MOORTV — Everything You Love. One Subscription.',
+    title: 'موور تي في — كل ما تحب. اشتراك واحد.',
     description,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MOORTV — Everything You Love. One Subscription.',
+    title: 'موور تي في — كل ما تحب. اشتراك واحد.',
     description,
   },
   robots: {
@@ -93,7 +101,8 @@ const structuredData = {
       '@id': `${SITE.domain}/#organization`,
       name: SITE.name,
       url: SITE.domain,
-      description,
+      alternateName: 'MOORTV',
+      description: descriptionEn,
       areaServed: { '@type': 'Country', name: 'Mauritania' },
       contactPoint: {
         '@type': 'ContactPoint',
@@ -109,14 +118,14 @@ const structuredData = {
       url: SITE.domain,
       name: SITE.name,
       publisher: { '@id': `${SITE.domain}/#organization` },
-      inLanguage: ['en', 'ar'],
+      inLanguage: ['ar', 'en'],
     },
   ],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${sora.variable} ${kufi.variable}`}>
+    <html lang="ar" dir="rtl" className={`${inter.variable} ${sora.variable} ${kufi.variable}`}>
       <body>
         <script
           type="application/ld+json"
@@ -124,21 +133,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
 
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-full focus:bg-white focus:px-5 focus:py-2.5 focus:text-sm focus:font-semibold focus:text-black"
-        >
-          Skip to content
-        </a>
-
-        <CartProvider>
-          <Preloader />
-          <Nav />
-          <main id="main">{children}</main>
-          <Footer />
-          <CartDrawer />
-          <FloatingWhatsApp />
-        </CartProvider>
+        <LanguageProvider>
+          <SkipLink />
+          <CartProvider>
+            <Preloader />
+            <Nav />
+            <main id="main">{children}</main>
+            <Footer />
+            <CartDrawer />
+            <FloatingWhatsApp />
+          </CartProvider>
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -4,6 +4,8 @@ import { useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCart } from '@/lib/cart';
 import { formatPrice } from '@/lib/site';
+import { pick } from '@/lib/products';
+import { useLang } from '@/lib/i18n';
 import { PosterArt } from '@/components/art/PosterArt';
 import { Button } from '@/components/ui/Button';
 
@@ -17,6 +19,7 @@ const TONES: Record<string, [string, string]> = {
 
 export function CartDrawer() {
   const { items, count, subtotal, savings, total, isOpen, closeCart, remove, setQty } = useCart();
+  const { t, lang, isRtl } = useLang();
   const panelRef = useRef<HTMLDivElement>(null);
   const lastFocused = useRef<HTMLElement | null>(null);
 
@@ -64,7 +67,7 @@ export function CartDrawer() {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true" aria-label="Shopping cart">
+        <div className="fixed inset-0 z-[70]" role="dialog" aria-modal="true" aria-label={t.cart.label}>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -77,11 +80,11 @@ export function CartDrawer() {
           <motion.div
             ref={panelRef}
             tabIndex={-1}
-            initial={{ x: '100%' }}
+            initial={{ x: isRtl ? '-100%' : '100%' }}
             animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            exit={{ x: isRtl ? '-100%' : '100%' }}
             transition={{ type: 'spring', stiffness: 320, damping: 36 }}
-            className="absolute right-0 top-0 flex h-full w-full max-w-[440px] flex-col border-l border-white/[0.08] bg-[linear-gradient(160deg,#0c0d14,#08080d)] outline-none"
+            className="absolute top-0 flex h-full w-full max-w-[440px] flex-col bg-[linear-gradient(160deg,#0c0d14,#08080d)] outline-none ltr:right-0 ltr:border-l rtl:left-0 rtl:border-r border-white/[0.08]"
           >
             {/* Header */}
             <div className="relative flex items-center justify-between border-b border-white/[0.07] px-6 py-5">
@@ -90,15 +93,15 @@ export function CartDrawer() {
                 className="pointer-events-none absolute -top-20 left-1/2 h-40 w-72 -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(47,123,255,0.3),transparent_70%)] blur-2xl"
               />
               <div className="relative">
-                <h2 className="font-display text-lg font-semibold text-white">Your Cart</h2>
+                <h2 className="font-display text-lg font-semibold text-white">{t.cart.title}</h2>
                 <p className="mt-0.5 text-[12px] text-white/35">
-                  {count === 0 ? 'Nothing here yet' : `${count} item${count === 1 ? '' : 's'}`}
+                  {count === 0 ? t.cart.empty : t.cart.itemCount(count)}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={closeCart}
-                aria-label="Close cart"
+                aria-label={t.cart.close}
                 className="relative flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/65 transition-colors hover:border-white/25 hover:text-white"
               >
                 <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" aria-hidden>
@@ -120,7 +123,7 @@ export function CartDrawer() {
                         layout
                         initial={{ opacity: 0, y: 18 }}
                         animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, x: 40, height: 0, marginBottom: 0 }}
+                        exit={{ opacity: 0, x: isRtl ? -40 : 40, height: 0, marginBottom: 0 }}
                         transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
                         className="hairline relative overflow-hidden rounded-2xl glass p-3.5"
                       >
@@ -136,12 +139,12 @@ export function CartDrawer() {
                           <div className="min-w-0 flex-1">
                             <div className="flex items-start justify-between gap-2">
                               <h3 className="truncate text-[13.5px] font-medium text-white">
-                                {item.product.name}
+                                {pick(item.product, 'name', lang)}
                               </h3>
                               <button
                                 type="button"
                                 onClick={() => remove(item.product.id)}
-                                aria-label={`Remove ${item.product.name}`}
+                                aria-label={t.cart.remove(pick(item.product, 'name', lang))}
                                 className="shrink-0 rounded-md p-1 text-white/30 transition-colors hover:text-ember-soft"
                               >
                                 <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" aria-hidden>
@@ -151,13 +154,13 @@ export function CartDrawer() {
                             </div>
 
                             <p className="mt-0.5 text-[11.5px] capitalize text-white/30">
-                              {item.product.kind}
+                              {item.product.kind === 'device' ? t.cart.kindDevice : t.cart.kindPlan}
                             </p>
 
                             <div className="mt-3 flex items-center justify-between gap-2">
                               <QtyStepper
                                 qty={item.qty}
-                                name={item.product.name}
+                                name={pick(item.product, 'name', lang)}
                                 onChange={(q) => setQty(item.product.id, q)}
                               />
                               <span className="text-[13.5px] font-semibold text-white">
@@ -178,17 +181,17 @@ export function CartDrawer() {
               <div className="border-t border-white/[0.07] bg-black/30 px-6 py-5">
                 <dl className="space-y-2.5 text-[13.5px]">
                   <div className="flex justify-between text-white/50">
-                    <dt>Subtotal</dt>
+                    <dt>{t.cart.subtotal}</dt>
                     <dd className="tabular-nums">{formatPrice(subtotal)}</dd>
                   </div>
                   {savings > 0 && (
                     <div className="flex justify-between text-emerald-300/90">
-                      <dt>Summer sale savings</dt>
-                      <dd className="tabular-nums">−{formatPrice(savings)}</dd>
+                      <dt>{t.cart.savings}</dt>
+                      <dd dir="ltr" className="tabular-nums">−{formatPrice(savings)}</dd>
                     </div>
                   )}
                   <div className="flex items-baseline justify-between border-t border-white/[0.07] pt-3.5">
-                    <dt className="text-[15px] font-medium text-white">Total</dt>
+                    <dt className="text-[15px] font-medium text-white">{t.cart.total}</dt>
                     <dd className="text-[21px] font-semibold tabular-nums text-white">
                       {formatPrice(total)}
                     </dd>
@@ -197,15 +200,15 @@ export function CartDrawer() {
 
                 <div className="mt-5">
                   <Button href="/checkout/" size="lg" full onClick={closeCart}>
-                    Proceed to Checkout
-                    <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" aria-hidden>
+                    {t.cart.checkout}
+                    <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:-scale-x-100" fill="none" aria-hidden>
                       <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </Button>
                 </div>
 
                 <p className="mt-3.5 text-center text-[11.5px] text-white/30">
-                  You confirm and pay on WhatsApp — nothing is charged here.
+                  {t.cart.noCharge}
                 </p>
               </div>
             )}
@@ -225,9 +228,11 @@ export function QtyStepper({
   name: string;
   onChange: (qty: number) => void;
 }) {
+  const { t } = useLang();
+
   return (
     <div className="flex items-center gap-0.5 rounded-full border border-white/10 bg-white/[0.03] p-0.5">
-      <StepButton label={`Decrease quantity of ${name}`} onClick={() => onChange(qty - 1)}>
+      <StepButton label={t.cart.decrease(name)} onClick={() => onChange(qty - 1)}>
         <path d="M3.5 8h9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
       </StepButton>
 
@@ -238,7 +243,7 @@ export function QtyStepper({
         {qty}
       </span>
 
-      <StepButton label={`Increase quantity of ${name}`} onClick={() => onChange(qty + 1)}>
+      <StepButton label={t.cart.increase(name)} onClick={() => onChange(qty + 1)}>
         <path d="M8 3.5v9M3.5 8h9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
       </StepButton>
     </div>
@@ -269,6 +274,8 @@ function StepButton({
 }
 
 function EmptyState({ onClose }: { onClose: () => void }) {
+  const { t } = useLang();
+
   return (
     <div className="flex h-full flex-col items-center justify-center px-4 text-center">
       <div className="relative mb-6">
@@ -289,14 +296,14 @@ function EmptyState({ onClose }: { onClose: () => void }) {
         </svg>
       </div>
 
-      <p className="text-[15px] font-medium text-white/70">Your cart is empty</p>
+      <p className="text-[15px] font-medium text-white/70">{t.cart.emptyTitle}</p>
       <p className="mt-2 max-w-[240px] text-[13px] leading-relaxed text-white/35">
-        Add a subscription or a TV stick and it will show up here.
+        {t.cart.emptyBody}
       </p>
 
       <div className="mt-7">
         <Button href="/#plans" variant="glass" onClick={onClose}>
-          Browse plans
+          {t.cart.browsePlans}
         </Button>
       </div>
     </div>

@@ -4,11 +4,11 @@ import type { ReactElement } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Stagger, StaggerItem } from '@/components/ui/Reveal';
+import { useLang } from '@/lib/i18n';
 
 type Feature = {
   title: string;
   titleAr: string;
-  body: string;
   icon: (p: { className?: string }) => ReactElement;
   tone: string;
 };
@@ -17,79 +17,73 @@ const FEATURES: Feature[] = [
   {
     title: 'Ultra HD Streaming',
     titleAr: 'جودة فائقة',
-    body: 'True 4K UHD with adaptive bitrate, so the picture stays sharp even when the connection dips.',
     icon: SparkIcon,
     tone: '#2f7bff',
   },
   {
     title: 'Fast Activation',
     titleAr: 'تفعيل فوري',
-    body: 'Order on WhatsApp and your line is live in minutes — not hours, not tomorrow.',
     icon: BoltIcon,
     tone: '#a855f7',
   },
   {
     title: 'Massive Library',
     titleAr: 'مكتبة ضخمة',
-    body: 'Over 20,000 movies, 10,000 series and 9,000 live channels in one single place.',
     icon: LayersIcon,
     tone: '#22d3ee',
   },
   {
     title: 'Works Everywhere',
     titleAr: 'على كل الأجهزة',
-    body: 'Smart TV, Android, iPhone, iPad, laptop or our own stick. One account covers them all.',
     icon: DevicesIcon,
     tone: '#ef2b47',
   },
   {
     title: 'Affordable Prices',
     titleAr: 'أسعار مناسبة',
-    body: 'A fraction of what the individual platforms cost separately, with no hidden fees.',
     icon: TagIcon,
     tone: '#10b981',
   },
   {
     title: 'Reliable Support',
     titleAr: 'دعم موثوق',
-    body: 'Real people on WhatsApp who answer quickly and actually fix things.',
     icon: SupportIcon,
     tone: '#f4917a',
   },
   {
     title: 'Premium Quality',
     titleAr: 'جودة ممتازة',
-    body: 'Stable servers with anti-freeze technology built for Mauritanian networks.',
     icon: ShieldIcon,
     tone: '#7c3aed',
   },
   {
     title: 'Always Growing',
     titleAr: 'تحديث مستمر',
-    body: 'New films, new seasons and new channels added every single week.',
     icon: RefreshIcon,
     tone: '#f97316',
   },
 ];
 
 export function Why() {
+  const { t } = useLang();
+
   return (
     <section id="why" className="relative scroll-mt-28 overflow-x-clip py-24 sm:py-32" aria-labelledby="why-title">
       <div className="container-x relative">
         <SectionHeading
-          eyebrow="Why MOORTV"
+          eyebrow={t.why.eyebrow}
           title={
             <span id="why-title">
-              Built to be the <span className="text-gradient">best in Mauritania</span>
+              {t.why.titleA} <span className="text-gradient">{t.why.titleB}</span>
             </span>
           }
-          subtitle="Not just a bigger catalogue — a better experience, end to end."
+          subtitle={t.why.subtitle}
         />
 
         <Stagger className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {FEATURES.map((feature) => (
+          {FEATURES.map((feature, i) => (
             <StaggerItem key={feature.title}>
-              <FeatureCard feature={feature} />
+              <FeatureCard feature={feature} body={t.why.items[i]} />
             </StaggerItem>
           ))}
         </Stagger>
@@ -98,8 +92,9 @@ export function Why() {
   );
 }
 
-function FeatureCard({ feature }: { feature: Feature }) {
+function FeatureCard({ feature, body }: { feature: Feature; body: string }) {
   const reduce = useReducedMotion();
+  const { lang } = useLang();
   const Icon = feature.icon;
 
   return (
@@ -128,12 +123,14 @@ function FeatureCard({ feature }: { feature: Feature }) {
         </span>
 
         <h3 className="relative font-display text-[16px] font-semibold tracking-tight text-white">
-          {feature.title}
+          {lang === 'en' ? feature.title : feature.titleAr}
         </h3>
-        <p dir="rtl" lang="ar" className="relative mt-1.5 text-left font-arabic text-[12px] text-white/35">
-          {feature.titleAr}
-        </p>
-        <p className="relative mt-3 text-[13px] leading-relaxed text-white/45">{feature.body}</p>
+        {lang === 'en' && (
+          <p dir="rtl" lang="ar" className="relative mt-1.5 text-start font-arabic text-[12px] text-white/35">
+            {feature.titleAr}
+          </p>
+        )}
+        <p className="relative mt-3 text-[13px] leading-relaxed text-white/45">{body}</p>
 
         <span
           aria-hidden

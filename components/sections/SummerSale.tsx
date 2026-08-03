@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
+import { useT } from '@/lib/i18n';
 
 /** The sale runs to the end of the current month, recomputed on the client. */
 function endOfMonth() {
@@ -26,6 +27,7 @@ function split(ms: number): Remaining {
 export function SummerSale() {
   // Rendered empty on the server so SSR markup and first client paint agree.
   const [remaining, setRemaining] = useState<Remaining | null>(null);
+  const t = useT();
 
   useEffect(() => {
     const target = endOfMonth();
@@ -68,7 +70,7 @@ export function SummerSale() {
                     transition={{ type: 'spring', stiffness: 220, damping: 16 }}
                     className="inline-flex items-center gap-2 rounded-full border border-amber-300/25 bg-amber-400/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-amber-200"
                   >
-                    Limited Time Only
+                    {t.sale.limited}
                   </motion.span>
 
                   <h2
@@ -79,21 +81,21 @@ export function SummerSale() {
                       ☀️
                     </span>{' '}
                     <span className="bg-gradient-to-r from-amber-200 via-white to-neon-soft bg-clip-text text-transparent">
-                      SUMMER SALE
+                      {t.sale.title}
                     </span>
                   </h2>
 
                   <p className="mt-5 text-[15px] leading-relaxed text-white/55 sm:text-base">
-                    Every subscription and every box is discounted right now.{' '}
-                    <span className="text-white/85">These prices won’t always be available.</span>
+                    {t.sale.body}{' '}
+                    <span className="text-white/85">{t.sale.bodyStrong}</span>
                   </p>
 
                   <div className="mt-9 flex flex-col items-center gap-3 sm:flex-row lg:justify-start">
                     <Button href="#plans" size="lg">
-                      Claim the offer
+                      {t.sale.ctaPrimary}
                     </Button>
                     <Button href="#boxes" variant="ghost" size="lg">
-                      See TV boxes
+                      {t.sale.ctaSecondary}
                     </Button>
                   </div>
                 </div>
@@ -110,19 +112,20 @@ export function SummerSale() {
 
 function Countdown({ remaining }: { remaining: Remaining | null }) {
   const reduce = useReducedMotion();
+  const t = useT();
   const units: Array<[string, number | null]> = [
-    ['Days', remaining?.days ?? null],
-    ['Hours', remaining?.hours ?? null],
-    ['Minutes', remaining?.minutes ?? null],
-    ['Seconds', remaining?.seconds ?? null],
+    [t.sale.units.days, remaining?.days ?? null],
+    [t.sale.units.hours, remaining?.hours ?? null],
+    [t.sale.units.minutes, remaining?.minutes ?? null],
+    [t.sale.units.seconds, remaining?.seconds ?? null],
   ];
 
   return (
     <div className="shrink-0">
       <p className="mb-4 text-[11px] font-medium uppercase tracking-[0.26em] text-white/35">
-        Offer ends in
+        {t.sale.endsIn}
       </p>
-      <div className="flex gap-2.5 sm:gap-3.5" role="timer" aria-live="off">
+      <div className="flex gap-2.5 sm:gap-3.5" role="timer" aria-live="off" dir="ltr">
         {units.map(([label, value]) => (
           <div key={label} className="flex flex-col items-center">
             <div className="hairline relative flex h-[74px] w-[70px] items-center justify-center overflow-hidden rounded-2xl bg-white/[0.05] backdrop-blur-xl sm:h-[86px] sm:w-[82px]">

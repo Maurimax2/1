@@ -6,8 +6,9 @@ import { AddToCart } from '@/components/ui/AddToCart';
 import { TiltCard } from '@/components/ui/TiltCard';
 import { Reveal } from '@/components/ui/Reveal';
 import { PosterArt } from '@/components/art/PosterArt';
-import { DEVICES, type Product } from '@/lib/products';
+import { DEVICES, pick, pickFeatures, type Product } from '@/lib/products';
 import { formatPrice } from '@/lib/site';
+import { useLang } from '@/lib/i18n';
 
 /** Deliberately deep so the hardware reads as a studio shot, not flat colour. */
 const TONES: Record<string, [string, string]> = {
@@ -22,6 +23,8 @@ const ACCENTS: Record<string, [string, string]> = {
 };
 
 export function Devices() {
+  const { t, lang } = useLang();
+
   return (
     <section id="boxes" className="relative scroll-mt-28 overflow-x-clip py-24 sm:py-32" aria-labelledby="boxes-title">
       <div
@@ -32,20 +35,22 @@ export function Devices() {
       <div className="container-x relative">
         <SectionHeading
           align="left"
-          eyebrow="TV Boxes & Sticks"
+          eyebrow={t.devices.eyebrow}
           title={
             <span id="boxes-title">
-              Turn any screen into a <span className="text-gradient">smart TV</span>
+              {t.devices.titleA} <span className="text-gradient">{t.devices.titleB}</span>
             </span>
           }
           subtitle={
             <>
-              <span dir="rtl" lang="ar" className="mb-2 block text-left font-arabic text-white/70">
-                حول شاشتك لتلفاز ذكي
-              </span>
-              Both devices arrive pre-configured with MOORTV installed and a{' '}
-              <span className="text-white/80">full year of subscription included</span>. Plug in,
-              connect WiFi, start watching.
+              {lang === 'en' && (
+                <span dir="rtl" lang="ar" className="mb-2 block text-start font-arabic text-white/70">
+                  {t.devices.arHeadline}
+                </span>
+              )}
+              {t.devices.subtitle}
+              <span className="text-white/80">{t.devices.subtitleStrong}</span>
+              {t.devices.subtitleEnd}
             </>
           }
         />
@@ -57,9 +62,7 @@ export function Devices() {
         </div>
 
         <Reveal delay={0.2}>
-          <p className="mt-10 text-center text-[13px] text-white/35">
-            Delivery available across Mauritania. We help you set it up on WhatsApp — free.
-          </p>
+          <p className="mt-10 text-center text-[13px] text-white/35">{t.devices.delivery}</p>
         </Reveal>
       </div>
     </section>
@@ -68,6 +71,7 @@ export function Devices() {
 
 function DeviceCard({ device, index }: { device: Product; index: number }) {
   const reduce = useReducedMotion();
+  const { t, lang, isRtl } = useLang();
   const tone = TONES[device.art] ?? TONES.box;
   const accent = ACCENTS[device.art] ?? ACCENTS.box;
   const featured = device.featured;
@@ -97,12 +101,12 @@ function DeviceCard({ device, index }: { device: Product; index: number }) {
               />
               <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0b0b12] to-transparent" />
 
-              <span className="absolute left-5 top-5 rounded-full border border-white/15 bg-black/55 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur-md">
-                {device.badge}
+              <span className="absolute top-5 rounded-full border border-white/15 bg-black/55 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur-md ltr:left-5 rtl:right-5">
+                {device.featured ? t.devices.badgeStrong : t.devices.badgeSeller}
               </span>
 
-              <span className="absolute right-5 top-5 rounded-full border border-emerald-400/30 bg-emerald-400/12 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-300 backdrop-blur-md">
-                1 Year Included
+              <span className="absolute top-5 rounded-full border border-emerald-400/30 bg-emerald-400/12 px-3.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-emerald-300 backdrop-blur-md ltr:right-5 rtl:left-5">
+                {t.devices.yearIncluded}
               </span>
             </div>
 
@@ -111,33 +115,28 @@ function DeviceCard({ device, index }: { device: Product; index: number }) {
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 <div>
                   <h3 className="font-display text-[24px] font-semibold tracking-tight text-white">
-                    {device.name}
+                    {pick(device, 'name', lang)}
                   </h3>
-                  {device.nameAr && (
-                    <p dir="rtl" lang="ar" className="mt-1.5 text-left font-arabic text-[12.5px] text-white/35">
-                      {device.nameAr}
-                    </p>
-                  )}
                 </div>
 
-                <div className="shrink-0 sm:text-right">
+                <div className="shrink-0 sm:text-end">
                   <div className="flex items-end gap-1.5 sm:justify-end">
                     <span className="text-[32px] font-semibold leading-none tracking-[-0.035em] text-white">
                       {new Intl.NumberFormat('en-US').format(device.price)}
                     </span>
                     <span className="pb-1 text-[12px] font-medium text-white/40">MRU</span>
                   </div>
-                  <p className="mt-1.5 text-[11.5px] text-white/30">one-time, year included</p>
+                  <p className="mt-1.5 text-[11.5px] text-white/30">{t.devices.oneTime}</p>
                 </div>
               </div>
 
-              <p className="mt-4 text-[13.5px] leading-relaxed text-white/45">{device.blurb}</p>
+              <p className="mt-4 text-[13.5px] leading-relaxed text-white/45">{pick(device, 'blurb', lang)}</p>
 
               <ul className="mt-6 flex-1 space-y-3 border-t border-white/[0.07] pt-6">
-                {device.features.map((f, i) => (
+                {pickFeatures(device, lang).map((f, i) => (
                   <motion.li
                     key={f}
-                    initial={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, x: isRtl ? 10 : -10 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.45, delay: 0.2 + i * 0.05 }}
@@ -168,7 +167,7 @@ function DeviceCard({ device, index }: { device: Product; index: number }) {
                   className="hidden shrink-0 items-center gap-2 text-[11.5px] font-medium uppercase tracking-[0.14em] text-emerald-300/70 sm:flex"
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                  In stock
+                  {t.devices.inStock}
                 </motion.span>
               </div>
             </div>

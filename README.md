@@ -7,6 +7,10 @@ The MOORTV website — `maurimax.store`.
 Built with Next.js 15 (App Router), React 18, Tailwind CSS and Framer Motion,
 and exported as a fully static site so GitHub Pages can serve it directly.
 
+**Arabic is the default language.** The site server-renders as
+`<html lang="ar" dir="rtl">`; English is available from the toggle in the
+header and the choice is remembered in `localStorage`.
+
 ---
 
 ## Running it locally
@@ -49,6 +53,8 @@ git add -A && git commit -m "..." && git push
 | Prices, plans, the two devices | `lib/products.ts` |
 | Categories & football leagues | `lib/products.ts` |
 | WhatsApp number, Snapchat, tagline | `lib/site.ts` |
+| All interface copy, both languages | `lib/i18n.tsx` |
+| Product names/descriptions per language | `lib/products.ts` (`nameAr`, `blurbAr`, `featuresAr`) |
 | Colours, fonts, animations | `tailwind.config.ts`, `app/globals.css` |
 | FAQ questions | `components/sections/FAQ.tsx` |
 | Testimonials | `components/sections/Testimonials.tsx` |
@@ -77,6 +83,31 @@ There is no payment processing on the site. The cart lives in
 `localStorage` (`lib/cart.tsx`), and checkout builds a formatted order message
 and opens `wa.me/22243042404` with it prefilled. Payment and activation happen
 in the WhatsApp conversation.
+
+## Languages
+
+`lib/i18n.tsx` holds one dictionary per language with identical shapes, so
+TypeScript catches a missing translation at build time. Components read it via
+`useLang()` (`{ lang, dir, isRtl, t }`) or `useT()`.
+
+To add a string: add it to `ar`, then to `en`. To change the default language,
+change `DEFAULT_LANG` — and the `lang`/`dir` attributes in `app/layout.tsx`,
+which set what search engines and first paint see.
+
+RTL notes worth knowing before editing styles:
+
+- Use logical utilities (`ps-`, `pe-`, `text-start`, `text-end`) or the
+  `ltr:` / `rtl:` variants rather than `left`/`right`.
+- Letter-spacing is reset in RTL because it breaks Arabic letter joining.
+  Latin-only elements (the MOORTV wordmark, service names) opt back in with
+  the `keep-tracking` class.
+- Phone numbers, the countdown and signed amounts are wrapped in `dir="ltr"`
+  so bidi does not reorder them.
+- Arrow icons that imply direction use `rtl:-scale-x-100`.
+
+Only the Arabic version is server-rendered, so it is the version search
+engines index. Switching to English is a client-side change; if English needs
+to be indexable too, that would mean adding a real `/en` route.
 
 ## Artwork
 

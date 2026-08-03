@@ -6,12 +6,15 @@ import { Rail } from '@/components/ui/Rail';
 import { Reveal } from '@/components/ui/Reveal';
 import { PosterArt } from '@/components/art/PosterArt';
 import { CATEGORIES, LEAGUES, type Category } from '@/lib/products';
+import { useLang } from '@/lib/i18n';
 
 /** Two rows, offset, so the section reads like a streaming home screen. */
 const ROW_ONE = CATEGORIES.slice(0, 5);
 const ROW_TWO = CATEGORIES.slice(5);
 
 export function Categories() {
+  const { t } = useLang();
+
   return (
     <section id="categories" className="relative scroll-mt-28 overflow-x-clip py-24 sm:py-32" aria-labelledby="categories-title">
       <div
@@ -22,24 +25,24 @@ export function Categories() {
       <div className="container-x relative">
         <SectionHeading
           align="left"
-          eyebrow="Browse"
+          eyebrow={t.categories.eyebrow}
           title={
             <span id="categories-title">
-              Everything, sorted the way <span className="text-gradient">you watch</span>
+              {t.categories.titleA} <span className="text-gradient">{t.categories.titleB}</span>
             </span>
           }
-          subtitle="Ten worlds of content, updated constantly. Scroll through and see what your subscription unlocks."
+          subtitle={t.categories.subtitle}
         />
       </div>
 
       <div className="container-x relative mt-16 space-y-6">
-        <Rail ariaLabel="Content categories, row one">
+        <Rail ariaLabel={t.categories.rowOne}>
           {ROW_ONE.map((c, i) => (
             <CategoryCard key={c.name} category={c} index={i} />
           ))}
         </Rail>
 
-        <Rail ariaLabel="Content categories, row two" className="lg:pl-16">
+        <Rail ariaLabel={t.categories.rowTwo} className="lg:ps-16">
           {ROW_TWO.map((c, i) => (
             <CategoryCard key={c.name} category={c} index={i} />
           ))}
@@ -53,18 +56,12 @@ export function Categories() {
             <div className="flex flex-col items-start gap-6 lg:flex-row lg:items-center lg:justify-between">
               <div>
                 <p className="text-[11px] font-medium uppercase tracking-[0.24em] text-white/35">
-                  Football
+                  {t.categories.footballEyebrow}
                 </p>
-                <p
-                  dir="rtl"
-                  lang="ar"
-                  className="mt-2.5 text-left font-arabic text-[17px] font-semibold text-white"
-                >
-                  جميع البطولات الكروية
+                <p className="mt-2.5 text-[17px] font-semibold text-white">
+                  {t.categories.footballTitle}
                 </p>
-                <p className="mt-1 text-[13px] text-white/45">
-                  Every major competition, live and in 4K.
-                </p>
+                <p className="mt-1 text-[13px] text-white/45">{t.categories.footballBody}</p>
               </div>
 
               <div className="flex flex-wrap gap-2">
@@ -75,6 +72,7 @@ export function Categories() {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.45, delay: i * 0.05 }}
+                    dir="ltr"
                     className="rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 text-[12px] font-medium text-white/60 transition-colors hover:border-emerald-400/35 hover:text-white"
                   >
                     {league}
@@ -91,6 +89,9 @@ export function Categories() {
 
 function CategoryCard({ category, index }: { category: Category; index: number }) {
   const reduce = useReducedMotion();
+  const { t, lang } = useLang();
+  const name = lang === 'en' ? category.name : category.nameAr;
+  const count = lang === 'en' ? category.count : category.countAr;
 
   return (
     <motion.a
@@ -101,7 +102,7 @@ function CategoryCard({ category, index }: { category: Category; index: number }
       transition={{ duration: 0.7, delay: Math.min(index, 4) * 0.07, ease: [0.16, 1, 0.3, 1] }}
       whileHover={reduce ? undefined : { y: -10, scale: 1.035 }}
       className="group relative block w-[210px] sm:w-[248px]"
-      aria-label={`${category.name} — ${category.count}`}
+      aria-label={`${name} — ${count}`}
     >
       <div className="hairline relative aspect-[3/4] overflow-hidden rounded-[22px]">
         <PosterArt
@@ -120,22 +121,24 @@ function CategoryCard({ category, index }: { category: Category; index: number }
         />
 
         <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/92 via-black/45 to-transparent p-5 pt-16">
-          <p
-            dir="rtl"
-            lang="ar"
-            className="text-left font-arabic text-[13px] text-white/55 transition-colors group-hover:text-white/80"
-          >
-            {category.nameAr}
-          </p>
+          {lang === 'en' && (
+            <p
+              dir="rtl"
+              lang="ar"
+              className="text-start font-arabic text-[13px] text-white/55 transition-colors group-hover:text-white/80"
+            >
+              {category.nameAr}
+            </p>
+          )}
           <h3 className="mt-1 font-display text-[19px] font-semibold tracking-tight text-white">
-            {category.name}
+            {name}
           </h3>
-          <p className="mt-1 text-[11.5px] text-white/45">{category.count}</p>
+          <p className="mt-1 text-[11.5px] text-white/45">{count}</p>
 
           {/* Slide-in CTA */}
           <div className="mt-3 flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.14em] text-white/0 transition-all duration-500 group-hover:text-white/85">
-            Explore
-            <svg viewBox="0 0 16 16" className="h-3 w-3" fill="none" aria-hidden>
+            {t.categories.explore}
+            <svg viewBox="0 0 16 16" className="h-3 w-3 rtl:-scale-x-100" fill="none" aria-hidden>
               <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </div>

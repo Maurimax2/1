@@ -14,6 +14,7 @@ import { Particles } from '@/components/ui/Particles';
 import { Button } from '@/components/ui/Button';
 import { PosterArt } from '@/components/art/PosterArt';
 import { SITE } from '@/lib/site';
+import { useLang, useT } from '@/lib/i18n';
 
 /**
  * Collage tiles form two loose curtains down the left and right margins so the
@@ -25,21 +26,22 @@ import { SITE } from '@/lib/site';
  */
 const TILES = [
   // Left curtain
-  { art: 'action', label: 'Action', tone: ['#2f7bff', '#e879f9'], pos: 'left-[-6%] top-[24%] sm:left-[2%] lg:left-[8.5%] lg:top-[21%]', w: 'w-[96px] sm:w-[112px] xl:w-[132px]', depth: 1.6, delay: 0.1, rot: -8, lgOnly: false },
-  { art: 'football', label: 'Football', tone: ['#10b981', '#2f7bff'], pos: 'left-[18%] top-[54%]', w: 'w-[96px] xl:w-[114px]', depth: 2.5, delay: 0.22, rot: 6, lgOnly: true },
-  { art: 'docs', label: 'Docs', tone: ['#0ea5e9', '#14b8a6'], pos: 'left-[-7%] top-[78%] sm:left-[1%] lg:left-[8%] lg:top-[80%]', w: 'w-[84px] sm:w-[88px] xl:w-[104px]', depth: 3.1, delay: 0.34, rot: -12, lgOnly: false },
-  { art: 'comedy', label: 'Comedy', tone: ['#f97316', '#e879f9'], pos: 'left-[21%] top-[12%]', w: 'w-[78px] xl:w-[92px]', depth: 2.2, delay: 0.28, rot: 7, lgOnly: true },
+  { art: 'action', key: 'action', tone: ['#2f7bff', '#e879f9'], pos: 'left-[-6%] top-[24%] sm:left-[2%] lg:left-[8.5%] lg:top-[21%]', w: 'w-[96px] sm:w-[112px] xl:w-[132px]', depth: 1.6, delay: 0.1, rot: -8, lgOnly: false },
+  { art: 'football', key: 'football', tone: ['#10b981', '#2f7bff'], pos: 'left-[18%] top-[54%]', w: 'w-[96px] xl:w-[114px]', depth: 2.5, delay: 0.22, rot: 6, lgOnly: true },
+  { art: 'docs', key: 'docs', tone: ['#0ea5e9', '#14b8a6'], pos: 'left-[-7%] top-[78%] sm:left-[1%] lg:left-[8%] lg:top-[80%]', w: 'w-[84px] sm:w-[88px] xl:w-[104px]', depth: 3.1, delay: 0.34, rot: -12, lgOnly: false },
+  { art: 'comedy', key: 'comedy', tone: ['#f97316', '#e879f9'], pos: 'left-[21%] top-[12%]', w: 'w-[78px] xl:w-[92px]', depth: 2.2, delay: 0.28, rot: 7, lgOnly: true },
 
   // Right curtain
-  { art: 'scifi', label: 'Sci-Fi', tone: ['#7c3aed', '#22d3ee'], pos: 'left-[106%] top-[24%] sm:left-[98%] lg:left-[90.5%] lg:top-[20%]', w: 'w-[96px] sm:w-[112px] xl:w-[132px]', depth: 1.9, delay: 0.16, rot: 9, lgOnly: false },
-  { art: 'kids', label: 'Kids', tone: ['#22d3ee', '#a855f7'], pos: 'left-[82%] top-[53%]', w: 'w-[96px] xl:w-[114px]', depth: 2.9, delay: 0.3, rot: -6, lgOnly: true },
-  { art: 'anime', label: 'Anime', tone: ['#e879f9', '#2f7bff'], pos: 'left-[107%] top-[78%] sm:left-[99%] lg:left-[91%] lg:top-[79%]', w: 'w-[84px] sm:w-[88px] xl:w-[104px]', depth: 3.4, delay: 0.4, rot: 11, lgOnly: false },
-  { art: 'drama', label: 'Drama', tone: ['#a855f7', '#1450d8'], pos: 'left-[79%] top-[12%]', w: 'w-[78px] xl:w-[92px]', depth: 2.6, delay: 0.36, rot: -5, lgOnly: true },
+  { art: 'scifi', key: 'scifi', tone: ['#7c3aed', '#22d3ee'], pos: 'left-[106%] top-[24%] sm:left-[98%] lg:left-[90.5%] lg:top-[20%]', w: 'w-[96px] sm:w-[112px] xl:w-[132px]', depth: 1.9, delay: 0.16, rot: 9, lgOnly: false },
+  { art: 'kids', key: 'kids', tone: ['#22d3ee', '#a855f7'], pos: 'left-[82%] top-[53%]', w: 'w-[96px] xl:w-[114px]', depth: 2.9, delay: 0.3, rot: -6, lgOnly: true },
+  { art: 'anime', key: 'anime', tone: ['#e879f9', '#2f7bff'], pos: 'left-[107%] top-[78%] sm:left-[99%] lg:left-[91%] lg:top-[79%]', w: 'w-[84px] sm:w-[88px] xl:w-[104px]', depth: 3.4, delay: 0.4, rot: 11, lgOnly: false },
+  { art: 'drama', key: 'drama', tone: ['#a855f7', '#1450d8'], pos: 'left-[79%] top-[12%]', w: 'w-[78px] xl:w-[92px]', depth: 2.6, delay: 0.36, rot: -5, lgOnly: true },
 ] as const;
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const { t, isRtl } = useLang();
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '32%']);
@@ -68,7 +70,7 @@ export function Hero() {
         rawY.set(0);
       }}
       className="relative isolate flex min-h-[100svh] items-center justify-center overflow-hidden pt-28 pb-24"
-      aria-label="MOOR TV — everything you love, one subscription"
+      aria-label={t.hero.aria}
     >
       <Aurora />
       <Particles />
@@ -80,7 +82,14 @@ export function Hero() {
         aria-hidden
       >
         {TILES.map((tile) => (
-          <CollageTile key={tile.art} tile={tile} px={px} py={py} reduce={!!reduce} />
+          <CollageTile
+            key={tile.art}
+            tile={tile}
+            label={t.hero.tiles[tile.key]}
+            px={px}
+            py={py}
+            reduce={!!reduce}
+          />
         ))}
       </motion.div>
 
@@ -103,12 +112,12 @@ export function Hero() {
           className="group relative inline-flex items-center gap-2.5 rounded-full border border-white/12 bg-white/[0.04] py-2 pl-2 pr-5 text-[12px] backdrop-blur-xl transition-colors hover:border-white/25"
         >
           <span className="relative flex h-6 items-center rounded-full bg-gradient-to-r from-electric to-neon px-2.5 text-[10px] font-bold uppercase tracking-[0.14em] text-white">
-            Summer Sale
+            {t.hero.saleBadge}
           </span>
           <span className="text-white/60 transition-colors group-hover:text-white/90">
-            Save up to 37% — limited time
+            {t.hero.salePitch}
           </span>
-          <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white" fill="none" aria-hidden>
+          <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 text-white/40 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-white rtl:-scale-x-100" fill="none" aria-hidden>
             <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </motion.a>
@@ -119,14 +128,14 @@ export function Hero() {
           transition={{ duration: 0.4, delay: 0.2 }}
           className="mt-8 max-w-5xl text-[clamp(2.6rem,7.4vw,5.9rem)] font-semibold leading-[0.98] tracking-[-0.045em]"
         >
-          <AnimatedLine text="Everything You Love." delay={0.28} />
+          <AnimatedLine text={t.hero.titleA} delay={0.28} />
           {/*
             The gradient must sit on a block, not an inline wrapping an
             inline-block — otherwise background-clip:text has no box covering
             the second wrapped line and that line renders invisible.
           */}
           <span className="text-gradient block">
-            <AnimatedLine text="One Subscription." delay={0.5} />
+            <AnimatedLine text={t.hero.titleB} delay={0.5} />
           </span>
         </motion.h1>
 
@@ -147,8 +156,7 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="mt-5 max-w-2xl text-pretty text-[15px] leading-relaxed text-white/55 sm:text-[17px]"
         >
-          Watch thousands of movies, TV shows, live channels, sports, kids content and much
-          more from one premium entertainment platform.
+          {t.hero.subtitle}
         </motion.p>
 
         <motion.div
@@ -158,13 +166,13 @@ export function Hero() {
           className="mt-11 flex flex-col items-center gap-3.5 sm:flex-row"
         >
           <Button href="#plans" size="lg" className="w-full sm:w-auto">
-            Start Watching
-            <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" aria-hidden>
+            {t.hero.ctaPrimary}
+            <svg viewBox="0 0 16 16" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 rtl:-scale-x-100" fill="none" aria-hidden>
               <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </Button>
           <Button href="#offers" size="lg" variant="glass" className="w-full sm:w-auto">
-            View Offers
+            {t.hero.ctaSecondary}
           </Button>
         </motion.div>
 
@@ -174,15 +182,11 @@ export function Hero() {
           transition={{ duration: 1, delay: 1.25 }}
           className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[12px] text-white/35"
         >
-          <span className="inline-flex items-center gap-1.5">
-            <Dot /> Instant activation
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <Dot /> Works on every device
-          </span>
-          <span className="inline-flex items-center gap-1.5">
-            <Dot /> 4K Ultra HD
-          </span>
+          {t.hero.chips.map((chip) => (
+            <span key={chip} className="inline-flex items-center gap-1.5">
+              <Dot /> {chip}
+            </span>
+          ))}
         </motion.p>
       </motion.div>
 
@@ -223,11 +227,13 @@ function AnimatedLine({ text, delay }: { text: string; delay: number }) {
 
 function CollageTile({
   tile,
+  label,
   px,
   py,
   reduce,
 }: {
   tile: (typeof TILES)[number];
+  label: string;
   px: ReturnType<typeof useSpring>;
   py: ReturnType<typeof useSpring>;
   reduce: boolean;
@@ -259,8 +265,8 @@ function CollageTile({
             tone={tile.tone as unknown as [string, string]}
             className="aspect-[2/3] w-full object-cover"
           />
-          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/88 to-transparent px-2.5 pb-2 pt-7 text-left text-[9px] font-medium uppercase tracking-[0.14em] text-white/70">
-            {tile.label}
+          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/88 to-transparent px-2.5 pb-2 pt-7 text-center text-[9px] font-medium uppercase tracking-[0.14em] text-white/70">
+            {label}
           </figcaption>
         </figure>
       </div>
@@ -269,6 +275,8 @@ function CollageTile({
 }
 
 function ScrollIndicator() {
+  const t = useT();
+
   return (
     <motion.a
       href="#logos"
@@ -276,10 +284,10 @@ function ScrollIndicator() {
       animate={{ opacity: 1 }}
       transition={{ duration: 1, delay: 1.6 }}
       className="group absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-2.5 sm:flex"
-      aria-label="Scroll to explore"
+      aria-label={t.hero.scroll}
     >
       <span className="text-[10px] uppercase tracking-[0.3em] text-white/30 transition-colors group-hover:text-white/60">
-        Scroll
+        {t.hero.scroll}
       </span>
       <span className="flex h-9 w-[22px] items-start justify-center rounded-full border border-white/20 p-1.5 transition-colors group-hover:border-white/45">
         <span className="h-1.5 w-1.5 rounded-full bg-white/70 animate-scroll-dot" />

@@ -4,13 +4,15 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from './Button';
 import { useCart } from '@/lib/cart';
 import type { Product } from '@/lib/products';
+import { pick } from '@/lib/products';
+import { useLang } from '@/lib/i18n';
 
 export function AddToCart({
   product,
   variant = 'primary',
   size = 'md',
   full = true,
-  label = 'Add to Cart',
+  label,
 }: {
   product: Product;
   variant?: 'primary' | 'glass' | 'ghost';
@@ -19,6 +21,7 @@ export function AddToCart({
   label?: string;
 }) {
   const { add, lastAdded } = useCart();
+  const { t, lang } = useLang();
   const justAdded = lastAdded === product.id;
 
   return (
@@ -27,7 +30,7 @@ export function AddToCart({
       size={size}
       full={full}
       onClick={() => add(product.id)}
-      aria-label={`Add ${product.name} to cart`}
+      aria-label={t.cart.addAria(pick(product, 'name', lang))}
     >
       <span className="relative inline-flex items-center justify-center gap-2">
         <AnimatePresence mode="wait" initial={false}>
@@ -41,7 +44,7 @@ export function AddToCart({
               className="inline-flex items-center gap-2"
             >
               <CheckIcon />
-              Added
+              {t.cart.added}
             </motion.span>
           ) : (
             <motion.span
@@ -53,7 +56,7 @@ export function AddToCart({
               className="inline-flex items-center gap-2"
             >
               <CartIcon />
-              {label}
+              {label ?? t.cart.addToCart}
             </motion.span>
           )}
         </AnimatePresence>

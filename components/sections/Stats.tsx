@@ -4,30 +4,25 @@ import { motion, useReducedMotion } from 'framer-motion';
 import { Counter } from '@/components/ui/Counter';
 import { Reveal, Stagger, StaggerItem } from '@/components/ui/Reveal';
 import { GlowDivider } from '@/components/ui/Aurora';
+import { useT } from '@/lib/i18n';
 
-const STATS = [
-  { value: 20000, suffix: '+', label: 'Movies', hint: 'Blockbusters to hidden gems' },
-  { value: 10000, suffix: '+', label: 'TV Shows', hint: 'Full seasons, always updated' },
-  { value: 9000, suffix: '+', label: 'Live Channels', hint: 'From every continent' },
-  { text: '4K UHD', label: 'Streaming Quality', hint: 'Crystal clear on every screen' },
+const COUNTS = [
+  { value: 20000, suffix: '+', key: 'movies' },
+  { value: 10000, suffix: '+', key: 'shows' },
+  { value: 9000, suffix: '+', key: 'channels' },
 ] as const;
 
-const DEVICES = [
-  { name: 'Smart TV', icon: TvIcon },
-  { name: 'Android', icon: AndroidIcon },
-  { name: 'iPhone', icon: PhoneIcon },
-  { name: 'Tablet', icon: TabletIcon },
-  { name: 'PC', icon: LaptopIcon },
-] as const;
+const DEVICE_ICONS = [TvIcon, AndroidIcon, PhoneIcon, TabletIcon, LaptopIcon] as const;
 
 export function Stats() {
   const reduce = useReducedMotion();
+  const t = useT();
 
   return (
     <section id="stats" className="relative overflow-x-clip py-24 sm:py-32" aria-labelledby="stats-title">
       <div className="container-x">
         <h2 id="stats-title" className="sr-only">
-          MOOR TV by the numbers
+          {t.stats.srTitle}
         </h2>
 
         <div className="hairline relative overflow-hidden rounded-[32px] glass p-8 sm:p-12 lg:p-16">
@@ -38,43 +33,38 @@ export function Stats() {
           />
 
           <Stagger className="relative grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
-            {STATS.map((stat) => (
-              <StaggerItem key={stat.label}>
-                <div className="group relative text-center lg:text-left">
-                  <div className="text-[clamp(2.1rem,5.2vw,3.4rem)] font-semibold leading-none tracking-[-0.04em] text-white">
-                    {'value' in stat ? (
-                      <span className="text-gradient">
-                        <Counter value={stat.value} suffix={stat.suffix} />
-                      </span>
-                    ) : (
-                      <span className="text-gradient">{stat.text}</span>
-                    )}
-                  </div>
-                  <div className="mt-3.5 text-sm font-medium text-white/85">{stat.label}</div>
-                  <div className="mt-1.5 text-[12px] leading-relaxed text-white/35">{stat.hint}</div>
-                  <span
-                    aria-hidden
-                    className="mx-auto mt-5 block h-px w-14 bg-gradient-to-r from-electric to-neon opacity-45 transition-all duration-500 group-hover:w-24 group-hover:opacity-100 lg:mx-0"
-                  />
-                </div>
+            {COUNTS.map((stat) => (
+              <StaggerItem key={stat.key}>
+                <StatBlock
+                  label={t.stats[stat.key].label}
+                  hint={t.stats[stat.key].hint}
+                  value={<Counter value={stat.value} suffix={stat.suffix} />}
+                />
               </StaggerItem>
             ))}
+            <StaggerItem>
+              <StatBlock
+                label={t.stats.quality.label}
+                hint={t.stats.quality.hint}
+                value={<span className="keep-tracking">{t.stats.quality.value}</span>}
+              />
+            </StaggerItem>
           </Stagger>
 
           <GlowDivider className="my-12" />
 
           <div className="relative flex flex-col items-center gap-8 lg:flex-row lg:justify-between">
             <Reveal direction="right">
-              <div className="text-center lg:text-left">
-                <p className="font-display text-lg font-medium text-white">Works Everywhere</p>
-                <p className="mt-1.5 text-[13px] text-white/40">
-                  One account. Every screen in your home.
-                </p>
+              <div className="text-center lg:text-start">
+                <p className="font-display text-lg font-medium text-white">{t.stats.everywhere}</p>
+                <p className="mt-1.5 text-[13px] text-white/40">{t.stats.everywhereHint}</p>
               </div>
             </Reveal>
 
             <Stagger className="flex flex-wrap items-center justify-center gap-3">
-              {DEVICES.map(({ name, icon: Icon }) => (
+              {t.stats.devices.map((name, i) => {
+                const Icon = DEVICE_ICONS[i];
+                return (
                 <StaggerItem key={name}>
                   <motion.div
                     whileHover={reduce ? undefined : { y: -5 }}
@@ -87,12 +77,37 @@ export function Stats() {
                     </span>
                   </motion.div>
                 </StaggerItem>
-              ))}
+                );
+              })}
             </Stagger>
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function StatBlock({
+  label,
+  hint,
+  value,
+}: {
+  label: string;
+  hint: string;
+  value: React.ReactNode;
+}) {
+  return (
+    <div className="group relative text-center lg:text-start">
+      <div className="text-[clamp(2.1rem,5.2vw,3.4rem)] font-semibold leading-none tracking-[-0.04em] text-white">
+        <span className="text-gradient">{value}</span>
+      </div>
+      <div className="mt-3.5 text-sm font-medium text-white/85">{label}</div>
+      <div className="mt-1.5 text-[12px] leading-relaxed text-white/35">{hint}</div>
+      <span
+        aria-hidden
+        className="mx-auto mt-5 block h-px w-14 bg-gradient-to-r from-electric to-neon opacity-45 transition-all duration-500 group-hover:w-24 group-hover:opacity-100 lg:mx-0"
+      />
+    </div>
   );
 }
 

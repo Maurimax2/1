@@ -5,30 +5,32 @@ import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
 import { WhatsAppIcon } from '@/components/sections/FAQ';
 import { SITE, waLink } from '@/lib/site';
+import { useLang } from '@/lib/i18n';
 
-const LINKS: Array<{ heading: string; items: Array<{ label: string; href: string; external?: boolean }> }> = [
+const LINK_GROUPS = [
   {
-    heading: 'Explore',
+    heading: 'explore' as const,
     items: [
-      { label: 'Subscriptions', href: '/#plans' },
-      { label: 'TV Boxes & Sticks', href: '/#boxes' },
-      { label: 'Categories', href: '/#categories' },
-      { label: 'Why MOORTV', href: '/#why' },
+      { key: 'subscriptions' as const, href: '/#plans' },
+      { key: 'boxes' as const, href: '/#boxes' },
+      { key: 'categories' as const, href: '/#categories' },
+      { key: 'why' as const, href: '/#why' },
     ],
   },
   {
-    heading: 'Support',
+    heading: 'support' as const,
     items: [
-      { label: 'FAQ', href: '/#faq' },
-      { label: 'Reviews', href: '/#reviews' },
-      { label: 'Summer Sale', href: '/#offers' },
-      { label: 'Checkout', href: '/checkout/' },
+      { key: 'faq' as const, href: '/#faq' },
+      { key: 'reviews' as const, href: '/#reviews' },
+      { key: 'sale' as const, href: '/#offers' },
+      { key: 'checkout' as const, href: '/checkout/' },
     ],
   },
 ];
 
 export function Footer() {
   const year = 2026;
+  const { t } = useLang();
 
   return (
     <footer className="relative overflow-hidden border-t border-white/[0.07] pt-20">
@@ -49,25 +51,23 @@ export function Footer() {
               />
               <div className="relative max-w-xl">
                 <h2 className="text-[clamp(1.8rem,4.2vw,2.9rem)] font-semibold leading-[1.08] tracking-[-0.035em]">
-                  Ready to watch <span className="text-gradient">everything?</span>
+                  {t.footer.ctaTitleA} <span className="text-gradient">{t.footer.ctaTitleB}</span>
                 </h2>
-                <p dir="rtl" lang="ar" className="mt-4 font-arabic text-[15px] text-white/55">
-                  اشترك الآن واستمتع بكل المحتوى في مكان واحد
-                </p>
+                <p className="mt-4 text-[15px] text-white/55">{t.footer.ctaSub}</p>
               </div>
 
               <div className="relative flex flex-col gap-3 sm:flex-row">
                 <Button href="/#plans" size="lg">
-                  Start Watching
+                  {t.footer.ctaPrimary}
                 </Button>
                 <Button
-                  href={waLink('Hello MOORTV, I would like to know more about your subscriptions.')}
+                  href={waLink(t.footer.waLearnMore)}
                   target="_blank"
                   variant="whatsapp"
                   size="lg"
                 >
                   <WhatsAppIcon />
-                  WhatsApp us
+                  {t.footer.ctaWhatsApp}
                 </Button>
               </div>
             </div>
@@ -79,16 +79,11 @@ export function Footer() {
           <div>
             <Logo withTagline size="lg" />
             <p className="mt-6 max-w-sm text-[13.5px] leading-relaxed text-white/40">
-              MOORTV brings movies, series, live channels and every major football competition
-              together into one premium subscription — built for Mauritania.
+              {t.footer.about}
             </p>
 
             <div className="mt-7 flex items-center gap-3">
-              <SocialLink
-                href={waLink('Hello MOORTV,')}
-                label="WhatsApp"
-                tone="#25D366"
-              >
+              <SocialLink href={waLink(t.footer.waGreeting)} label="WhatsApp" tone="#25D366">
                 <WhatsAppIcon className="h-[18px] w-[18px]" />
               </SocialLink>
               <SocialLink href={SITE.snapchatUrl} label="Snapchat" tone="#FFFC00">
@@ -97,14 +92,14 @@ export function Footer() {
             </div>
           </div>
 
-          {LINKS.map((column) => (
-            <nav key={column.heading} aria-label={column.heading}>
+          {LINK_GROUPS.map((column) => (
+            <nav key={column.heading} aria-label={t.footer[column.heading]}>
               <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/40">
-                {column.heading}
+                {t.footer[column.heading]}
               </h3>
               <ul className="mt-5 space-y-3">
                 {column.items.map((item) => (
-                  <li key={item.label}>
+                  <li key={item.key}>
                     <a
                       href={item.href}
                       className="group inline-flex items-center gap-2 text-[13.5px] text-white/50 transition-colors hover:text-white"
@@ -113,7 +108,7 @@ export function Footer() {
                         aria-hidden
                         className="h-px w-0 bg-gradient-to-r from-electric to-neon transition-all duration-300 group-hover:w-4"
                       />
-                      {item.label}
+                      {t.footer.links[item.key]}
                     </a>
                   </li>
                 ))}
@@ -123,22 +118,22 @@ export function Footer() {
 
           <div>
             <h3 className="text-[11px] font-semibold uppercase tracking-[0.22em] text-white/40">
-              Contact
+              {t.footer.contact}
             </h3>
             <ul className="mt-5 space-y-4 text-[13.5px]">
               <li>
                 <a
-                  href={waLink('Hello MOORTV,')}
+                  href={waLink(t.footer.waGreeting)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-start gap-2.5 text-white/50 transition-colors hover:text-white"
                 >
                   <WhatsAppIcon className="mt-0.5 h-4 w-4 text-emerald-400/80" />
                   <span>
-                    <span className="block font-medium text-white/80 group-hover:text-white">
+                    <span dir="ltr" className="block font-medium text-white/80 group-hover:text-white">
                       {SITE.whatsappDisplay}
                     </span>
-                    <span className="text-[12px] text-white/35">WhatsApp — orders & support</span>
+                    <span className="text-[12px] text-white/35">{t.footer.waLine}</span>
                   </span>
                 </a>
               </li>
@@ -153,18 +148,18 @@ export function Footer() {
                     <SnapchatIcon />
                   </span>
                   <span>
-                    <span className="block font-medium text-white/80 group-hover:text-white">
+                    <span dir="ltr" className="block font-medium text-white/80 group-hover:text-white">
                       {SITE.snapchat}
                     </span>
-                    <span className="text-[12px] text-white/35">Snapchat — daily offers</span>
+                    <span className="text-[12px] text-white/35">{t.footer.snapLine}</span>
                   </span>
                 </a>
               </li>
               <li className="flex items-start gap-2.5 text-white/50">
                 <PinIcon />
                 <span>
-                  <span className="block font-medium text-white/80">Mauritania</span>
-                  <span className="text-[12px] text-white/35">Delivery nationwide</span>
+                  <span className="block font-medium text-white/80">{t.footer.country}</span>
+                  <span className="text-[12px] text-white/35">{t.footer.countryLine}</span>
                 </span>
               </li>
             </ul>
@@ -174,11 +169,10 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="flex flex-col items-center justify-between gap-4 border-t border-white/[0.07] py-8 text-center sm:flex-row sm:text-left">
           <p className="text-[12px] text-white/30">
-            © {year} {SITE.name}. All rights reserved.
+            © {year} {SITE.name}. {t.footer.rights}
           </p>
           <p className="max-w-md text-[11px] leading-relaxed text-white/25">
-            Third-party brand names are the property of their respective owners and are used for
-            descriptive purposes only.
+            {t.footer.trademarks}
           </p>
         </div>
       </div>

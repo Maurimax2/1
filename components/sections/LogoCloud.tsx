@@ -2,6 +2,7 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { Reveal } from '@/components/ui/Reveal';
+import { useT } from '@/lib/i18n';
 
 /**
  * Service compatibility strip.
@@ -25,6 +26,7 @@ const SERVICES = [
 
 export function LogoCloud() {
   const reduce = useReducedMotion();
+  const t = useT();
   const track = [...SERVICES, ...SERVICES];
 
   return (
@@ -35,7 +37,7 @@ export function LogoCloud() {
             id="logos-title"
             className="text-center text-[11px] font-medium uppercase tracking-[0.28em] text-white/35"
           >
-            All the entertainment you know — in one place
+            {t.logos.title}
           </p>
         </Reveal>
       </div>
@@ -64,7 +66,7 @@ export function LogoCloud() {
                     style={{ background: `radial-gradient(circle at 50% 60%, ${service.color}, transparent 68%)` }}
                   />
                   <span
-                    className={`relative text-[15px] text-white/70 transition-all duration-500 group-hover:text-white sm:text-[17px] ${service.className}`}
+                    className={`keep-tracking relative text-[15px] text-white/70 transition-all duration-500 group-hover:text-white sm:text-[17px] ${service.className}`}
                     style={{ textShadow: '0 0 24px rgba(255,255,255,0.14)' }}
                   >
                     {service.name}
@@ -78,9 +80,7 @@ export function LogoCloud() {
 
       <div className="container-x">
         <p className="mx-auto mt-9 max-w-2xl text-center text-[11px] leading-relaxed text-white/25">
-          All brand names and trademarks shown are the property of their respective owners and are
-          referenced here only to describe the categories of content available. MOOR TV is an
-          independent service and is not affiliated with, endorsed by, or sponsored by any of them.
+          {t.logos.disclaimer}
         </p>
       </div>
     </section>

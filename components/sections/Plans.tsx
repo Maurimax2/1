@@ -6,10 +6,13 @@ import { TiltCard } from '@/components/ui/TiltCard';
 import { AddToCart } from '@/components/ui/AddToCart';
 import { Reveal } from '@/components/ui/Reveal';
 import { PosterArt } from '@/components/art/PosterArt';
-import { PLANS, type Product } from '@/lib/products';
+import { PLANS, pick, pickFeatures, type Product } from '@/lib/products';
 import { formatPrice } from '@/lib/site';
+import { useLang } from '@/lib/i18n';
 
 export function Plans() {
+  const { t } = useLang();
+
   return (
     <section id="plans" className="relative scroll-mt-28 overflow-x-clip py-24 sm:py-32" aria-labelledby="plans-title">
       {/* Section lighting */}
@@ -20,13 +23,13 @@ export function Plans() {
 
       <div className="container-x relative">
         <SectionHeading
-          eyebrow="Subscriptions"
+          eyebrow={t.plans.eyebrow}
           title={
             <span id="plans-title">
-              Pick your plan. <span className="text-gradient">Watch everything.</span>
+              {t.plans.titleA} <span className="text-gradient">{t.plans.titleB}</span>
             </span>
           }
-          subtitle="One subscription unlocks the entire MOORTV library — every movie, every series, every live channel, on every screen you own."
+          subtitle={t.plans.subtitle}
         />
 
         <div className="perspective mt-20 grid gap-6 lg:grid-cols-3 lg:items-center">
@@ -36,10 +39,7 @@ export function Plans() {
         </div>
 
         <Reveal delay={0.2}>
-          <p className="mt-12 text-center text-[13px] text-white/35">
-            All plans include instant activation and support on WhatsApp. Prices in Mauritanian
-            ouguiya (MRU).
-          </p>
+          <p className="mt-12 text-center text-[13px] text-white/35">{t.plans.footnote}</p>
         </Reveal>
       </div>
     </section>
@@ -48,6 +48,7 @@ export function Plans() {
 
 function PlanCard({ plan, index }: { plan: Product; index: number }) {
   const reduce = useReducedMotion();
+  const { t, lang } = useLang();
   const featured = plan.featured;
   const popular = plan.badge === 'Most Popular';
 
@@ -102,7 +103,7 @@ function PlanCard({ plan, index }: { plan: Product; index: number }) {
                       : 'border border-neon/35 bg-neon/12 text-neon-soft',
                   ].join(' ')}
                 >
-                  {plan.badge}
+                  {plan.featured ? t.plans.badges.best : t.plans.badges.popular}
                 </span>
               </div>
             )}
@@ -120,14 +121,9 @@ function PlanCard({ plan, index }: { plan: Product; index: number }) {
 
             <div className="relative text-center">
               <h3 className="font-display text-[22px] font-semibold tracking-tight text-white">
-                {plan.name}
+                {pick(plan, 'name', lang)}
               </h3>
-              {plan.nameAr && (
-                <p dir="rtl" lang="ar" className="mt-2 font-arabic text-[13px] text-white/40">
-                  {plan.nameAr}
-                </p>
-              )}
-              <p className="mt-2 text-[13px] text-white/40">{plan.blurb}</p>
+              <p className="mt-2 text-[13px] text-white/40">{pick(plan, 'blurb', lang)}</p>
 
               <div className="mt-6 flex items-end justify-center gap-2.5">
                 <span
@@ -150,17 +146,17 @@ function PlanCard({ plan, index }: { plan: Product; index: number }) {
                       featured ? 'bg-ember/20 text-ember-moon' : 'bg-emerald-400/12 text-emerald-300',
                     ].join(' ')}
                   >
-                    Save {Math.round((1 - plan.price / plan.compareAt) * 100)}%
+                    {t.plans.save(Math.round((1 - plan.price / plan.compareAt) * 100))}
                   </span>
                 </p>
               )}
             </div>
 
             <ul className="relative mt-8 flex-1 space-y-3.5 border-t border-white/[0.07] pt-7">
-              {plan.features.map((feature, i) => (
+              {pickFeatures(plan, lang).map((feature, i) => (
                 <motion.li
                   key={feature}
-                  initial={{ opacity: 0, x: -12 }}
+                  initial={{ opacity: 0, x: t.dir === 'rtl' ? 12 : -12 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.25 + i * 0.05 }}

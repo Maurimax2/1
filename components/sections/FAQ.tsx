@@ -6,44 +6,62 @@ import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Reveal } from '@/components/ui/Reveal';
 import { Button } from '@/components/ui/Button';
 import { SITE, waLink } from '@/lib/site';
+import { useLang } from '@/lib/i18n';
 
 const FAQS = [
   {
     q: 'How do I get my subscription after ordering?',
+    qAr: 'كيف أحصل على اشتراكي بعد الطلب؟',
     a: 'Add your plan to the cart and check out — the site opens WhatsApp with your order already written out. Send it, and we reply with your activation details. Most lines are live in under five minutes.',
+    aAr: 'أضف اشتراكك إلى السلة وأكمل الطلب — سيفتح الموقع واتساب وطلبك مكتوب بالفعل. أرسله لنا ونرد عليك ببيانات التفعيل. معظم الاشتراكات تعمل في أقل من خمس دقائق.',
   },
   {
     q: 'Which devices does MOORTV work on?',
+    qAr: 'على أي الأجهزة يعمل موور تي في؟',
     a: 'Smart TVs (Samsung, LG, Android TV), Android phones and boxes, iPhone and iPad, Windows and Mac laptops, and our own MOORTV Stick or Box. One subscription covers your household — we will help you set up each device.',
+    aAr: 'الشاشات الذكية (سامسونج، إل جي، أندرويد تي في)، وهواتف وأجهزة أندرويد، والآيفون والآيباد، وحواسيب ويندوز وماك، وأجهزتنا الخاصة: عصا موور تي في وجهاز موور تي في. اشتراك واحد يكفي البيت كله — ونساعدك في إعداد كل جهاز.',
   },
   {
     q: 'What is included in the library?',
+    qAr: 'ماذا تشمل المكتبة؟',
     a: 'Over 20,000 movies, 10,000 series, and 9,000 live channels: all major football leagues, sports, kids programming, anime, documentaries, news, Arabic and Turkish drama, and content from the big international platforms.',
+    aAr: 'أكثر من 20,000 فيلم و10,000 مسلسل و9,000 قناة مباشرة: كل الدوريات الكروية الكبرى، والرياضة، وبرامج الأطفال، والأنمي، والوثائقيات، والأخبار، والدراما العربية والتركية، ومحتوى المنصات العالمية الكبرى.',
   },
   {
     q: 'Do I need a fast internet connection?',
+    qAr: 'هل أحتاج إلى إنترنت سريع؟',
     a: 'For 4K we recommend around 25 Mbps. Full HD works comfortably from about 10 Mbps, and the stream adapts automatically if your connection dips, so playback keeps going.',
+    aAr: 'لجودة 4K ننصح بسرعة تقارب 25 ميجابت. أما الجودة الكاملة HD فتعمل بسلاسة من حوالي 10 ميجابت، والبث يتكيّف تلقائياً إذا ضعف الاتصال فلا تتوقف المشاهدة.',
   },
   {
     q: 'Should I buy the Stick or the Box?',
+    qAr: 'هل أشتري العصا أم الجهاز؟',
     a: 'Both come with a full year of MOORTV included and both output 4K. The Stick (3000 MRU) is pocket-sized, plugs straight into HDMI and runs on WiFi — perfect for a second TV or for travelling. The Box (4500 MRU) has more memory and a wired ethernet port, so it is the safer choice for your main TV and for big live matches.',
+    aAr: 'كلاهما يأتي مع سنة كاملة من موور تي في وكلاهما يدعم جودة 4K. العصا (3000 أوقية) بحجم الجيب، تُوصَّل مباشرة بمنفذ HDMI وتعمل بالواي فاي — مثالية للتلفاز الثاني أو للسفر. أما الجهاز (4500 أوقية) فذاكرته أكبر وفيه منفذ إيثرنت سلكي، وهو الخيار الأضمن للتلفاز الرئيسي وللمباريات الكبرى.',
   },
   {
     q: 'How do I pay?',
+    qAr: 'كيف أدفع؟',
     a: 'We arrange payment directly on WhatsApp using the methods common in Mauritania — Bankily, Masrvi, Sedad or cash. Nothing is charged through the website itself.',
+    aAr: 'نرتّب الدفع مباشرة عبر واتساب بالوسائل المتداولة في موريتانيا — بنكيلي أو مصرفي أو سداد أو نقداً. ولا يُخصم أي مبلغ عبر الموقع نفسه.',
   },
   {
     q: 'What happens when my subscription ends?',
+    qAr: 'ماذا يحدث عند انتهاء اشتراكي؟',
     a: 'We message you before the end date so there is no interruption. Renewing is one message, and you keep the same line and settings.',
+    aAr: 'نراسلك قبل تاريخ الانتهاء حتى لا ينقطع البث. والتجديد برسالة واحدة، وتحتفظ بنفس الاشتراك ونفس الإعدادات.',
   },
   {
     q: 'What if something stops working?',
+    qAr: 'ماذا لو توقف شيء عن العمل؟',
     a: 'Write to us on WhatsApp at any hour. Most issues are a quick settings fix; if a server needs changing we move you across immediately, at no cost.',
+    aAr: 'راسلنا على واتساب في أي وقت. معظم المشاكل تُحل بتعديل بسيط في الإعدادات؛ وإذا احتاج الخادم إلى تغيير ننقلك فوراً وبدون أي تكلفة.',
   },
 ];
 
 export function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
+  const { t, lang } = useLang();
 
   return (
     <section id="faq" className="relative scroll-mt-28 overflow-x-clip py-24 sm:py-32" aria-labelledby="faq-title">
@@ -52,25 +70,23 @@ export function FAQ() {
           <div className="lg:sticky lg:top-32 lg:self-start">
             <SectionHeading
               align="left"
-              eyebrow="FAQ"
-              title={<span id="faq-title">Questions, answered</span>}
-              subtitle="Everything you might want to know before you subscribe. Anything else — just ask us directly."
+              eyebrow={t.faq.eyebrow}
+              title={<span id="faq-title">{t.faq.title}</span>}
+              subtitle={t.faq.subtitle}
             />
 
             <Reveal delay={0.2}>
               <div className="mt-9 hairline rounded-3xl glass p-6">
-                <p className="text-[13.5px] leading-relaxed text-white/55">
-                  Still unsure? Message us on WhatsApp and we will answer in minutes.
-                </p>
+                <p className="text-[13.5px] leading-relaxed text-white/55">{t.faq.helpBody}</p>
                 <div className="mt-5">
                   <Button
-                    href={waLink('Hello MOORTV, I have a question about your subscriptions.')}
+                    href={waLink(t.faq.waMessage)}
                     target="_blank"
                     variant="whatsapp"
                     size="md"
                   >
                     <WhatsAppIcon />
-                    {SITE.whatsappDisplay}
+                    <span dir="ltr">{SITE.whatsappDisplay}</span>
                   </Button>
                 </div>
               </div>
@@ -81,7 +97,9 @@ export function FAQ() {
             {FAQS.map((item, i) => (
               <Reveal key={item.q} delay={i * 0.05} amount={0.1}>
                 <AccordionItem
-                  {...item}
+                  id={`faq-${i}`}
+                  q={lang === 'en' ? item.q : item.qAr}
+                  a={lang === 'en' ? item.a : item.aAr}
                   isOpen={open === i}
                   onToggle={() => setOpen(open === i ? null : i)}
                 />
@@ -95,17 +113,19 @@ export function FAQ() {
 }
 
 function AccordionItem({
+  id,
   q,
   a,
   isOpen,
   onToggle,
 }: {
+  id: string;
   q: string;
   a: string;
   isOpen: boolean;
   onToggle: () => void;
 }) {
-  const panelId = `faq-panel-${q.replace(/\W+/g, '-').toLowerCase()}`;
+  const panelId = `${id}-panel`;
 
   return (
     <div
@@ -120,7 +140,7 @@ function AccordionItem({
           onClick={onToggle}
           aria-expanded={isOpen}
           aria-controls={panelId}
-          className="flex w-full items-center justify-between gap-5 px-6 py-5 text-left"
+          className="flex w-full items-center justify-between gap-5 px-6 py-5 text-start"
         >
           <span
             className={[
@@ -159,7 +179,7 @@ function AccordionItem({
             className="overflow-hidden"
           >
             <div className="px-6 pb-6">
-              <div aria-hidden className="mb-4 h-px w-full bg-gradient-to-r from-electric/40 via-neon/25 to-transparent" />
+              <div aria-hidden className="mb-4 h-px w-full bg-gradient-to-r from-electric/40 via-neon/25 to-transparent rtl:bg-gradient-to-l" />
               <p className="text-[14px] leading-relaxed text-white/50">{a}</p>
             </div>
           </motion.div>

@@ -129,14 +129,14 @@ export function Logo({
     <span className={`inline-flex items-center gap-3 ${className}`}>
       <LogoMark className={`${mark} shrink-0`} tone={tone} glow={size !== 'sm'} />
       <span className="flex flex-col leading-none">
-        <span className={`font-display font-bold tracking-[0.1em] text-white ${word}`}>
+        <span className={`keep-tracking font-display font-bold tracking-[0.1em] text-white ${word}`}>
           MOOR<span className="text-gradient-static">TV</span>
         </span>
         {withTagline && (
           <span
             dir="rtl"
             lang="ar"
-            className="mt-2 text-left font-arabic text-[11px] font-medium leading-snug tracking-normal text-white/45"
+            className="mt-2 text-start font-arabic text-[11px] font-medium leading-snug tracking-normal text-white/45"
           >
             {SITE.taglineAr}
           </span>

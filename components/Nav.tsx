@@ -5,19 +5,22 @@ import { AnimatePresence, motion, useMotionValueEvent, useScroll } from 'framer-
 import { Logo } from '@/components/ui/Logo';
 import { Button } from '@/components/ui/Button';
 import { useCart } from '@/lib/cart';
+import { useLang } from '@/lib/i18n';
+import { LangToggle } from '@/components/ui/LangToggle';
 
-const NAV_LINKS = [
-  { label: 'Plans', href: '/#plans' },
-  { label: 'TV Boxes', href: '/#boxes' },
-  { label: 'Browse', href: '/#categories' },
-  { label: 'Why Us', href: '/#why' },
-  { label: 'FAQ', href: '/#faq' },
-];
+const NAV_HREFS = [
+  { key: 'plans', href: '/#plans' },
+  { key: 'boxes', href: '/#boxes' },
+  { key: 'browse', href: '/#categories' },
+  { key: 'why', href: '/#why' },
+  { key: 'faq', href: '/#faq' },
+] as const;
 
 export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { count, openCart } = useCart();
+  const { t, isRtl } = useLang();
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, 'change', (y) => setScrolled(y > 24));
@@ -55,18 +58,18 @@ export function Nav() {
                 : 'border border-transparent',
             ].join(' ')}
           >
-            <a href="/#top" className="shrink-0 rounded-full pl-1" aria-label="MOORTV — home">
+            <a href="/#top" className="shrink-0 rounded-full ltr:pl-1 rtl:pr-1" aria-label={t.nav.home}>
               <Logo size="sm" />
             </a>
 
-            <nav aria-label="Main" className="hidden items-center gap-1 lg:flex">
-              {NAV_LINKS.map((link) => (
+            <nav aria-label={t.nav.label} className="hidden items-center gap-1 lg:flex">
+              {NAV_HREFS.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   className="group relative rounded-full px-4 py-2 text-[13.5px] font-medium text-white/55 transition-colors hover:text-white"
                 >
-                  <span className="relative z-10">{link.label}</span>
+                  <span className="relative z-10">{t.nav[link.key]}</span>
                   <span
                     aria-hidden
                     className="absolute inset-0 scale-90 rounded-full bg-white/[0.06] opacity-0 transition-all duration-300 group-hover:scale-100 group-hover:opacity-100"
@@ -76,11 +79,12 @@ export function Nav() {
             </nav>
 
             <div className="flex items-center gap-2">
-              <CartButton count={count} onClick={openCart} />
+              <LangToggle />
+              <CartButton count={count} onClick={openCart} label={t.nav.openCart} labelCount={t.nav.openCartCount} />
 
               <div className="hidden sm:block">
                 <Button href="/#plans" size="sm">
-                  Start Watching
+                  {t.nav.cta}
                 </Button>
               </div>
 
@@ -88,7 +92,7 @@ export function Nav() {
                 type="button"
                 onClick={() => setMenuOpen((v) => !v)}
                 aria-expanded={menuOpen}
-                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                aria-label={menuOpen ? t.nav.closeMenu : t.nav.openMenu}
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white transition-colors hover:border-white/25 lg:hidden"
               >
                 <span className="relative block h-3 w-4">
@@ -119,12 +123,22 @@ export function Nav() {
   );
 }
 
-function CartButton({ count, onClick }: { count: number; onClick: () => void }) {
+function CartButton({
+  count,
+  onClick,
+  label,
+  labelCount,
+}: {
+  count: number;
+  onClick: () => void;
+  label: string;
+  labelCount: (n: number) => string;
+}) {
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label={count > 0 ? `Open cart, ${count} item${count === 1 ? '' : 's'}` : 'Open cart'}
+      aria-label={count > 0 ? labelCount(count) : label}
       className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/[0.04] text-white/75 transition-all duration-300 hover:border-white/25 hover:text-white"
     >
       <svg viewBox="0 0 24 24" fill="none" className="h-[18px] w-[18px]" aria-hidden>
@@ -147,7 +161,7 @@ function CartButton({ count, onClick }: { count: number; onClick: () => void }) 
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 520, damping: 24 }}
-            className="absolute -right-1 -top-1 flex h-[19px] min-w-[19px] items-center justify-center rounded-full bg-gradient-to-br from-ember to-ember-soft px-1 text-[10.5px] font-bold text-white shadow-[0_4px_14px_-2px_rgba(239,43,71,0.9)]"
+            className="absolute -top-1 flex h-[19px] min-w-[19px] items-center justify-center rounded-full bg-gradient-to-br from-ember to-ember-soft px-1 text-[10.5px] font-bold text-white shadow-[0_4px_14px_-2px_rgba(239,43,71,0.9)] ltr:-right-1 rtl:-left-1"
           >
             {count}
           </motion.span>
@@ -158,6 +172,8 @@ function CartButton({ count, onClick }: { count: number; onClick: () => void }) 
 }
 
 function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { t, isRtl } = useLang();
+
   return (
     <AnimatePresence>
       {open && (
@@ -171,7 +187,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
           <div className="absolute inset-0 bg-void/92 backdrop-blur-2xl" onClick={onClose} />
 
           <motion.nav
-            aria-label="Mobile"
+            aria-label={t.nav.label}
             initial={{ y: -24, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -24, opacity: 0 }}
@@ -179,10 +195,10 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
             className="container-x relative flex h-full flex-col justify-center pb-20"
           >
             <ul className="space-y-1.5">
-              {NAV_LINKS.map((link, i) => (
+              {NAV_HREFS.map((link, i) => (
                 <motion.li
                   key={link.href}
-                  initial={{ opacity: 0, x: -26 }}
+                  initial={{ opacity: 0, x: isRtl ? 26 : -26 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.08 + i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 >
@@ -191,7 +207,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
                     onClick={onClose}
                     className="block border-b border-white/[0.07] py-4 text-[26px] font-semibold tracking-tight text-white/80 transition-colors hover:text-white"
                   >
-                    {link.label}
+                    {t.nav[link.key]}
                   </a>
                 </motion.li>
               ))}
@@ -204,7 +220,7 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
               className="mt-10"
             >
               <Button href="/#plans" size="lg" full onClick={onClose}>
-                Start Watching
+                {t.nav.cta}
               </Button>
             </motion.div>
           </motion.nav>
@@ -216,11 +232,14 @@ function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
 
 function ScrollProgress() {
   const { scrollYProgress } = useScroll();
+  const { isRtl } = useLang();
   return (
     <motion.div
       aria-hidden
       style={{ scaleX: scrollYProgress }}
-      className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-[linear-gradient(90deg,#2f7bff,#a855f7,#ef2b47)]"
+      className={`fixed inset-x-0 top-0 z-[60] h-[2px] bg-[linear-gradient(90deg,#2f7bff,#a855f7,#ef2b47)] ${
+        isRtl ? 'origin-right' : 'origin-left'
+      }`}
     />
   );
 }

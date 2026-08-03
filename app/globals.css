@@ -47,6 +47,41 @@
     text-wrap: balance;
   }
 
+  /*
+   * Arabic is the default language. Noto Kufi Arabic carries both body and
+   * display weights, so the whole tree switches to it in RTL rather than
+   * falling back mid-sentence. Latin glyphs inside Arabic copy (MOORTV, 4K,
+   * prices) still resolve through the Latin fallbacks in the stack.
+   */
+  [dir='rtl'] body,
+  [dir='rtl'] h1,
+  [dir='rtl'] h2,
+  [dir='rtl'] h3,
+  [dir='rtl'] h4,
+  [dir='rtl'] button,
+  [dir='rtl'] input,
+  [dir='rtl'] textarea {
+    font-family: var(--font-arabic), var(--font-sans), system-ui, sans-serif;
+  }
+
+  /* Arabic script needs a little more leading and no negative tracking. */
+  [dir='rtl'] h1,
+  [dir='rtl'] h2,
+  [dir='rtl'] h3 {
+    letter-spacing: 0;
+    line-height: 1.28;
+  }
+
+  /*
+   * Letter-spacing is a Latin typographic device. Applied to Arabic it pulls
+   * apart letters that are supposed to join, which reads as broken text — so
+   * RTL resets tracking everywhere. Genuinely Latin bits (the MOORTV wordmark)
+   * opt back in with `.keep-tracking`, which sets the value inline so it wins.
+   */
+  html[dir='rtl'] :not(.keep-tracking) {
+    letter-spacing: normal;
+  }
+
   p {
     text-wrap: pretty;
   }
