@@ -1470,3 +1470,46 @@ body.lb-open { overflow: hidden; }
   border-radius: inherit;
 }
 @media (max-width: 900px) { .cmap { grid-template-columns: 1fr; } }
+
+/* ══════════════════════════════════════════════════════════════════════
+   RALLY — the client's own announcement, in their own words
+   ══════════════════════════════════════════════════════════════════════ */
+.rally { position: relative; overflow: hidden; padding: var(--sp) 0; }
+.rally__media { position: absolute; inset: -8% 0; z-index: 0; }
+.rally__media .pic img { filter: saturate(1.05) contrast(1.06); }
+.rally__veil {
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(to right, rgba(10, 9, 8, 0.94) 0%, rgba(10, 9, 8, 0.82) 46%, rgba(10, 9, 8, 0.45) 100%),
+    linear-gradient(to top, rgba(10, 9, 8, 0.85), transparent 40%);
+}
+.rally__inner {
+  position: relative; z-index: 2; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--pad);
+  display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(2rem, 5vw, 5rem); align-items: center;
+}
+.rally__title {
+  font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 4rem); color: #fff;
+  margin-bottom: 1.8rem;
+}
+.rally__p { color: rgba(255, 255, 255, 0.8); margin-bottom: 1.2rem; max-width: 58ch; }
+.rally__years {
+  display: inline-flex; align-items: center; gap: 0.8rem; margin: 1.4rem 0 2rem;
+  font-family: var(--sans); font-size: 0.82rem; letter-spacing: 0.34em;
+  text-transform: uppercase; color: var(--gold-2); font-variant-numeric: lining-nums;
+}
+.rally__flag { font-size: 1.15rem; letter-spacing: normal; }
+.rally__frames { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(0.7rem, 1.4vw, 1.1rem); }
+.rally__frame {
+  position: relative; aspect-ratio: 3 / 4; overflow: hidden; border-radius: var(--r);
+  background: var(--ink-3); padding: 0;
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.85);
+}
+.rally__frame:first-child { transform: translateY(clamp(-2rem, -3vw, -1rem)); }
+.rally__frame .pic img { transition: transform 1.6s var(--ease), opacity 1s; }
+.rally__frame:hover .pic img { transform: scale(1.07); }
+
+@media (max-width: 900px) {
+  .rally__inner { grid-template-columns: 1fr; }
+  .rally__veil { background: linear-gradient(to top, rgba(10, 9, 8, 0.95) 30%, rgba(10, 9, 8, 0.7)); }
+  .rally__frame:first-child { transform: none; }
+}

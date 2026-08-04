@@ -188,6 +188,17 @@
    828
   ]
  },
+ "desert-track-vehicle": {
+  "h": 1200,
+  "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQBACdASoUAA8APt1ep00opSOiMAgBEBuJYgCxDExDAt2wZGuU3aioAAD3np1HYbz1D45lewpJ0q6C2O0GoScGzltCcrQiLYBdJv317nqnowbyhRec79WsQeR3nQAA",
+  "w": 1600,
+  "widths": [
+   480,
+   960,
+   1440,
+   1600
+  ]
+ },
  "dune-branch": {
   "h": 960,
   "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAABQAwCdASoPABQAPt1apkyopSOiMAgBEBuJYgCdAB08Ei5pQAD+cNGLjkBP/1kr4kUSzsEO6FlmxlnHaIDiPNSGNJJI0MIyLKIwmBh+AAA=",
@@ -242,6 +253,17 @@
   "widths": [
    480,
    720
+  ]
+ },
+ "dune-sunset-glow": {
+  "h": 1200,
+  "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQBACdASoUAA8APt1cpkyopSOiMAgBEBuJZgCdLwGT+gZaGOatypraoAD3HpJ54FFFKiWP3bjGHUZY/ivMuSDrhXt4avvzy0i6A8xxGXVjM7H42IFYAA==",
+  "w": 1600,
+  "widths": [
+   480,
+   960,
+   1440,
+   1600
   ]
  },
  "erg-palm-line": {

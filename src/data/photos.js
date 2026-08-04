@@ -762,6 +762,31 @@ const P = {
       'Una guesthouse tradizionale con cortile, ai margini del deserto.',
       'L’ultima doccia calda prima di due notti in campo, e la prima dopo.'],
   },
+
+  'desert-track-vehicle': {
+    cat: 'desert', pos: '50% 55%',
+    en: ['Desert piste, Adrar Region', 'The Track Ahead',
+      'A pickup running the open piste, with nothing on either side but scrub and stone.',
+      'Beyond the tarmac everything is piste. Distances are long, fuel stations are far apart, and the driver navigates from memory.'],
+    fr: ['Piste du désert, région de l’Adrar', 'La piste devant',
+      'Un pick-up sur la piste ouverte, avec de part et d’autre rien que broussailles et pierre.',
+      'Au-delà du goudron, tout est piste. Les distances sont longues, les stations rares, et le chauffeur navigue de mémoire.'],
+    it: ['Pista nel deserto, regione dell’Adrar', 'La pista davanti',
+      'Un pick-up sulla pista aperta, con ai lati solo arbusti e pietra.',
+      'Oltre l’asfalto è tutta pista. Le distanze sono lunghe, i distributori lontani, e l’autista naviga a memoria.'],
+  },
+  'dune-sunset-glow': {
+    cat: 'desert', pos: '50% 55%',
+    en: ['Adrar Region', 'The Sun Goes Down Whole',
+      'A clean orange disc dropping behind the palms, with no haze to break it.',
+      'The best hour of the day in the Sahara is the last one. Everything stops for it.'],
+    fr: ['Région de l’Adrar', 'Le soleil descend entier',
+      'Un disque orange net qui tombe derrière les palmiers, sans brume pour le briser.',
+      'La plus belle heure de la journée au Sahara est la dernière. Tout s’arrête pour elle.'],
+    it: ['Regione dell’Adrar', 'Il sole scende intero',
+      'Un disco arancione netto che cala dietro le palme, senza foschia a spezzarlo.',
+      'L’ora più bella della giornata nel Sahara è l’ultima. Tutto si ferma per lei.'],
+  },
 };
 
 const CATEGORIES = ['train', 'desert', 'culture', 'landscapes', 'travellers'];

@@ -90,6 +90,9 @@ CATALOG["plateau-road"] = "plateau-road"
 CATALOG["red-hills-road"] = "red-hills-road"
 CATALOG["sand-canyon"] = "sand-canyon"
 
+CATALOG["desert-track-vehicle"] = "desert-track-vehicle"
+CATALOG["dune-sunset-glow"] = "dune-sunset-glow"
+
 
 def lqip(im):
     """A ~20px blurred placeholder, inlined as a data URI."""

@@ -345,6 +345,19 @@ module.exports = {
     },
   ],
 
+  rally: {
+    eyebrow: 'A photo from the previous edition',
+    title: 'In the Heart of the Desert',
+    body: [
+      'An immortal moment in the memory of everyone who experienced its details deep in the sand, where the roar of engines meets the passion for adventure, creating unforgettable moments that leave behind memories etched on the face of the desert.',
+      'Preparations are underway, and the ground is beginning to whisper of the approaching challenge. Be prepared and keep your eyes peeled. The next edition of the rally will not pass unnoticed. The desert is calling.',
+    ],
+    years: '2025 · 2026',
+    cta: 'Ask about the rally',
+    waMsg: 'Hello, I would like information about the desert rally.',
+    photos: ['desert-track-vehicle', 'dune-sunset-glow'],
+  },
+
   destinationsPage: {
     hero: {
       eyebrow: 'Where we go',

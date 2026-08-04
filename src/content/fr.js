@@ -339,6 +339,19 @@ module.exports = {
     },
   ],
 
+  rally: {
+    eyebrow: 'Une photo de l’édition précédente',
+    title: 'Au cœur du désert',
+    body: [
+      'Un instant immortel dans la mémoire de tous ceux qui en ont vécu les détails au plus profond du sable, là où le rugissement des moteurs rencontre la passion de l’aventure, créant des moments inoubliables qui laissent des souvenirs gravés sur le visage du désert.',
+      'Les préparatifs sont en cours, et le sol commence à murmurer le défi qui approche. Tenez-vous prêts et gardez les yeux ouverts. La prochaine édition du rallye ne passera pas inaperçue. Le désert appelle.',
+    ],
+    years: '2025 · 2026',
+    cta: 'Renseignez-vous sur le rallye',
+    waMsg: 'Bonjour, je souhaite des informations sur le rallye du désert.',
+    photos: ['desert-track-vehicle', 'dune-sunset-glow'],
+  },
+
   destinationsPage: {
     hero: {
       eyebrow: 'Où nous allons',

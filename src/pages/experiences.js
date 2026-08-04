@@ -66,7 +66,7 @@ function colsBlock(e, t) {
 }
 
 module.exports = function experiences(t, L) {
-  const all = [];
+  const all = [...t.rally.photos];
 
   const sections = t.experiences
     .map((e, i) => {
@@ -153,6 +153,35 @@ module.exports = function experiences(t, L) {
 <nav class="expnav" aria-label="${t.experiencesPage.hero.title}">${index}</nav>
 
 ${sections}
+
+
+<section class="rally">
+  <div class="rally__media" data-parallax="0.14">
+    ${pic({ slug: t.rally.photos[0], alt: t.rally.title, base: L.base, pos: photo(t.rally.photos[0], t.code).pos, sizes: '100vw', cls: 'pic--fill' })}
+  </div>
+  <div class="rally__veil"></div>
+
+  <div class="rally__inner">
+    <div class="rally__text">
+      <p class="eyebrow reveal">${t.rally.eyebrow}</p>
+      <h2 class="rally__title reveal" data-split>${t.rally.title}</h2>
+      ${t.rally.body.map((p, i) => `<p class="rally__p reveal" style="--d:${i * 90}ms">${p}</p>`).join('')}
+      <p class="rally__years reveal">${t.rally.years}<span class="rally__flag">\u{1F1F2}\u{1F1F7}</span></p>
+      <div class="reveal">${bookBtn(t.rally.cta, t.rally.waMsg, 'btn--glass')}</div>
+    </div>
+
+    <div class="rally__frames">
+      ${t.rally.photos
+        .map(
+          (slug, i) => `<button class="rally__frame reveal" style="--d:${i * 120}ms" data-photo="${slug}" aria-label="${photo(slug, t.code).title}">
+        ${pic({ slug, alt: photo(slug, t.code).title, base: L.base, pos: photo(slug, t.code).pos, sizes: '(max-width:900px) 45vw, 22vw', cls: 'pic--fill' })}
+        <span class="strip__zoom">${icon('expand')}</span>
+      </button>`
+        )
+        .join('')}
+    </div>
+  </div>
+</section>
 
 <section class="outro">
   <div class="outro__inner">
