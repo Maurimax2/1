@@ -617,6 +617,8 @@ function renderStatic() {
   renderCart();
   observeReveals();
   bindAccordions();
+  tiltCards();
+  railArrows();
 }
 
 function planCard(p, d) {
@@ -861,6 +863,155 @@ function particles() {
   });
 }
 
+
+/* ---------------- Premium interactions ---------------- */
+var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* Word-by-word headline reveal. Keeps one accessible string for readers. */
+function revealHeadline() {
+  if (REDUCED) return;
+  $$('#hero h1 span[data-i]').forEach(function (el, li) {
+    var text = el.textContent;
+    el.setAttribute('aria-label', text);
+    var words = text.split(' ');
+    el.innerHTML = words.map(function (w, i) {
+      return '<span aria-hidden="true" style="display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.1em">'+
+        '<span style="display:inline-block;transform:translateY(105%);opacity:0;transition:transform 1s cubic-bezier(.16,1,.3,1) '+
+        (li*.22 + i*.085 + .25)+'s,opacity 1s '+(li*.22 + i*.085 + .25)+'s">'+esc(w)+(i<words.length-1?'&nbsp;':'')+'</span></span>';
+    }).join('');
+    requestAnimationFrame(function () {
+      $$('span span', el).forEach(function (w) { w.style.transform = 'translateY(0)'; w.style.opacity = '1'; });
+    });
+  });
+}
+
+/* Brief intro, once per browser session. */
+function preloader() {
+  var seen = true;
+  try { seen = sessionStorage.getItem('moortv.intro') === '1'; } catch (e) { seen = false; }
+  if (seen || REDUCED) { revealHeadline(); return; }
+
+  var el = document.createElement('div');
+  el.id = 'pre';
+  el.setAttribute('aria-hidden', 'true');
+  el.innerHTML = '<div class="pl-glow"></div>' + logoMark(80) +
+    '<p class="pl-word keep">MOOR<i>TV</i></p>' +
+    '<p class="pl-tag">' + esc(T.ar.hero.tagline) + '</p>' +
+    '<div class="pl-bar"><i></i></div>';
+  document.body.appendChild(el);
+  document.body.style.overflow = 'hidden';
+
+  var bar = $('.pl-bar i', el), t0 = performance.now(), DUR = 1450;
+  (function step(now) {
+    var k = Math.min(1, (now - t0) / DUR);
+    bar.style.width = (k * 100) + '%';
+    if (k < 1) { requestAnimationFrame(step); return; }
+    try { sessionStorage.setItem('moortv.intro', '1'); } catch (e) {}
+    el.style.opacity = '0'; el.style.filter = 'blur(14px)';
+    document.body.style.overflow = '';
+    revealHeadline();
+    setTimeout(function () { el.remove(); }, 700);
+  })(t0);
+}
+
+/* Hero collage follows the cursor, each tile at its own depth. */
+function heroParallax() {
+  if (REDUCED) return;
+  var hero = $('#hero'), tiles = $$('#tiles .tile');
+  if (!hero || !tiles.length) return;
+  var tx = 0, ty = 0, cx = 0, cy = 0, running = false;
+  tiles.forEach(function (t, i) { t.dataset.depth = (1.6 + (i % 4) * 0.7).toFixed(2); });
+  hero.addEventListener('mousemove', function (e) {
+    var r = hero.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width - .5) * 2;
+    ty = ((e.clientY - r.top) / r.height - .5) * 2;
+    if (!running) { running = true; requestAnimationFrame(loop); }
+  });
+  hero.addEventListener('mouseleave', function () { tx = 0; ty = 0; });
+  function loop() {
+    cx += (tx - cx) * .06; cy += (ty - cy) * .06;
+    tiles.forEach(function (t) {
+      var d = +t.dataset.depth * 11;
+      t.style.setProperty('--px', (-cx * d).toFixed(2) + 'px');
+      t.style.setProperty('--py', (-cy * d * .75).toFixed(2) + 'px');
+    });
+    if (Math.abs(cx - tx) > .001 || Math.abs(cy - ty) > .001) requestAnimationFrame(loop);
+    else running = false;
+  }
+}
+
+/* 3D tilt + a spotlight that tracks the cursor, on every card. */
+function tiltCards() {
+  if (REDUCED || window.matchMedia('(hover: none)').matches) return;
+  $$('.card, .why, .rv').forEach(function (card) {
+    var spot = document.createElement('span');
+    spot.className = 'spot';
+    card.appendChild(spot);
+    card.addEventListener('mousemove', function (e) {
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+      card.style.transform = 'perspective(1100px) rotateX(' + ((.5 - py) * 9).toFixed(2) +
+        'deg) rotateY(' + ((px - .5) * 9).toFixed(2) + 'deg) translateY(-6px)';
+      spot.style.background = 'radial-gradient(420px circle at ' + (px * 100) + '% ' + (py * 100) +
+        '%, rgba(255,255,255,.07), transparent 62%)';
+      spot.style.opacity = '1';
+    });
+    card.addEventListener('mouseleave', function () {
+      card.style.transform = ''; spot.style.opacity = '0';
+    });
+  });
+}
+
+/* Ripple from the click point on every button. */
+function ripples() {
+  if (REDUCED) return;
+  document.addEventListener('pointerdown', function (e) {
+    var btn = e.target.closest('.btn'); if (!btn) return;
+    var r = btn.getBoundingClientRect();
+    var s = document.createElement('span');
+    s.className = 'ripple';
+    s.style.left = (e.clientX - r.left) + 'px';
+    s.style.top = (e.clientY - r.top) + 'px';
+    btn.appendChild(s);
+    setTimeout(function () { s.remove(); }, 650);
+  });
+}
+
+/* Arrow controls on the category rails (desktop). */
+function railArrows() {
+  $$('.rail').forEach(function (rail) {
+    var wrap = document.createElement('div');
+    wrap.className = 'railwrap';
+    rail.parentNode.insertBefore(wrap, rail);
+    wrap.appendChild(rail);
+    ['prev', 'next'].forEach(function (dir) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'railbtn ' + dir;
+      b.setAttribute('aria-label', dir === 'next' ? 'Next' : 'Previous');
+      b.innerHTML = '<svg viewBox="0 0 16 16" width="16" height="16" fill="none" aria-hidden><path d="' +
+        (dir === 'next' ? 'M6 3.5 10.5 8 6 12.5' : 'M10 3.5 5.5 8 10 12.5') +
+        '" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      b.addEventListener('click', function () {
+        var rtl = document.documentElement.dir === 'rtl';
+        var step = Math.max(280, rail.clientWidth * .8) * (rtl ? -1 : 1);
+        rail.scrollBy({ left: (dir === 'next' ? 1 : -1) * step, behavior: 'smooth' });
+      });
+      wrap.appendChild(b);
+    });
+    function sync() {
+      var off = Math.abs(rail.scrollLeft);
+      var rtl = document.documentElement.dir === 'rtl';
+      var atStart = off <= 4, atEnd = off + rail.clientWidth >= rail.scrollWidth - 4;
+      // "next" moves further into the rail — the left edge in RTL.
+      $('.railbtn.prev', wrap).classList.toggle('off', rtl ? atStart : atStart);
+      $('.railbtn.next', wrap).classList.toggle('off', atEnd);
+    }
+    rail.addEventListener('scroll', sync, { passive: true });
+    sync();
+  });
+}
+
 /* ---------------- Wiring ---------------- */
 function openCart(){ $('#cart').classList.add('on'); document.body.style.overflow='hidden'; }
 function closeCart(){ $('#cart').classList.remove('on'); document.body.style.overflow=''; }
@@ -930,4 +1081,7 @@ window.addEventListener('scroll', function () {
 renderStatic();
 countdown();
 particles();
+preloader();
+heroParallax();
+ripples();
 })();

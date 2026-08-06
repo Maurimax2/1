@@ -38,6 +38,18 @@ be stale.
   Publishing invented ones as if they were real would be misleading to
   customers.
 
+## What's in it
+
+Cinematic intro (once per browser session), aurora lighting, a canvas
+particle field, a hero collage that follows the cursor with per-tile depth,
+word-by-word headline reveal, scroll-reveal on every section, animated
+counters, a live sale countdown, 3D tilt with a cursor spotlight on every
+card, ripple on every button, arrow controls on the category rails, an
+accordion FAQ, a cart drawer, and a checkout modal that opens WhatsApp.
+
+Everything decorative is disabled under `prefers-reduced-motion`, and the
+tilt is skipped on touch devices.
+
 ## Notes
 
 - Fonts load from Google Fonts — the single external request in the file.
