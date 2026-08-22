@@ -32,6 +32,8 @@ ar: {
           {n:'10,000+',l:'مسلسل',h:'مواسم كاملة، تُحدَّث دائماً'},
           {n:'9,000+',l:'قناة مباشرة',h:'من كل قارات العالم'},
           {n:'4K UHD',l:'جودة البث',h:'وضوح تام على كل شاشة'} ],
+  statsLead:{ eyebrow:'المكتبة', titleA:'اشتراك واحد', titleB:'يفتح كل هذا.',
+    body:'مكتبة كاملة تُحدَّث كل أسبوع، وبث مباشر لكل ما يهمّك — بنفس السعر مهما طالت المدة.' },
   plans:{ eyebrow:'الأسعار', titleA:'اشتراك واحد،', titleB:'أربعة خيارات.',
     subtitle:'نفس المحتوى الكامل في كل الاشتراكات — الفرق في المدة فقط. كلما طالت المدة قلّت التكلفة الشهرية.',
     footnote:'الأسعار بالأوقية الموريتانية. التفعيل والدعم عبر واتساب، ولا يُخصم أي مبلغ عبر الموقع.',
@@ -91,7 +93,7 @@ ar: {
     ph:{name:'محمد ولد أحمد',phone:'44 00 00 00',notes:'أي شيء ينبغي أن نعرفه…'},
     msg:{greeting:'مرحباً موريماكس،',intro:'أرغب في الاشتراك.',name:'الاسم',phone:'الهاتف',
       products:'الاشتراك:',qty:'الكمية',total:'الإجمالي',notes:'ملاحظات',closing:'الرجاء التواصل معي.'} },
-  footer:{ ctaA:'جاهز للمشاهدة؟', ctaB:'ابدأ اليوم.',
+  footer:{ ctaEyebrow:'ابدأ الآن', ctaA:'جاهز للمشاهدة؟', ctaB:'ابدأ اليوم.',
     ctaSub:'اشتراك واحد يفتح لك كل المحتوى — من 350 أوقية.',
     ctaPrimary:'اختر اشتراكك', ctaWhatsApp:'راسلنا على واتساب', orderNow:'اطلب الآن',
     about:'موريماكس يجمع الأفلام والمسلسلات والقنوات المباشرة وكل البطولات الكروية الكبرى في اشتراك واحد — مصمَّم لموريتانيا.',
@@ -118,6 +120,8 @@ en: {
           {n:'10,000+',l:'TV Shows',h:'Full seasons, always updated'},
           {n:'9,000+',l:'Live Channels',h:'From every continent'},
           {n:'4K UHD',l:'Streaming Quality',h:'Crystal clear on every screen'} ],
+  statsLead:{ eyebrow:'The library', titleA:'One subscription', titleB:'opens all of this.',
+    body:'A full library updated every week, and live coverage of everything that matters — at the same price however long you take it for.' },
   plans:{ eyebrow:'Pricing', titleA:'One subscription,', titleB:'four ways to buy.',
     subtitle:'Every plan unlocks the same full library — only the length changes. The longer you go, the less each month costs.',
     footnote:'Prices in Mauritanian ouguiya. Activation and support happen on WhatsApp; nothing is charged on this site.',
@@ -177,7 +181,7 @@ en: {
     ph:{name:'Mohamed Ould Ahmed',phone:'44 00 00 00',notes:'Anything we should know…'},
     msg:{greeting:'Hello MAURIMAX,',intro:'I would like to subscribe.',name:'Name',phone:'Phone',
       products:'Subscription:',qty:'Quantity',total:'Total',notes:'Notes',closing:'Please contact me.'} },
-  footer:{ ctaA:'Ready to watch?', ctaB:'Start today.',
+  footer:{ ctaEyebrow:'Get started', ctaA:'Ready to watch?', ctaB:'Start today.',
     ctaSub:'One subscription unlocks everything — from 350 MRU.',
     ctaPrimary:'Choose your plan', ctaWhatsApp:'WhatsApp us', orderNow:'Order now',
     about:'MAURIMAX brings movies, series, live channels and every major football competition together into one subscription — built for Mauritania.',
@@ -413,7 +417,7 @@ function render() {
   $('#menuList').innerHTML = links.map(function(l,i){
     return '<a href="'+l[1]+'" data-close>'+esc(d.nav[l[0]])+'<span>0'+(i+1)+'</span></a>'; }).join('');
 
-  $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span class="pill"><i></i>'+esc(p)+'</span>'; }).join('');
+  $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span><i></i>'+esc(p)+'</span>'; }).join('');
   var star = photo('p-alvarez');
   var fan = ['po-ucl','po-epl','po-laliga'].map(photo).filter(Boolean);
   $('#heroStage').innerHTML =
@@ -424,13 +428,33 @@ function render() {
     (star ? '<img class="star" src="'+star+'" alt="" decoding="async">' : '');
   $('#fromPrice').textContent = num(BASE);
 
+  // Crests ride along in the marquee so the strip reads as football, not
+  // as a generic band of feature words.
+  var crestPool = ['l-epl','l-ucl','l-laliga','l-seriea','l-bundesliga','l-spl'].map(photo).filter(Boolean);
   var band = d.band.concat(d.band);
-  $('#bandTrack').innerHTML = band.map(function(b){ return '<span class="it">'+esc(b)+'<em>✦</em></span>'; }).join('');
+  $('#bandTrack').innerHTML = band.map(function(b,i){
+    var c = crestPool.length ? crestPool[i % crestPool.length] : '';
+    return '<span class="it">'+(c ? '<img src="'+c+'" alt="" loading="lazy" decoding="async">' : '')+
+      esc(b)+'<em></em></span>'; }).join('');
 
+  // Figures as hairline rows with counters, not a grid of identical boxes.
   $('#statRow').innerHTML = d.stats.map(function(s){
-    return '<div class="statCell"><div class="n keep">'+esc(s.n)+'</div><div class="l">'+esc(s.l)+'</div><div class="h">'+esc(s.h)+'</div></div>'; }).join('');
+    var f = figure(s.n);
+    return '<div class="figRow"><span class="n" data-count="'+f.to+'" data-pre="'+esc(f.pre)+
+      '" data-post="'+esc(f.post)+'">'+esc(f.pre)+(f.to ? '0' : '')+esc(f.post)+'</span>'+
+      '<span class="tx"><b>'+esc(s.l)+'</b><span>'+esc(s.h)+'</span></span></div>'; }).join('');
 
-  $('#planCards').innerHTML = PLANS.map(function(p){ return planCard(p,d); }).join('');
+  var leadPlan = PLANS.filter(function(p){ return p.best; })[0];
+  $('#leadPlan').innerHTML = leadPlanHtml(leadPlan, d);
+  $('#planCards').innerHTML = PLANS.filter(function(p){ return !p.best; })
+    .map(function(p){ return planRow(p,d); }).join('');
+
+  pFan = undefined;   // the hero was just rebuilt; drop the parallax cache
+
+  // Players anchoring the football, why and closing sections.
+  setImg('#fbAnchor', 'p-ronaldo');
+  setImg('#whyAnchor', 'p-haaland');
+  setImg('#closeArt', 'p-yamal');
 
   $('#posterWall').innerHTML = POSTERS.map(function(po){
     var shot = photo(po.shot); if (!shot) return '';
@@ -446,32 +470,33 @@ function render() {
 
   $('#leagueList').innerHTML = d.football.leagues.map(function(l,i){
     var crest = photo(LEAGUE_CRESTS[i]);
-    return '<div class="lg"><span class="top">'+
-      (crest ? '<img class="crest" src="'+crest+'" alt="" loading="lazy" decoding="async">'
-             : '<span class="crest" aria-hidden="true"></span>')+
-      '<span class="nm keep" dir="ltr">'+esc(l[0])+'</span></span>'+
+    return '<div class="lg">'+
+      (crest ? '<img class="crest" src="'+crest+'" alt="" loading="lazy" decoding="async">' : '')+
+      '<span class="nm keep" dir="ltr">'+esc(l[0])+'</span>'+
       '<span class="sub">'+esc(l[1])+'</span></div>'; }).join('');
 
-  $('#catA').innerHTML = CATS.slice(0,5).map(catCard).join('');
-  $('#catB').innerHTML = CATS.slice(5).map(catCard).join('');
+  $('#catA').innerHTML = CATS.slice(0,5).map(function(c,i){ return catCard(c,i); }).join('');
+  $('#catB').innerHTML = CATS.slice(5).map(function(c,i){ return catCard(c,i+5); }).join('');
 
   $('#whyGrid').innerHTML = d.why.items.map(function(w,i){
-    return '<div class="feat"><span class="ic"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" aria-hidden>'+
-      '<path d="'+WHY_PATHS[i]+'" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>'+
-      '<h3>'+esc(w.t)+'</h3><p>'+esc(w.b)+'</p></div>'; }).join('');
+    return '<div class="feat"><span class="ix">'+(i<9?'0':'')+(i+1)+'</span>'+
+      '<div><h3>'+esc(w.t)+'</h3><p>'+esc(w.b)+'</p></div></div>'; }).join('');
 
   $('#rvRail').innerHTML = REVIEWS.map(function(r){
     var x = r[lang];
-    return '<figure class="rv"><div style="display:flex;gap:3px">'+rep(5,function(){return STAR;})+'</div>'+
-      '<blockquote class="q">“'+esc(x[2])+'”</blockquote>'+
+    return '<figure class="rv"><div class="qm" aria-hidden="true">”</div>'+
+      '<blockquote class="q">'+esc(x[2])+'</blockquote>'+
       '<figcaption class="who"><span class="av">'+r.i+'</span><span>'+
-      '<span style="display:block;font-size:14px;font-weight:700">'+esc(x[0])+'</span>'+
-      '<span style="display:block;font-size:12.5px;color:var(--muted)">'+esc(x[1])+'</span></span></figcaption></figure>'; }).join('');
+      '<span style="display:block;font-size:13.5px;font-weight:600">'+esc(x[0])+'</span>'+
+      '<span style="display:block;font-size:12px;color:var(--muted)">'+esc(x[1])+'</span></span>'+
+      '<span class="st" style="margin-inline-start:auto">'+rep(5,function(){return STAR;})+'</span>'+
+      '</figcaption></figure>'; }).join('');
 
   $('#faqList').innerHTML = FAQS.map(function(f,i){
     var x = f[lang];
     return '<div class="acc'+(i===0?' on':'')+'"><button type="button" aria-expanded="'+(i===0)+'">'+
-      '<span>'+esc(x[0])+'</span><span class="pm"></span></button>'+
+      '<span class="ix">'+(i<9?'0':'')+(i+1)+'</span>'+
+      '<span class="qq">'+esc(x[0])+'</span><span class="pm"></span></button>'+
       '<div class="panel"><p>'+esc(x[1])+'</p></div></div>'; }).join('');
 
   var fl = d.footer.links;
@@ -484,6 +509,7 @@ function render() {
     '<li><a href="https://www.snapchat.com/add/'+SNAP+'" target="_blank" rel="noopener"><span dir="ltr" style="display:block;color:#fff;font-weight:700">'+SNAP+'</span><span style="font-size:12.5px">'+esc(d.footer.snapLine)+'</span></a></li>'+
     '<li><span style="display:block;color:#fff;font-weight:700">'+esc(d.footer.country)+'</span><span style="font-size:12.5px;color:rgba(255,255,255,.5)">'+esc(d.footer.countryLine)+'</span></li>';
 
+  $('#faqWaNum').textContent = WA_DISPLAY;
   $('#faqWa').href = wa(d.faq.waMessage);
   $('#footWa').href = wa(d.footer.waLearn);
   $('#socWa').href = wa(d.footer.waGreeting);
@@ -495,47 +521,95 @@ function render() {
   $('#cNotes').placeholder = d.checkout.ph.notes;
 
   renderCart();
+  fitWordmarks();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWordmarks);
   reveal();
+  counters();
   accordions();
   railArrows();
 }
 
-function planCard(p, d) {
-  var tag = p.badge ? '<span class="tag">'+esc(p.badge==='best'?d.plans.best:d.plans.popular)+'</span>' : '';
-  // The monthly plan has nothing to save against, but it still reserves the
-  // row so all four artwork frames line up across the grid.
-  var save = p.savePct > 0
-    ? '<span class="save">'+esc(d.plans.save(p.savePct))+'</span>'
-    : '<span class="save" aria-hidden="true" style="visibility:hidden">'+esc(d.plans.save(0))+'</span>';
-  return '<article class="plan rev'+(p.best?' best':'')+'">'+tag+
-    '<div class="dur">'+esc(d.plans.months(p.months))+'</div>'+
-    '<div class="amount" dir="ltr"><b class="keep">'+num(p.price)+'</b><s>MRU</s></div>'+
-    '<div class="per">'+esc(d.plans.perMonth(p.per))+'</div>'+ save +
-    '<div class="art">'+planArt(p)+'</div>'+
+/* The one plan that carries the section: a dark block with the player
+   standing out of the top of it, and the full feature list. */
+function leadPlanHtml(p, d) {
+  var src = photo(p.photo);
+  return '<article class="lead">'+
+    '<span class="bgfill" aria-hidden="true"></span>'+
+    (src ? '<img class="hero-img" src="'+src+'" alt="" decoding="async">' : '')+
+    '<span class="tagline keep">'+esc(d.plans.best)+'</span>'+
+    '<h3 class="dur">'+esc(d.plans.months(p.months))+'</h3>'+
+    '<div class="amt"><b dir="ltr">'+num(p.price)+'</b><s>MRU</s></div>'+
+    '<div class="meta"><span>'+esc(d.plans.perMonth(p.per))+'</span>'+
+      '<span class="save">'+esc(d.plans.save(p.savePct))+'</span></div>'+
     '<ul>'+d.plans.features.map(function(f){ return '<li>'+TICK+'<span>'+esc(f)+'</span></li>'; }).join('')+'</ul>'+
-    '<div class="go"><button class="btn '+(p.best?'btn-o':'btn-v')+' btn-full" data-add="'+p.id+'"><span>'+esc(d.plans.add)+'</span></button></div>'+
+    '<div class="go"><button class="btn btn-o btn-lg btn-full" data-add="'+p.id+'">'+
+      '<span>'+esc(d.plans.add)+'</span></button></div>'+
     '</article>';
 }
 
-/* A player standing on the plan's own violet field, with the number of months
-   set behind them. Falls back to the drawn numeral when no photo is inlined. */
-function planArt(p) {
+/* The shorter terms: one hairline row each, with a cropped player at the
+   head of the row so the imagery still runs through the section. */
+function planRow(p, d) {
   var src = photo(p.photo);
-  if (!src) return scene(p.art);
-  return '<div class="artimg cut">' +
-    '<span class="bed" style="background:linear-gradient(150deg,' + V + ',' + V2 + ' 55%,#2a0a49)"></span>' +
-    '<span class="ghost keep" aria-hidden="true">' + p.months + '</span>' +
-    '<span class="glow"></span>' +
-    '<img src="' + src + '" alt="" loading="lazy" decoding="async">' +
-    '<span class="vig"></span></div>';
+  return '<div class="prow">'+
+    '<span class="crop">'+(src ? '<img src="'+src+'" alt="" loading="lazy" decoding="async">' : '')+'</span>'+
+    '<span class="info"><b>'+esc(d.plans.months(p.months))+'</b>'+
+      '<span>'+esc(d.plans.perMonth(p.per))+
+      (p.badge==='popular' ? ' · <em class="pop" style="font-style:normal">'+esc(d.plans.popular)+'</em>' : '')+
+      (p.savePct>0 ? ' · '+esc(d.plans.save(p.savePct)) : '')+'</span></span>'+
+    '<span class="price" dir="ltr"><b>'+num(p.price)+'</b><span>MRU</span></span>'+
+    '<button class="plus" data-add="'+p.id+'" aria-label="'+esc(d.plans.add)+'">'+
+      '<svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden>'+
+      '<path d="M8 3.5v9M3.5 8h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'+
+    '</button></div>';
 }
 
-function catCard(c) {
+/* Shrinks each typographic poster's wordmark until it fits its tile.
+   Measured rather than calculated: the display face may not have loaded, and
+   the fallback's metrics are much wider, so any size derived from character
+   counts overflows for one of the two. */
+function fitWordmarks() {
+  $$('.typo .wm').forEach(function (el) {
+    var box = el.parentNode;
+    var maxW = box.clientWidth * .88, maxH = box.clientHeight * .60;
+    if (!maxW) return;
+    var size = Math.round(box.clientWidth * .42);
+    el.style.fontSize = size + 'px';
+    while (size > 11 && (el.scrollWidth > maxW || el.scrollHeight > maxH)) {
+      size -= 2;
+      el.style.fontSize = size + 'px';
+    }
+  });
+}
+
+/* Splits a figure like "20,000+" or "4K UHD" into a countable number plus
+   whatever sits around it. Non-numeric figures come back with to = 0 and are
+   printed as-is. */
+function figure(text) {
+  var m = String(text).match(/^([^\d]*)([\d,.]+)(.*)$/);
+  if (!m) return { pre:'', to:0, post:String(text) };
+  var n = parseInt(m[2].replace(/[,.]/g,''), 10);
+  return isNaN(n) ? { pre:'', to:0, post:String(text) } : { pre:m[1], to:n, post:m[3] };
+}
+
+function setImg(sel, key) {
+  var el = $(sel), src = photo(key);
+  if (!el) return;
+  if (src) { el.src = src; el.style.display = ''; } else { el.style.display = 'none'; }
+}
+
+/* Categories with real photography use it. The rest become typographic
+   posters — the category name set large and cropped by the frame — rather
+   than a drawn icon on a coloured rectangle, which is the one thing on the
+   page that still read as filler. */
+function catCard(c, i) {
   var x = c[lang], shot = photo(c.photo);
   var art = shot
     ? '<div class="artimg"><img src="'+shot+'" alt="" loading="lazy" decoding="async">'+
-      '<span class="vig" style="background:linear-gradient(to top,rgba(14,4,22,.88) 6%,rgba(14,4,22,.3) 40%,rgba(78,13,131,.18))"></span></div>'
-    : scene(c.art, c.img);
+      '<span class="vig"></span></div>'
+    : '<div class="typo'+(i % 3 === 1 ? ' alt' : '')+'">'+
+        '<span class="wm keep" aria-hidden="true">'+esc(c.en[0])+'</span>'+
+        '<span class="vig"></span></div>';
   return '<a href="#plans" class="cat rev" aria-label="'+esc(x[0])+'"><div class="fr">'+art+
     '<div class="meta"><h3>'+esc(x[0])+'</h3><p class="c">'+esc(x[1])+'</p></div></div></a>';
 }
@@ -573,7 +647,10 @@ function renderCart(){
   }
   box.innerHTML = cart.map(function(l){
     var p=find(l.id);
-    return '<div class="line"><div class="th">'+scene(p.art,p.img)+'</div><div style="flex:1;min-width:0">'+
+    var th = photo(p.photo);
+    return '<div class="line"><div class="th">'+
+      (th ? '<img src="'+th+'" alt="" loading="lazy" decoding="async">' : scene(p.art,p.img))+
+      '</div><div style="flex:1;min-width:0">'+
       '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">'+
       '<h3 style="font-size:14.5px;font-weight:800">'+esc(d.plans.months(p.months))+'</h3>'+
       '<button data-rm="'+p.id+'" aria-label="remove" style="color:var(--muted);padding:2px">'+
@@ -634,6 +711,48 @@ function reveal(){
   function onScroll(){ clearTimeout(timer); timer = setTimeout(sweep, 180); }
   window.addEventListener('scroll', onScroll, {passive:true});
 }
+/* Figures count up the first time they come into view. */
+function counters(){
+  var els = $$('.figRow .n[data-count]');
+  if (REDUCED || !('IntersectionObserver' in window)){
+    els.forEach(function(el){ paint(el, +el.dataset.count); });
+    return;
+  }
+  var io = new IntersectionObserver(function(ents){
+    ents.forEach(function(e){
+      if (!e.isIntersecting) return;
+      var el = e.target, to = +el.dataset.count;
+      io.unobserve(el);
+      if (!to){ return; }
+      var t0 = performance.now(), DUR = 1100;
+      (function step(now){
+        var k = Math.min(1, (now - t0) / DUR);
+        // ease-out so it settles rather than stopping dead
+        paint(el, Math.round(to * (1 - Math.pow(1 - k, 3))));
+        if (k < 1) requestAnimationFrame(step);
+      })(t0);
+    });
+  }, {threshold:.4});
+  els.forEach(function(el){ if (+el.dataset.count) io.observe(el); });
+}
+function paint(el, v){ el.textContent = el.dataset.pre + num(v) + el.dataset.post; }
+
+/* Slow parallax on the hero: the posters and the player drift at different
+   rates so the composition has depth as it leaves. */
+var pFan, pStar, pTick = false;
+function parallax(y){
+  if (REDUCED || pTick) return;
+  pTick = true;
+  requestAnimationFrame(function(){
+    pTick = false;
+    if (pFan === undefined){ pFan = $('#heroStage .fan'); pStar = $('#heroStage .star'); }
+    if (!pFan || !pStar) return;
+    if (y > window.innerHeight * 1.2) return;
+    pFan.style.transform = 'translate3d(0,' + (y * 0.11) + 'px,0)';
+    pStar.style.transform = 'translate3d(0,' + (y * -0.05) + 'px,0)';
+  });
+}
+
 function accordions(){
   $$('.acc').forEach(function(acc){
     var panel=$('.panel',acc);
@@ -707,9 +826,17 @@ document.addEventListener('click', function(e){
   var el;
   if ((el = e.target.closest('[data-add]'))){
     add(el.getAttribute('data-add'));
-    var s = el.querySelector('span'), old = s.textContent;
-    s.textContent = t().cart.added;
-    setTimeout(function(){ s.textContent = old; }, 1400);
+    // The full-width buttons swap their label; the compact `+` on a plan row
+    // has no label to swap, so it just flashes instead.
+    var s = el.querySelector('span');
+    if (s) {
+      var old = s.textContent;
+      s.textContent = t().cart.added;
+      setTimeout(function(){ s.textContent = old; }, 1400);
+    } else {
+      el.classList.add('done');
+      setTimeout(function(){ el.classList.remove('done'); }, 900);
+    }
     return;
   }
   if ((el = e.target.closest('[data-rm]'))){ setQ(el.getAttribute('data-rm'),0); return; }
@@ -721,6 +848,7 @@ document.addEventListener('click', function(e){
   if (e.target.closest('[data-close-cart]')){ closeCart(); return; }
   if (e.target.closest('[data-close-modal]')){ closeModal(); return; }
   if (e.target.closest('[data-close]')){ $('#menu').classList.remove('on'); document.body.style.overflow='';
+    document.querySelector('header').classList.remove('menu-open');
     $('#burger').setAttribute('aria-expanded','false'); }
 });
 if (!REDUCED) document.addEventListener('pointerdown', function(e){
@@ -734,12 +862,14 @@ $('#toCheckout').addEventListener('click', openModal);
 $('#burger').addEventListener('click', function(){
   var m=$('#menu'), on=m.classList.toggle('on');
   document.body.style.overflow = on?'hidden':'';
+  document.querySelector('header').classList.toggle('menu-open', on);
   this.setAttribute('aria-expanded', on?'true':'false');
 });
 document.addEventListener('keydown', function(e){
   if (e.key!=='Escape') return;
   closeCart(); closeModal();
-  $('#menu').classList.remove('on'); $('#burger').setAttribute('aria-expanded','false');
+  $('#menu').classList.remove('on'); document.querySelector('header').classList.remove('menu-open');
+  document.body.style.overflow=''; $('#burger').setAttribute('aria-expanded','false');
 });
 $('#lang').addEventListener('click', function(){
   lang = lang==='ar' ? 'en' : 'ar';
@@ -760,12 +890,22 @@ $('#coForm').addEventListener('submit', function(e){
 ['cName','cPhone'].forEach(function(id){
   $('#'+id).addEventListener('input', function(){ this.closest('.field').classList.remove('bad'); });
 });
+var fitTimer;
+window.addEventListener('resize', function(){
+  clearTimeout(fitTimer); fitTimer = setTimeout(fitWordmarks, 150);
+});
+
+var headerEl = document.querySelector('header');
 window.addEventListener('scroll', function(){
   var y = window.pageYOffset;
-  document.querySelector('header').classList.toggle('stuck', y>16);
-  $('#fab').classList.toggle('on', y>640);
+  // White bar only once the header has left the dark hero; over the hero it
+  // stays transparent with white type.
+  var hero = $('#hero');
+  headerEl.classList.toggle('stuck', y > (hero ? hero.offsetHeight - 70 : 16));
+  $('#fab').classList.toggle('on', y>560);
   var max = document.documentElement.scrollHeight - window.innerHeight;
   $('#prog').style.transform = 'scaleX(' + (max>0 ? y/max : 0) + ')';
+  parallax(y);
 }, {passive:true});
 
 render();

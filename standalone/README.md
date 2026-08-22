@@ -83,13 +83,33 @@ Guidance for new artwork:
   not real.** Replace them with genuine reviews and real numbers. Publishing
   invented ones as if they were real would mislead customers.
 
-## What's in it
+## The design system
 
-A monument-style white layout: numbered section markers, an extended-width
-display face, flat-block highlights on the headlines, a violet ticker band,
-four subscription cards with a player standing on each, the competition grid,
-category rails with arrow controls, an accordion FAQ, a cart drawer and a
-checkout modal that opens WhatsApp with the order written out.
+The page runs **dark → light → dark**: a cinematic football hero, a white
+editorial body, a dark closing CTA and footer. Purple is concentrated in the
+dark zones instead of spread everywhere, and orange is an accent — never a
+surface.
+
+- **Type** `Alexandria` (variable, Latin + Arabic) carries all text;
+  `Big Shoulders Display` (condensed) is reserved for numerals, the wordmark
+  and Latin poster words.
+- **Radius** collapsed to `0 / 3px / pill`. The pill is spent on exactly one
+  thing — the primary call to action.
+- **No shadows on light surfaces.** Hairlines separate things instead;
+  `drop-shadow` appears only under player cut-outs, where it is motivated.
+- **Players break their containers** — out of the hero fan, out of the top of
+  the lead pricing card, off the edge of the football and closing sections.
+- **Sections are not numbered.** They are not a sequence, so numbering them
+  would have been decoration.
+
+### Two things that must stay measured, not calculated
+
+`fitWordmarks()` shrinks each typographic category poster until it fits its
+tile. Sizing it from character counts breaks: if Google Fonts has not loaded,
+the fallback's metrics are far wider and the word overflows.
+
+`figure()` splits each library statistic into a number plus whatever surrounds
+it, so `20,000+` counts up on scroll and `4K UHD` is printed as-is.
 
 Everything decorative is disabled under `prefers-reduced-motion`.
 
