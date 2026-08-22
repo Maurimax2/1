@@ -281,10 +281,16 @@ var FAQS = [
 ];
 
 /* ---------------- Artwork (original SVG, nothing licensed) ---------------- */
-function art(variant, a, b, w, h) {
+/**
+ * Generated SVG key art. If `img` is supplied it is composited on top of the
+ * gradient bed instead of the drawn illustration — which is what you want for
+ * cut-out PNGs with a transparent background.
+ */
+function art(variant, a, b, w, h, img) {
   var uid = variant + a.replace(/#/g,'') + b.replace(/#/g,'');
   var W = 'rgba(255,255,255,.9)';
   var inner = '';
+  if (img) return artWithImage(uid, a, b, img, w, h);
   switch (variant) {
     case 'movies': inner =
       '<g transform="rotate(-18 200 250)"><rect x="-40" y="190" width="480" height="120" rx="10" fill="#050505" opacity=".55"/>'+
@@ -377,6 +383,17 @@ function art(variant, a, b, w, h) {
     '<g opacity=".92">'+inner+'</g>'+
     '<rect width="400" height="560" fill="url(#vg'+uid+')"/><rect width="400" height="560" fill="url(#vl'+uid+')"/></svg>';
 }
+/** Gradient bed + a cut-out PNG on top, with a grounding shadow. */
+function artWithImage(uid, a, b, img, w, h) {
+  return '<div class="artimg" style="width:' + (w ? w + 'px' : '100%') + ';height:' + (h ? h + 'px' : '100%') + '">' +
+    '<span class="artbed" style="background:' +
+      'radial-gradient(ellipse 70% 55% at 50% 22%, ' + a + '66, transparent 70%),' +
+      'linear-gradient(160deg, ' + a + '55, ' + b + '33 45%, #040407)"></span>' +
+    '<span class="artvig"></span>' +
+    '<img src="' + esc(img) + '" alt="" loading="lazy" decoding="async">' +
+    '</div>';
+}
+
 function rep(n, fn){ var o=''; for(var i=0;i<n;i++) o+=fn(i); return o; }
 
 /* The remote we actually ship — reused by both hardware shots. */
@@ -527,7 +544,7 @@ function renderStatic() {
   $('#tiles').innerHTML = TILES.map(function(x,i){
     return '<div class="tile'+(x[4]?' lg':'')+'" style="'+x[3]+'">'+
       '<figure style="transform:rotate('+x[5]+'deg);animation-delay:'+(i*.4)+'s">'+
-      '<div style="aspect-ratio:2/3">'+art(x[0],x[1],x[2])+'</div>'+
+      '<div style="aspect-ratio:2/3">'+art(x[0],x[1],x[2],0,0,(T.imgTiles||{})[x[0]])+'</div>'+
       '<figcaption>'+esc(d.hero.tiles[x[0]])+'</figcaption></figure></div>';
   }).join('');
 
@@ -631,7 +648,7 @@ function planCard(p, d) {
     '<div class="body '+(p.hi?'':'glass')+'"'+(p.hi?' style="background:linear-gradient(165deg,rgba(74,16,48,.72),rgba(12,10,24,.94) 45%,rgba(8,8,14,.97))"':'')+'>'+
     badge+
     '<div style="width:100%;max-width:210px;margin:0 auto 28px;border-radius:24px;overflow:hidden;border:1px solid rgba(255,255,255,.1)">'+
-    '<div style="aspect-ratio:4/3">'+art(p.art,p.tone[0],p.tone[1])+'</div></div>'+
+    '<div style="aspect-ratio:4/3">'+art(p.art,p.tone[0],p.tone[1],0,0,p.img)+'</div></div>'+
     '<div style="text-align:center"><h3 style="font-size:22px">'+esc(x.n)+'</h3>'+
     '<p style="margin-top:8px;font-size:13px;color:rgba(255,255,255,.4)">'+esc(x.b)+'</p>'+
     '<div class="price" dir="ltr"><b>'+num(p.price)+'</b><s>MRU</s></div>'+save+'</div>'+
@@ -646,7 +663,7 @@ function devCard(p, d) {
   return '<article class="card rev'+(p.hi?' hi':'')+'">'+
     '<div class="body glass" style="padding:0">'+
     '<div style="position:relative;overflow:hidden;border-radius:30px 30px 0 0">'+
-    '<div style="aspect-ratio:4/3">'+art(p.art,p.tone[0],p.tone[1])+'</div>'+
+    '<div style="aspect-ratio:4/3">'+art(p.art,p.tone[0],p.tone[1],0,0,p.img)+'</div>'+
     '<div style="position:absolute;inset-inline:0;bottom:0;height:112px;background:linear-gradient(to top,#0b0b12,transparent)"></div>'+
     '<span class="badge" style="position:absolute;top:20px;inset-inline-start:20px;border:1px solid rgba(255,255,255,.15);background:rgba(0,0,0,.55);color:#fff;backdrop-filter:blur(8px)">'+esc(d.devices[p.badge])+'</span>'+
     '<span class="badge" style="position:absolute;top:20px;inset-inline-end:20px;border:1px solid rgba(52,211,153,.3);background:rgba(52,211,153,.12);color:#6ee7b7;backdrop-filter:blur(8px)">'+esc(d.devices.yearIncluded)+'</span>'+
@@ -666,7 +683,7 @@ function devCard(p, d) {
 function catCard(c) {
   var x = L(c);
   return '<a href="#plans" class="cat rev" aria-label="'+esc(x[0])+' — '+esc(x[1])+'"><div class="fr">'+
-    art(c.art,c.tone[0],c.tone[1])+
+    art(c.art,c.tone[0],c.tone[1],0,0,c.img)+
     '<div class="meta"><h3>'+esc(x[0])+'</h3><p class="c">'+esc(x[1])+'</p></div></div></a>';
 }
 
@@ -712,7 +729,7 @@ function renderCart() {
   }
   box.innerHTML = cart.map(function (l) {
     var p = find(l.id), x = L(p);
-    return '<div class="line"><div class="thumb">'+art(p.art,p.tone[0],p.tone[1],74,74)+'</div>'+
+    return '<div class="line"><div class="thumb">'+art(p.art,p.tone[0],p.tone[1],74,74,p.img)+'</div>'+
       '<div style="flex:1;min-width:0">'+
       '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">'+
       '<h3 style="font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(x.n)+'</h3>'+

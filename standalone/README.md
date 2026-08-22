@@ -28,6 +28,32 @@ node standalone/build.mjs
 Editing `moortv.html` directly is fine too; just be aware the `.js` will then
 be stale.
 
+## Using your own images
+
+Every card falls back to generated SVG art. To use a real image instead, drop
+the file in `images/` and add an `img` field to that item in the script:
+
+```js
+{ id:'plan-12m', price:3000, art:'best', img:'images/offer.png', ... }
+{ art:'football', img:'images/football.png', ar:['كرة القدم', ...] }
+```
+
+Cut-out PNGs with a transparent background work best — they composite onto the
+same gradient bed the drawn art uses, so the section keeps its look. Add the
+`cutout` class treatment by giving the file room: it is centred on the bottom
+edge and padded, the way a product or player render should sit in a frame.
+
+Guidance:
+
+- **Format** PNG with transparency for cut-outs; JPG is fine for full-bleed
+  photography.
+- **Size** roughly 800×1200 for the tall category cards, 1000×750 for the wide
+  device cards. Keep each file under ~300 KB or the page gets heavy.
+- **Rights** only use images you may use commercially: files you own, material
+  a rights-holder has licensed to you, or press assets cleared for promotional
+  use. Studio stills, character art and photos of footballers are copyrighted
+  and carry likeness rights on top — background removal does not change that.
+
 ## Before publishing
 
 - **The 4,500 MRU box price is a placeholder.** Only the stick (3,000 MRU with
