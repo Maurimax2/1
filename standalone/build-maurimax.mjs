@@ -46,8 +46,30 @@ if (!html.includes(tag)) throw new Error('No `' + tag + '` found in the template
 html = html.replace(tag, () => '<script>\n' + js + '\n</script>');
 
 writeFileSync(join(here, 'maurimax.html'), html);
+
+// A second copy for the Artifact preview host, which supplies its own
+// document skeleton and rejects a full document. Same page, unwrapped:
+// the <title> stays (it names the artifact), charset/viewport/icon go
+// because the host sets them, and dir/lang are stamped by an inline script
+// before first paint so the RTL layout never flashes left-to-right.
+const preview = html
+  .replace(/^[\s\S]*?<meta name="viewport"[^>]*>\s*/, '<script>(function(){var l="ar";' +
+    'try{var s=localStorage.getItem("maurimax.lang");if(s==="ar"||s==="en")l=s;}catch(e){}' +
+    'var d=document.documentElement;d.lang=l;d.dir=l==="ar"?"rtl":"ltr";})();</script>\n')
+  // The descriptive title is right for search results but wrong for a gallery
+  // card, which wants the name on its own.
+  .replace(/<title>[\s\S]*?<\/title>/, '<title>موريماكس MAURIMAX</title>')
+  .replace(/<link rel="icon"[^>]*>\s*/, '')
+  .replace(/<\/head>\s*<body[^>]*>/, '')
+  .replace(/<\/body>\s*<\/html>\s*$/, '');
+if (/<\/?(?:html|head|body)\b/i.test(preview)) {
+  throw new Error('Preview build still contains a document wrapper tag');
+}
+writeFileSync(join(here, 'maurimax.preview.html'), preview);
+
 console.log(
   'maurimax.html — ' + (Buffer.byteLength(html) / 1024).toFixed(1) + ' KB\n' +
     '  logo   ' + (logo.length / 1024).toFixed(1) + ' KB\n' +
-    '  photos ' + photos.length + ' files, ' + (photoBytes / 1024).toFixed(1) + ' KB'
+    '  photos ' + photos.length + ' files, ' + (photoBytes / 1024).toFixed(1) + ' KB\n' +
+    'maurimax.preview.html — ' + (Buffer.byteLength(preview) / 1024).toFixed(1) + ' KB (Artifact copy)'
 );

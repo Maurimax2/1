@@ -49,7 +49,7 @@ ar: {
   football:{ eyebrow:'الرياضة', titleA:'كل مباراة تهمّك،', titleB:'مباشرة.',
     subtitle:'الدوريات الأوروبية الكبرى والبطولات القارية والدوري السعودي — بجودة عالية وبدون تقطيع.',
     bandTitle:'البطولات المتاحة', bandSub:'مباشرة وبجودة تصل إلى 4K',
-    bandCta:'اشترك الآن',
+    bandCta:'اشترك الآن', liveTag:'مباشر',
     leagues:[
       ['Premier League','الدوري الإنجليزي'],
       ['UEFA Champions League','دوري أبطال أوروبا'],
@@ -135,7 +135,7 @@ en: {
   football:{ eyebrow:'Sport', titleA:'Every match that matters,', titleB:'live.',
     subtitle:'The big European leagues, continental competitions and the Saudi Pro League — in high quality, without buffering.',
     bandTitle:'Competitions included', bandSub:'Live, in quality up to 4K',
-    bandCta:'Subscribe now',
+    bandCta:'Subscribe now', liveTag:'LIVE',
     leagues:[
       ['Premier League','England'],
       ['UEFA Champions League','Europe'],
@@ -213,14 +213,14 @@ function find(id){ for(var i=0;i<PLANS.length;i++) if(PLANS[i].id===id) return P
 var CATS = [
   {art:'movies',   ar:['أفلام','أكثر من 20,000 فيلم'],        en:['Movies','20,000+ titles']},
   {art:'series',   ar:['مسلسلات','أكثر من 10,000 مسلسل'],     en:['TV Shows','10,000+ series']},
-  {art:'football', ar:['كرة القدم','كل الدوريات الكبرى'],      en:['Football','Every major league']},
-  {art:'sports',   ar:['رياضة','أكثر من 900 قناة'],            en:['Sports','900+ channels']},
+  {art:'football', photo:'c-football', ar:['كرة القدم','كل الدوريات الكبرى'], en:['Football','Every major league']},
+  {art:'sports',   photo:'c-sports',   ar:['رياضة','أكثر من 900 قناة'],       en:['Sports','900+ channels']},
   {art:'kids',     ar:['أطفال','آمن وممتع'],                   en:['Kids','Safe & fun']},
   {art:'anime',    ar:['أنمي','مترجم ومدبلج'],                 en:['Anime','Subbed & dubbed']},
   {art:'docs',     ar:['وثائقيات','قصص حقيقية'],               en:['Documentaries','Real stories']},
   {art:'news',     ar:['أخبار','على مدار الساعة'],             en:['News','24/7 worldwide']},
   {art:'series2',  ar:['دراما عربية وتركية','مواسم كاملة'],    en:['Arabic & Turkish drama','Full seasons']},
-  {art:'live',     ar:['قنوات مباشرة','أكثر من 9,000 قناة'],   en:['Live TV','9,000+ channels']}
+  {art:'live',     photo:'c-live',     ar:['قنوات مباشرة','أكثر من 9,000 قناة'], en:['Live TV','9,000+ channels']}
 ];
 
 /* Illustrative examples, not verified customer reviews — replace before launch. */
@@ -269,6 +269,17 @@ function photo(key){ return (key && MXIMG[key]) || ''; }
 
 /* Parallel to football.leagues in the dictionaries; '' where no mark exists. */
 var LEAGUE_CRESTS = ['l-epl','l-ucl','l-laliga','l-seriea','l-bundesliga','','l-spl',''];
+
+/* The poster wall. `i` indexes football.leagues so the caption reads from the
+   dictionary and stays translated. */
+var POSTERS = [
+  { i:0, shot:'po-epl',        crest:'l-epl' },
+  { i:1, shot:'po-ucl',        crest:'l-ucl' },
+  { i:2, shot:'po-laliga',     crest:'l-laliga' },
+  { i:3, shot:'po-seriea',     crest:'l-seriea' },
+  { i:4, shot:'po-bundesliga', crest:'l-bundesliga' },
+  { i:5, shot:'po-ligue1',     crest:'' }
+];
 
 function scene(variant, img) {
   var id = 'g' + variant;
@@ -417,6 +428,18 @@ function render() {
 
   $('#planCards').innerHTML = PLANS.map(function(p){ return planCard(p,d); }).join('');
 
+  $('#posterWall').innerHTML = POSTERS.map(function(po){
+    var shot = photo(po.shot); if (!shot) return '';
+    var l = d.football.leagues[po.i], crest = photo(po.crest);
+    return '<a class="po" href="#plans" aria-label="'+esc(l[0])+'">'+
+      '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">'+
+      '<span class="scrim"></span>'+
+      '<span class="live keep"><i></i>'+esc(d.football.liveTag)+'</span>'+
+      '<span class="cap">'+
+        (crest ? '<img src="'+crest+'" alt="" loading="lazy" decoding="async">' : '')+
+        '<span><b class="keep" dir="ltr">'+esc(l[0])+'</b><s>'+esc(l[1])+'</s></span>'+
+      '</span></a>'; }).join('');
+
   $('#leagueList').innerHTML = d.football.leagues.map(function(l,i){
     var crest = photo(LEAGUE_CRESTS[i]);
     return '<div class="lg"><span class="top">'+
@@ -504,8 +527,12 @@ function planArt(p) {
 }
 
 function catCard(c) {
-  var x = c[lang];
-  return '<a href="#plans" class="cat rev" aria-label="'+esc(x[0])+'"><div class="fr">'+scene(c.art, c.img)+
+  var x = c[lang], shot = photo(c.photo);
+  var art = shot
+    ? '<div class="artimg"><img src="'+shot+'" alt="" loading="lazy" decoding="async">'+
+      '<span class="vig" style="background:linear-gradient(to top,rgba(14,4,22,.88) 6%,rgba(14,4,22,.3) 40%,rgba(78,13,131,.18))"></span></div>'
+    : scene(c.art, c.img);
+  return '<a href="#plans" class="cat rev" aria-label="'+esc(x[0])+'"><div class="fr">'+art+
     '<div class="meta"><h3>'+esc(x[0])+'</h3><p class="c">'+esc(x[1])+'</p></div></div></a>';
 }
 
