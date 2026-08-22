@@ -46,6 +46,7 @@
   --orange-2:#ff8a4f;
   /* Type */
   --ui:'Alexandria',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --head:var(--ui);
   --disp:'Big Shoulders Display','Archivo Narrow','Arial Narrow',sans-serif;
   /* Radius — deliberately tiny. A pill is reserved for one CTA. */
   --r:3px;
@@ -55,7 +56,7 @@
 html{scroll-behavior:smooth;scroll-padding-top:84px;overflow-x:clip;background:var(--paper)}
 body{background:var(--paper);color:var(--ink-text);font-family:var(--ui);font-size:15px;
   line-height:1.6;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:clip}
-h1,h2,h3,h4{line-height:1.15;font-weight:700;letter-spacing:-.01em}
+h1,h2,h3,h4{font-family:var(--head);line-height:1.15;font-weight:700;letter-spacing:-.01em}
 html[dir=rtl] h1,html[dir=rtl] h2,html[dir=rtl] h3{line-height:1.35;letter-spacing:0}
 p{text-wrap:pretty}
 a{color:inherit;text-decoration:none}
@@ -907,6 +908,7 @@ html[dir=ltr] #drawer{transform:translateX(100%)}
     </form>
   </div>
 </div>
+__FONTLAB__
 __IMG_MAP__
 <script src="maurimax.js"></script>
 </body>

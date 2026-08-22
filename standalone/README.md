@@ -17,6 +17,7 @@ untouched by the rebrand — keep it or delete it.
 | `maurimax.src.html` | markup + all CSS, with `__LOGO_URI__` / `__IMG_MAP__` placeholders |
 | `maurimax.js` | the runtime: prices, artwork, both dictionaries, cart, interactions |
 | `maurimax.preview.html` | generated too — the same page without a document wrapper, for hosts that supply their own skeleton |
+| `fontlab.html` | a floating typeface switcher, injected into the preview copy only |
 | `images/` | the logo, the optimised player and league artwork, `prepare.mjs` |
 
 **Edit those, never `maurimax.html`** — it is generated, and the next build
@@ -90,9 +91,15 @@ editorial body, a dark closing CTA and footer. Purple is concentrated in the
 dark zones instead of spread everywhere, and orange is an accent — never a
 surface.
 
-- **Type** `Alexandria` (variable, Latin + Arabic) carries all text;
-  `Big Shoulders Display` (condensed) is reserved for numerals, the wordmark
-  and Latin poster words.
+- **Type** three variables drive everything: `--head` for headings, `--ui`
+  for body text and `--disp` for numerals, the wordmark and Latin poster
+  words. Currently `Alexandria` for the first two and
+  `Big Shoulders Display` for the third.
+
+  To try alternatives, open `maurimax.preview.html` — `fontlab.html` adds a
+  switcher to that copy with six candidate pairings. The build asserts the
+  lab never reaches `maurimax.html`. Once a pairing is chosen, set the three
+  variables in `:root` and delete the lab.
 - **Radius** collapsed to `0 / 3px / pill`. The pill is spent on exactly one
   thing — the primary call to action.
 - **No shadows on light surfaces.** Hairlines separate things instead;

@@ -521,6 +521,8 @@ function render() {
   $('#cNotes').placeholder = d.checkout.ph.notes;
 
   renderCart();
+  // Exposed so the preview build's font switcher can re-measure after a swap.
+  window.MXFit = fitWordmarks;
   fitWordmarks();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWordmarks);
   reveal();
