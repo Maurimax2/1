@@ -209,9 +209,10 @@ en: {
 var BASE = 350;
 var PLANS = [
   { id:'p1',  months:1,  price:350,  art:'m1',  photo:'p-haaland' },
-  { id:'p3',  months:3,  price:700,  art:'m3',  photo:'p-ronaldo', badge:'popular' },
-  { id:'p6',  months:6,  price:1000, art:'m6',  photo:'p-yamal' },
-  { id:'p12', months:12, price:1500, art:'m12', photo:'p-messi', badge:'best', best:true }
+  { id:'p3',  months:3,  price:700,  art:'m3',  photo:'x-tyrion',  badge:'popular' },
+  { id:'p6',  months:6,  price:1000, art:'m6',  photo:'x-punisher' },
+  { id:'p12', months:12, price:1500, art:'m12', photo:'p-messi', photo2:'x-walter',
+    badge:'best', best:true }
 ];
 PLANS.forEach(function (p) {
   p.ref = BASE * p.months;
@@ -234,21 +235,12 @@ var SHOWS = [
   {k:'m-fury',        kind:'film',   ar:'فيوري',            en:'Fury'}
 ];
 
-/* Character cut-outs for the lineup band: [name, where they are from]. */
-var FACES = [
-  {k:'x-walter',     ar:['والتر وايت','بريكينغ باد'],        en:['Walter White','Breaking Bad']},
-  {k:'x-homelander', ar:['هوملاندر','ذا بويز'],              en:['Homelander','The Boys']},
-  {k:'x-tyrion',     ar:['تيريون لانيستر','صراع العروش'],    en:['Tyrion Lannister','Game of Thrones']},
-  {k:'x-punisher',   ar:['ذا بانيشر','مارفل'],               en:['The Punisher','Marvel']},
-  {k:'x-jane',       ar:['باتريك جين','ذا مينتاليست'],       en:['Patrick Jane','The Mentalist']}
-];
-
 var CATS = [
   {art:'movies',   photo:'m-fury',        ar:['أفلام','أكثر من 20,000 فيلم'],    en:['Movies','20,000+ titles']},
   {art:'series',   photo:'m-walkingdead', ar:['مسلسلات','أكثر من 10,000 مسلسل'], en:['TV Shows','10,000+ series']},
   {art:'football', photo:'c-football', ar:['كرة القدم','كل الدوريات الكبرى'], en:['Football','Every major league']},
   {art:'sports',   photo:'c-sports',   ar:['رياضة','أكثر من 900 قناة'],       en:['Sports','900+ channels']},
-  {art:'kids',     ar:['أطفال','آمن وممتع'],                   en:['Kids','Safe & fun']},
+  {art:'kids',     photo:'m-spiderman', ar:['أطفال','آمن وممتع'],  en:['Kids','Safe & fun']},
   {art:'anime',    ar:['أنمي','مترجم ومدبلج'],                 en:['Anime','Subbed & dubbed']},
   {art:'docs',     photo:'c-docs', ar:['وثائقيات','قصص حقيقية'],  en:['Documentaries','Real stories']},
   {art:'news',     ar:['أخبار','على مدار الساعة'],             en:['News','24/7 worldwide']},
@@ -447,13 +439,16 @@ function render() {
     return '<a href="'+l[1]+'" data-close>'+esc(d.nav[l[0]])+'<span>0'+(i+1)+'</span></a>'; }).join('');
 
   $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span><i></i>'+esc(p)+'</span>'; }).join('');
-  var star = photo('p-alvarez');
-  var fan = ['po-ucl','po-epl','po-laliga'].map(photo).filter(Boolean);
+  // Football in the middle, screen titles either side; a footballer and a
+  // character in front. The hero states both halves of the offer at once.
+  var star = photo('p-alvarez'), star2 = photo('x-homelander');
+  var fan = ['m-got','po-epl','m-oppenheimer'].map(photo).filter(Boolean);
   $('#heroStage').innerHTML =
     (fan.length === 3
       ? '<div class="fan">' + fan.map(function(src,i){
           return '<span class="pc pc-'+(i+1)+'"><img src="'+src+'" alt="" decoding="async"></span>'; }).join('') + '</div>'
       : '<div style="border-radius:26px;overflow:hidden;aspect-ratio:4/3.4;box-shadow:0 40px 80px -40px rgba(78,13,131,.55)">'+scene('hero')+'</div>') +
+    (star2 ? '<img class="star2" src="'+star2+'" alt="" decoding="async">' : '') +
     (star ? '<img class="star" src="'+star+'" alt="" decoding="async">' : '');
   $('#fromPrice').textContent = num(BASE);
 
@@ -482,6 +477,7 @@ function render() {
 
   // Players anchoring the football, why and closing sections.
   setImg('#fbAnchor', 'p-ronaldo');
+  setImg('#catAnchor', 'x-jane');
   setImg('#whyAnchor', 'p-haaland');
   setImg('#closeArt', 'p-yamal');
 
@@ -510,12 +506,6 @@ function render() {
       '<span class="art"><img src="'+art+'" alt="" loading="lazy" decoding="async">'+
       '<span class="kind keep">'+esc(d.categories.kind[sh.kind])+'</span></span>'+
       '<b>'+esc(sh[lang])+'</b></a>'; }).join('');
-
-  $('#faceRow').innerHTML = FACES.map(function(f){
-    var art = photo(f.k); if (!art) return '';
-    var x = f[lang];
-    return '<div class="face"><img src="'+art+'" alt="'+esc(x[0])+'" loading="lazy" decoding="async">'+
-      '<b>'+esc(x[0])+'</b><s>'+esc(x[1])+'</s></div>'; }).join('');
 
   $('#catA').innerHTML = CATS.slice(0,5).map(function(c,i){ return catCard(c,i); }).join('');
   $('#catB').innerHTML = CATS.slice(5).map(function(c,i){ return catCard(c,i+5); }).join('');
@@ -574,10 +564,11 @@ function render() {
 /* The one plan that carries the section: a dark block with the player
    standing out of the top of it, and the full feature list. */
 function leadPlanHtml(p, d) {
-  var src = photo(p.photo);
+  var src = photo(p.photo), src2 = photo(p.photo2);
   return '<article class="lead">'+
     '<span class="bgfill" aria-hidden="true"></span>'+
     (src ? '<img class="hero-img" src="'+src+'" alt="" decoding="async">' : '')+
+    (src2 ? '<img class="hero-img2" src="'+src2+'" alt="" decoding="async">' : '')+
     '<span class="tagline keep">'+esc(d.plans.best)+'</span>'+
     '<h3 class="dur">'+esc(d.plans.months(p.months))+'</h3>'+
     '<div class="amt"><b dir="ltr">'+num(p.price)+'</b><s>MRU</s></div>'+

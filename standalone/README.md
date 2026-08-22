@@ -41,7 +41,7 @@ used, and turns every `images/*.webp` into `window.MXIMG['<filename>']`.
 | Which crest sits beside which competition | `LEAGUE_CRESTS` |
 | Which posters fill the wall, and the hero fan | `POSTERS`, and the `fan` array in `render()` |
 | Titles in the streaming rail | `SHOWS` |
-| The character line-up | `FACES` |
+| Who stands where | `PLANS[].photo` / `.photo2`, and the `setImg` calls in `render()` |
 | Colours, type, spacing | the `:root` block in `maurimax.src.html` |
 
 ## Images
@@ -55,7 +55,7 @@ Everything in `images/` is inlined at build time. Keys come from the filename:
 | `l-` | `LEAGUE_CRESTS`, the marquee | competition marks, transparent |
 | `po-` | `POSTERS` | league key art, opaque |
 | `m-` | `SHOWS`, two genre tiles | film and series key art, opaque |
-| `x-` | `FACES` | character cut-outs, background removed |
+| `x-` | `PLANS`, the hero, section anchors | character cut-outs, background removed |
 | `c-` | `CATS[].photo` | photography for genre tiles |
 
 Cut-outs were produced with `rembg` (u2net, alpha matting on); the nature
@@ -104,18 +104,21 @@ Guidance for new artwork:
 
 ### Genre tiles still without artwork
 
-Four genres fall back to the typographic poster treatment because nothing was
-supplied for them. They look deliberate, but real key art would be better:
+Three genres fall back to the typographic poster treatment because nothing has
+been supplied for them. They read as deliberate, but real key art would be
+better:
 
 | Genre | `CATS` entry |
 | --- | --- |
-| أطفال — Kids | `art:'kids'` |
 | أنمي — Anime | `art:'anime'` |
 | أخبار — News | `art:'news'` |
 | دراما عربية وتركية — Arabic & Turkish drama | `art:'series2'` |
 
-Drop a file into `images/` as `c-kids.webp` (and so on), add a line to `JOBS`
-in `prepare.mjs`, then set `photo:'c-kids'` on that entry.
+Drop a file into `images/` as `c-anime.webp` (and so on), add a line to `JOBS`
+in `prepare.mjs`, then set `photo:'c-anime'` on that entry.
+
+Kids uses the Spider-Man key art — a judgement call, the way a streaming
+service files superheroes under family viewing.
 
 ## The design system
 
@@ -132,8 +135,13 @@ surface.
   thing — the primary call to action.
 - **No shadows on light surfaces.** Hairlines separate things instead;
   `drop-shadow` appears only under player cut-outs, where it is motivated.
-- **Players break their containers** — out of the hero fan, out of the top of
-  the lead pricing card, off the edge of the football and closing sections.
+- **Football and screen sit side by side.** A footballer and a character stand
+  together in the hero, together on the best-value card, and alternate down
+  the plan ladder; each section is anchored by one or the other. Neither world
+  is filed away in a rail of its own.
+- **Figures break their containers** — out of the hero fan, out of the top of
+  the lead pricing card, off the edge of the football, content, why and
+  closing sections.
 - **Sections are not numbered.** They are not a sequence, so numbering them
   would have been decoration.
 

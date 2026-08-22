@@ -229,8 +229,8 @@ header.stuck #navcta{border-color:var(--ink-text)}
 
 /* — The composition — */
 .heroArt{position:relative;z-index:1}
-.fan{position:relative;aspect-ratio:1/.84;margin-inline-end:16%}
-@media(min-width:900px){.fan{aspect-ratio:1/.86;margin-inline-end:15%}}
+.fan{position:relative;aspect-ratio:1/.84;margin-inline:14% 15%}
+@media(min-width:900px){.fan{aspect-ratio:1/.86;margin-inline:12% 14%}}
 .pc{position:absolute;overflow:hidden;border-radius:var(--r);background:#150a1d;
   box-shadow:0 26px 50px -24px rgba(0,0,0,.85)}
 .pc img{display:block;width:100%;height:100%;object-fit:cover}
@@ -239,14 +239,22 @@ header.stuck #navcta{border-color:var(--ink-text)}
 .pc-1{width:47%;left:0;top:16%;z-index:1;transform:rotate(-6.5deg)}
 .pc-2{width:50%;left:26%;top:0;z-index:2}
 .pc-3{width:47%;left:54%;top:19%;z-index:1;transform:rotate(6.5deg)}
-/* The player is not in a card. He stands in front of the whole scene and
-   overhangs the section below it. */
-.star{position:absolute;z-index:3;inset-inline-end:-1%;bottom:-11%;height:106%;width:auto;
-  object-fit:contain;object-position:bottom center;pointer-events:none;
+/* Nobody sits in a card. A footballer and a screen character stand in front
+   of the whole scene, one at each edge, overhanging the section below — the
+   two worlds the subscription covers, stated in the first screen. */
+.star,.star2{position:absolute;width:auto;object-fit:contain;object-position:bottom center;
+  pointer-events:none}
+.star{z-index:3;inset-inline-end:-3%;bottom:-11%;height:88%;
   filter:drop-shadow(0 30px 34px rgba(0,0,0,.55))}
-@media(min-width:900px){.star{height:118%;bottom:-8%;inset-inline-end:-10%}}
+.star2{z-index:2;inset-inline-start:-1%;bottom:-7%;height:80%;
+  filter:drop-shadow(0 26px 30px rgba(0,0,0,.6))}
+@media(min-width:900px){
+  .star{height:112%;bottom:-8%;inset-inline-end:-9%}
+  .star2{height:92%;bottom:-5%;inset-inline-start:-7%}
+}
 @media(prefers-reduced-motion:no-preference){
   .heroArt.rev.in .star{animation:starIn 1s .2s cubic-bezier(.16,1,.3,1) both}
+  .heroArt.rev.in .star2{animation:starIn 1s .32s cubic-bezier(.16,1,.3,1) both}
   .heroArt.rev.in .pc{animation:pcIn .9s cubic-bezier(.16,1,.3,1) both}
   .heroArt.rev.in .pc-2{animation-delay:.06s}
   .heroArt.rev.in .pc-3{animation-delay:.12s}
@@ -326,10 +334,16 @@ html[dir=rtl] .band .track{animation-name:marchR}
 .lead .bgfill::before{content:'';position:absolute;inset:0;
   background:radial-gradient(ellipse 70% 60% at 76% 0%,rgba(122,43,196,.5),transparent 68%),
              radial-gradient(ellipse 60% 50% at 10% 100%,rgba(138,30,99,.35),transparent 66%)}
-.lead .hero-img{position:absolute;z-index:2;bottom:calc(100% - 190px);inset-inline-end:5%;
-  height:225px;width:auto;object-fit:contain;object-position:bottom center;pointer-events:none;
+/* The best-value card carries one of each too. */
+.lead .hero-img,.lead .hero-img2{position:absolute;z-index:2;width:auto;object-fit:contain;
+  object-position:bottom center;pointer-events:none;
   filter:drop-shadow(0 22px 26px rgba(0,0,0,.5))}
-@media(min-width:520px){.lead .hero-img{height:280px;bottom:calc(100% - 232px)}}
+/* Both stand over the outer half of the card, where the right-aligned Arabic
+   never reaches — the second figure a step behind and shorter. */
+.lead .hero-img{bottom:calc(100% - 190px);inset-inline-end:3%;height:225px}
+.lead .hero-img2{bottom:calc(100% - 178px);inset-inline-end:27%;height:166px;z-index:1}
+@media(min-width:520px){.lead .hero-img{height:280px;bottom:calc(100% - 232px)}
+  .lead .hero-img2{height:210px;bottom:calc(100% - 218px);inset-inline-end:26%}}
 .lead .tagline{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;
   color:var(--orange);text-transform:uppercase}
 .lead .dur{margin-top:10px;font-size:20px;font-weight:700}
@@ -497,31 +511,12 @@ html[dir=rtl] .railbtn svg{transform:scaleX(-1)}
 @media(prefers-reduced-motion:reduce){.show .art,.show .art img{transition:none}
   .show:hover .art,.show:hover .art img{transform:none}}
 .railSplit{margin-top:44px;padding-top:34px;border-top:1px solid var(--line)}
-
-/* ==========================================================
-   FACES — the cut-out lineup. Characters stand on one baseline
-   rather than sitting inside cards.
-   ========================================================== */
-#faces{background:var(--ink);color:#fff;padding:56px 0 0;overflow:hidden}
-#why.dark{padding-top:56px}
-@media(min-width:700px){#why.dark{padding-top:84px}}
-@media(min-width:700px){#faces{padding-top:80px}}
-.faceRow{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;margin-top:28px;
-  align-items:flex-end;border-bottom:1px solid var(--line-dark)}
-.faceRow::-webkit-scrollbar{display:none}
-.face{flex:0 0 38%;display:flex;flex-direction:column;align-items:center;text-align:center;
-  padding:0 10px 16px;border-inline-start:1px solid var(--line-dark)}
-.face:first-child{border-inline-start:0}
-@media(min-width:760px){.face{flex-basis:20%}}
-/* Explicit width as well as height: a lazy image has no intrinsic width
-   until it decodes, which would collapse the column and shift the row. */
-.face img{width:100%;height:186px;object-fit:contain;object-position:bottom center;
-  filter:drop-shadow(0 18px 22px rgba(0,0,0,.6));transition:transform .5s cubic-bezier(.16,1,.3,1)}
-@media(min-width:760px){.face img{height:240px}}
-.face:hover img{transform:translateY(-6px)}
-.face b{margin-top:14px;font-size:13px;font-weight:600}
-.face s{margin-top:2px;text-decoration:none;font-size:11px;color:var(--muted-dark)}
-@media(prefers-reduced-motion:reduce){.face img{transition:none}.face:hover img{transform:none}}
+.catHead{position:relative}
+.catHead .anchor{display:none}
+@media(min-width:1000px){
+  .catHead .anchor{display:block;position:absolute;bottom:-30px;inset-inline-end:0;height:250px;
+    width:auto;pointer-events:none;filter:drop-shadow(0 24px 28px rgba(21,10,29,.3))}
+}
 
 /* ==========================================================
    WHY — a hairline list with large indices, not eight boxes
@@ -800,12 +795,15 @@ html[dir=ltr] #drawer{transform:translateX(100%)}
 <!-- 6 — content -->
 <section id="categories" class="pad tint" style="scroll-margin-top:84px">
   <div class="wrap">
-    <div class="sheadRow rev">
-      <div class="shead">
-        <span class="lbl keep" data-i="categories.eyebrow"></span>
-        <h2><span data-i="categories.titleA"></span> <span class="hl" data-i="categories.titleB"></span></h2>
+    <div class="catHead rev">
+      <div class="sheadRow">
+        <div class="shead">
+          <span class="lbl keep" data-i="categories.eyebrow"></span>
+          <h2><span data-i="categories.titleA"></span> <span class="hl" data-i="categories.titleB"></span></h2>
+        </div>
+        <p style="max-width:32ch;font-size:14px;color:var(--muted)" data-i="categories.subtitle"></p>
       </div>
-      <p style="max-width:32ch;font-size:14px;color:var(--muted)" data-i="categories.subtitle"></p>
+      <img class="anchor" id="catAnchor" alt="" aria-hidden="true">
     </div>
     <div class="showRail rev" id="showRail"></div>
     <div class="railSplit rev">
@@ -816,17 +814,6 @@ html[dir=ltr] #drawer{transform:translateX(100%)}
       <div class="railwrap"><div class="rail" id="catA"></div></div>
       <div class="railwrap"><div class="rail" id="catB"></div></div>
     </div>
-  </div>
-</section>
-
-<!-- 7 — the cut-out lineup -->
-<section id="faces">
-  <div class="wrap">
-    <div class="shead rev">
-      <span class="lbl keep" data-i="faces.eyebrow"></span>
-      <h2><span data-i="faces.titleA"></span> <span class="hl" data-i="faces.titleB"></span></h2>
-    </div>
-    <div class="faceRow rev" id="faceRow"></div>
   </div>
 </section>
 
