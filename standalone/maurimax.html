@@ -180,6 +180,27 @@ html[dir=rtl] #hero h1{line-height:1.2}
   -webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,#000 30%,transparent 78%);
   mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,#000 30%,transparent 78%)}
 .heroArt .stage{position:relative;padding:8% 4%}
+/* Three posters fanned with depth, the player stepping out in front of them.
+   The fan is symmetric, so physical left is correct in both directions. */
+/* The fan is inset from the edge the player stands on, so he overlaps it
+   rather than burying the middle poster. */
+.fan{position:relative;aspect-ratio:4/3.15;margin-inline-end:15%}
+.pc{position:absolute;border-radius:18px;overflow:hidden;background:#1b0b28;
+  box-shadow:0 30px 60px -28px rgba(22,8,31,.6),0 0 0 1px rgba(255,255,255,.5)}
+.pc img{display:block;width:100%;height:100%;object-fit:cover}
+.pc-1{width:46%;left:0;top:17%;z-index:1;transform:rotate(-7deg)}
+.pc-2{width:48%;left:27%;top:0;z-index:2}
+.pc-3{width:46%;left:55%;top:19%;z-index:1;transform:rotate(7deg)}
+.pc::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(14,4,22,.45),transparent 50%)}
+@media(max-width:900px){.fan{margin-inline-end:9%}
+  .pc-1{width:43%;left:0}.pc-2{width:45%;left:26%}.pc-3{width:43%;left:51%}}
+@media(prefers-reduced-motion:no-preference){
+  .pc{animation:drift 7s ease-in-out infinite}
+  .pc-2{animation-duration:8.5s;animation-delay:-1.4s}
+  .pc-3{animation-duration:7.8s;animation-delay:-2.6s}
+  @keyframes drift{50%{translate:0 -10px}}
+}
 
 /* ——— Ticker band ——— */
 .band{background:var(--violet);color:#fff;overflow:hidden;padding:18px 0}
@@ -452,17 +473,27 @@ html[dir=ltr] #drawer{transform:translateX(100%)}
 .lg .top{display:flex;align-items:center;gap:13px}
 .lg .crest{flex-shrink:0;width:42px;height:42px;object-fit:contain;object-position:center}
 .lg .nm{min-width:0}
+/* The full list under the poster wall is a summary, not a second table —
+   one wrapping row of chips, so it reads as a footnote to the posters. */
+.leagueList{display:flex;flex-wrap:wrap;gap:10px;background:none;padding:22px}
+.leagueList .lg{display:flex;flex-direction:row;align-items:center;gap:9px;
+  padding:8px 15px 8px 9px;border:1px solid var(--line);border-radius:99px;background:#fff}
+html[dir=rtl] .leagueList .lg{padding:8px 9px 8px 15px}
+.leagueList .lg .top{gap:9px}
+.leagueList .lg .crest{width:24px;height:24px}
+.leagueList .lg .nm{font-size:13px}
+.leagueList .lg .sub{display:none}
 
 /* The player standing in the hero, over the illustrated pitch.
    Never mirrored for RTL — flipping a photo reverses the kit and sponsor. */
-.heroArt .star{position:absolute;inset-inline-end:1%;bottom:0;height:102%;width:auto;
+.heroArt .star{position:absolute;z-index:3;inset-inline-end:-4%;bottom:-2%;height:88%;width:auto;
   object-fit:contain;object-position:bottom center;pointer-events:none;
   filter:drop-shadow(0 26px 34px rgba(22,8,31,.34));
   animation:starIn 1.1s .35s cubic-bezier(.16,1,.3,1) both}
 @keyframes starIn{from{opacity:0;transform:translateY(26px) scale(.97)}
   to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.heroArt .star{animation:none;opacity:1}}
-@media(max-width:900px){.heroArt .star{height:84%;inset-inline-end:0}}
+@media(max-width:900px){.heroArt .star{height:78%;inset-inline-end:-2%}}
 
 /* ——— Preloader ——— */
 #pre{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;
@@ -768,8 +799,8 @@ html[dir=ltr] #drawer{transform:translateX(100%)}
 'use strict';
 
 /* ---------------- Contact ---------------- */
-var WA_DISPLAY = '43 04 24 04';
-var WA_E164 = '22243042404';          // Mauritania +222
+var WA_DISPLAY = '46 26 17 21';
+var WA_E164 = '22246261721';          // Mauritania +222
 var SNAP = 'moor.view';
 function wa(m){ return 'https://wa.me/' + WA_E164 + '?text=' + encodeURIComponent(m); }
 function num(n){ return new Intl.NumberFormat('en-US').format(n); }
@@ -1176,8 +1207,12 @@ function render() {
 
   $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span class="pill"><i></i>'+esc(p)+'</span>'; }).join('');
   var star = photo('p-alvarez');
+  var fan = ['po-ucl','po-epl','po-laliga'].map(photo).filter(Boolean);
   $('#heroStage').innerHTML =
-    '<div style="border-radius:26px;overflow:hidden;aspect-ratio:4/3.4;box-shadow:0 40px 80px -40px rgba(78,13,131,.55)">'+scene('hero')+'</div>' +
+    (fan.length === 3
+      ? '<div class="fan">' + fan.map(function(src,i){
+          return '<span class="pc pc-'+(i+1)+'"><img src="'+src+'" alt="" decoding="async"></span>'; }).join('') + '</div>'
+      : '<div style="border-radius:26px;overflow:hidden;aspect-ratio:4/3.4;box-shadow:0 40px 80px -40px rgba(78,13,131,.55)">'+scene('hero')+'</div>') +
     (star ? '<img class="star" src="'+star+'" alt="" decoding="async">' : '');
   $('#fromPrice').textContent = num(BASE);
 
@@ -1372,8 +1407,24 @@ function reveal(){
       var el=e.target; setTimeout(function(){ el.classList.add('in'); }, Math.min(i,6)*70);
       io.unobserve(el);
     });
-  },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  },{threshold:.01, rootMargin:'0px 0px -40px 0px'});
   els.forEach(function(e){ io.observe(e); });
+
+  // A flick-scroll can carry a section past the viewport without the observer
+  // ever getting a frame on it, which would leave it stuck at opacity 0. Sweep
+  // on scroll-end and reveal anything that is in view or already behind us.
+  var timer;
+  function sweep(){
+    var rest = els.filter(function(e){ return !e.classList.contains('in'); });
+    rest.forEach(function(e){
+      if (e.getBoundingClientRect().top < window.innerHeight - 40){
+        e.classList.add('in'); io.unobserve(e);
+      }
+    });
+    if (!rest.length) window.removeEventListener('scroll', onScroll);
+  }
+  function onScroll(){ clearTimeout(timer); timer = setTimeout(sweep, 180); }
+  window.addEventListener('scroll', onScroll, {passive:true});
 }
 function accordions(){
   $$('.acc').forEach(function(acc){

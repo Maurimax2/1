@@ -16,6 +16,7 @@ untouched by the rebrand — keep it or delete it.
 | --- | --- |
 | `maurimax.src.html` | markup + all CSS, with `__LOGO_URI__` / `__IMG_MAP__` placeholders |
 | `maurimax.js` | the runtime: prices, artwork, both dictionaries, cart, interactions |
+| `maurimax.preview.html` | generated too — the same page without a document wrapper, for hosts that supply their own skeleton |
 | `images/` | the logo, the optimised player and league artwork, `prepare.mjs` |
 
 **Edit those, never `maurimax.html`** — it is generated, and the next build
@@ -33,11 +34,12 @@ used, and turns every `images/*.webp` into `window.MXIMG['<filename>']`.
 | What | Where |
 | --- | --- |
 | Prices, badges, which player goes on which card | `PLANS` in `maurimax.js` |
-| WhatsApp number | `WA_E164` (international, no `+`) and `WA_DISPLAY` |
+| WhatsApp number | `WA_E164` (international, no `+`) and `WA_DISPLAY` — currently 46 26 17 21 |
 | Snapchat handle | `SNAP` |
 | All interface text, both languages | the `T` object (`T.ar` and `T.en`) |
 | Categories, FAQ, reviews | `CATS`, `FAQS`, `REVIEWS` |
 | Which crest sits beside which competition | `LEAGUE_CRESTS` |
+| Which posters fill the wall, and the hero fan | `POSTERS`, and the `fan` array in `render()` |
 | Colours, type, spacing | the `:root` block in `maurimax.src.html` |
 
 ## Images

@@ -7,8 +7,8 @@
 'use strict';
 
 /* ---------------- Contact ---------------- */
-var WA_DISPLAY = '43 04 24 04';
-var WA_E164 = '22243042404';          // Mauritania +222
+var WA_DISPLAY = '46 26 17 21';
+var WA_E164 = '22246261721';          // Mauritania +222
 var SNAP = 'moor.view';
 function wa(m){ return 'https://wa.me/' + WA_E164 + '?text=' + encodeURIComponent(m); }
 function num(n){ return new Intl.NumberFormat('en-US').format(n); }
@@ -415,8 +415,12 @@ function render() {
 
   $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span class="pill"><i></i>'+esc(p)+'</span>'; }).join('');
   var star = photo('p-alvarez');
+  var fan = ['po-ucl','po-epl','po-laliga'].map(photo).filter(Boolean);
   $('#heroStage').innerHTML =
-    '<div style="border-radius:26px;overflow:hidden;aspect-ratio:4/3.4;box-shadow:0 40px 80px -40px rgba(78,13,131,.55)">'+scene('hero')+'</div>' +
+    (fan.length === 3
+      ? '<div class="fan">' + fan.map(function(src,i){
+          return '<span class="pc pc-'+(i+1)+'"><img src="'+src+'" alt="" decoding="async"></span>'; }).join('') + '</div>'
+      : '<div style="border-radius:26px;overflow:hidden;aspect-ratio:4/3.4;box-shadow:0 40px 80px -40px rgba(78,13,131,.55)">'+scene('hero')+'</div>') +
     (star ? '<img class="star" src="'+star+'" alt="" decoding="async">' : '');
   $('#fromPrice').textContent = num(BASE);
 
@@ -611,8 +615,24 @@ function reveal(){
       var el=e.target; setTimeout(function(){ el.classList.add('in'); }, Math.min(i,6)*70);
       io.unobserve(el);
     });
-  },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+  },{threshold:.01, rootMargin:'0px 0px -40px 0px'});
   els.forEach(function(e){ io.observe(e); });
+
+  // A flick-scroll can carry a section past the viewport without the observer
+  // ever getting a frame on it, which would leave it stuck at opacity 0. Sweep
+  // on scroll-end and reveal anything that is in view or already behind us.
+  var timer;
+  function sweep(){
+    var rest = els.filter(function(e){ return !e.classList.contains('in'); });
+    rest.forEach(function(e){
+      if (e.getBoundingClientRect().top < window.innerHeight - 40){
+        e.classList.add('in'); io.unobserve(e);
+      }
+    });
+    if (!rest.length) window.removeEventListener('scroll', onScroll);
+  }
+  function onScroll(){ clearTimeout(timer); timer = setTimeout(sweep, 180); }
+  window.addEventListener('scroll', onScroll, {passive:true});
 }
 function accordions(){
   $$('.acc').forEach(function(acc){

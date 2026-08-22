@@ -5,3 +5,7 @@ node_modules/
 next-env.d.ts
 .env*.local
 out/
+
+# Vercel build output
+.vercel-static/
+.vercel/
