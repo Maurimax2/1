@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>موريماكس | MAURIMAX — كل ما تحب. اشتراك واحد.</title>
+<meta name="description" content="موريماكس — أكبر منصة ترفيهية في موريتانيا. أفلام ومسلسلات وقنوات مباشرة وكل البطولات الكروية بجودة 4K. اشتراك واحد يبدأ من 350 أوقية.">
+<meta name="theme-color" content="#ffffff">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_MR">
+<meta property="og:title" content="موريماكس — كل ما تحب. اشتراك واحد.">
+<meta property="og:description" content="أفلام ومسلسلات وقنوات مباشرة وكل البطولات الكروية بجودة 4K. يبدأ من 350 أوقية.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,75..125,400..900;1,75..125,400..900&family=Noto+Kufi+Arabic:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="__LOGO_URI__">
+<style>
+/* ==========================================================
+   MAURIMAX — single-file build
+   Monument style: white ground, monumental type, violet + orange.
+   Arabic is the default language; English via the header toggle.
+   ========================================================== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --white:#ffffff;
+  --paper:#f6f4f9;          /* tinted section ground */
+  --paper2:#efeaf6;
+  --ink:#16081f;            /* violet-black */
+  --muted:#6b5b78;
+  --line:#e6e0ee;
+  --violet:#4e0d83;         /* sampled from the logo */
+  --violet-2:#7a2bc4;
+  --violet-tint:#f2ebfa;
+  --orange:#e86a30;         /* sampled from the logo */
+  --orange-2:#ff8a4f;
+  --orange-tint:#fef0e7;
+  --lat:'Archivo',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --ar:'Noto Kufi Arabic','Segoe UI',Tahoma,sans-serif;
+  color-scheme:light;
+}
+html{scroll-behavior:smooth;scroll-padding-top:104px;overflow-x:clip;background:var(--white)}
+body{background:var(--white);color:var(--ink);font-family:var(--ar);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;overflow-x:clip}
+html[dir=ltr] body{font-family:var(--lat)}
+h1,h2,h3,h4{line-height:1.18;font-weight:800;letter-spacing:0}
+/* Monument: wide, heavy, tightly tracked Latin display. */
+html[dir=ltr] h1,html[dir=ltr] h2,html[dir=ltr] h3,html[dir=ltr] .mono{
+  font-family:var(--lat);font-variation-settings:'wdth' 118;letter-spacing:-.02em;line-height:1.02}
+.mono{font-family:var(--lat);font-variation-settings:'wdth' 118;font-weight:900}
+p{text-wrap:pretty}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,textarea{font:inherit}
+img,svg{display:block;max-width:100%}
+::selection{background:var(--violet);color:#fff}
+:focus-visible{outline:2.5px solid var(--violet);outline-offset:3px;border-radius:4px}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--paper)}
+::-webkit-scrollbar-thumb{background:var(--violet);border-radius:99px;border:3px solid var(--paper)}
+html[dir=rtl] :not(.keep){letter-spacing:normal}
+.keep{letter-spacing:.06em}
+
+.wrap{width:100%;max-width:1320px;margin:0 auto;padding:0 20px}
+@media(min-width:640px){.wrap{padding:0 36px}}
+@media(min-width:1200px){.wrap{padding:0 56px}}
+.pad{padding:84px 0}
+@media(min-width:768px){.pad{padding:132px 0}}
+.paper{background:var(--paper)}
+
+/* ——— Monument section headers ——— */
+.shead{display:flex;flex-direction:column;gap:22px;max-width:760px}
+.shead.mid{margin:0 auto;text-align:center;align-items:center}
+.tagnum{display:inline-flex;align-items:center;gap:12px;font-family:var(--lat);font-weight:800;
+  font-size:11px;letter-spacing:.2em;color:var(--violet);text-transform:uppercase}
+.tagnum b{font-variation-settings:'wdth' 125;font-size:12px}
+.tagnum s{display:block;width:34px;height:2px;background:var(--orange);text-decoration:none}
+.shead h2{font-size:clamp(2.1rem,5.6vw,4.4rem);font-weight:900;letter-spacing:-.01em}
+html[dir=rtl] .shead h2{line-height:1.22}
+.shead p{font-size:clamp(.98rem,1.6vw,1.12rem);color:var(--muted);max-width:620px}
+.hl{color:var(--violet)}
+.hl-o{color:var(--orange)}
+/* Marker highlight — a flat brand block behind a word. */
+.mark{position:relative;display:inline-block;padding:0 .18em;color:#fff;z-index:0}
+.mark::before{content:'';position:absolute;inset:.06em -.02em .1em;background:var(--violet);
+  border-radius:6px;z-index:-1;transform:rotate(-.6deg)}
+.mark.o::before{background:var(--orange)}
+
+/* ——— Buttons ——— */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  height:54px;padding:0 30px;border-radius:99px;font-weight:800;font-size:15px;overflow:hidden;
+  transition:transform .2s,box-shadow .3s,background .3s,color .3s;white-space:nowrap}
+.btn:active{transform:scale(.975)}
+.btn-lg{height:62px;padding:0 38px;font-size:16px}
+.btn-sm{height:44px;padding:0 22px;font-size:14px}
+.btn-v{background:var(--violet);color:#fff;box-shadow:0 12px 30px -12px rgba(78,13,131,.6)}
+.btn-v:hover{background:#3d0a68;box-shadow:0 18px 40px -14px rgba(78,13,131,.75)}
+.btn-o{background:var(--orange);color:#fff;box-shadow:0 12px 30px -12px rgba(232,106,48,.65)}
+.btn-o:hover{background:#d55c25;box-shadow:0 18px 40px -14px rgba(232,106,48,.8)}
+.btn-line{border:2px solid var(--ink);color:var(--ink);background:transparent}
+.btn-line:hover{background:var(--ink);color:#fff}
+.btn-ghost{border:2px solid var(--line);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--violet);color:var(--violet)}
+.btn-wa{background:#12a150;color:#fff;box-shadow:0 12px 30px -12px rgba(18,161,80,.65)}
+.btn-wa:hover{background:#0e8a44}
+.btn-full{width:100%}
+.btn .rip{position:absolute;width:0;height:0;border-radius:99px;background:rgba(255,255,255,.4);
+  transform:translate(-50%,-50%);pointer-events:none;animation:rip .6s ease-out forwards}
+@keyframes rip{to{width:420px;height:420px;opacity:0}}
+html[dir=rtl] .flip{transform:scaleX(-1)}
+
+/* ——— Reveal ——— */
+.rev{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rev.in{opacity:1;transform:none}
+
+/* ——— Header ——— */
+header{position:fixed;inset-inline:0;top:0;z-index:60;background:rgba(255,255,255,.86);
+  backdrop-filter:blur(18px) saturate(160%);border-bottom:1px solid transparent;transition:border-color .4s,box-shadow .4s}
+header.stuck{border-bottom-color:var(--line);box-shadow:0 8px 30px -22px rgba(22,8,31,.5)}
+#bar{display:flex;align-items:center;justify-content:space-between;gap:18px;height:76px}
+.brand{display:inline-flex;align-items:center;gap:12px;flex-shrink:0}
+.brand img{width:40px;height:40px}
+.brand b{font-family:var(--lat);font-variation-settings:'wdth' 120;font-weight:900;font-size:20px;
+  letter-spacing:.02em;color:var(--ink)}
+.brand b i{font-style:normal;color:var(--orange)}
+nav.main{display:none;align-items:center;gap:4px}
+@media(min-width:1080px){nav.main{display:flex}}
+nav.main a{position:relative;padding:10px 16px;font-size:14.5px;font-weight:600;color:var(--muted);
+  border-radius:99px;transition:color .25s,background .25s}
+nav.main a:hover{color:var(--violet);background:var(--violet-tint)}
+.tools{display:flex;align-items:center;gap:8px}
+.ico{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;height:44px;
+  min-width:44px;padding:0 12px;border-radius:99px;border:2px solid var(--line);color:var(--ink);
+  transition:border-color .25s,color .25s,background .25s}
+.ico:hover{border-color:var(--violet);color:var(--violet)}
+#count{position:absolute;top:-5px;inset-inline-end:-5px;display:none;align-items:center;justify-content:center;
+  height:21px;min-width:21px;padding:0 6px;border-radius:99px;background:var(--orange);color:#fff;
+  font-family:var(--lat);font-size:11px;font-weight:900}
+#count.on{display:flex}
+#navcta{display:none}
+@media(min-width:640px){#navcta{display:inline-flex}}
+#burger{display:flex}
+@media(min-width:1080px){#burger{display:none}}
+#prog{position:fixed;top:0;inset-inline:0;height:3px;z-index:70;transform-origin:right;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--violet),var(--orange))}
+html[dir=ltr] #prog{transform-origin:left}
+
+#menu{position:fixed;inset:0;z-index:55;display:none;background:#fff}
+#menu.on{display:block}
+#menu .inner{display:flex;flex-direction:column;justify-content:center;height:100%;padding:80px 0}
+#menu a{display:flex;align-items:center;justify-content:space-between;padding:18px 0;font-size:28px;
+  font-weight:800;border-bottom:1px solid var(--line)}
+#menu a span{font-family:var(--lat);font-size:13px;font-weight:800;color:var(--orange)}
+
+/* ——— Hero ——— */
+#hero{position:relative;padding:128px 0 72px;overflow:hidden}
+@media(min-width:900px){#hero{padding:150px 0 96px}}
+.heroGrid{display:grid;gap:52px;align-items:center}
+@media(min-width:980px){.heroGrid{grid-template-columns:1.05fr .95fr;gap:56px}}
+#hero h1{font-size:clamp(2.6rem,7.4vw,5.6rem);font-weight:900}
+html[dir=rtl] #hero h1{line-height:1.2}
+.heroSub{margin-top:26px;font-size:clamp(1rem,1.9vw,1.2rem);color:var(--muted);max-width:540px}
+.heroCta{margin-top:38px;display:flex;flex-wrap:wrap;gap:14px}
+.heroFrom{margin-top:30px;display:inline-flex;align-items:baseline;gap:10px;padding:14px 22px;
+  border-radius:99px;background:var(--violet-tint);border:1px solid #e2d3f3}
+.heroFrom .n{font-family:var(--lat);font-variation-settings:'wdth' 120;font-weight:900;font-size:30px;color:var(--violet)}
+.heroFrom .l{font-size:13px;font-weight:600;color:var(--violet)}
+.heroPills{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;
+  border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--muted);background:#fff}
+.pill i{width:7px;height:7px;border-radius:99px;background:var(--orange)}
+/* Blueprint field behind the hero art */
+.heroArt{position:relative}
+.heroArt .field{position:absolute;inset:-8% -6%;border-radius:36px;background:
+  radial-gradient(ellipse 70% 60% at 70% 20%,rgba(122,43,196,.14),transparent 62%),
+  radial-gradient(ellipse 60% 60% at 20% 85%,rgba(232,106,48,.14),transparent 62%),
+  var(--paper)}
+.heroArt .grid{position:absolute;inset:-8% -6%;border-radius:36px;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:46px 46px;
+  -webkit-mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,#000 30%,transparent 78%);
+  mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,#000 30%,transparent 78%)}
+.heroArt .stage{position:relative;padding:8% 4%}
+
+/* ——— Ticker band ——— */
+.band{background:var(--violet);color:#fff;overflow:hidden;padding:18px 0}
+.band .track{display:flex;width:max-content;gap:0;animation:march 38s linear infinite}
+html[dir=rtl] .band .track{animation-name:marchR}
+@keyframes march{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes marchR{from{transform:translateX(0)}to{transform:translateX(50%)}}
+.band .it{display:inline-flex;align-items:center;gap:26px;padding:0 26px;font-family:var(--lat);
+  font-variation-settings:'wdth' 118;font-weight:900;font-size:15px;letter-spacing:.06em;white-space:nowrap}
+html[dir=rtl] .band .it{font-family:var(--ar);font-weight:800;letter-spacing:0}
+.band .it em{font-style:normal;color:var(--orange-2);font-size:18px}
+
+/* ——— Stats ——— */
+/* minmax(0,…) rather than 1fr: the figures are single unbreakable tokens, so
+   the default min-content floor would push the grid past a narrow viewport. */
+.statRow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px;background:var(--line);
+  border:1px solid var(--line);border-radius:26px;overflow:hidden}
+@media(min-width:900px){.statRow{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.statCell{background:#fff;padding:36px 26px;transition:background .35s}
+@media(max-width:520px){.statCell{padding:26px 16px}}
+.statCell:hover{background:var(--violet-tint)}
+.statCell .n{font-family:var(--lat);font-variation-settings:'wdth' 122;font-weight:900;
+  font-size:clamp(1.5rem,6.2vw,3.2rem);color:var(--violet);line-height:1}
+.statCell .l{margin-top:12px;font-size:15px;font-weight:700}
+.statCell .h{margin-top:5px;font-size:12.5px;color:var(--muted)}
+
+/* ——— Plan cards ——— */
+.plans{display:grid;gap:20px;margin-top:60px}
+@media(min-width:680px){.plans{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1120px){.plans{grid-template-columns:repeat(4,1fr)}}
+.plan{position:relative;display:flex;flex-direction:column;background:#fff;border:2px solid var(--line);
+  border-radius:26px;padding:30px 26px;transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .35s,box-shadow .4s}
+.plan:hover{transform:translateY(-8px);border-color:#d8cbe9;box-shadow:0 30px 60px -34px rgba(22,8,31,.4)}
+.plan.best{border-color:var(--violet);background:var(--violet);color:#fff;
+  box-shadow:0 34px 70px -34px rgba(78,13,131,.7)}
+.plan.best:hover{border-color:var(--violet)}
+.plan .tag{position:absolute;top:-14px;inset-inline-start:26px;display:inline-flex;align-items:center;
+  height:28px;padding:0 14px;border-radius:99px;background:var(--orange);color:#fff;
+  font-family:var(--lat);font-size:11px;font-weight:900;letter-spacing:.08em}
+html[dir=rtl] .plan .tag{font-family:var(--ar);letter-spacing:0;font-weight:800}
+.plan .dur{font-size:17px;font-weight:800}
+.plan.best .dur{color:#fff}
+.plan .amount{margin-top:18px;display:flex;align-items:flex-start;gap:6px}
+.plan .amount b{font-family:var(--lat);font-variation-settings:'wdth' 122;font-weight:900;
+  font-size:clamp(2.6rem,5vw,3.4rem);line-height:.95;color:var(--violet)}
+.plan.best .amount b{color:#fff}
+.plan .amount s{text-decoration:none;font-size:13px;font-weight:700;color:var(--muted);padding-top:8px}
+.plan.best .amount s{color:rgba(255,255,255,.7)}
+.plan .per{margin-top:10px;font-size:13px;color:var(--muted)}
+.plan.best .per{color:rgba(255,255,255,.75)}
+.plan .save{margin-top:14px;display:inline-flex;align-items:center;padding:6px 12px;border-radius:99px;
+  background:var(--orange-tint);color:#b8511f;font-size:12px;font-weight:800}
+.plan.best .save{background:rgba(255,255,255,.16);color:#fff}
+.plan .art{margin:22px -6px 0;border-radius:18px;overflow:hidden;aspect-ratio:1/1}
+.plan ul{list-style:none;margin-top:22px;padding-top:20px;border-top:1px solid var(--line);
+  display:flex;flex-direction:column;gap:11px;flex:1}
+.plan.best ul{border-top-color:rgba(255,255,255,.2)}
+.plan li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;line-height:1.45;color:#3b2b47}
+.plan.best li{color:rgba(255,255,255,.9)}
+.plan li svg{flex-shrink:0;margin-top:3px;color:var(--orange)}
+.plan.best li svg{color:var(--orange-2)}
+.plan .go{margin-top:24px}
+
+/* ——— Generic card grid ——— */
+.grid3{display:grid;gap:20px;margin-top:60px}
+@media(min-width:640px){.grid3{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.grid3{grid-template-columns:repeat(4,1fr)}}
+.feat{background:#fff;border:1px solid var(--line);border-radius:24px;padding:28px;transition:transform .35s,box-shadow .35s,border-color .35s}
+.feat:hover{transform:translateY(-6px);border-color:#dccff0;box-shadow:0 26px 50px -32px rgba(22,8,31,.34)}
+.feat .ic{display:inline-flex;align-items:center;justify-content:center;width:52px;height:52px;
+  border-radius:16px;background:var(--violet-tint);color:var(--violet);margin-bottom:20px}
+.feat h3{font-size:17px;font-weight:800}
+.feat p{margin-top:10px;font-size:13.5px;color:var(--muted)}
+
+/* ——— Rails ——— */
+.railwrap{position:relative}
+.rail{display:flex;gap:18px;overflow-x:auto;padding:4px 0 18px;scroll-snap-type:x mandatory;
+  scrollbar-width:none;margin-inline:-20px;padding-inline:20px}
+.rail::-webkit-scrollbar{display:none}
+.rail>*{scroll-snap-align:start;flex-shrink:0}
+.railbtn{position:absolute;top:40%;z-index:12;display:none;align-items:center;justify-content:center;
+  width:48px;height:48px;border-radius:99px;background:#fff;border:2px solid var(--line);
+  color:var(--ink);transform:translateY(-50%);transition:all .28s;box-shadow:0 12px 28px -18px rgba(22,8,31,.5)}
+.railbtn:hover{border-color:var(--violet);color:var(--violet);transform:translateY(-50%) scale(1.08)}
+.railbtn.off{opacity:0;pointer-events:none}
+.railbtn.prev{inset-inline-start:-14px}
+.railbtn.next{inset-inline-end:-14px}
+@media(min-width:1024px){.railbtn{display:flex}}
+.cat{position:relative;width:230px;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+@media(min-width:640px){.cat{width:262px}}
+.cat:hover{transform:translateY(-10px)}
+.cat .fr{position:relative;aspect-ratio:3/4;border-radius:22px;overflow:hidden;background:var(--paper2)}
+.cat .fr>svg,.cat .fr>.artimg{position:absolute;inset:0;width:100%;height:100%;transition:transform 1s ease-out}
+.cat:hover .fr>svg,.cat:hover .fr>.artimg{transform:scale(1.07)}
+.cat .meta{position:absolute;inset-inline:0;bottom:0;padding:56px 20px 20px;color:#fff;
+  background:linear-gradient(to top,rgba(16,6,24,.92),rgba(16,6,24,.35) 46%,transparent)}
+.cat h3{font-size:20px;font-weight:800}
+.cat .c{margin-top:3px;font-size:12px;opacity:.75}
+
+/* ——— Leagues ——— */
+.leagueBand{border:1px solid var(--line);border-radius:28px;overflow:hidden;background:#fff}
+.leagueTop{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;
+  padding:30px;border-bottom:1px solid var(--line)}
+.leagueList{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
+@media(min-width:720px){.leagueList{grid-template-columns:repeat(4,1fr)}}
+.lg{background:#fff;padding:26px 20px;display:flex;flex-direction:column;gap:8px;transition:background .3s}
+.lg:hover{background:var(--violet-tint)}
+.lg .nm{font-family:var(--lat);font-variation-settings:'wdth' 116;font-weight:900;font-size:15px;
+  letter-spacing:.01em;color:var(--ink)}
+.lg .sub{font-size:12px;color:var(--muted)}
+
+/* ——— Reviews ——— */
+.rvRail{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;padding-bottom:16px;
+  margin-inline:-20px;padding-inline:20px;scroll-snap-type:x mandatory}
+.rvRail::-webkit-scrollbar{display:none}
+.rv{flex-shrink:0;scroll-snap-align:start;width:330px;background:#fff;border:1px solid var(--line);
+  border-radius:24px;padding:26px;display:flex;flex-direction:column}
+@media(min-width:640px){.rv{width:390px}}
+.rv .q{flex:1;margin-top:16px;font-size:14.5px;line-height:1.75;color:#3b2b47}
+.rv .who{display:flex;align-items:center;gap:13px;margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.rv .av{width:44px;height:44px;border-radius:99px;display:flex;align-items:center;justify-content:center;
+  background:var(--violet);color:#fff;font-family:var(--lat);font-weight:900;font-size:14px;flex-shrink:0}
+
+/* ——— FAQ ——— */
+.faqWrap{display:grid;gap:44px}
+@media(min-width:1024px){.faqWrap{grid-template-columns:.8fr 1.2fr;gap:72px;align-items:start}}
+.acc{border-bottom:1px solid var(--line)}
+.acc button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:20px;
+  padding:22px 0;text-align:start;font-size:16px;font-weight:700;transition:color .25s}
+.acc.on button{color:var(--violet)}
+.acc .pm{flex-shrink:0;position:relative;width:26px;height:26px;border-radius:99px;
+  background:var(--violet-tint);transition:background .3s,transform .35s}
+.acc.on .pm{background:var(--violet);transform:rotate(135deg)}
+.acc .pm::before,.acc .pm::after{content:'';position:absolute;inset:50% 7px auto;height:2px;
+  background:var(--violet);transform:translateY(-50%);transition:background .3s}
+.acc .pm::after{inset:7px auto 7px 50%;width:2px;height:auto;transform:translateX(-50%)}
+.acc.on .pm::before,.acc.on .pm::after{background:#fff}
+.acc .panel{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.16,1,.3,1)}
+.acc .panel p{padding-bottom:24px;font-size:14.5px;line-height:1.8;color:var(--muted)}
+
+/* ——— Footer ——— */
+footer{background:var(--ink);color:#fff;padding-top:76px}
+footer a{color:rgba(255,255,255,.62);transition:color .25s}
+footer a:hover{color:#fff}
+.fcta{background:var(--violet);border-radius:30px;padding:48px 30px;display:flex;flex-direction:column;
+  gap:28px;align-items:center;text-align:center;margin-bottom:66px}
+@media(min-width:900px){.fcta{flex-direction:row;justify-content:space-between;text-align:start;padding:52px}}
+.fcta h2{font-size:clamp(1.7rem,3.6vw,2.7rem);font-weight:900;color:#fff}
+.fcols{display:grid;gap:44px;padding-bottom:52px}
+@media(min-width:768px){.fcols{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.fcols{grid-template-columns:1.5fr repeat(3,1fr)}}
+.fcols h3{font-family:var(--lat);font-size:11px;font-weight:900;letter-spacing:.18em;
+  color:var(--orange);text-transform:uppercase}
+.fcols ul{list-style:none;margin-top:18px;display:flex;flex-direction:column;gap:11px;font-size:14px}
+.fbot{display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;
+  padding:26px 0;border-top:1px solid rgba(255,255,255,.12);font-size:12.5px;color:rgba(255,255,255,.45)}
+@media(min-width:640px){.fbot{flex-direction:row;justify-content:space-between;text-align:start}}
+.soc{display:flex;gap:10px;margin-top:24px}
+.soc a{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:14px;
+  border:1px solid rgba(255,255,255,.18);transition:all .28s}
+.soc a:hover{background:#fff;color:var(--ink);border-color:#fff}
+
+/* ——— Floating WhatsApp ——— */
+#fab{position:fixed;bottom:22px;inset-inline-end:22px;z-index:50;display:none;align-items:center;gap:0;
+  height:60px;padding:0 18px;border-radius:99px;background:#12a150;color:#fff;overflow:hidden;
+  box-shadow:0 18px 40px -14px rgba(18,161,80,.75);transition:gap .35s,padding .35s}
+#fab.on{display:flex}
+#fab:hover{gap:10px;padding-inline-end:26px}
+#fab .lbl{max-width:0;overflow:hidden;white-space:nowrap;font-weight:800;font-size:14px;transition:max-width .35s}
+#fab:hover .lbl{max-width:150px}
+
+/* ——— Cart + checkout ——— */
+.ov{position:fixed;inset:0;z-index:80;display:none}
+.ov.on{display:block}
+.ov .scrim{position:absolute;inset:0;background:rgba(22,8,31,.45);backdrop-filter:blur(6px)}
+#drawer{position:absolute;top:0;inset-inline-end:0;display:flex;flex-direction:column;height:100%;
+  width:100%;max-width:452px;background:#fff;transform:translateX(-100%);
+  transition:transform .45s cubic-bezier(.16,1,.3,1)}
+html[dir=ltr] #drawer{transform:translateX(100%)}
+.ov.on #drawer{transform:none}
+.dh{display:flex;align-items:center;justify-content:space-between;padding:24px;border-bottom:1px solid var(--line)}
+#lines{flex:1;overflow-y:auto;padding:22px 24px;display:flex;flex-direction:column;gap:14px}
+.line{display:flex;gap:14px;padding:14px;border:1px solid var(--line);border-radius:18px}
+.line .th{width:72px;height:72px;flex-shrink:0;border-radius:12px;overflow:hidden;background:var(--paper2)}
+.qty{display:flex;align-items:center;gap:2px;border:1px solid var(--line);border-radius:99px;padding:2px}
+.qty button{width:30px;height:30px;border-radius:99px;display:flex;align-items:center;justify-content:center;
+  color:var(--muted);transition:all .2s}
+.qty button:hover{background:var(--violet-tint);color:var(--violet)}
+.qty span{min-width:28px;text-align:center;font-family:var(--lat);font-weight:800;font-size:14px}
+.sum{padding:22px 24px;border-top:1px solid var(--line);background:var(--paper)}
+.sum .row{display:flex;justify-content:space-between;font-size:14px;color:var(--muted);margin-bottom:10px}
+.sum .row.tot{margin:16px 0 0;padding-top:16px;border-top:1px solid var(--line);align-items:baseline;color:var(--ink)}
+.sum .row.tot dt{font-size:16px;font-weight:800}
+.sum .row.tot dd{font-family:var(--lat);font-size:24px;font-weight:900;color:var(--violet)}
+#modal{position:fixed;inset:0;z-index:90;display:none;overflow-y:auto;padding:24px 16px}
+#modal.on{display:block}
+#modal .sheet{position:relative;max-width:540px;margin:40px auto;background:#fff;border-radius:28px;padding:30px}
+@media(min-width:640px){#modal .sheet{padding:40px}}
+.field{margin-bottom:20px}
+.field .lb{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:8px}
+.field label{font-size:13.5px;font-weight:700}
+.field .opt{font-size:12px;color:var(--muted)}
+.field input,.field textarea{width:100%;border:2px solid var(--line);border-radius:14px;padding:14px 16px;
+  font-size:15px;color:var(--ink);outline:none;transition:border-color .25s,box-shadow .25s;resize:none;background:#fff}
+.field input:focus,.field textarea:focus{border-color:var(--violet);box-shadow:0 0 0 4px var(--violet-tint)}
+.field.bad input,.field.bad textarea{border-color:var(--orange)}
+.field .err{display:none;margin-top:6px;font-size:12px;color:#c2521c;font-weight:600}
+.field.bad .err{display:block}
+.field .hint{margin-top:6px;font-size:12px;color:var(--muted)}
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;gap:10px}
+
+/* ——— Supplied images share the illustration's frame ——— */
+.artimg{position:relative;overflow:hidden;display:block;width:100%;height:100%}
+.artimg .bed{position:absolute;inset:0}
+.artimg .vig{position:absolute;inset:0;background:linear-gradient(to top,rgba(16,6,24,.35),transparent 55%)}
+.artimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.artimg.cut img{object-fit:contain;object-position:center bottom;padding:6% 8% 0}
+/* The plan's duration engraved into the corner of the frame, behind the
+   player — outlined rather than filled so the photograph stays legible. */
+.artimg .ghost{position:absolute;top:-.14em;inset-inline-start:.06em;
+  font-family:var(--lat);font-variation-settings:'wdth' 125;font-weight:900;
+  font-size:clamp(3.4rem,9vw,5.2rem);line-height:1;letter-spacing:-.05em;
+  color:transparent;-webkit-text-stroke:2px rgba(255,255,255,.34);
+  pointer-events:none;user-select:none}
+@supports not (-webkit-text-stroke:1px #000){.artimg .ghost{color:rgba(255,255,255,.2)}}
+.artimg .glow{position:absolute;left:50%;bottom:-14%;width:82%;aspect-ratio:1/.42;transform:translateX(-50%);
+  border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.3),transparent 72%);
+  filter:blur(6px);pointer-events:none}
+
+/* League marks sit beside the league name. The slot keeps its width when a
+   competition has no mark, so every name in the grid starts on the same line. */
+.lg .top{display:flex;align-items:center;gap:13px}
+.lg .crest{flex-shrink:0;width:42px;height:42px;object-fit:contain;object-position:center}
+.lg .nm{min-width:0}
+
+/* The player standing in the hero, over the illustrated pitch.
+   Never mirrored for RTL — flipping a photo reverses the kit and sponsor. */
+.heroArt .star{position:absolute;inset-inline-end:1%;bottom:0;height:102%;width:auto;
+  object-fit:contain;object-position:bottom center;pointer-events:none;
+  filter:drop-shadow(0 26px 34px rgba(22,8,31,.34));
+  animation:starIn 1.1s .35s cubic-bezier(.16,1,.3,1) both}
+@keyframes starIn{from{opacity:0;transform:translateY(26px) scale(.97)}
+  to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.heroArt .star{animation:none;opacity:1}}
+@media(max-width:900px){.heroArt .star{height:84%;inset-inline-end:0}}
+
+/* ——— Preloader ——— */
+#pre{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;background:#fff;transition:opacity .65s,transform .65s}
+#pre img{width:88px;height:88px;animation:pop .8s cubic-bezier(.16,1,.3,1) both}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:none;opacity:1}}
+#pre .w{margin-top:22px;font-family:var(--lat);font-variation-settings:'wdth' 122;font-weight:900;
+  font-size:22px;letter-spacing:.04em}
+#pre .w i{font-style:normal;color:var(--orange)}
+#pre .bar{margin-top:26px;width:170px;height:3px;border-radius:99px;background:var(--line);overflow:hidden}
+#pre .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--orange))}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#skip{position:absolute;inset-inline-start:16px;top:-100px;z-index:200;background:var(--violet);color:#fff;
+  padding:12px 22px;border-radius:99px;font-weight:700;transition:top .2s}
+#skip:focus{top:16px}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  .rev{opacity:1;transform:none}
+  #pre{display:none}
+}
+</style>
+</head>
+<body>
+<a id="skip" href="#main" data-i="nav.skip">تخطَّ إلى المحتوى</a>
+<div id="prog"></div>
+
+<header>
+  <div class="wrap"><div id="bar">
+    <a href="#top" class="brand" aria-label="MAURIMAX">
+      <img src="__LOGO_URI__" alt="" width="40" height="40">
+      <b class="keep">MAURI<i>MAX</i></b>
+    </a>
+    <nav class="main" id="nav"></nav>
+    <div class="tools">
+      <button class="ico" id="lang" aria-label="Language">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden><circle cx="12" cy="12" r="8.6" stroke="currentColor" stroke-width="1.7"/><ellipse cx="12" cy="12" rx="3.6" ry="8.6" stroke="currentColor" stroke-width="1.7"/><path d="M3.6 12h16.8" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="keep" id="langTxt" style="font-family:var(--lat);font-size:12px;font-weight:900">EN</span>
+      </button>
+      <button class="ico" id="cartBtn" aria-label="Cart">
+        <svg viewBox="0 0 24 24" width="19" height="19" fill="none" aria-hidden><path d="M3 4h2.2l2.1 10.4a1.8 1.8 0 0 0 1.77 1.44h7.4a1.8 1.8 0 0 0 1.76-1.4L20 8H6.2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/></svg>
+        <span id="count">0</span>
+      </button>
+      <a href="#plans" class="btn btn-v btn-sm" id="navcta"><span data-i="nav.cta">اشترك الآن</span></a>
+      <button class="ico" id="burger" aria-label="Menu" aria-expanded="false">
+        <svg viewBox="0 0 16 16" width="18" height="18" fill="none" aria-hidden><path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div></div>
+</header>
+<div id="menu"><div class="wrap inner"><div id="menuList"></div>
+  <a href="#plans" class="btn btn-v btn-lg btn-full" style="margin-top:36px" data-close><span data-i="nav.cta"></span></a>
+</div></div>
+
+<main id="main"><span id="top"></span>
+
+<section id="hero">
+  <div class="wrap"><div class="heroGrid">
+    <div class="heroCopy">
+      <span class="tagnum rev"><s></s><b data-i="hero.kicker">MAURIMAX</b></span>
+      <h1 class="rev" style="margin-top:20px"><span data-i="hero.titleA"></span><br><span class="mark" data-i="hero.titleB"></span></h1>
+      <p class="heroSub rev" data-i="hero.subtitle"></p>
+      <div class="heroFrom rev">
+        <span class="l" data-i="hero.from"></span>
+        <span class="n keep" id="fromPrice">350</span>
+        <span class="l">MRU</span>
+      </div>
+      <div class="heroCta rev">
+        <a href="#plans" class="btn btn-v btn-lg"><span data-i="hero.ctaPrimary"></span></a>
+        <a href="#football" class="btn btn-line btn-lg"><span data-i="hero.ctaSecondary"></span></a>
+      </div>
+      <div class="heroPills rev" id="heroPills"></div>
+    </div>
+    <div class="heroArt rev">
+      <div class="field"></div><div class="grid"></div>
+      <div class="stage" id="heroStage"></div>
+    </div>
+  </div></div>
+</section>
+
+<div class="band"><div class="track" id="bandTrack"></div></div>
+
+<section class="pad">
+  <div class="wrap">
+    <div class="statRow rev" id="statRow"></div>
+  </div>
+</section>
+
+<section id="plans" class="pad paper" style="scroll-margin-top:104px">
+  <div class="wrap">
+    <div class="shead mid rev">
+      <span class="tagnum"><b>01</b><s></s><span data-i="plans.eyebrow"></span></span>
+      <h2><span data-i="plans.titleA"></span> <span class="hl" data-i="plans.titleB"></span></h2>
+      <p data-i="plans.subtitle"></p>
+    </div>
+    <div class="plans" id="planCards"></div>
+    <p class="rev" style="margin-top:40px;text-align:center;font-size:13.5px;color:var(--muted)" data-i="plans.footnote"></p>
+  </div>
+</section>
+
+<section id="football" class="pad" style="scroll-margin-top:104px">
+  <div class="wrap">
+    <div class="shead rev">
+      <span class="tagnum"><b>02</b><s></s><span data-i="football.eyebrow"></span></span>
+      <h2><span data-i="football.titleA"></span> <span class="mark o" data-i="football.titleB"></span></h2>
+      <p data-i="football.subtitle"></p>
+    </div>
+    <div class="rev" style="margin-top:52px">
+      <div class="leagueBand">
+        <div class="leagueTop">
+          <div>
+            <p style="font-size:19px;font-weight:800" data-i="football.bandTitle"></p>
+            <p style="margin-top:4px;font-size:13.5px;color:var(--muted)" data-i="football.bandSub"></p>
+          </div>
+          <a href="#plans" class="btn btn-o btn-sm"><span data-i="football.bandCta"></span></a>
+        </div>
+        <div class="leagueList" id="leagueList"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="categories" class="pad paper" style="scroll-margin-top:104px">
+  <div class="wrap">
+    <div class="shead rev">
+      <span class="tagnum"><b>03</b><s></s><span data-i="categories.eyebrow"></span></span>
+      <h2><span data-i="categories.titleA"></span> <span class="hl" data-i="categories.titleB"></span></h2>
+      <p data-i="categories.subtitle"></p>
+    </div>
+    <div style="margin-top:52px"><div class="railwrap"><div class="rail" id="catA"></div></div></div>
+    <div style="margin-top:18px"><div class="railwrap"><div class="rail" id="catB"></div></div></div>
+  </div>
+</section>
+
+<section id="why" class="pad" style="scroll-margin-top:104px">
+  <div class="wrap">
+    <div class="shead mid rev">
+      <span class="tagnum"><b>04</b><s></s><span data-i="why.eyebrow"></span></span>
+      <h2><span data-i="why.titleA"></span> <span class="hl" data-i="why.titleB"></span></h2>
+      <p data-i="why.subtitle"></p>
+    </div>
+    <div class="grid3" id="whyGrid"></div>
+  </div>
+</section>
+
+<section id="reviews" class="pad paper" style="scroll-margin-top:104px">
+  <div class="wrap">
+    <div class="shead rev">
+      <span class="tagnum"><b>05</b><s></s><span data-i="reviews.eyebrow"></span></span>
+      <h2><span data-i="reviews.titleA"></span> <span class="hl" data-i="reviews.titleB"></span></h2>
+      <p data-i="reviews.subtitle"></p>
+    </div>
+    <div class="rvRail" id="rvRail" style="margin-top:48px"></div>
+  </div>
+</section>
+
+<section id="faq" class="pad" style="scroll-margin-top:104px">
+  <div class="wrap"><div class="faqWrap">
+    <div>
+      <div class="shead rev">
+        <span class="tagnum"><b>06</b><s></s><span data-i="faq.eyebrow"></span></span>
+        <h2 data-i="faq.title"></h2>
+        <p data-i="faq.subtitle"></p>
+      </div>
+      <div class="rev" style="margin-top:30px;padding:26px;border-radius:22px;background:var(--violet-tint)">
+        <p style="font-size:14px;color:#4a3a57" data-i="faq.helpBody"></p>
+        <a class="btn btn-wa" style="margin-top:18px" id="faqWa" target="_blank" rel="noopener">
+          <span><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden><path d="M12.04 2C6.6 2 2.17 6.43 2.16 11.88c0 1.74.46 3.44 1.32 4.94L2 22l5.32-1.39a9.86 9.86 0 0 0 4.71 1.2h.01c5.44 0 9.87-4.43 9.88-9.88a9.8 9.8 0 0 0-2.89-6.99A9.8 9.8 0 0 0 12.04 2Zm5.8 15.68a8.2 8.2 0 0 1-5.8 2.4h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.11.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.35c0-4.53 3.69-8.21 8.22-8.21a8.16 8.16 0 0 1 5.8 2.41 8.15 8.15 0 0 1 2.4 5.81c0 4.53-3.69 8.21-8.22 8.21Z"/></svg><span dir="ltr">43 04 24 04</span></span>
+        </a>
+      </div>
+    </div>
+    <div id="faqList" class="rev"></div>
+  </div></div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="fcta rev">
+      <div style="max-width:560px">
+        <h2><span data-i="footer.ctaA"></span> <span style="color:var(--orange-2)" data-i="footer.ctaB"></span></h2>
+        <p style="margin-top:14px;font-size:15px;color:rgba(255,255,255,.75)" data-i="footer.ctaSub"></p>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a href="#plans" class="btn btn-o btn-lg"><span data-i="footer.ctaPrimary"></span></a>
+        <a class="btn btn-wa btn-lg" id="footWa" target="_blank" rel="noopener"><span data-i="footer.ctaWhatsApp"></span></a>
+      </div>
+    </div>
+    <div class="fcols">
+      <div>
+        <div class="brand" style="gap:14px">
+          <img src="__LOGO_URI__" alt="" width="52" height="52">
+          <span><b class="keep" style="font-family:var(--lat);font-variation-settings:'wdth' 120;font-weight:900;font-size:24px;color:#fff">MAURI<i style="font-style:normal;color:var(--orange)">MAX</i></b>
+          <span style="display:block;margin-top:4px;font-size:12px;color:rgba(255,255,255,.5)">أكبر منصة ترفيهية في موريتانيا</span></span>
+        </div>
+        <p style="margin-top:22px;max-width:380px;font-size:14px;color:rgba(255,255,255,.55)" data-i="footer.about"></p>
+        <div class="soc">
+          <a id="socWa" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden><path d="M12.04 2C6.6 2 2.17 6.43 2.16 11.88c0 1.74.46 3.44 1.32 4.94L2 22l5.32-1.39a9.86 9.86 0 0 0 4.71 1.2h.01c5.44 0 9.87-4.43 9.88-9.88a9.8 9.8 0 0 0-2.89-6.99A9.8 9.8 0 0 0 12.04 2Zm5.8 15.68a8.2 8.2 0 0 1-5.8 2.4h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.11.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.35c0-4.53 3.69-8.21 8.22-8.21a8.16 8.16 0 0 1 5.8 2.41 8.15 8.15 0 0 1 2.4 5.81c0 4.53-3.69 8.21-8.22 8.21Z"/></svg></a>
+          <a href="https://www.snapchat.com/add/moor.view" target="_blank" rel="noopener" aria-label="Snapchat"><svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden><path d="M12.02 2c2.7 0 4.42 1.9 4.55 4.6.04.83-.02 1.63-.06 2.28.24.1.55.13.85.02.24-.09.5-.13.7-.13.5 0 .95.31.95.79 0 .45-.35.73-.9.95-.13.05-.31.1-.5.17-.5.16-1.05.35-1.2.7-.09.2-.05.46.12.78.05.1 1.24 2.4 3.48 2.77.28.05.48.3.46.58-.05.7-1.44 1.13-2.5 1.3-.11.02-.2.15-.26.44-.03.12-.06.27-.1.43-.06.24-.24.4-.5.4h-.03c-.16 0-.38-.03-.67-.09a5.4 5.4 0 0 0-1.1-.12c-.27 0-.54.02-.82.07-.54.09-1 .43-1.53.82-.76.56-1.62 1.2-2.93 1.2h-.12c-1.3 0-2.15-.64-2.9-1.2-.53-.4-1-.73-1.54-.82a5.1 5.1 0 0 0-.82-.07c-.47 0-.85.07-1.13.13-.26.05-.47.09-.63.09-.34 0-.5-.2-.56-.42-.04-.16-.07-.3-.1-.43-.06-.28-.15-.42-.26-.44-1.06-.16-2.45-.6-2.5-1.3a.55.55 0 0 1 .46-.58c2.24-.37 3.43-2.67 3.48-2.77.17-.32.21-.58.12-.78-.15-.35-.7-.54-1.2-.7-.19-.06-.37-.12-.5-.17-.7-.28-.94-.6-.9-.99.04-.42.5-.71.94-.71.2 0 .43.04.66.13.32.12.6.15.85.06-.04-.65-.1-1.45-.06-2.28C7.6 3.9 9.32 2 12.02 2Z"/></svg></a>
+        </div>
+      </div>
+      <nav><h3 data-i="footer.explore"></h3><ul id="fExplore"></ul></nav>
+      <nav><h3 data-i="footer.support"></h3><ul id="fSupport"></ul></nav>
+      <div><h3 data-i="footer.contact"></h3><ul id="fContact"></ul></div>
+    </div>
+    <div class="fbot">
+      <p>© 2026 MAURIMAX. <span data-i="footer.rights"></span></p>
+      <p style="max-width:440px" data-i="footer.trademarks"></p>
+    </div>
+  </div>
+</footer>
+
+<a id="fab" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden><path d="M12.04 2C6.6 2 2.17 6.43 2.16 11.88c0 1.74.46 3.44 1.32 4.94L2 22l5.32-1.39a9.86 9.86 0 0 0 4.71 1.2h.01c5.44 0 9.87-4.43 9.88-9.88a9.8 9.8 0 0 0-2.89-6.99A9.8 9.8 0 0 0 12.04 2Zm5.8 15.68a8.2 8.2 0 0 1-5.8 2.4h-.01a8.2 8.2 0 0 1-4.18-1.14l-.3-.18-3.11.82.83-3.04-.2-.31a8.17 8.17 0 0 1-1.25-4.35c0-4.53 3.69-8.21 8.22-8.21a8.16 8.16 0 0 1 5.8 2.41 8.15 8.15 0 0 1 2.4 5.81c0 4.53-3.69 8.21-8.22 8.21Z"/><path d="M17.5 14.4c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.26-.46-2.4-1.48-.89-.79-1.49-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.06 2.86 1.21 3.06c.15.2 2.1 3.2 5.08 4.49.71.3 1.26.49 1.69.63.71.22 1.36.19 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/></svg>
+  <span class="lbl" data-i="footer.orderNow"></span></a>
+
+<div class="ov" id="cart" role="dialog" aria-modal="true">
+  <div class="scrim" data-close-cart></div>
+  <div id="drawer">
+    <div class="dh">
+      <div><h2 style="font-size:20px;font-weight:800" data-i="cart.title"></h2>
+      <p id="cartCount" style="margin-top:2px;font-size:13px;color:var(--muted)"></p></div>
+      <button class="ico" data-close-cart aria-label="Close" style="width:42px;height:42px;min-width:42px;padding:0">
+        <svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden><path d="m4 4 8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div id="lines"></div>
+    <div class="sum" id="cartSum" style="display:none">
+      <dl style="margin:0">
+        <div class="row"><dt data-i="cart.subtotal"></dt><dd id="sSub" dir="ltr"></dd></div>
+        <div class="row" id="sSaveRow" style="color:#12a150;font-weight:700"><dt data-i="cart.savings"></dt><dd id="sSave" dir="ltr"></dd></div>
+        <div class="row tot"><dt data-i="cart.total"></dt><dd id="sTot" dir="ltr"></dd></div>
+      </dl>
+      <button class="btn btn-v btn-lg btn-full" style="margin-top:20px" id="toCheckout"><span data-i="cart.checkout"></span></button>
+      <p style="margin-top:12px;text-align:center;font-size:12px;color:var(--muted)" data-i="cart.noCharge"></p>
+    </div>
+  </div>
+</div>
+
+<div id="modal" role="dialog" aria-modal="true">
+  <div class="scrim" style="position:fixed;inset:0;background:rgba(22,8,31,.5);backdrop-filter:blur(6px)" data-close-modal></div>
+  <div class="sheet">
+    <button class="ico" data-close-modal aria-label="Close" style="position:absolute;top:22px;inset-inline-end:22px;width:42px;height:42px;min-width:42px;padding:0">
+      <svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden><path d="m4 4 8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+    </button>
+    <h2 style="font-size:26px;font-weight:900"><span data-i="checkout.titleA"></span> <span class="hl" data-i="checkout.titleB"></span></h2>
+    <p style="margin-top:10px;font-size:14px;color:var(--muted)" data-i="checkout.hint"></p>
+    <form id="coForm" novalidate style="margin-top:28px">
+      <div class="field" id="fName">
+        <div class="lb"><label for="cName"><span data-i="checkout.name"></span> <span style="color:var(--orange)">*</span></label></div>
+        <input id="cName" autocomplete="name"><p class="err" data-i="checkout.nameError"></p>
+      </div>
+      <div class="field" id="fPhone">
+        <div class="lb"><label for="cPhone"><span data-i="checkout.phone"></span> <span style="color:var(--orange)">*</span></label></div>
+        <input id="cPhone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel">
+        <p class="hint" data-i="checkout.phoneHint"></p><p class="err" data-i="checkout.phoneError"></p>
+      </div>
+      <div class="field">
+        <div class="lb"><label for="cNotes" data-i="checkout.notes"></label><span class="opt" data-i="checkout.optional"></span></div>
+        <textarea id="cNotes" rows="3"></textarea>
+      </div>
+      <div style="margin-top:8px;padding-top:20px;border-top:1px solid var(--line)">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px">
+          <span style="font-size:16px;font-weight:800" data-i="cart.total"></span>
+          <span id="coTotal" dir="ltr" style="font-family:var(--lat);font-size:26px;font-weight:900;color:var(--violet)"></span>
+        </div>
+        <button type="submit" class="btn btn-wa btn-lg btn-full"><span data-i="checkout.submit"></span></button>
+        <p style="margin-top:14px;font-size:12.5px;color:var(--muted)" id="coNote"></p>
+      </div>
+    </form>
+  </div>
+</div>
+__IMG_MAP__
+<script src="maurimax.js"></script>
+</body>
+</html>

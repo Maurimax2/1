@@ -1,87 +1,99 @@
-# MOORTV — single-file build
+# MAURIMAX — single-file build
 
-`moortv.html` is the whole site in one self-contained file: no build step, no
-framework, no dependencies. Rename it to `index.html` and upload it anywhere
-(GitHub Pages, cPanel, Netlify drop, a USB stick).
+`maurimax.html` is the whole site in one self-contained file: no build step to
+run before serving, no framework, no dependencies. Rename it to `index.html`
+and upload it anywhere (GitHub Pages, cPanel, Netlify drop, a USB stick).
 
 Arabic is the default language and the page renders `dir="rtl"`. The globe
 button in the header switches to English; the choice is kept in `localStorage`.
+
+The older MOORTV build is still here as `moortv.html` / `moortv.js`. It is
+untouched by the rebrand — keep it or delete it.
+
+## The three source files
+
+| File | What it is |
+| --- | --- |
+| `maurimax.src.html` | markup + all CSS, with `__LOGO_URI__` / `__IMG_MAP__` placeholders |
+| `maurimax.js` | the runtime: prices, artwork, both dictionaries, cart, interactions |
+| `images/` | the logo, the optimised player and league artwork, `prepare.mjs` |
+
+**Edit those, never `maurimax.html`** — it is generated, and the next build
+overwrites whatever you typed into it:
+
+```bash
+node standalone/build-maurimax.mjs
+```
+
+The build inlines the script, base64s the logo into the three places it is
+used, and turns every `images/*.webp` into `window.MXIMG['<filename>']`.
 
 ## Editing
 
 | What | Where |
 | --- | --- |
-| Prices, plan and device copy | `PLANS` / `DEVICES` near the top of the script |
+| Prices, badges, which player goes on which card | `PLANS` in `maurimax.js` |
 | WhatsApp number | `WA_E164` (international, no `+`) and `WA_DISPLAY` |
 | Snapchat handle | `SNAP` |
 | All interface text, both languages | the `T` object (`T.ar` and `T.en`) |
-| Categories, FAQ, testimonials | `CATS`, `FAQS`, `REVIEWS` |
-| Colours | the `:root` block in `<style>` |
+| Categories, FAQ, reviews | `CATS`, `FAQS`, `REVIEWS` |
+| Which crest sits beside which competition | `LEAGUE_CRESTS` |
+| Colours, type, spacing | the `:root` block in `maurimax.src.html` |
 
-`moortv.js` is the readable source for that script. **If you edit the `.js`,
-re-inline it** — otherwise the HTML keeps serving the old copy:
+## Images
+
+Everything in `images/` is inlined at build time. Keys come from the filename:
+`p-messi.webp` → `MXIMG['p-messi']`, referenced from `PLANS[].photo`,
+`LEAGUE_CRESTS`, and the hero (`p-alvarez`).
+
+Anything missing simply falls back to the drawn SVG artwork, so you can delete
+a file without breaking the page.
+
+To regenerate the optimised versions from full-resolution originals:
 
 ```bash
-node standalone/build.mjs
+node standalone/images/prepare.mjs "/path/to/Football pngs"
 ```
 
-Editing `moortv.html` directly is fine too; just be aware the `.js` will then
-be stale.
+That trims each file to its alpha bounding box, resizes it, and writes WebP
+with transparency. Adding a new one means adding a line to `JOBS` in
+`prepare.mjs` and a reference in `maurimax.js`.
 
-## Using your own images
+Guidance for new artwork:
 
-Every card falls back to generated SVG art. To use a real image instead, drop
-the file in `images/` and add an `img` field to that item in the script:
-
-```js
-{ id:'plan-12m', price:3000, art:'best', img:'images/offer.png', ... }
-{ art:'football', img:'images/football.png', ar:['كرة القدم', ...] }
-```
-
-Cut-out PNGs with a transparent background work best — they composite onto the
-same gradient bed the drawn art uses, so the section keeps its look. Add the
-`cutout` class treatment by giving the file room: it is centred on the bottom
-edge and padded, the way a product or player render should sit in a frame.
-
-Guidance:
-
-- **Format** PNG with transparency for cut-outs; JPG is fine for full-bleed
+- **Format** PNG or WebP with transparency for cut-outs; JPG for full-bleed
   photography.
-- **Size** roughly 800×1200 for the tall category cards, 1000×750 for the wide
-  device cards. Keep each file under ~300 KB or the page gets heavy.
-- **Rights** only use images you may use commercially: files you own, material
-  a rights-holder has licensed to you, or press assets cleared for promotional
-  use. Studio stills, character art and photos of footballers are copyrighted
-  and carry likeness rights on top — background removal does not change that.
+- **Size** the whole `images/` folder ends up inside the HTML file, and base64
+  adds a third on top. Keep the total under ~400 KB.
+- **Rights** see below.
 
 ## Before publishing
 
-- **The 4,500 MRU box price is a placeholder.** Only the stick (3,000 MRU with
-  a year included) comes from the brand's own flyer. Confirm the box price and
-  update it in `DEVICES` and in the Stick-vs-Box FAQ answer, which quotes both.
-- **The testimonials and the "5,000+ subscribers / 4.9★" figures are
-  illustrative, not real.** Replace them with genuine reviews and real numbers.
-  Publishing invented ones as if they were real would be misleading to
-  customers.
+- **The football photographs and league marks are not licensed.** The player
+  cut-outs came from FootyRenders and uniqrenders; the competition marks came
+  from football-logos.cc. Photographs of footballers are copyrighted and carry
+  likeness rights on top, and league marks are registered trademarks —
+  removing a background or resizing changes neither. Using them on a
+  commercial page is a real legal exposure. Replace them with images you own
+  or have licensed, or drop the files from `images/` and the page falls back
+  to its own artwork.
+- **The reviews and the "5,000+ subscribers / 4.9★" figures are illustrative,
+  not real.** Replace them with genuine reviews and real numbers. Publishing
+  invented ones as if they were real would mislead customers.
 
 ## What's in it
 
-Cinematic intro (once per browser session), aurora lighting, a canvas
-particle field, a hero collage that follows the cursor with per-tile depth,
-word-by-word headline reveal, scroll-reveal on every section, animated
-counters, a live sale countdown, 3D tilt with a cursor spotlight on every
-card, ripple on every button, arrow controls on the category rails, an
-accordion FAQ, a cart drawer, and a checkout modal that opens WhatsApp.
+A monument-style white layout: numbered section markers, an extended-width
+display face, flat-block highlights on the headlines, a violet ticker band,
+four subscription cards with a player standing on each, the competition grid,
+category rails with arrow controls, an accordion FAQ, a cart drawer and a
+checkout modal that opens WhatsApp with the order written out.
 
-Everything decorative is disabled under `prefers-reduced-motion`, and the
-tilt is skipped on touch devices.
+Everything decorative is disabled under `prefers-reduced-motion`.
 
 ## Notes
 
 - Fonts load from Google Fonts — the single external request in the file.
   Remove the two `<link>` tags in `<head>` to drop it; the CSS falls back to
   system Arabic and Latin faces.
-- All artwork is original SVG drawn in code, so there is nothing to license.
-  Streaming-service names are set as plain typography rather than reproduced
-  logos, with an ownership notice under the strip.
 - Checkout does not take payment. It formats the order and opens WhatsApp.
