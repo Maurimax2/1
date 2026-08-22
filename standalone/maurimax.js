@@ -62,7 +62,10 @@ ar: {
       ['Saudi Pro League','الدوري السعودي'],
       ['CAF & World Cup','بطولات أفريقيا والعالم'] ] },
   categories:{ eyebrow:'المحتوى', titleA:'كل شيء،', titleB:'في مكان واحد.',
-    subtitle:'مكتبة تُحدَّث باستمرار — تصفّحها وشاهد ما يفتحه لك اشتراك واحد.' },
+    subtitle:'مكتبة تُحدَّث باستمرار — تصفّحها وشاهد ما يفتحه لك اشتراك واحد.',
+    browseTitle:'تصفّح حسب النوع', browseHint:'اسحب لعرض المزيد',
+    kind:{ film:'فيلم', series:'مسلسل' } },
+  faces:{ eyebrow:'شخصيات', titleA:'وجوه', titleB:'تعرفها جيداً.' },
   why:{ eyebrow:'لماذا موريماكس', titleA:'تجربة', titleB:'تستحق الاشتراك.',
     subtitle:'ليست مجرد مكتبة أكبر — بل خدمة أفضل من البداية إلى النهاية.',
     items:[
@@ -149,8 +152,11 @@ en: {
       ['Ligue 1','France'],
       ['Saudi Pro League','Saudi Arabia'],
       ['CAF & World Cup','International'] ] },
+  faces:{ eyebrow:'Characters', titleA:'Faces', titleB:'you already know.' },
   categories:{ eyebrow:'Content', titleA:'Everything,', titleB:'in one place.',
-    subtitle:'A library that grows every week — browse what a single subscription unlocks.' },
+    subtitle:'A library that grows every week — browse what a single subscription unlocks.' ,
+    browseTitle:'Browse by genre', browseHint:'Swipe for more',
+    kind:{ film:'Film', series:'Series' } },
   why:{ eyebrow:'Why MAURIMAX', titleA:'An experience', titleB:'worth subscribing to.',
     subtitle:'Not just a bigger catalogue — a better service, end to end.',
     items:[
@@ -214,14 +220,37 @@ PLANS.forEach(function (p) {
 });
 function find(id){ for(var i=0;i<PLANS.length;i++) if(PLANS[i].id===id) return PLANS[i]; return null; }
 
+/* Titles with real key art, shown in the streaming rail.
+   kind picks the badge wording out of the dictionary. */
+var SHOWS = [
+  {k:'m-oppenheimer', kind:'film',   ar:'أوبنهايمر',        en:'Oppenheimer'},
+  {k:'m-got',         kind:'series', ar:'صراع العروش',      en:'Game of Thrones'},
+  {k:'m-batman',      kind:'film',   ar:'ذا باتمان',        en:'The Batman'},
+  {k:'m-breakingbad', kind:'series', ar:'بريكينغ باد',      en:'Breaking Bad'},
+  {k:'m-odyssey',     kind:'film',   ar:'الأوديسة',         en:'The Odyssey'},
+  {k:'m-lacasa',      kind:'series', ar:'لا كاسا دي بابيل', en:'La Casa de Papel'},
+  {k:'m-spiderman',   kind:'film',   ar:'سبايدر-مان',       en:'Spider-Man'},
+  {k:'m-walkingdead', kind:'series', ar:'ذا ووكينغ ديد',    en:'The Walking Dead'},
+  {k:'m-fury',        kind:'film',   ar:'فيوري',            en:'Fury'}
+];
+
+/* Character cut-outs for the lineup band: [name, where they are from]. */
+var FACES = [
+  {k:'x-walter',     ar:['والتر وايت','بريكينغ باد'],        en:['Walter White','Breaking Bad']},
+  {k:'x-homelander', ar:['هوملاندر','ذا بويز'],              en:['Homelander','The Boys']},
+  {k:'x-tyrion',     ar:['تيريون لانيستر','صراع العروش'],    en:['Tyrion Lannister','Game of Thrones']},
+  {k:'x-punisher',   ar:['ذا بانيشر','مارفل'],               en:['The Punisher','Marvel']},
+  {k:'x-jane',       ar:['باتريك جين','ذا مينتاليست'],       en:['Patrick Jane','The Mentalist']}
+];
+
 var CATS = [
-  {art:'movies',   ar:['أفلام','أكثر من 20,000 فيلم'],        en:['Movies','20,000+ titles']},
-  {art:'series',   ar:['مسلسلات','أكثر من 10,000 مسلسل'],     en:['TV Shows','10,000+ series']},
+  {art:'movies',   photo:'m-fury',        ar:['أفلام','أكثر من 20,000 فيلم'],    en:['Movies','20,000+ titles']},
+  {art:'series',   photo:'m-walkingdead', ar:['مسلسلات','أكثر من 10,000 مسلسل'], en:['TV Shows','10,000+ series']},
   {art:'football', photo:'c-football', ar:['كرة القدم','كل الدوريات الكبرى'], en:['Football','Every major league']},
   {art:'sports',   photo:'c-sports',   ar:['رياضة','أكثر من 900 قناة'],       en:['Sports','900+ channels']},
   {art:'kids',     ar:['أطفال','آمن وممتع'],                   en:['Kids','Safe & fun']},
   {art:'anime',    ar:['أنمي','مترجم ومدبلج'],                 en:['Anime','Subbed & dubbed']},
-  {art:'docs',     ar:['وثائقيات','قصص حقيقية'],               en:['Documentaries','Real stories']},
+  {art:'docs',     photo:'c-docs', ar:['وثائقيات','قصص حقيقية'],  en:['Documentaries','Real stories']},
   {art:'news',     ar:['أخبار','على مدار الساعة'],             en:['News','24/7 worldwide']},
   {art:'series2',  ar:['دراما عربية وتركية','مواسم كاملة'],    en:['Arabic & Turkish drama','Full seasons']},
   {art:'live',     photo:'c-live',     ar:['قنوات مباشرة','أكثر من 9,000 قناة'], en:['Live TV','9,000+ channels']}
@@ -475,6 +504,19 @@ function render() {
       '<span class="nm keep" dir="ltr">'+esc(l[0])+'</span>'+
       '<span class="sub">'+esc(l[1])+'</span></div>'; }).join('');
 
+  $('#showRail').innerHTML = SHOWS.map(function(sh){
+    var art = photo(sh.k); if (!art) return '';
+    return '<a class="show" href="#plans" aria-label="'+esc(sh[lang])+'">'+
+      '<span class="art"><img src="'+art+'" alt="" loading="lazy" decoding="async">'+
+      '<span class="kind keep">'+esc(d.categories.kind[sh.kind])+'</span></span>'+
+      '<b>'+esc(sh[lang])+'</b></a>'; }).join('');
+
+  $('#faceRow').innerHTML = FACES.map(function(f){
+    var art = photo(f.k); if (!art) return '';
+    var x = f[lang];
+    return '<div class="face"><img src="'+art+'" alt="'+esc(x[0])+'" loading="lazy" decoding="async">'+
+      '<b>'+esc(x[0])+'</b><s>'+esc(x[1])+'</s></div>'; }).join('');
+
   $('#catA').innerHTML = CATS.slice(0,5).map(function(c,i){ return catCard(c,i); }).join('');
   $('#catB').innerHTML = CATS.slice(5).map(function(c,i){ return catCard(c,i+5); }).join('');
 
@@ -521,8 +563,6 @@ function render() {
   $('#cNotes').placeholder = d.checkout.ph.notes;
 
   renderCart();
-  // Exposed so the preview build's font switcher can re-measure after a swap.
-  window.MXFit = fitWordmarks;
   fitWordmarks();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWordmarks);
   reveal();

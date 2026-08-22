@@ -2,7 +2,7 @@
  * Re-generates the optimised artwork in this folder from the original
  * full-resolution files. Only needs re-running when a source image changes.
  *
- *   node standalone/images/prepare.mjs /path/to/source-folder
+ *   node standalone/images/prepare.mjs <source-folder> [more folders...]
  *
  * Sources are the player cut-outs and league marks supplied by the brand.
  * Everything is trimmed to its alpha bounding box, resized, and written as
@@ -15,9 +15,9 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const src = process.argv[2];
-if (!src) {
-  console.error('usage: node prepare.mjs <source-folder>');
+const roots = process.argv.slice(2);
+if (!roots.length) {
+  console.error('usage: node prepare.mjs <source-folder> [more folders...]');
   process.exit(1);
 }
 
@@ -55,15 +55,47 @@ const JOBS = {
   'c-football':    ['IMG_5250', 560, 58],
   'c-sports':      ['IMG_5251', 560, 58],
   'c-live':        ['IMG_5249', 560, 58],
+
+  /* Movie and series key art, shown at title size in the streaming rail. */
+  'm-oppenheimer': ['IMG_5320', 'w320', 56],
+  'm-batman':      ['IMG_5322', 'w320', 54],
+  'm-odyssey':     ['IMG_5319', 'w320', 54],
+  'm-spiderman':   ['IMG_5318', 'w320', 54],
+  'm-got':         ['IMG_5321', 'w320', 54],
+  'm-breakingbad': ['IMG_5323', 'w320', 54],
+  'm-lacasa':      ['IMG_5326', 'w320', 54],
+  'm-walkingdead': ['IMG_5325', 'w320', 54],
+  'm-fury':        ['IMG_5324', 'w320', 54],
+
+  /* Character cut-outs, background removed, for the lineup band. */
+  'x-walter':      ['cut/walter.png', 430, 62],
+  'x-homelander':  ['cut/homelander.png', 430, 62],
+  'x-tyrion':      ['cut/tyrion.png', 430, 62],
+  'x-punisher':    ['cut/punisher.png', 430, 62],
+  'x-jane':        ['cut/jane.png', 430, 62],
+
+  /* Nature photography for the documentaries tile. */
+  'c-docs':        ['ng_nature.png', 430, 56],
 };
 
-const pool = readdirSync(src);
+/** Every file under every source folder, so jobs can name any of them. */
+function walk(dir, out = []) {
+  for (const e of readdirSync(dir, { withFileTypes: true })) {
+    if (e.name.startsWith('.') || e.name === '__MACOSX') continue;
+    const full = join(dir, e.name);
+    if (e.isDirectory()) walk(full, out); else out.push(full);
+  }
+  return out;
+}
+// Deduplicated: the roots given on the command line often nest.
+const pool = [...new Set(roots.flatMap((r) => walk(r)))];
+
 function resolve(fragment) {
   const hit = pool.filter((f) => f.toLowerCase().includes(fragment.toLowerCase()));
   if (hit.length !== 1) {
-    throw new Error(`"${fragment}" matched ${hit.length} files: ${hit.join(', ')}`);
+    throw new Error(`"${fragment}" matched ${hit.length} files: ${hit.join(', ') || '(none)'}`);
   }
-  return join(src, hit[0]);
+  return hit[0];
 }
 
 const py = `

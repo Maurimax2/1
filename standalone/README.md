@@ -17,7 +17,6 @@ untouched by the rebrand — keep it or delete it.
 | `maurimax.src.html` | markup + all CSS, with `__LOGO_URI__` / `__IMG_MAP__` placeholders |
 | `maurimax.js` | the runtime: prices, artwork, both dictionaries, cart, interactions |
 | `maurimax.preview.html` | generated too — the same page without a document wrapper, for hosts that supply their own skeleton |
-| `fontlab.html` | a floating typeface switcher, injected into the preview copy only |
 | `images/` | the logo, the optimised player and league artwork, `prepare.mjs` |
 
 **Edit those, never `maurimax.html`** — it is generated, and the next build
@@ -41,13 +40,28 @@ used, and turns every `images/*.webp` into `window.MXIMG['<filename>']`.
 | Categories, FAQ, reviews | `CATS`, `FAQS`, `REVIEWS` |
 | Which crest sits beside which competition | `LEAGUE_CRESTS` |
 | Which posters fill the wall, and the hero fan | `POSTERS`, and the `fan` array in `render()` |
+| Titles in the streaming rail | `SHOWS` |
+| The character line-up | `FACES` |
 | Colours, type, spacing | the `:root` block in `maurimax.src.html` |
 
 ## Images
 
 Everything in `images/` is inlined at build time. Keys come from the filename:
-`p-messi.webp` → `MXIMG['p-messi']`, referenced from `PLANS[].photo`,
-`LEAGUE_CRESTS`, and the hero (`p-alvarez`).
+`p-messi.webp` → `MXIMG['p-messi']`. The prefix says what a file is for:
+
+| Prefix | Used by | What it is |
+| --- | --- | --- |
+| `p-` | `PLANS[].photo`, the hero | footballer cut-outs, transparent |
+| `l-` | `LEAGUE_CRESTS`, the marquee | competition marks, transparent |
+| `po-` | `POSTERS` | league key art, opaque |
+| `m-` | `SHOWS`, two genre tiles | film and series key art, opaque |
+| `x-` | `FACES` | character cut-outs, background removed |
+| `c-` | `CATS[].photo` | photography for genre tiles |
+
+Cut-outs were produced with `rembg` (u2net, alpha matting on); the nature
+photograph had its overlaid branding removed with an OpenCV TELEA inpaint
+before cropping. Neither step is part of the build — `images/` holds the
+results.
 
 Anything missing simply falls back to the drawn SVG artwork, so you can delete
 a file without breaking the page.
@@ -80,9 +94,28 @@ Guidance for new artwork:
   commercial page is a real legal exposure. Replace them with images you own
   or have licensed, or drop the files from `images/` and the page falls back
   to its own artwork.
+- **The film, series and character images are not licensed either.** Poster
+  art, production stills and the nature photograph are copyrighted, the
+  characters carry likeness rights, and the titles are trademarks. Cutting a
+  background out or removing a logo changes none of that.
 - **The reviews and the "5,000+ subscribers / 4.9★" figures are illustrative,
   not real.** Replace them with genuine reviews and real numbers. Publishing
   invented ones as if they were real would mislead customers.
+
+### Genre tiles still without artwork
+
+Four genres fall back to the typographic poster treatment because nothing was
+supplied for them. They look deliberate, but real key art would be better:
+
+| Genre | `CATS` entry |
+| --- | --- |
+| أطفال — Kids | `art:'kids'` |
+| أنمي — Anime | `art:'anime'` |
+| أخبار — News | `art:'news'` |
+| دراما عربية وتركية — Arabic & Turkish drama | `art:'series2'` |
+
+Drop a file into `images/` as `c-kids.webp` (and so on), add a line to `JOBS`
+in `prepare.mjs`, then set `photo:'c-kids'` on that entry.
 
 ## The design system
 
@@ -93,13 +126,8 @@ surface.
 
 - **Type** three variables drive everything: `--head` for headings, `--ui`
   for body text and `--disp` for numerals, the wordmark and Latin poster
-  words. Currently `Alexandria` for the first two and
-  `Big Shoulders Display` for the third.
-
-  To try alternatives, open `maurimax.preview.html` — `fontlab.html` adds a
-  switcher to that copy with six candidate pairings. The build asserts the
-  lab never reaches `maurimax.html`. Once a pairing is chosen, set the three
-  variables in `:root` and delete the lab.
+  words. `Alexandria` for the first two, `Big Shoulders Display` for the
+  third — chosen from six candidates and now fixed.
 - **Radius** collapsed to `0 / 3px / pill`. The pill is spent on exactly one
   thing — the primary call to action.
 - **No shadows on light surfaces.** Hairlines separate things instead;
@@ -118,6 +146,10 @@ the fallback's metrics are far wider and the word overflows.
 `figure()` splits each library statistic into a number plus whatever surrounds
 it, so `20,000+` counts up on scroll and `4K UHD` is printed as-is.
 
+One more trap worth knowing: `aspect-ratio` is ignored on inline elements. Any
+frame built from a `<span>` needs `display:block` or it collapses and the art
+covers whatever follows it.
+
 Everything decorative is disabled under `prefers-reduced-motion`.
 
 ## Notes
@@ -126,3 +158,8 @@ Everything decorative is disabled under `prefers-reduced-motion`.
   Remove the two `<link>` tags in `<head>` to drop it; the CSS falls back to
   system Arabic and Latin faces.
 - Checkout does not take payment. It formats the order and opens WhatsApp.
+- The file is ~970 KB because all 35 images are base64'd into it. That is the
+  cost of one self-contained file. If load time on mobile data matters more
+  than portability, change the build to write `images/` alongside the HTML and
+  reference them by path — the markup already lazy-loads everything below the
+  hero.

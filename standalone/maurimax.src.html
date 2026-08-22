@@ -473,6 +473,57 @@ html[dir=rtl] .railbtn svg{transform:scaleX(-1)}
 .artimg.cut img{object-fit:contain;object-position:center bottom;padding:6% 8% 0}
 
 /* ==========================================================
+   TITLES — the streaming rail. Key art at poster size with the
+   caption underneath, so the artwork is never covered by type.
+   ========================================================== */
+.showRail{display:flex;gap:11px;overflow-x:auto;scroll-snap-type:x mandatory;
+  scrollbar-width:none;margin-top:30px;padding-bottom:2px}
+.showRail::-webkit-scrollbar{display:none}
+.show{flex:0 0 132px;scroll-snap-align:start}
+@media(min-width:700px){.showRail{gap:16px}.show{flex-basis:176px}}
+/* display:block is load-bearing — aspect-ratio is ignored on an inline
+   element, which collapsed the frame and buried the caption under the art. */
+.show .art{display:block;position:relative;aspect-ratio:2/3;overflow:hidden;border-radius:var(--r);
+  background:#150a1d;transition:transform .45s cubic-bezier(.16,1,.3,1)}
+.show:hover .art{transform:translateY(-4px)}
+.show .art img{width:100%;height:100%;object-fit:cover;
+  transition:transform 1.1s cubic-bezier(.16,1,.3,1)}
+.show:hover .art img{transform:scale(1.05)}
+.show .kind{position:absolute;top:9px;inset-inline-start:9px;padding:3px 7px;border-radius:2px;
+  background:rgba(11,6,15,.72);backdrop-filter:blur(4px);font-size:9.5px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:#fff}
+.show b{display:block;margin-top:11px;font-size:13px;font-weight:600;line-height:1.35}
+.show s{display:block;text-decoration:none;margin-top:2px;font-size:11.5px;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){.show .art,.show .art img{transition:none}
+  .show:hover .art,.show:hover .art img{transform:none}}
+.railSplit{margin-top:44px;padding-top:34px;border-top:1px solid var(--line)}
+
+/* ==========================================================
+   FACES — the cut-out lineup. Characters stand on one baseline
+   rather than sitting inside cards.
+   ========================================================== */
+#faces{background:var(--ink);color:#fff;padding:56px 0 0;overflow:hidden}
+#why.dark{padding-top:56px}
+@media(min-width:700px){#why.dark{padding-top:84px}}
+@media(min-width:700px){#faces{padding-top:80px}}
+.faceRow{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;margin-top:28px;
+  align-items:flex-end;border-bottom:1px solid var(--line-dark)}
+.faceRow::-webkit-scrollbar{display:none}
+.face{flex:0 0 38%;display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:0 10px 16px;border-inline-start:1px solid var(--line-dark)}
+.face:first-child{border-inline-start:0}
+@media(min-width:760px){.face{flex-basis:20%}}
+/* Explicit width as well as height: a lazy image has no intrinsic width
+   until it decodes, which would collapse the column and shift the row. */
+.face img{width:100%;height:186px;object-fit:contain;object-position:bottom center;
+  filter:drop-shadow(0 18px 22px rgba(0,0,0,.6));transition:transform .5s cubic-bezier(.16,1,.3,1)}
+@media(min-width:760px){.face img{height:240px}}
+.face:hover img{transform:translateY(-6px)}
+.face b{margin-top:14px;font-size:13px;font-weight:600}
+.face s{margin-top:2px;text-decoration:none;font-size:11px;color:var(--muted-dark)}
+@media(prefers-reduced-motion:reduce){.face img{transition:none}.face:hover img{transform:none}}
+
+/* ==========================================================
    WHY — a hairline list with large indices, not eight boxes
    ========================================================== */
 .whyWrap{position:relative}
@@ -756,8 +807,26 @@ html[dir=ltr] #drawer{transform:translateX(100%)}
       </div>
       <p style="max-width:32ch;font-size:14px;color:var(--muted)" data-i="categories.subtitle"></p>
     </div>
-    <div class="railwrap rev"><div class="rail" id="catA"></div></div>
-    <div class="railwrap rev"><div class="rail" id="catB"></div></div>
+    <div class="showRail rev" id="showRail"></div>
+    <div class="railSplit rev">
+      <div class="sheadRow" style="margin-bottom:4px">
+        <h3 style="font-size:17px;font-weight:700" data-i="categories.browseTitle"></h3>
+        <p style="font-size:12.5px;color:var(--muted)" data-i="categories.browseHint"></p>
+      </div>
+      <div class="railwrap"><div class="rail" id="catA"></div></div>
+      <div class="railwrap"><div class="rail" id="catB"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 — the cut-out lineup -->
+<section id="faces">
+  <div class="wrap">
+    <div class="shead rev">
+      <span class="lbl keep" data-i="faces.eyebrow"></span>
+      <h2><span data-i="faces.titleA"></span> <span class="hl" data-i="faces.titleB"></span></h2>
+    </div>
+    <div class="faceRow rev" id="faceRow"></div>
   </div>
 </section>
 
@@ -908,7 +977,6 @@ html[dir=ltr] #drawer{transform:translateX(100%)}
     </form>
   </div>
 </div>
-__FONTLAB__
 __IMG_MAP__
 <script src="maurimax.js"></script>
 </body>
