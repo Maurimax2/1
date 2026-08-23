@@ -54,7 +54,7 @@ writeFileSync(join(here, 'maurimax.html'), html);
 // before first paint so the RTL layout never flashes left-to-right.
 const preview = html
   .replace(/^[\s\S]*?<meta name="viewport"[^>]*>\s*/, '<script>(function(){var l="ar";' +
-    'try{var s=localStorage.getItem("maurimax.lang");if(s==="ar"||s==="en")l=s;}catch(e){}' +
+    'try{var s=localStorage.getItem("maurimax.lang");if(s==="ar"||s==="fr")l=s;}catch(e){}' +
     'var d=document.documentElement;d.lang=l;d.dir=l==="ar"?"rtl":"ltr";})();</script>\n')
   // The descriptive title is right for search results but wrong for a gallery
   // card, which wants the name on its own.

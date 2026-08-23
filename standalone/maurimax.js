@@ -6,12 +6,17 @@
 (function () {
 'use strict';
 
+/* Current language. Declared up here because num() below reads it. */
+var lang = 'ar';
+
 /* ---------------- Contact ---------------- */
 var WA_DISPLAY = '46 26 17 21';
 var WA_E164 = '22246261721';          // Mauritania +222
 var SNAP = 'moor.view';
 function wa(m){ return 'https://wa.me/' + WA_E164 + '?text=' + encodeURIComponent(m); }
-function num(n){ return new Intl.NumberFormat('en-US').format(n); }
+// French groups thousands with a space, Arabic Mauritania uses the comma.
+// Every figure on the page runs through this, including the WhatsApp order.
+function num(n){ return new Intl.NumberFormat(lang === 'fr' ? 'fr-FR' : 'en-US').format(n); }
 function money(n){ return num(n) + ' MRU'; }
 
 /* Brand */
@@ -39,7 +44,7 @@ ar: {
     footnote:'الأسعار بالأوقية الموريتانية. التفعيل والدعم عبر واتساب، ولا يُخصم أي مبلغ عبر الموقع.',
     perMonth:function(n){ return num(n) + ' أوقية شهرياً'; },
     save:function(p){ return 'وفّر ' + p + '%'; },
-    popular:'الأكثر طلباً', best:'أفضل قيمة', add:'أضف إلى السلة',
+    popular:'الأكثر طلباً', best:'أفضل قيمة', add:'اشترك الآن',
     months:function(n){ return n===1?'شهر واحد':n===12?'سنة كاملة':n+' أشهر'; },
     features:[
       'المكتبة كاملة بلا استثناء',
@@ -63,8 +68,7 @@ ar: {
       ['CAF & World Cup','بطولات أفريقيا والعالم'] ] },
   categories:{ eyebrow:'المحتوى', titleA:'كل شيء،', titleB:'في مكان واحد.',
     subtitle:'مكتبة تُحدَّث باستمرار — تصفّحها وشاهد ما يفتحه لك اشتراك واحد.',
-    browseTitle:'تصفّح حسب النوع', browseHint:'اسحب لعرض المزيد',
-    kind:{ film:'فيلم', series:'مسلسل' } },
+  },
   faces:{ eyebrow:'شخصيات', titleA:'وجوه', titleB:'تعرفها جيداً.' },
   why:{ eyebrow:'لماذا موريماكس', titleA:'تجربة', titleB:'تستحق الاشتراك.',
     subtitle:'ليست مجرد مكتبة أكبر — بل خدمة أفضل من البداية إلى النهاية.',
@@ -83,11 +87,11 @@ ar: {
     subtitle:'كل ما قد تريد معرفته قبل الاشتراك. وأي شيء آخر — اسألنا مباشرة.',
     helpBody:'ما زلت متردداً؟ راسلنا على واتساب ونرد عليك خلال دقائق.',
     waMessage:'مرحباً موريماكس، عندي سؤال حول الاشتراكات.' },
-  cart:{ title:'سلّتك', empty:'لا يوجد شيء بعد', emptyTitle:'سلّتك فارغة',
-    emptyBody:'اختر اشتراكاً وسيظهر هنا.', browse:'تصفّح الاشتراكات',
-    subtotal:'المجموع الفرعي', savings:'وفّرت', total:'الإجمالي', checkout:'إتمام الطلب',
-    noCharge:'تؤكّد وتدفع عبر واتساب — لا يُخصم منك شيء هنا.', added:'أُضيف',
-    count:function(n){ return n===1?'منتج واحد':n===2?'منتجان':(n<=10?n+' منتجات':n+' منتجاً'); } },
+  pick:{ eyebrow:'الاشتراك', title:'اختر مدّتك',
+    sub:'كل الاشتراكات تفتح نفس المحتوى بالكامل — الفرق في المدة وحدها.',
+    forCat:function(c){ return 'اشتراك واحد يفتح قسم ' + c + ' وكل شيء آخر في المكتبة.'; },
+    note:'لا يُخصم أي مبلغ على الموقع. يُفتح طلبك كرسالة واتساب جاهزة.',
+    back:'العودة إلى الاشتراكات' },
   checkout:{ titleA:'أكمل', titleB:'طلبك', hint:'نستخدم بياناتك فقط لتأكيد الطلب وتفعيله.',
     name:'الاسم', nameError:'الرجاء إدخال اسمك.', phone:'رقم الهاتف',
     phoneHint:'رقم موريتاني من 8 أرقام', phoneError:'الرجاء إدخال رقم هاتف صحيح.',
@@ -95,7 +99,7 @@ ar: {
     note:function(p){ return 'لا يُخصم منك شيء على هذا الموقع. يُفتح طلبك كرسالة واتساب جاهزة إلى '+p+'، حيث نؤكّد الدفع ونفعّل اشتراكك.'; },
     ph:{name:'محمد ولد أحمد',phone:'44 00 00 00',notes:'أي شيء ينبغي أن نعرفه…'},
     msg:{greeting:'مرحباً موريماكس،',intro:'أرغب في الاشتراك.',name:'الاسم',phone:'الهاتف',
-      products:'الاشتراك:',qty:'الكمية',total:'الإجمالي',notes:'ملاحظات',closing:'الرجاء التواصل معي.'} },
+      plan:'الاشتراك',total:'الإجمالي',notes:'ملاحظات',closing:'الرجاء التواصل معي.'} },
   footer:{ ctaEyebrow:'ابدأ الآن', ctaA:'جاهز للمشاهدة؟', ctaB:'ابدأ اليوم.',
     ctaSub:'اشتراك واحد يفتح لك كل المحتوى — من 350 أوقية.',
     ctaPrimary:'اختر اشتراكك', ctaWhatsApp:'راسلنا على واتساب', orderNow:'اطلب الآن',
@@ -110,96 +114,94 @@ ar: {
     waLearn:'مرحباً موريماكس، أريد معرفة المزيد عن الاشتراكات.',
     waOrder:'مرحباً موريماكس، أرغب في الاشتراك.' }
 },
-en: {
+fr: {
   dir:'ltr',
-  nav:{ plans:'Pricing', football:'Football', browse:'Content', why:'Why Us', faq:'FAQ',
-        cta:'Subscribe', skip:'Skip to content' },
-  hero:{ kicker:'MAURIMAX', titleA:'Everything you love.', titleB:'One subscription.',
-    subtitle:'Movies, series, live channels and every major football competition in 4K — on every screen you own.',
-    from:'From', ctaPrimary:'Choose your plan', ctaSecondary:'See competitions',
-    pills:['Activated in minutes','Works on every device','4K Ultra HD'] },
-  band:['Every football league','Movies & series','Live channels','4K quality','Instant activation','WhatsApp support'],
-  stats:[ {n:'20,000+',l:'Movies',h:'Blockbusters to hidden gems'},
-          {n:'10,000+',l:'TV Shows',h:'Full seasons, always updated'},
-          {n:'9,000+',l:'Live Channels',h:'From every continent'},
-          {n:'4K UHD',l:'Streaming Quality',h:'Crystal clear on every screen'} ],
-  statsLead:{ eyebrow:'The library', titleA:'One subscription', titleB:'opens all of this.',
-    body:'A full library updated every week, and live coverage of everything that matters — at the same price however long you take it for.' },
-  plans:{ eyebrow:'Pricing', titleA:'One subscription,', titleB:'four ways to buy.',
-    subtitle:'Every plan unlocks the same full library — only the length changes. The longer you go, the less each month costs.',
-    footnote:'Prices in Mauritanian ouguiya. Activation and support happen on WhatsApp; nothing is charged on this site.',
-    perMonth:function(n){ return num(n) + ' MRU / month'; },
-    save:function(p){ return 'Save ' + p + '%'; },
-    popular:'Most popular', best:'Best value', add:'Add to cart',
-    months:function(n){ return n===1?'1 Month':n===12?'12 Months':n+' Months'; },
+  nav:{ plans:'Abonnements', football:'Football', browse:'Contenu', why:'Pourquoi nous', faq:'FAQ',
+        cta:'S’abonner', skip:'Aller au contenu' },
+  hero:{ kicker:'MAURIMAX', titleA:'Tout ce que vous aimez.', titleB:'Un seul abonnement.',
+    subtitle:'Films, séries, chaînes en direct et toutes les grandes compétitions de football en 4K — sur tous vos écrans.',
+    from:'À partir de', ctaPrimary:'Choisir mon abonnement', ctaSecondary:'Voir les compétitions',
+    pills:['Activation en minutes','Sur tous vos appareils','4K Ultra HD'] },
+  band:['Toutes les ligues de football','Films et séries','Chaînes en direct','Qualité 4K','Activation immédiate','Assistance WhatsApp'],
+  stats:[ {n:'20,000+',l:'Films',h:'Des blockbusters aux pépites'},
+          {n:'10,000+',l:'Séries',h:'Saisons complètes, toujours à jour'},
+          {n:'9,000+',l:'Chaînes en direct',h:'De tous les continents'},
+          {n:'4K UHD',l:'Qualité de diffusion',h:'Une image nette sur chaque écran'} ],
+  statsLead:{ eyebrow:'La bibliothèque', titleA:'Un seul abonnement', titleB:'ouvre tout cela.',
+    body:'Une bibliothèque complète enrichie chaque semaine et le direct de tout ce qui compte — au même prix, quelle que soit la durée.' },
+  plans:{ eyebrow:'Tarifs', titleA:'Un abonnement,', titleB:'quatre durées.',
+    subtitle:'Tous les abonnements donnent accès à la même bibliothèque complète — seule la durée change. Plus elle est longue, moins le mois revient cher.',
+    footnote:'Prix en ouguiya mauritanienne. Activation et assistance sur WhatsApp ; aucun montant n’est prélevé sur ce site.',
+    perMonth:function(n){ return num(n) + ' MRU / mois'; },
+    save:function(p){ return 'Économisez ' + p + ' %'; },
+    popular:'Le plus choisi', best:'Meilleure offre', add:'S’abonner',
+    months:function(n){ return n===1?'1 mois':n+' mois'; },
     features:[
-      'The complete library',
-      'Every football league, live',
-      'Movies, series, anime, documentaries',
-      'Kids and news channels',
-      '4K on every device',
-      'Fast WhatsApp support' ] },
-  football:{ eyebrow:'Sport', titleA:'Every match that matters,', titleB:'live.',
-    subtitle:'The big European leagues, continental competitions and the Saudi Pro League — in high quality, without buffering.',
-    bandTitle:'Competitions included', bandSub:'Live, in quality up to 4K',
-    bandCta:'Subscribe now', liveTag:'LIVE',
+      'La bibliothèque complète',
+      'Toutes les ligues, en direct',
+      'Films, séries, animés, documentaires',
+      'Chaînes jeunesse et information',
+      '4K sur tous vos appareils',
+      'Assistance WhatsApp rapide' ] },
+  football:{ eyebrow:'Sport', titleA:'Chaque match qui compte,', titleB:'en direct.',
+    subtitle:'Les grands championnats européens, les compétitions continentales et la Saudi Pro League — en haute qualité, sans coupure.',
+    bandTitle:'Compétitions incluses', bandSub:'En direct, jusqu’à la 4K',
+    bandCta:'S’abonner', liveTag:'DIRECT',
     leagues:[
-      ['Premier League','England'],
+      ['Premier League','Angleterre'],
       ['UEFA Champions League','Europe'],
-      ['LaLiga','Spain'],
-      ['Serie A','Italy'],
-      ['Bundesliga','Germany'],
+      ['LaLiga','Espagne'],
+      ['Serie A','Italie'],
+      ['Bundesliga','Allemagne'],
       ['Ligue 1','France'],
-      ['Saudi Pro League','Saudi Arabia'],
-      ['CAF & World Cup','International'] ] },
-  faces:{ eyebrow:'Characters', titleA:'Faces', titleB:'you already know.' },
-  categories:{ eyebrow:'Content', titleA:'Everything,', titleB:'in one place.',
-    subtitle:'A library that grows every week — browse what a single subscription unlocks.' ,
-    browseTitle:'Browse by genre', browseHint:'Swipe for more',
-    kind:{ film:'Film', series:'Series' } },
-  why:{ eyebrow:'Why MAURIMAX', titleA:'An experience', titleB:'worth subscribing to.',
-    subtitle:'Not just a bigger catalogue — a better service, end to end.',
+      ['Saudi Pro League','Arabie saoudite'],
+      ['CAF & Coupe du monde','International'] ] },
+  categories:{ eyebrow:'Contenu', titleA:'Tout,', titleB:'au même endroit.',
+    subtitle:'Une bibliothèque enrichie chaque semaine — parcourez ce qu’un seul abonnement débloque.'
+  },
+  why:{ eyebrow:'Pourquoi MAURIMAX', titleA:'Une expérience', titleB:'qui vaut l’abonnement.',
+    subtitle:'Pas seulement un catalogue plus large — un meilleur service, du début à la fin.',
     items:[
-      {t:'Ultra HD quality',b:'4K with adaptive bitrate, so the picture stays sharp even when the connection dips.'},
-      {t:'Live in minutes',b:'Order on WhatsApp and your line is activated straight away — no waiting until tomorrow.'},
-      {t:'Massive library',b:'Over 20,000 movies, 10,000 series and 9,000 channels in one place.'},
-      {t:'Every device',b:'Smart TV, Android, iPhone, iPad or laptop. One account covers them all.'},
-      {t:'Genuinely affordable',b:'From 125 MRU a month — a fraction of the platforms bought separately.'},
-      {t:'Real support',b:'People on WhatsApp who answer quickly and actually fix things.'},
-      {t:'No buffering',b:'Stable servers tuned for Mauritanian networks, even on the big matches.'},
-      {t:'Updated weekly',b:'New films, seasons and channels added every week at no extra cost.'} ] },
-  reviews:{ eyebrow:'Testimonials', titleA:'Trusted by', titleB:'thousands.',
-    subtitle:'Here is what some subscribers say about the experience.' },
-  faq:{ eyebrow:'FAQ', title:'Questions, answered',
-    subtitle:'Everything you might want to know before subscribing. Anything else — just ask.',
-    helpBody:'Still unsure? Message us on WhatsApp and we will answer in minutes.',
-    waMessage:'Hello MAURIMAX, I have a question about your subscriptions.' },
-  cart:{ title:'Your cart', empty:'Nothing here yet', emptyTitle:'Your cart is empty',
-    emptyBody:'Pick a subscription and it will show up here.', browse:'Browse plans',
-    subtotal:'Subtotal', savings:'You save', total:'Total', checkout:'Proceed to checkout',
-    noCharge:'You confirm and pay on WhatsApp — nothing is charged here.', added:'Added',
-    count:function(n){ return n + ' item' + (n===1?'':'s'); } },
-  checkout:{ titleA:'Complete your', titleB:'order', hint:'We only use your details to confirm and activate the order.',
-    name:'Full name', nameError:'Please enter your name.', phone:'Phone number',
-    phoneHint:'Mauritanian number, 8 digits', phoneError:'Please enter a valid phone number.',
-    notes:'Notes', optional:'Optional', submit:'Send order on WhatsApp',
-    note:function(p){ return 'Nothing is charged on this site. Your order opens as a prefilled WhatsApp message to '+p+', where we confirm payment and activate you.'; },
-    ph:{name:'Mohamed Ould Ahmed',phone:'44 00 00 00',notes:'Anything we should know…'},
-    msg:{greeting:'Hello MAURIMAX,',intro:'I would like to subscribe.',name:'Name',phone:'Phone',
-      products:'Subscription:',qty:'Quantity',total:'Total',notes:'Notes',closing:'Please contact me.'} },
-  footer:{ ctaEyebrow:'Get started', ctaA:'Ready to watch?', ctaB:'Start today.',
-    ctaSub:'One subscription unlocks everything — from 350 MRU.',
-    ctaPrimary:'Choose your plan', ctaWhatsApp:'WhatsApp us', orderNow:'Order now',
-    about:'MAURIMAX brings movies, series, live channels and every major football competition together into one subscription — built for Mauritania.',
-    explore:'Explore', support:'Support', contact:'Contact',
-    links:{plans:'Pricing',football:'Football',cats:'Content',why:'Why MAURIMAX',
-      faq:'FAQ',reviews:'Reviews'},
-    waLine:'WhatsApp — orders & support', snapLine:'Snapchat — daily offers',
-    country:'Mauritania', countryLine:'Service nationwide', rights:'All rights reserved.',
-    trademarks:'Competition names are used to describe available content only and remain the property of their owners. MAURIMAX is an independent service, not affiliated with any of them.',
-    waGreeting:'Hello MAURIMAX,',
-    waLearn:'Hello MAURIMAX, I would like to know more about your subscriptions.',
-    waOrder:'Hello MAURIMAX, I would like to subscribe.' }
+      {t:'Qualité Ultra HD',b:'4K à débit adaptatif : l’image reste nette même quand la connexion faiblit.'},
+      {t:'Actif en quelques minutes',b:'Commandez sur WhatsApp et votre accès est activé aussitôt — sans attendre demain.'},
+      {t:'Bibliothèque immense',b:'Plus de 20 000 films, 10 000 séries et 9 000 chaînes au même endroit.'},
+      {t:'Tous vos appareils',b:'Smart TV, Android, iPhone, iPad ou ordinateur. Un compte suffit pour toute la maison.'},
+      {t:'Vraiment abordable',b:'À partir de 125 MRU par mois — une fraction du prix des plateformes prises séparément.'},
+      {t:'Une vraie assistance',b:'Des personnes sur WhatsApp qui répondent vite et règlent le problème.'},
+      {t:'Sans coupure',b:'Des serveurs stables réglés pour les réseaux mauritaniens, même les soirs de grand match.'},
+      {t:'Enrichi chaque semaine',b:'Nouveaux films, saisons et chaînes ajoutés chaque semaine, sans supplément.'} ] },
+  reviews:{ eyebrow:'Témoignages', titleA:'La confiance de', titleB:'milliers d’abonnés.',
+    subtitle:'Voici ce qu’en disent quelques abonnés.' },
+  faq:{ eyebrow:'FAQ', title:'Questions fréquentes',
+    subtitle:'Tout ce qu’il faut savoir avant de s’abonner. Pour le reste, écrivez-nous.',
+    helpBody:'Encore un doute ? Écrivez-nous sur WhatsApp, nous répondons en quelques minutes.',
+    waMessage:'Bonjour MAURIMAX, j’ai une question sur vos abonnements.' },
+  pick:{ eyebrow:'Abonnement', title:'Choisissez votre durée',
+    sub:'Tous les abonnements donnent accès à la même bibliothèque — seule la durée change.',
+    forCat:function(c){ return 'Un seul abonnement ouvre ' + c + ' et tout le reste de la bibliothèque.'; },
+    note:'Aucun montant n’est prélevé sur le site. Votre commande s’ouvre dans WhatsApp, déjà rédigée.',
+    back:'Retour aux abonnements' },
+  checkout:{ titleA:'Finalisez votre', titleB:'commande', hint:'Vos informations servent uniquement à confirmer et activer la commande.',
+    name:'Nom complet', nameError:'Merci d’indiquer votre nom.', phone:'Numéro de téléphone',
+    phoneHint:'Numéro mauritanien, 8 chiffres', phoneError:'Merci d’indiquer un numéro valide.',
+    notes:'Remarques', optional:'Facultatif', submit:'Envoyer la commande sur WhatsApp',
+    note:function(p){ return 'Aucun montant n’est prélevé sur ce site. Votre commande s’ouvre dans WhatsApp vers le '+p+', déjà rédigée — nous y confirmons le paiement et activons votre accès.'; },
+    ph:{name:'Mohamed Ould Ahmed',phone:'44 00 00 00',notes:'Quelque chose à nous signaler…'},
+    msg:{greeting:'Bonjour MAURIMAX,',intro:'Je souhaite m’abonner.',name:'Nom',phone:'Téléphone',
+      plan:'Abonnement',total:'Total',notes:'Remarques',closing:'Merci de me recontacter.'} },
+  footer:{ ctaEyebrow:'Commencer', ctaA:'Prêt à regarder ?', ctaB:'Commencez aujourd’hui.',
+    ctaSub:'Un seul abonnement débloque tout — à partir de 350 MRU.',
+    ctaPrimary:'Choisir mon abonnement', ctaWhatsApp:'Nous écrire sur WhatsApp', orderNow:'Commander',
+    about:'MAURIMAX réunit films, séries, chaînes en direct et toutes les grandes compétitions de football dans un seul abonnement — pensé pour la Mauritanie.',
+    explore:'Explorer', support:'Assistance', contact:'Contact',
+    links:{plans:'Abonnements',football:'Football',cats:'Contenu',why:'Pourquoi MAURIMAX',
+      faq:'FAQ',reviews:'Avis'},
+    waLine:'WhatsApp — commandes et assistance', snapLine:'Snapchat — offres du jour',
+    country:'Mauritanie', countryLine:'Service dans tout le pays', rights:'Tous droits réservés.',
+    trademarks:'Les noms de compétitions servent uniquement à décrire le contenu disponible et restent la propriété de leurs détenteurs. MAURIMAX est un service indépendant, sans affiliation avec aucun d’entre eux.',
+    waGreeting:'Bonjour MAURIMAX,',
+    waLearn:'Bonjour MAURIMAX, je voudrais en savoir plus sur vos abonnements.',
+    waOrder:'Bonjour MAURIMAX, je souhaite m’abonner.' }
 }
 };
 
@@ -221,62 +223,54 @@ PLANS.forEach(function (p) {
 });
 function find(id){ for(var i=0;i<PLANS.length;i++) if(PLANS[i].id===id) return PLANS[i]; return null; }
 
-/* Titles with real key art, shown in the streaming rail.
-   kind picks the badge wording out of the dictionary. */
-var SHOWS = [
-  {k:'m-oppenheimer', kind:'film',   ar:'أوبنهايمر',        en:'Oppenheimer'},
-  {k:'m-got',         kind:'series', ar:'صراع العروش',      en:'Game of Thrones'},
-  {k:'m-batman',      kind:'film',   ar:'ذا باتمان',        en:'The Batman'},
-  {k:'m-breakingbad', kind:'series', ar:'بريكينغ باد',      en:'Breaking Bad'},
-  {k:'m-odyssey',     kind:'film',   ar:'الأوديسة',         en:'The Odyssey'},
-  {k:'m-lacasa',      kind:'series', ar:'لا كاسا دي بابيل', en:'La Casa de Papel'},
-  {k:'m-spiderman',   kind:'film',   ar:'سبايدر-مان',       en:'Spider-Man'},
-  {k:'m-walkingdead', kind:'series', ar:'ذا ووكينغ ديد',    en:'The Walking Dead'},
-  {k:'m-fury',        kind:'film',   ar:'فيوري',            en:'Fury'}
-];
+/* Key art as moving background texture behind the closing call to action —
+   never as a list of titles. */
+var DRIFT = ['m-oppenheimer','m-got','m-batman','m-breakingbad','m-odyssey',
+             'm-lacasa','m-spiderman','m-walkingdead','m-fury',
+             'po-epl','po-ucl','po-seriea','po-laliga','po-bundesliga','po-ligue1'];
 
 var CATS = [
-  {art:'movies',   photo:'m-fury',        ar:['أفلام','أكثر من 20,000 فيلم'],    en:['Movies','20,000+ titles']},
-  {art:'series',   photo:'m-walkingdead', ar:['مسلسلات','أكثر من 10,000 مسلسل'], en:['TV Shows','10,000+ series']},
-  {art:'football', photo:'c-football', ar:['كرة القدم','كل الدوريات الكبرى'], en:['Football','Every major league']},
-  {art:'sports',   photo:'c-sports',   ar:['رياضة','أكثر من 900 قناة'],       en:['Sports','900+ channels']},
-  {art:'kids',     photo:'m-spiderman', ar:['أطفال','آمن وممتع'],  en:['Kids','Safe & fun']},
-  {art:'anime',    ar:['أنمي','مترجم ومدبلج'],                 en:['Anime','Subbed & dubbed']},
-  {art:'docs',     photo:'c-docs', ar:['وثائقيات','قصص حقيقية'],  en:['Documentaries','Real stories']},
-  {art:'news',     ar:['أخبار','على مدار الساعة'],             en:['News','24/7 worldwide']},
-  {art:'series2',  ar:['دراما عربية وتركية','مواسم كاملة'],    en:['Arabic & Turkish drama','Full seasons']},
-  {art:'live',     photo:'c-live',     ar:['قنوات مباشرة','أكثر من 9,000 قناة'], en:['Live TV','9,000+ channels']}
+  {art:'movies',   photo:'m-fury',        ar:['أفلام','أكثر من 20,000 فيلم'],    fr:['Films','Plus de 20 000 films']},
+  {art:'series',   photo:'m-walkingdead', ar:['مسلسلات','أكثر من 10,000 مسلسل'], fr:['Séries','Plus de 10 000 séries']},
+  {art:'football', photo:'c-football', ar:['كرة القدم','كل الدوريات الكبرى'], fr:['Football','Tous les grands championnats']},
+  {art:'sports',   photo:'c-sports',   ar:['رياضة','أكثر من 900 قناة'],       fr:['Sports','Plus de 900 chaînes']},
+  {art:'kids',     photo:'c-kids',  ar:['أطفال','آمن وممتع'],      fr:['Enfants','Sûr et amusant']},
+  {art:'anime',    photo:'c-anime', ar:['أنمي','مترجم ومدبلج'],   fr:['Animés','Sous-titrés et doublés']},
+  {art:'docs',     photo:'c-docs', ar:['وثائقيات','قصص حقيقية'],  fr:['Documentaires','Des histoires vraies']},
+  {art:'news',     photo:'c-news', logo:true, ar:['أخبار','على مدار الساعة'], fr:['Actualités','24 h/24, partout']},
+  {art:'series2',  ar:['دراما عربية وتركية','مواسم كاملة'],    fr:['Drames arabes et turcs','Saisons complètes']},
+  {art:'live',     photo:'c-live',     ar:['قنوات مباشرة','أكثر من 9,000 قناة'], fr:['Chaînes en direct','Plus de 9 000 chaînes']}
 ];
 
 /* Illustrative examples, not verified customer reviews — replace before launch. */
 var REVIEWS = [
   {i:'MA',ar:['محمد ولد أحمد','نواكشوط','أتابع كل مباريات دوري الأبطال بجودة عالية دون أي تقطيع، والتفعيل استغرق دقائق فقط.'],
-        en:['Mohamed Ould Ahmed','Nouakchott','I follow every Champions League match in high quality without a single freeze, and activation took minutes.']},
+        fr:['Mohamed Ould Ahmed','Nouakchott','Je suis tous les matchs de Ligue des champions en haute qualité, sans une seule coupure, et l’activation a pris quelques minutes.']},
   {i:'FS',ar:['فاطمتو منت سيدي','نواذيبو','قسم الأطفال ممتاز وزوجي يجد كل مبارياته. اشتراك واحد عوّض ثلاثة كنا ندفعها.'],
-        en:['Fatimetou Mint Sidi','Nouadhibou','The kids section is perfect and my husband gets his football. One subscription replaced three.']},
+        fr:['Fatimetou Mint Sidi','Nouadhibou','La section jeunesse est parfaite et mon mari a tout son football. Un abonnement en a remplacé trois.']},
   {i:'CD',ar:['الشيخ ديالو','روصو','اشتركت سنة كاملة بـ1500 أوقية. أرخص بكثير من أي خيار آخر جربته.'],
-        en:['Cheikh Diallo','Rosso','I took the full year for 1,500 MRU. Far cheaper than anything else I had tried.']},
+        fr:['Cheikh Diallo','Rosso','J’ai pris l’année complète à 1 500 MRU. Bien moins cher que tout ce que j’avais essayé.']},
   {i:'AB',ar:['أمينتو منت بابا','كيفة','كل المسلسلات التي أتابعها موجودة، والحلقات الجديدة تظهر في نفس الأسبوع.'],
-        en:['Aminetou Mint Baba','Kiffa','Every series I follow is there, and new episodes appear the same week.']},
+        fr:['Aminetou Mint Baba','Kiffa','Toutes les séries que je suis sont là, et les nouveaux épisodes arrivent dans la semaine.']},
   {i:'SV',ar:['سيدي محمد فال','أطار','ما أقنعني هو الدعم — أرسلت رسالة ليلاً فردّ عليّ أحدهم وحلّ المشكلة فوراً.'],
-        en:['Sidi Mohamed Vall','Atar','What convinced me was the support — I messaged at night and someone fixed it right away.']}
+        fr:['Sidi Mohamed Vall','Atar','Ce qui m’a convaincu, c’est l’assistance — j’ai écrit le soir et quelqu’un a réglé ça tout de suite.']}
 ];
 
 var FAQS = [
-  {ar:['كيف أحصل على اشتراكي؟','اختر المدة، أضفها إلى السلة وأكمل الطلب — سيفتح الموقع واتساب وطلبك مكتوب بالفعل. أرسله ونرد ببيانات التفعيل خلال دقائق.'],
-   en:['How do I get my subscription?','Pick a length, add it to the cart and check out — the site opens WhatsApp with your order already written. Send it and we reply with your activation details within minutes.']},
+  {ar:['كيف أحصل على اشتراكي؟','اختر المدة وأدخل اسمك ورقمك — سيفتح الموقع واتساب وطلبك مكتوب بالفعل. أرسله ونرد ببيانات التفعيل خلال دقائق.'],
+   fr:['Comment obtenir mon abonnement ?','Choisissez une durée, indiquez votre nom et votre numéro — le site ouvre WhatsApp avec votre commande déjà rédigée. Envoyez-la et nous répondons avec vos accès en quelques minutes.']},
   {ar:['ما الفرق بين الاشتراكات؟','لا فرق في المحتوى إطلاقاً — كل الاشتراكات تفتح المكتبة كاملة. الفرق في المدة فقط: كلما طالت المدة انخفضت التكلفة الشهرية، من 350 أوقية للشهر إلى 125 أوقية شهرياً في اشتراك السنة.'],
-   en:['What is the difference between the plans?','None at all in content — every plan unlocks the full library. Only the length differs: the longer the term, the lower the monthly cost, from 350 MRU for one month down to 125 MRU a month on the yearly plan.']},
+   fr:['Quelle est la différence entre les abonnements ?','Aucune sur le contenu — chaque abonnement ouvre la bibliothèque complète. Seule la durée change : plus elle est longue, moins le mois revient cher, de 350 MRU pour un mois à 125 MRU par mois sur l’année.']},
   {ar:['على أي الأجهزة يعمل؟','الشاشات الذكية (سامسونج، إل جي، أندرويد تي في)، هواتف وأجهزة أندرويد، الآيفون والآيباد، وحواسيب ويندوز وماك. حساب واحد يكفي البيت كله ونساعدك في الإعداد.'],
-   en:['Which devices does it work on?','Smart TVs (Samsung, LG, Android TV), Android phones and boxes, iPhone and iPad, and Windows and Mac laptops. One account covers your household and we help you set it up.']},
+   fr:['Sur quels appareils cela fonctionne-t-il ?','Smart TV (Samsung, LG, Android TV), téléphones et boîtiers Android, iPhone et iPad, ordinateurs Windows et Mac. Un compte suffit pour toute la maison et nous vous aidons à l’installer.']},
   {ar:['هل أحتاج إنترنت سريع؟','لجودة 4K ننصح بحوالي 25 ميجابت. الجودة الكاملة HD تعمل بسلاسة من 10 ميجابت، والبث يتكيّف تلقائياً إذا ضعف الاتصال فلا تتوقف المشاهدة.'],
-   en:['Do I need fast internet?','For 4K we recommend around 25 Mbps. Full HD works comfortably from 10 Mbps, and the stream adapts automatically if your connection dips.']},
+   fr:['Faut-il une connexion rapide ?','Pour la 4K, comptez environ 25 Mb/s. La Full HD passe très bien à partir de 10 Mb/s, et le flux s’adapte automatiquement si la connexion faiblit.']},
   {ar:['كيف أدفع؟','نرتّب الدفع مباشرة عبر واتساب بالوسائل المتداولة في موريتانيا — بنكيلي أو مصرفي أو سداد أو نقداً. لا يُخصم أي مبلغ عبر الموقع.'],
-   en:['How do I pay?','We arrange payment directly on WhatsApp using the methods common in Mauritania — Bankily, Masrvi, Sedad or cash. Nothing is charged through the site.']},
+   fr:['Comment payer ?','Le paiement se règle directement sur WhatsApp avec les moyens courants en Mauritanie — Bankily, Masrvi, Sedad ou espèces. Rien n’est prélevé via le site.']},
   {ar:['ماذا يحدث عند انتهاء الاشتراك؟','نراسلك قبل تاريخ الانتهاء حتى لا ينقطع البث. التجديد برسالة واحدة وتحتفظ بنفس الإعدادات.'],
-   en:['What happens when it expires?','We message you before the end date so there is no interruption. Renewing takes one message and you keep the same settings.']},
+   fr:['Que se passe-t-il à l’expiration ?','Nous vous écrivons avant la date de fin pour éviter toute coupure. Le renouvellement tient en un message et vous gardez vos réglages.']},
   {ar:['ماذا لو توقف شيء عن العمل؟','راسلنا على واتساب في أي وقت. معظم المشاكل تُحل بتعديل بسيط، وإذا احتاج الخادم إلى تغيير ننقلك فوراً وبدون تكلفة.'],
-   en:['What if something stops working?','Message us on WhatsApp any time. Most issues are a quick settings fix; if a server needs changing we move you across immediately, at no cost.']}
+   fr:['Et si quelque chose ne marche plus ?','Écrivez-nous sur WhatsApp à tout moment. La plupart des soucis se règlent par un réglage ; si un serveur doit changer, nous vous basculons aussitôt, sans frais.']}
 ];
 
 /* ---------------- Artwork ----------------
@@ -407,13 +401,11 @@ var WHY_PATHS = [
 ];
 
 /* ---------------- State ---------------- */
-var lang = 'ar';
-try { var st = localStorage.getItem('maurimax.lang'); if (st==='ar'||st==='en') lang = st; } catch(e){}
-var cart = [];
-try { var raw = localStorage.getItem('maurimax.cart');
-  if (raw) { var pj = JSON.parse(raw);
-    if (Object.prototype.toString.call(pj)==='[object Array]') cart = pj.filter(function(l){ return l && find(l.id) && l.q>0; }); } } catch(e){}
-function saveCart(){ try{ localStorage.setItem('maurimax.cart', JSON.stringify(cart)); }catch(e){} }
+try { var st = localStorage.getItem('maurimax.lang'); if (st==='ar'||st==='fr') lang = st; } catch(e){}
+// One subscription per order, so there is nothing to accumulate — just the
+// plan the visitor picked in the order sheet.
+var chosen = null;
+
 function t(){ return T[lang]; }
 function $(s,r){ return (r||document).querySelector(s); }
 function $$(s,r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); }
@@ -424,8 +416,8 @@ function render() {
   var d = t();
   document.documentElement.lang = lang;
   document.documentElement.dir = d.dir;
-  $('#langTxt').textContent = lang === 'ar' ? 'EN' : 'ع';
-  $('#lang').setAttribute('aria-label', lang==='ar' ? 'Switch to English' : 'التبديل إلى العربية');
+  $('#langTxt').textContent = lang === 'ar' ? 'FR' : 'ع';
+  $('#lang').setAttribute('aria-label', lang==='ar' ? 'Passer au français' : 'التبديل إلى العربية');
 
   $$('[data-i]').forEach(function (el) {
     var v = d, parts = el.getAttribute('data-i').split('.');
@@ -500,13 +492,6 @@ function render() {
       '<span class="nm keep" dir="ltr">'+esc(l[0])+'</span>'+
       '<span class="sub">'+esc(l[1])+'</span></div>'; }).join('');
 
-  $('#showRail').innerHTML = SHOWS.map(function(sh){
-    var art = photo(sh.k); if (!art) return '';
-    return '<a class="show" href="#plans" aria-label="'+esc(sh[lang])+'">'+
-      '<span class="art"><img src="'+art+'" alt="" loading="lazy" decoding="async">'+
-      '<span class="kind keep">'+esc(d.categories.kind[sh.kind])+'</span></span>'+
-      '<b>'+esc(sh[lang])+'</b></a>'; }).join('');
-
   $('#catA').innerHTML = CATS.slice(0,5).map(function(c,i){ return catCard(c,i); }).join('');
   $('#catB').innerHTML = CATS.slice(5).map(function(c,i){ return catCard(c,i+5); }).join('');
 
@@ -552,7 +537,8 @@ function render() {
   $('#cPhone').placeholder = d.checkout.ph.phone;
   $('#cNotes').placeholder = d.checkout.ph.notes;
 
-  renderCart();
+  renderDrift();
+  renderPicker(d);
   fitWordmarks();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWordmarks);
   reveal();
@@ -575,7 +561,7 @@ function leadPlanHtml(p, d) {
     '<div class="meta"><span>'+esc(d.plans.perMonth(p.per))+'</span>'+
       '<span class="save">'+esc(d.plans.save(p.savePct))+'</span></div>'+
     '<ul>'+d.plans.features.map(function(f){ return '<li>'+TICK+'<span>'+esc(f)+'</span></li>'; }).join('')+'</ul>'+
-    '<div class="go"><button class="btn btn-o btn-lg btn-full" data-add="'+p.id+'">'+
+    '<div class="go"><button class="btn btn-o btn-lg btn-full" data-pick="'+p.id+'">'+
       '<span>'+esc(d.plans.add)+'</span></button></div>'+
     '</article>';
 }
@@ -591,7 +577,7 @@ function planRow(p, d) {
       (p.badge==='popular' ? ' · <em class="pop" style="font-style:normal">'+esc(d.plans.popular)+'</em>' : '')+
       (p.savePct>0 ? ' · '+esc(d.plans.save(p.savePct)) : '')+'</span></span>'+
     '<span class="price" dir="ltr"><b>'+num(p.price)+'</b><span>MRU</span></span>'+
-    '<button class="plus" data-add="'+p.id+'" aria-label="'+esc(d.plans.add)+'">'+
+    '<button class="plus" data-pick="'+p.id+'" aria-label="'+esc(d.plans.add)+'">'+
       '<svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden>'+
       '<path d="M8 3.5v9M3.5 8h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'+
     '</button></div>';
@@ -638,78 +624,69 @@ function setImg(sel, key) {
 function catCard(c, i) {
   var x = c[lang], shot = photo(c.photo);
   var art = shot
-    ? '<div class="artimg"><img src="'+shot+'" alt="" loading="lazy" decoding="async">'+
-      '<span class="vig"></span></div>'
+    ? '<div class="artimg'+(c.logo ? ' logo' : '')+'">'+
+      '<img src="'+shot+'" alt="" loading="lazy" decoding="async"><span class="vig"></span></div>'
     : '<div class="typo'+(i % 3 === 1 ? ' alt' : '')+'">'+
-        '<span class="wm keep" aria-hidden="true">'+esc(c.en[0])+'</span>'+
+        '<span class="wm keep" aria-hidden="true">'+esc(c.fr[0])+'</span>'+
         '<span class="vig"></span></div>';
-  return '<a href="#plans" class="cat rev" aria-label="'+esc(x[0])+'"><div class="fr">'+art+
-    '<div class="meta"><h3>'+esc(x[0])+'</h3><p class="c">'+esc(x[1])+'</p></div></div></a>';
+  // Tapping a genre opens the order sheet — every plan unlocks every genre,
+  // so the sheet just names which one brought you there.
+  return '<button type="button" class="cat rev" data-cat="'+esc(x[0])+'">'+
+    '<div class="fr">'+art+
+    '<div class="meta"><h3>'+esc(x[0])+'</h3><p class="c">'+esc(x[1])+'</p></div></div></button>';
 }
 
-/* ---------------- Cart ---------------- */
-function totals(){
-  var sub=0, ref=0, n=0;
-  cart.forEach(function(l){ var p=find(l.id); if(!p) return;
-    sub += p.price*l.q; ref += p.ref*l.q; n += l.q; });
-  return { sub:sub, save:Math.max(0, ref-sub), n:n };
-}
-function add(id){
-  for (var i=0;i<cart.length;i++) if (cart[i].id===id){ cart[i].q=Math.min(20,cart[i].q+1); saveCart(); renderCart(); return; }
-  cart.push({id:id,q:1}); saveCart(); renderCart();
-}
-function setQ(id,q){
-  for (var i=0;i<cart.length;i++) if (cart[i].id===id){
-    if (q<=0) cart.splice(i,1); else cart[i].q=Math.min(20,q); break; }
-  saveCart(); renderCart();
-}
-function renderCart(){
-  var d=t(), tt=totals();
-  var badge=$('#count'); badge.textContent=tt.n; badge.className = tt.n>0?'on':'';
-  $('#cartCount').textContent = tt.n===0 ? d.cart.empty : d.cart.count(tt.n);
-
-  var box=$('#lines');
-  if (!cart.length){
-    box.innerHTML = '<div class="empty"><svg viewBox="0 0 24 24" width="52" height="52" fill="none" style="color:var(--line)" aria-hidden>'+
-      '<path d="M3 4h2.2l2.1 10.4a1.8 1.8 0 0 0 1.77 1.44h7.4a1.8 1.8 0 0 0 1.76-1.4L20 8H6.2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'+
-      '<circle cx="10" cy="19.5" r="1.4" fill="currentColor"/><circle cx="17" cy="19.5" r="1.4" fill="currentColor"/></svg>'+
-      '<p style="font-size:16px;font-weight:800;margin-top:12px">'+esc(d.cart.emptyTitle)+'</p>'+
-      '<p style="font-size:13.5px;color:var(--muted);max-width:240px">'+esc(d.cart.emptyBody)+'</p>'+
-      '<a href="#plans" class="btn btn-ghost" style="margin-top:16px" data-close-cart><span>'+esc(d.cart.browse)+'</span></a></div>';
-    $('#cartSum').style.display='none'; return;
+/* Two rows of key art crossing behind the closing call to action. Each row is
+   duplicated so the -50% translate loops seamlessly. */
+function renderDrift(){
+  var box = $('#drift'); if (!box) return;
+  var art = DRIFT.map(photo).filter(Boolean);
+  if (art.length < 6){ box.innerHTML = ''; return; }
+  var half = Math.ceil(art.length / 2);
+  function row(list, cls){
+    var twice = list.concat(list);
+    return '<div class="pdRow'+cls+'">' + twice.map(function(src){
+      return '<img src="'+src+'" alt="" loading="lazy" decoding="async">'; }).join('') + '</div>';
   }
-  box.innerHTML = cart.map(function(l){
-    var p=find(l.id);
-    var th = photo(p.photo);
-    return '<div class="line"><div class="th">'+
-      (th ? '<img src="'+th+'" alt="" loading="lazy" decoding="async">' : scene(p.art,p.img))+
-      '</div><div style="flex:1;min-width:0">'+
-      '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">'+
-      '<h3 style="font-size:14.5px;font-weight:800">'+esc(d.plans.months(p.months))+'</h3>'+
-      '<button data-rm="'+p.id+'" aria-label="remove" style="color:var(--muted);padding:2px">'+
-      '<svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden><path d="m4 4 8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button></div>'+
-      '<p style="margin-top:2px;font-size:12.5px;color:var(--muted)">'+esc(d.plans.perMonth(p.per))+'</p>'+
-      '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:12px">'+
-      '<div class="qty"><button data-q="'+p.id+'" data-d="-1" aria-label="-"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden><path d="M3.5 8h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>'+
-      '<span class="keep">'+l.q+'</span>'+
-      '<button data-q="'+p.id+'" data-d="1" aria-label="+"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden><path d="M8 3.5v9M3.5 8h9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button></div>'+
-      '<span dir="ltr" style="font-family:var(--lat);font-weight:900;font-size:15px">'+money(p.price*l.q)+'</span></div></div></div>';
+  box.innerHTML = row(art.slice(0, half), '') + row(art.slice(half), ' b');
+}
+
+/* ---------------- Order sheet ----------------
+   Step one lists the plans, step two takes the details. */
+function renderPicker(d){
+  $('#pickList').innerHTML = PLANS.map(function(p){
+    var bits = [d.plans.perMonth(p.per)];
+    if (p.badge === 'popular') bits.push('<em>' + esc(d.plans.popular) + '</em>');
+    if (p.savePct > 0) bits.push(esc(d.plans.save(p.savePct)));
+    return '<button type="button" class="pk'+(p.best?' best':'')+'" data-pick="'+p.id+'">'+
+      '<span><span class="nm">'+esc(d.plans.months(p.months))+
+        (p.best ? ' · ' + esc(d.plans.best) : '')+'</span>'+
+        '<span class="sub">'+bits.join(' · ')+'</span></span>'+
+      '<span class="amt" dir="ltr">'+num(p.price)+'<s>MRU</s></span>'+
+      '<span class="go" aria-hidden="true">'+
+        '<svg viewBox="0 0 16 16" width="14" height="14" fill="none">'+
+        '<path d="M6 3.5 10.5 8 6 12.5" stroke="currentColor" stroke-width="1.8" '+
+        'stroke-linecap="round" stroke-linejoin="round"/></svg></span>'+
+      '</button>';
   }).join('');
-  $('#cartSum').style.display='';
-  $('#sSub').textContent = money(tt.sub);
-  $('#sTot').textContent = money(tt.sub);
-  $('#coTotal').textContent = money(tt.sub);
-  $('#sSaveRow').style.display = tt.save>0 ? '' : 'none';
-  $('#sSave').textContent = '−' + money(tt.save);
+}
+
+function renderChosen(){
+  var d = t(), p = find(chosen);
+  if (!p) return;
+  $('#chosenBox').innerHTML =
+    '<span class="cbody"><b>'+esc(d.plans.months(p.months))+'</b>'+
+    '<span>'+esc(d.plans.perMonth(p.per))+
+      (p.savePct>0 ? ' · '+esc(d.plans.save(p.savePct)) : '')+'</span></span>'+
+    '<span class="cnum" dir="ltr">'+num(p.price)+'<s>MRU</s></span>';
 }
 
 function orderMessage(){
-  var d=t(), m=d.checkout.msg, tt=totals();
+  var d=t(), m=d.checkout.msg, p=find(chosen);
   var name=$('#cName').value.trim(), phone=$('#cPhone').value.trim(), notes=$('#cNotes').value.trim();
-  var out=[m.greeting,'',m.intro,'',m.name+': '+(name||'—'),m.phone+': '+(phone||'—'),'',m.products];
-  cart.forEach(function(l){ var p=find(l.id);
-    out.push('• '+d.plans.months(p.months)+' — '+m.qty+': '+l.q+' — '+money(p.price*l.q)); });
-  out.push('', m.total+': '+money(tt.sub));
+  var out=[m.greeting,'',m.intro,'',m.name+': '+(name||'—'),m.phone+': '+(phone||'—'),'',
+           m.plan+': '+d.plans.months(p.months),
+           m.total+': '+money(p.price)];
   if (notes) out.push('', m.notes+': '+notes);
   out.push('', m.closing);
   return out.join('\n');
@@ -849,49 +826,53 @@ function preloader(){
 }
 
 /* ---------------- Wiring ---------------- */
-function openCart(){ $('#cart').classList.add('on'); document.body.style.overflow='hidden'; }
-function closeCart(){ $('#cart').classList.remove('on'); document.body.style.overflow=''; }
-function openModal(){ closeCart(); $('#modal').classList.add('on'); document.body.style.overflow='hidden';
-  setTimeout(function(){ $('#cName').focus(); },80); }
-function closeModal(){ $('#modal').classList.remove('on'); document.body.style.overflow=''; }
+function step(which){
+  $('#stepPick').classList.toggle('on', which === 'pick');
+  $('#stepForm').classList.toggle('on', which === 'form');
+}
+function openSheet(planId, catName){
+  var forCat = $('#forCat');
+  if (catName){
+    forCat.textContent = t().pick.forCat(catName);
+    forCat.style.display = '';
+  } else {
+    forCat.style.display = 'none';
+  }
+  if (planId && find(planId)){ chosen = planId; renderChosen(); step('form'); }
+  else { step('pick'); }
+  $('#modal').classList.add('on');
+  document.body.style.overflow = 'hidden';
+  setTimeout(function(){ (planId ? $('#cName') : $('.pk')).focus(); }, 90);
+}
+function closeSheet(){
+  $('#modal').classList.remove('on');
+  document.body.style.overflow = '';
+}
 
 document.addEventListener('click', function(e){
   var el;
-  if ((el = e.target.closest('[data-add]'))){
-    add(el.getAttribute('data-add'));
-    // The full-width buttons swap their label; the compact `+` on a plan row
-    // has no label to swap, so it just flashes instead.
-    var s = el.querySelector('span');
-    if (s) {
-      var old = s.textContent;
-      s.textContent = t().cart.added;
-      setTimeout(function(){ s.textContent = old; }, 1400);
-    } else {
-      el.classList.add('done');
-      setTimeout(function(){ el.classList.remove('done'); }, 900);
-    }
+  if ((el = e.target.closest('[data-pick]'))){
+    chosen = el.getAttribute('data-pick');
+    renderChosen(); step('form');
+    if (!$('#modal').classList.contains('on')) openSheet(chosen);
+    else setTimeout(function(){ $('#cName').focus(); }, 60);
     return;
   }
-  if ((el = e.target.closest('[data-rm]'))){ setQ(el.getAttribute('data-rm'),0); return; }
-  if ((el = e.target.closest('[data-q]'))){
-    var id=el.getAttribute('data-q'), dd=+el.getAttribute('data-d');
-    for (var i=0;i<cart.length;i++) if (cart[i].id===id){ setQ(id,cart[i].q+dd); break; }
-    return;
-  }
-  if (e.target.closest('[data-close-cart]')){ closeCart(); return; }
-  if (e.target.closest('[data-close-modal]')){ closeModal(); return; }
+  if ((el = e.target.closest('[data-cat]'))){ openSheet(null, el.getAttribute('data-cat')); return; }
+  if (e.target.closest('[data-open-plans]')){ openSheet(null); return; }
+  if (e.target.closest('[data-close-modal]')){ closeSheet(); return; }
   if (e.target.closest('[data-close]')){ $('#menu').classList.remove('on'); document.body.style.overflow='';
     document.querySelector('header').classList.remove('menu-open');
     $('#burger').setAttribute('aria-expanded','false'); }
 });
+$('#moBack').addEventListener('click', function(){ step('pick'); });
+
 if (!REDUCED) document.addEventListener('pointerdown', function(e){
   var btn=e.target.closest('.btn'); if(!btn) return;
-  var r=btn.getBoundingClientRect(), s=document.createElement('span');
-  s.className='rip'; s.style.left=(e.clientX-r.left)+'px'; s.style.top=(e.clientY-r.top)+'px';
-  btn.appendChild(s); setTimeout(function(){ s.remove(); },600);
+  var r=btn.getBoundingClientRect(), sp=document.createElement('span');
+  sp.className='rip'; sp.style.left=(e.clientX-r.left)+'px'; sp.style.top=(e.clientY-r.top)+'px';
+  btn.appendChild(sp); setTimeout(function(){ sp.remove(); },600);
 });
-$('#cartBtn').addEventListener('click', openCart);
-$('#toCheckout').addEventListener('click', openModal);
 $('#burger').addEventListener('click', function(){
   var m=$('#menu'), on=m.classList.toggle('on');
   document.body.style.overflow = on?'hidden':'';
@@ -900,18 +881,19 @@ $('#burger').addEventListener('click', function(){
 });
 document.addEventListener('keydown', function(e){
   if (e.key!=='Escape') return;
-  closeCart(); closeModal();
+  closeSheet();
   $('#menu').classList.remove('on'); document.querySelector('header').classList.remove('menu-open');
   document.body.style.overflow=''; $('#burger').setAttribute('aria-expanded','false');
 });
 $('#lang').addEventListener('click', function(){
-  lang = lang==='ar' ? 'en' : 'ar';
+  lang = lang==='ar' ? 'fr' : 'ar';
   try{ localStorage.setItem('maurimax.lang', lang); }catch(e){}
   render();
+  if (chosen) renderChosen();
 });
 $('#coForm').addEventListener('submit', function(e){
   e.preventDefault();
-  if (!cart.length) return;
+  if (!find(chosen)) { step('pick'); return; }
   var ok=true;
   var bad = $('#cName').value.trim().length < 2;
   $('#fName').classList.toggle('bad', bad); if (bad) ok=false;
@@ -923,6 +905,7 @@ $('#coForm').addEventListener('submit', function(e){
 ['cName','cPhone'].forEach(function(id){
   $('#'+id).addEventListener('input', function(){ this.closest('.field').classList.remove('bad'); });
 });
+
 var fitTimer;
 window.addEventListener('resize', function(){
   clearTimeout(fitTimer); fitTimer = setTimeout(fitWordmarks, 150);

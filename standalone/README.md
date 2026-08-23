@@ -4,8 +4,10 @@
 run before serving, no framework, no dependencies. Rename it to `index.html`
 and upload it anywhere (GitHub Pages, cPanel, Netlify drop, a USB stick).
 
-Arabic is the default language and the page renders `dir="rtl"`. The globe
-button in the header switches to English; the choice is kept in `localStorage`.
+Arabic is the default language and the page renders `dir="rtl"`. The header
+toggle switches to **French**; the choice is kept in `localStorage`. Figures
+follow the locale too — `1,500` in Arabic, `1 500` in French — including in
+the WhatsApp order.
 
 The older MOORTV build is still here as `moortv.html` / `moortv.js`. It is
 untouched by the rebrand — keep it or delete it.
@@ -15,7 +17,7 @@ untouched by the rebrand — keep it or delete it.
 | File | What it is |
 | --- | --- |
 | `maurimax.src.html` | markup + all CSS, with `__LOGO_URI__` / `__IMG_MAP__` placeholders |
-| `maurimax.js` | the runtime: prices, artwork, both dictionaries, cart, interactions |
+| `maurimax.js` | the runtime: prices, artwork, both dictionaries, the order sheet, interactions |
 | `maurimax.preview.html` | generated too — the same page without a document wrapper, for hosts that supply their own skeleton |
 | `images/` | the logo, the optimised player and league artwork, `prepare.mjs` |
 
@@ -40,7 +42,7 @@ used, and turns every `images/*.webp` into `window.MXIMG['<filename>']`.
 | Categories, FAQ, reviews | `CATS`, `FAQS`, `REVIEWS` |
 | Which crest sits beside which competition | `LEAGUE_CRESTS` |
 | Which posters fill the wall, and the hero fan | `POSTERS`, and the `fan` array in `render()` |
-| Titles in the streaming rail | `SHOWS` |
+| Key art drifting behind the closing CTA | `DRIFT` |
 | Who stands where | `PLANS[].photo` / `.photo2`, and the `setImg` calls in `render()` |
 | Colours, type, spacing | the `:root` block in `maurimax.src.html` |
 
@@ -54,7 +56,7 @@ Everything in `images/` is inlined at build time. Keys come from the filename:
 | `p-` | `PLANS[].photo`, the hero | footballer cut-outs, transparent |
 | `l-` | `LEAGUE_CRESTS`, the marquee | competition marks, transparent |
 | `po-` | `POSTERS` | league key art, opaque |
-| `m-` | `SHOWS`, two genre tiles | film and series key art, opaque |
+| `m-` | `DRIFT`, the hero fan, two genre tiles | film and series key art, opaque |
 | `x-` | `PLANS`, the hero, section anchors | character cut-outs, background removed |
 | `c-` | `CATS[].photo` | photography for genre tiles |
 
@@ -102,23 +104,17 @@ Guidance for new artwork:
   not real.** Replace them with genuine reviews and real numbers. Publishing
   invented ones as if they were real would mislead customers.
 
-### Genre tiles still without artwork
+### One genre tile still without artwork
 
-Three genres fall back to the typographic poster treatment because nothing has
-been supplied for them. They read as deliberate, but real key art would be
-better:
+**دراما عربية وتركية — Arabic & Turkish drama** (`art:'series2'`) falls back to
+the typographic poster treatment because nothing has been supplied for it. It
+reads as deliberate, but a still from a real series would be better. Drop a
+file into `images/` as `c-drama.webp`, add a line to `JOBS` in `prepare.mjs`,
+then set `photo:'c-drama'` on that entry.
 
-| Genre | `CATS` entry |
-| --- | --- |
-| أنمي — Anime | `art:'anime'` |
-| أخبار — News | `art:'news'` |
-| دراما عربية وتركية — Arabic & Turkish drama | `art:'series2'` |
-
-Drop a file into `images/` as `c-anime.webp` (and so on), add a line to `JOBS`
-in `prepare.mjs`, then set `photo:'c-anime'` on that entry.
-
-Kids uses the Spider-Man key art — a judgement call, the way a streaming
-service files superheroes under family viewing.
+The News tile carries a channel mark rather than a photograph, so it sets
+`logo:true` and the art sits contained on the brand ground instead of being
+cropped to fill.
 
 ## The design system
 
@@ -144,6 +140,18 @@ surface.
   closing sections.
 - **Sections are not numbered.** They are not a sequence, so numbering them
   would have been decoration.
+- **Key art is texture, not a list.** Film and series posters drift in two
+  crossing rows behind the closing call to action and fill the hero fan. The
+  page never presents them as a catalogue of titles.
+
+### Ordering: no cart
+
+Nobody buys two subscriptions, so there is no cart to maintain. Tapping a
+genre — or any plan — opens one sheet: step one lists the four terms, step two
+takes a name and number and hands the order to WhatsApp. `chosen` holds the
+single selected plan id; `openSheet(planId, catName)` decides which step
+opens, and naming the genre makes the sheet feel like an answer to the tap
+rather than a generic popup.
 
 ### Two things that must stay measured, not calculated
 

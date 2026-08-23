@@ -53,8 +53,13 @@ const JOBS = {
   'po-bundesliga': ['IMG_5256', 'w400', 52],
   'po-ligue1':     ['IMG_5255', 'w400', 52],
   'c-football':    ['IMG_5250', 560, 58],
-  'c-sports':      ['IMG_5251', 560, 58],
   'c-live':        ['IMG_5249', 560, 58],
+  'c-sports':      ['newcat/ufc.png', 560, 56],
+  'c-kids':        ['newcat/kids.png', 480, 60],
+  'c-anime':       ['newcat/anime.png', 520, 56],
+  /* A channel mark rather than a photograph: sits contained on the tile,
+     white ground already knocked out. */
+  'c-news':        ['newcat/aljazeera.png', 300, 62],
 
   /* Movie and series key art, shown at title size in the streaming rail. */
   'm-oppenheimer': ['IMG_5320', 'w320', 56],
