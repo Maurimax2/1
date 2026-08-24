@@ -1,22 +1,18 @@
 # maurimax.store
 
-Two sites live in this repository, both served by GitHub Pages from `main`.
-
-| URL | What it is | Source |
-| --- | --- | --- |
-| `maurimax.store/` | **MAURIMAX** — the streaming subscription site | `site/` |
-| `maurimax.store/travel/` | the Mauritanian travel site | `travel/` |
-
-The travel site used to sit at the root. It moved to `/travel/` when MAURIMAX
-took the domain; every link in it was already relative, so nothing needed
-rewriting apart from its sitemap. The exact pre-move state is preserved on the
-`travel-site` branch if it is ever wanted back at the root.
-
-## MAURIMAX
+**MAURIMAX** — the streaming subscription site. Served by GitHub Pages from
+`main`.
 
 Arabic is the default language and the page renders `dir="rtl"`; the header
 toggle switches to French. There is no cart — tapping a genre or a plan opens
 one order sheet that ends in a prefilled WhatsApp message.
+
+A Mauritanian travel site used to occupy this domain, first at the root and
+briefly at `/travel/`. It has been removed from the domain entirely. Nothing
+was lost: its exact state is preserved on the **`travel-site`** branch, and
+`git log` still has every commit.
+
+## Editing
 
 Everything at the root is **generated**. Edit the sources in `site/`, never
 `index.html` or `assets/`:
@@ -54,9 +50,3 @@ commercial risks rather than technical ones:
   trademarks. Removing a background or a logo changes none of that.
 - **The reviews and the subscriber figures are illustrative, not real.** They
   need replacing with genuine ones.
-
-## The travel site
-
-Unchanged apart from its location and its sitemap URLs. Its own documentation
-is at [`travel/README.md`](travel/README.md) and its build tooling lives in
-`travel/src` and `travel/tools`.
