@@ -10,7 +10,7 @@
  *   node standalone/build-maurimax.mjs
  */
 import { cpSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -73,8 +73,14 @@ writeFileSync(join(here, 'maurimax.preview.html'), preview);
    is ~1.1 MB and blocks first paint until all of it arrives; this one is
    under 100 KB and streams its images, which matters a lot on mobile data.
    ---------------------------------------------------------------- */
-const dist = join(here, 'dist');
-rmSync(dist, { recursive: true, force: true });
+// `--out <dir>` writes the deployable copy somewhere else — used to publish
+// straight into the repo root. Only assets/ is cleared, never the whole
+// directory, so pointing this at a populated folder cannot wipe it.
+const outArg = process.argv.indexOf('--out');
+const dist = outArg > -1 && process.argv[outArg + 1]
+  ? resolve(process.argv[outArg + 1])
+  : join(here, 'dist');
+rmSync(join(dist, 'assets'), { recursive: true, force: true });
 mkdirSync(join(dist, 'assets'), { recursive: true });
 
 let distHtml = readFileSync(join(here, 'maurimax.src.html'), 'utf8')
@@ -90,7 +96,7 @@ cpSync(join(imgDir, 'maurimax-logo.png'), join(dist, 'assets', 'logo.png'));
 for (const f of photos) cpSync(join(imgDir, f), join(dist, 'assets', f));
 
 console.log(
-  'dist/index.html — ' + (Buffer.byteLength(distHtml) / 1024).toFixed(1) +
+  dist + '/index.html — ' + (Buffer.byteLength(distHtml) / 1024).toFixed(1) +
     ' KB + ' + (photos.length + 1) + ' asset files\n' +
   'maurimax.html — ' + (Buffer.byteLength(html) / 1024).toFixed(1) + ' KB\n' +
     '  logo   ' + (logo.length / 1024).toFixed(1) + ' KB\n' +
