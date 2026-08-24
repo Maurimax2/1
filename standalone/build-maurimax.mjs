@@ -9,7 +9,7 @@
  *
  *   node standalone/build-maurimax.mjs
  */
-import { readdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { cpSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -67,7 +67,31 @@ if (/<\/?(?:html|head|body)\b/i.test(preview)) {
 }
 writeFileSync(join(here, 'maurimax.preview.html'), preview);
 
+/* ----------------------------------------------------------------
+   dist/ — the same site for real hosting, with the artwork as separate
+   cacheable files instead of base64 inside the document. The single file
+   is ~1.1 MB and blocks first paint until all of it arrives; this one is
+   under 100 KB and streams its images, which matters a lot on mobile data.
+   ---------------------------------------------------------------- */
+const dist = join(here, 'dist');
+rmSync(dist, { recursive: true, force: true });
+mkdirSync(join(dist, 'assets'), { recursive: true });
+
+let distHtml = readFileSync(join(here, 'maurimax.src.html'), 'utf8')
+  .split('__LOGO_URI__').join('assets/logo.png')
+  .replace(mapTag, () => '<script>window.MXIMG={' +
+    photos.map((f) => JSON.stringify(f.replace(/\.webp$/, '')) +
+      ':"assets/' + f + '"').join(',') + '};</script>')
+  .replace(tag, () => '<script>\n' + js + '\n</script>');
+
+writeFileSync(join(dist, 'index.html'), distHtml);
+writeFileSync(join(dist, '.nojekyll'), '');
+cpSync(join(imgDir, 'maurimax-logo.png'), join(dist, 'assets', 'logo.png'));
+for (const f of photos) cpSync(join(imgDir, f), join(dist, 'assets', f));
+
 console.log(
+  'dist/index.html — ' + (Buffer.byteLength(distHtml) / 1024).toFixed(1) +
+    ' KB + ' + (photos.length + 1) + ' asset files\n' +
   'maurimax.html — ' + (Buffer.byteLength(html) / 1024).toFixed(1) + ' KB\n' +
     '  logo   ' + (logo.length / 1024).toFixed(1) + ' KB\n' +
     '  photos ' + photos.length + ' files, ' + (photoBytes / 1024).toFixed(1) + ' KB\n' +

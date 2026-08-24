@@ -9,3 +9,6 @@ out/
 # Vercel build output
 .vercel-static/
 .vercel/
+
+# Generated deployable output
+standalone/dist/
