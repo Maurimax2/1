@@ -238,7 +238,7 @@ var CATS = [
   {art:'anime',    photo:'c-anime', ar:['أنمي','مترجم ومدبلج'],   fr:['Animés','Sous-titrés et doublés']},
   {art:'docs',     photo:'c-docs', ar:['وثائقيات','قصص حقيقية'],  fr:['Documentaires','Des histoires vraies']},
   {art:'news',     photo:'c-news', logo:true, ar:['أخبار','على مدار الساعة'], fr:['Actualités','24 h/24, partout']},
-  {art:'series2',  ar:['دراما عربية وتركية','مواسم كاملة'],    fr:['Drames arabes et turcs','Saisons complètes']},
+  {art:'series2',  photo:'c-drama', ar:['دراما عربية وتركية','مواسم كاملة'], fr:['Drames arabes et turcs','Saisons complètes']},
   {art:'live',     photo:'c-live',     ar:['قنوات مباشرة','أكثر من 9,000 قناة'], fr:['Chaînes en direct','Plus de 9 000 chaînes']}
 ];
 

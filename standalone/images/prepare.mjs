@@ -57,6 +57,7 @@ const JOBS = {
   'c-sports':      ['newcat/ufc.png', 560, 56],
   'c-kids':        ['newcat/kids.png', 480, 60],
   'c-anime':       ['newcat/anime.png', 520, 56],
+  'c-drama':       ['newcat/drama.jpg', 520, 56],
   /* A channel mark rather than a photograph: sits contained on the tile,
      white ground already knocked out. */
   'c-news':        ['newcat/aljazeera.png', 300, 62],

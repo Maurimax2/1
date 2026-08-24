@@ -38,7 +38,7 @@ used, and turns every `images/*.webp` into `window.MXIMG['<filename>']`.
 | Prices, badges, which player goes on which card | `PLANS` in `maurimax.js` |
 | WhatsApp number | `WA_E164` (international, no `+`) and `WA_DISPLAY` — currently 46 26 17 21 |
 | Snapchat handle | `SNAP` |
-| All interface text, both languages | the `T` object (`T.ar` and `T.en`) |
+| All interface text, both languages | the `T` object (`T.ar` and `T.fr`) |
 | Categories, FAQ, reviews | `CATS`, `FAQS`, `REVIEWS` |
 | Which crest sits beside which competition | `LEAGUE_CRESTS` |
 | Which posters fill the wall, and the hero fan | `POSTERS`, and the `fan` array in `render()` |
@@ -104,17 +104,16 @@ Guidance for new artwork:
   not real.** Replace them with genuine reviews and real numbers. Publishing
   invented ones as if they were real would mislead customers.
 
-### One genre tile still without artwork
+### Genre tiles
 
-**دراما عربية وتركية — Arabic & Turkish drama** (`art:'series2'`) falls back to
-the typographic poster treatment because nothing has been supplied for it. It
-reads as deliberate, but a still from a real series would be better. Drop a
-file into `images/` as `c-drama.webp`, add a line to `JOBS` in `prepare.mjs`,
-then set `photo:'c-drama'` on that entry.
-
-The News tile carries a channel mark rather than a photograph, so it sets
+All ten now carry real artwork. The News tile is the one exception in
+treatment: it holds a channel mark rather than a photograph, so it sets
 `logo:true` and the art sits contained on the brand ground instead of being
 cropped to fill.
+
+`fitWordmarks()` and the `.typo` treatment are kept even though nothing uses
+them now — drop a `photo` from any `CATS` entry and that tile falls back to
+its name set at display size rather than breaking.
 
 ## The design system
 
