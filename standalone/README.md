@@ -9,8 +9,32 @@ toggle switches to **French**; the choice is kept in `localStorage`. Figures
 follow the locale too — `1,500` in Arabic, `1 500` in French — including in
 the WhatsApp order.
 
-The older MOORTV build is still here as `moortv.html` / `moortv.js`. It is
-untouched by the rebrand — keep it or delete it.
+## Two sites, one pipeline
+
+| Brand | Sources | Build | Palette |
+| --- | --- | --- | --- |
+| **MAURIMAX** | `maurimax.src.html`, `maurimax.js` | `build-maurimax.mjs` | white ground, violet + orange |
+| **MOOR TV** | `moortv.src.html`, `moortv.js` | `build-moortv.mjs` | black ground, blue + violet |
+
+They share `images/`, the same layout and the same runtime shape — only the
+palette, the copy, the prices and the contact details differ. Each build reads
+its own logo (`maurimax-logo.png` / `moortv-logo.png`) and writes its own
+`*.html`, `*.preview.html` and `dist*` output.
+
+MOOR TV differs from MAURIMAX in two structural ways:
+
+- **Five durations, not four** — 500 / 1,000 / 1,700 / 2,500 / 3,000 MRU for
+  1, 3, 6, 12 and 15 months, measured against a 500 monthly reference.
+- **An extras section.** Two-screen terms and the hardware bundle are a
+  different thing being bought, not a longer version of the same thing, so
+  they sit in `EXTRAS` outside the ladder. `planLabel()` is the single place
+  that names an offer, so the cards, the order sheet and the WhatsApp message
+  always describe it the same way. `find()` resolves ids across both lists,
+  which is what lets an extra be ordered through the same sheet.
+
+MOOR TV's mark is rendered from `images/moortv-logo.svg`, the cool colourway
+of the brand's retro-TV logo. Its bezel is the brand blue rather than the
+stock near-black, which would disappear against the dark header.
 
 ## The three source files
 

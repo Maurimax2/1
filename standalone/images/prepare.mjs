@@ -80,6 +80,9 @@ const JOBS = {
   'x-punisher':    ['cut/punisher.png', 430, 62],
   'x-jane':        ['cut/jane.png', 430, 62],
 
+  /* MOOR TV hardware. */
+  'd-stick':       ['moor/stick.png', 620, 68],
+
   /* Nature photography for the documentaries tile. */
   'c-docs':        ['ng_nature.png', 430, 56],
 };
