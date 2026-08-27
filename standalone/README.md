@@ -36,6 +36,33 @@ MOOR TV's mark is rendered from `images/moortv-logo.svg`, the cool colourway
 of the brand's retro-TV logo. Its bezel is the brand blue rather than the
 stock near-black, which would disappear against the dark header.
 
+### Keeping the two sites from looking alike
+
+They share an image folder, so the casting is what separates them. **No figure
+or poster holds the same slot on both sites**, and five files were held back
+from MAURIMAX entirely so MOOR TV could open on faces the other site never
+shows: the alternate Ronaldo and Messi renders (`p-ronaldo-b`, `p-messi-b`),
+Kane (`p-kane`, cut out — he was displaced from MAURIMAX when Makhachev took
+the Sports tile), the Ligue 1 mark and the Premier League mark with its
+wordmark.
+
+| Slot | MAURIMAX | MOOR TV |
+| --- | --- | --- |
+| Hero figures | Álvarez + Homelander | Ronaldo (alt) + the Punisher |
+| Hero fan | GoT · Premier League · Oppenheimer | Breaking Bad · Champions League · The Batman |
+| Lead plan | Messi + Walter White | Messi (alt) + Tyrion |
+| Plan rows | Haaland, Tyrion, Punisher | Kane, Homelander, Jane, Haaland |
+| Football anchor | Ronaldo | Yamal |
+| Content anchor | Patrick Jane | Walter White |
+| Why anchor | Haaland | Álvarez |
+| Closing CTA | Yamal | Messi |
+| Poster wall lead | Premier League | Champions League |
+| Movies / Series tiles | Fury / The Walking Dead | Spider-Man / Game of Thrones |
+
+The eight genre photographs — football, sports, kids, anime, news,
+documentaries, drama, live — have no alternates, so both sites use them. New
+images for any of those would separate the two further.
+
 ## The three source files
 
 | File | What it is |

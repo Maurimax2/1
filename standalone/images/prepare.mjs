@@ -83,6 +83,15 @@ const JOBS = {
   /* MOOR TV hardware. */
   'd-stick':       ['moor/stick.png', 620, 68],
 
+  /* Kept back from MAURIMAX so the two sites do not open on the same faces:
+     the alternate Ronaldo and Messi renders, Kane, and two competition marks
+     MAURIMAX has no slot for. */
+  'p-ronaldo-b':   ['Ronaldo - FootyRenders 2.png', 680, 68],
+  'p-messi-b':     ['Messi - FootyRenders.png', 660, 68],
+  'p-kane':        ['moor/kane.png', 660, 66],
+  'l-ligue1':      ['IMG_5248', 240, 80],
+  'l-epl-text':    ['england_english-premier-league_3000', 240, 80],
+
   /* Nature photography for the documentaries tile. */
   'c-docs':        ['ng_nature.png', 430, 56],
 };

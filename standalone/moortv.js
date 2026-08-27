@@ -219,11 +219,11 @@ fr: {
    savings percentages are measured against. */
 var BASE = 500;
 var PLANS = [
-  { id:'p1',  months:1,  price:500,  art:'m1',  photo:'p-haaland' },
-  { id:'p3',  months:3,  price:1000, art:'m3',  photo:'x-tyrion' },
-  { id:'p6',  months:6,  price:1700, art:'m6',  photo:'x-punisher' },
-  { id:'p12', months:12, price:2500, art:'m12', photo:'p-yamal', badge:'popular' },
-  { id:'p15', months:15, price:3000, art:'m12', photo:'p-messi', photo2:'x-walter',
+  { id:'p1',  months:1,  price:500,  art:'m1',  photo:'p-kane' },
+  { id:'p3',  months:3,  price:1000, art:'m3',  photo:'x-homelander' },
+  { id:'p6',  months:6,  price:1700, art:'m6',  photo:'x-jane' },
+  { id:'p12', months:12, price:2500, art:'m12', photo:'p-haaland', badge:'popular' },
+  { id:'p15', months:15, price:3000, art:'m12', photo:'p-messi-b', photo2:'x-tyrion',
     badge:'best', best:true }
 ];
 PLANS.forEach(function (p) {
@@ -251,13 +251,13 @@ function find(id){ return findAny(id); }
 
 /* Key art as moving background texture behind the closing call to action —
    never as a list of titles. */
-var DRIFT = ['m-oppenheimer','m-got','m-batman','m-breakingbad','m-odyssey',
-             'm-lacasa','m-spiderman','m-walkingdead','m-fury',
-             'po-epl','po-ucl','po-seriea','po-laliga','po-bundesliga','po-ligue1'];
+var DRIFT = ['m-walkingdead','m-lacasa','m-fury','m-spiderman','m-odyssey',
+             'm-batman','m-breakingbad','m-got','m-oppenheimer',
+             'po-ligue1','po-bundesliga','po-laliga','po-seriea','po-ucl','po-epl'];
 
 var CATS = [
-  {art:'movies',   photo:'m-fury',        ar:['أفلام','أكثر من 20,000 فيلم'],    fr:['Films','Plus de 20 000 films']},
-  {art:'series',   photo:'m-walkingdead', ar:['مسلسلات','أكثر من 15,000 مسلسل'], fr:['Séries','Plus de 15 000 séries']},
+  {art:'movies',   photo:'m-spiderman', ar:['أفلام','أكثر من 20,000 فيلم'],    fr:['Films','Plus de 20 000 films']},
+  {art:'series',   photo:'m-got',       ar:['مسلسلات','أكثر من 15,000 مسلسل'], fr:['Séries','Plus de 15 000 séries']},
   {art:'football', photo:'c-football', ar:['كرة القدم','كل الدوريات الكبرى'], fr:['Football','Tous les grands championnats']},
   {art:'sports',   photo:'c-sports',   ar:['رياضة','أكثر من 900 قناة'],       fr:['Sports','Plus de 900 chaînes']},
   {art:'kids',     photo:'c-kids',  ar:['أطفال','آمن وممتع'],      fr:['Enfants','Sûr et amusant']},
@@ -313,17 +313,17 @@ var MXIMG = window.MXIMG || {};
 function photo(key){ return (key && MXIMG[key]) || ''; }
 
 /* Parallel to football.leagues in the dictionaries; '' where no mark exists. */
-var LEAGUE_CRESTS = ['l-epl','l-ucl','l-laliga','l-seriea','l-bundesliga','','l-spl',''];
+var LEAGUE_CRESTS = ['l-epl-text','l-ucl','l-laliga','l-seriea','l-bundesliga','l-ligue1','l-spl',''];
 
 /* The poster wall. `i` indexes football.leagues so the caption reads from the
    dictionary and stays translated. */
 var POSTERS = [
-  { i:0, shot:'po-epl',        crest:'l-epl' },
   { i:1, shot:'po-ucl',        crest:'l-ucl' },
-  { i:2, shot:'po-laliga',     crest:'l-laliga' },
-  { i:3, shot:'po-seriea',     crest:'l-seriea' },
+  { i:5, shot:'po-ligue1',     crest:'l-ligue1' },
+  { i:0, shot:'po-epl',        crest:'l-epl-text' },
   { i:4, shot:'po-bundesliga', crest:'l-bundesliga' },
-  { i:5, shot:'po-ligue1',     crest:'' }
+  { i:2, shot:'po-laliga',     crest:'l-laliga' },
+  { i:3, shot:'po-seriea',     crest:'l-seriea' }
 ];
 
 function scene(variant, img) {
@@ -459,8 +459,8 @@ function render() {
   $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span><i></i>'+esc(p)+'</span>'; }).join('');
   // Football in the middle, screen titles either side; a footballer and a
   // character in front. The hero states both halves of the offer at once.
-  var star = photo('p-alvarez'), star2 = photo('x-homelander');
-  var fan = ['m-got','po-epl','m-oppenheimer'].map(photo).filter(Boolean);
+  var star = photo('p-ronaldo-b'), star2 = photo('x-punisher');
+  var fan = ['m-breakingbad','po-ucl','m-batman'].map(photo).filter(Boolean);
   $('#heroStage').innerHTML =
     (fan.length === 3
       ? '<div class="fan">' + fan.map(function(src,i){
@@ -472,7 +472,7 @@ function render() {
 
   // Crests ride along in the marquee so the strip reads as football, not
   // as a generic band of feature words.
-  var crestPool = ['l-epl','l-ucl','l-laliga','l-seriea','l-bundesliga','l-spl'].map(photo).filter(Boolean);
+  var crestPool = ['l-ucl','l-ligue1','l-epl-text','l-bundesliga','l-spl','l-laliga'].map(photo).filter(Boolean);
   var band = d.band.concat(d.band);
   $('#bandTrack').innerHTML = band.map(function(b,i){
     var c = crestPool.length ? crestPool[i % crestPool.length] : '';
@@ -495,10 +495,10 @@ function render() {
   pFan = undefined;   // the hero was just rebuilt; drop the parallax cache
 
   // Players anchoring the football, why and closing sections.
-  setImg('#fbAnchor', 'p-ronaldo');
-  setImg('#catAnchor', 'x-jane');
-  setImg('#whyAnchor', 'p-haaland');
-  setImg('#closeArt', 'p-yamal');
+  setImg('#fbAnchor', 'p-yamal');
+  setImg('#catAnchor', 'x-walter');
+  setImg('#whyAnchor', 'p-alvarez');
+  setImg('#closeArt', 'p-messi');
 
   $('#posterWall').innerHTML = POSTERS.map(function(po){
     var shot = photo(po.shot); if (!shot) return '';
