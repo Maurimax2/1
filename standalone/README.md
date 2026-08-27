@@ -11,26 +11,61 @@ the WhatsApp order.
 
 ## Two sites, one pipeline
 
-| Brand | Sources | Build | Palette |
+| Brand | Sources | Build | Look |
 | --- | --- | --- | --- |
-| **MAURIMAX** | `maurimax.src.html`, `maurimax.js` | `build-maurimax.mjs` | white ground, violet + orange |
-| **MOOR TV** | `moortv.src.html`, `moortv.js` | `build-moortv.mjs` | black ground, blue + violet |
+| **MAURIMAX** | `maurimax.src.html`, `maurimax.js` | `build-maurimax.mjs` | dark → light → dark; white editorial body, violet + orange |
+| **MOOR TV** | `moortv.src.html`, `moortv.js` | `build-moortv.mjs` | dark throughout; blue leads, violet is the atmosphere |
 
-They share `images/`, the same layout and the same runtime shape — only the
-palette, the copy, the prices and the contact details differ. Each build reads
-its own logo (`maurimax-logo.png` / `moortv-logo.png`) and writes its own
-`*.html`, `*.preview.html` and `dist*` output.
+They share `images/` and the same runtime shape — the dictionaries, the order
+sheet, the reveal and counter machinery are the same code in both files. What
+they do **not** share is the layout. Each build reads its own logo
+(`maurimax-logo.png` / `moortv-logo.png`) and writes its own `*.html`,
+`*.preview.html` and `dist*` output.
 
-MOOR TV differs from MAURIMAX in two structural ways:
+### What MOOR TV does differently
+
+Every section is a different shape, not a recolour of the MAURIMAX one:
+
+| Section | MAURIMAX | MOOR TV |
+| --- | --- | --- |
+| Ground | dark → white → dark | dark all the way down; sections separate by elevation (`--paper` base, `--paper-2` panel, a lit blue field) |
+| Hero | copy left, a fan of three cards right, two figures over it | centred type on a raked wall of key art at three speeds, the two figures holding the bottom corners |
+| Statistics | four stepped hairline rows in a 5/7 split | one scoreboard band, four figures read across |
+| Pricing | one dominant card plus four hairline rows | a five-across ladder, each term a column headed by a portrait |
+| Extras | three matching cards | one split panel: two-screen terms as rows, the hardware filling the other half |
+| Football | a 2×2-lead poster grid | a full-bleed marquee, paused on hover or focus |
+| Content | two horizontal rails with arrows | a mosaic, everything on screen, two tiles double width |
+| Why | a two-column hairline list | eight numbered blocks; the ninth cell is where the figure stands |
+| Reviews | a draggable rail of columns | a wall of quotes, the first one double width |
+| FAQ | a 4/7 sidebar split | one centred column, help block beneath |
+| Closing CTA | type left, figure right | centred, the figure behind the type |
+
+And two differences of substance rather than form:
 
 - **Five durations, not four** — 500 / 1,000 / 1,700 / 2,500 / 3,000 MRU for
   1, 3, 6, 12 and 15 months, measured against a 500 monthly reference.
 - **An extras section.** Two-screen terms and the hardware bundle are a
   different thing being bought, not a longer version of the same thing, so
   they sit in `EXTRAS` outside the ladder. `planLabel()` is the single place
-  that names an offer, so the cards, the order sheet and the WhatsApp message
+  that names an offer, so the ladder, the order sheet and the WhatsApp message
   always describe it the same way. `find()` resolves ids across both lists,
   which is what lets an extra be ordered through the same sheet.
+
+Three things in the MOOR TV CSS exist because the page never goes light, and
+are worth knowing before editing it:
+
+- **Nothing inverts to white-on-white.** Every icon button hover goes to
+  `#fff` ground with `var(--ink)` text, not to `var(--ink-text)` — which is
+  now white.
+- **Half the competition marks are near-black artwork made for a white page.**
+  `.lg .crest`, the marquee marks and the poster captions give them a plate to
+  sit on; without it they disappear into the ground.
+- **The portrait bands crop, they do not contain.** A whole body is unreadable
+  at column width, so `.tier .ph` crops to head and shoulders and fades out
+  with a *mask*, not a gradient overlay — an overlay would have to match the
+  colour underneath it, and the featured column's ground is a different colour
+  from the other four. For the same reason the ladder never drops to one
+  column: a full-width tier turns that crop into a pair of eyes.
 
 MOOR TV's mark is rendered from `images/moortv-logo.svg`, the cool colourway
 of the brand's retro-TV logo. Its bezel is the brand blue rather than the
@@ -49,9 +84,9 @@ wordmark.
 | Slot | MAURIMAX | MOOR TV |
 | --- | --- | --- |
 | Hero figures | Álvarez + Homelander | Ronaldo (alt) + the Punisher |
-| Hero fan | GoT · Premier League · Oppenheimer | Breaking Bad · Champions League · The Batman |
-| Lead plan | Messi + Walter White | Messi (alt) + Tyrion |
-| Plan rows | Haaland, Tyrion, Punisher | Kane, Homelander, Jane, Haaland |
+| Hero backdrop | a fan of GoT · Premier League · Oppenheimer | the whole `WALL` pool, raked and sliding |
+| Featured term | Messi + Walter White | Messi (alt) + Tyrion |
+| Other terms | Haaland, Tyrion, Punisher | Kane, Homelander, Jane, Haaland |
 | Football anchor | Ronaldo | Yamal |
 | Content anchor | Patrick Jane | Walter White |
 | Why anchor | Haaland | Álvarez |

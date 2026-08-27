@@ -215,7 +215,7 @@ fr: {
 };
 
 /* ---------------- Plans ----------------
-   350 / 700 / 1000 / 1500 MRU. The monthly rate (350) is the reference the
+   500 / 1000 / 1700 / 2500 / 3000 MRU. The monthly rate (500) is the reference the
    savings percentages are measured against. */
 var BASE = 500;
 var PLANS = [
@@ -255,6 +255,12 @@ var DRIFT = ['m-walkingdead','m-lacasa','m-fury','m-spiderman','m-odyssey',
              'm-batman','m-breakingbad','m-got','m-oppenheimer',
              'po-ligue1','po-bundesliga','po-laliga','po-seriea','po-ucl','po-epl'];
 
+/* The raked hero wall. Ordered so no two neighbours in a row are both
+   football or both film — the mix is what says "everything is in here". */
+var WALL = ['m-batman','po-ucl','m-breakingbad','po-laliga','m-got','po-epl',
+            'm-spiderman','po-seriea','m-oppenheimer','po-bundesliga',
+            'm-lacasa','po-ligue1','m-fury','m-walkingdead','m-odyssey'];
+
 var CATS = [
   {art:'movies',   photo:'m-spiderman', ar:['أفلام','أكثر من 20,000 فيلم'],    fr:['Films','Plus de 20 000 films']},
   {art:'series',   photo:'m-got',       ar:['مسلسلات','أكثر من 15,000 مسلسل'], fr:['Séries','Plus de 15 000 séries']},
@@ -274,8 +280,8 @@ var REVIEWS = [
         fr:['Mohamed Ould Ahmed','Nouakchott','Je suis tous les matchs de Ligue des champions en haute qualité, sans une seule coupure, et l’activation a pris quelques minutes.']},
   {i:'FS',ar:['فاطمتو منت سيدي','نواذيبو','قسم الأطفال ممتاز وزوجي يجد كل مبارياته. اشتراك واحد عوّض ثلاثة كنا ندفعها.'],
         fr:['Fatimetou Mint Sidi','Nouadhibou','La section jeunesse est parfaite et mon mari a tout son football. Un abonnement en a remplacé trois.']},
-  {i:'CD',ar:['الشيخ ديالو','روصو','اشتركت سنة كاملة بـ1500 أوقية. أرخص بكثير من أي خيار آخر جربته.'],
-        fr:['Cheikh Diallo','Rosso','J’ai pris l’année complète à 1 500 MRU. Bien moins cher que tout ce que j’avais essayé.']},
+  {i:'CD',ar:['الشيخ ديالو','روصو','اشتركت 15 شهراً بـ3000 أوقية. أرخص بكثير من أي خيار آخر جربته.'],
+        fr:['Cheikh Diallo','Rosso','J’ai pris les 15 mois à 3 000 MRU. Bien moins cher que tout ce que j’avais essayé.']},
   {i:'AB',ar:['أمينتو منت بابا','كيفة','كل المسلسلات التي أتابعها موجودة، والحلقات الجديدة تظهر في نفس الأسبوع.'],
         fr:['Aminetou Mint Baba','Kiffa','Toutes les séries que je suis sont là, et les nouveaux épisodes arrivent dans la semaine.']},
   {i:'SV',ar:['سيدي محمد فال','أطار','ما أقنعني هو الدعم — أرسلت رسالة ليلاً فردّ عليّ أحدهم وحلّ المشكلة فوراً.'],
@@ -285,8 +291,8 @@ var REVIEWS = [
 var FAQS = [
   {ar:['كيف أحصل على اشتراكي؟','اختر المدة وأدخل اسمك ورقمك — سيفتح الموقع واتساب وطلبك مكتوب بالفعل. أرسله ونرد ببيانات التفعيل خلال دقائق.'],
    fr:['Comment obtenir mon abonnement ?','Choisissez une durée, indiquez votre nom et votre numéro — le site ouvre WhatsApp avec votre commande déjà rédigée. Envoyez-la et nous répondons avec vos accès en quelques minutes.']},
-  {ar:['ما الفرق بين الاشتراكات؟','لا فرق في المحتوى إطلاقاً — كل الاشتراكات تفتح المكتبة كاملة. الفرق في المدة فقط: كلما طالت المدة انخفضت التكلفة الشهرية، من 350 أوقية للشهر إلى 125 أوقية شهرياً في اشتراك السنة.'],
-   fr:['Quelle est la différence entre les abonnements ?','Aucune sur le contenu — chaque abonnement ouvre la bibliothèque complète. Seule la durée change : plus elle est longue, moins le mois revient cher, de 350 MRU pour un mois à 125 MRU par mois sur l’année.']},
+  {ar:['ما الفرق بين الاشتراكات؟','لا فرق في المحتوى إطلاقاً — كل الاشتراكات تفتح المكتبة كاملة. الفرق في المدة فقط: كلما طالت المدة انخفضت التكلفة الشهرية، من 500 أوقية للشهر إلى 200 أوقية شهرياً في اشتراك 15 شهراً.'],
+   fr:['Quelle est la différence entre les abonnements ?','Aucune sur le contenu — chaque abonnement ouvre la bibliothèque complète. Seule la durée change : plus elle est longue, moins le mois revient cher, de 500 MRU pour un mois à 200 MRU par mois sur 15 mois.']},
   {ar:['على أي الأجهزة يعمل؟','الشاشات الذكية (سامسونج، إل جي، أندرويد تي في)، هواتف وأجهزة أندرويد، الآيفون والآيباد، وحواسيب ويندوز وماك. حساب واحد يكفي البيت كله ونساعدك في الإعداد.'],
    fr:['Sur quels appareils cela fonctionne-t-il ?','Smart TV (Samsung, LG, Android TV), téléphones et boîtiers Android, iPhone et iPad, ordinateurs Windows et Mac. Un compte suffit pour toute la maison et nous vous aidons à l’installer.']},
   {ar:['هل أحتاج إنترنت سريع؟','لجودة 4K ننصح بحوالي 25 ميجابت. الجودة الكاملة HD تعمل بسلاسة من 10 ميجابت، والبث يتكيّف تلقائياً إذا ضعف الاتصال فلا تتوقف المشاهدة.'],
@@ -326,105 +332,8 @@ var POSTERS = [
   { i:3, shot:'po-seriea',     crest:'l-seriea' }
 ];
 
-function scene(variant, img) {
-  var id = 'g' + variant;
-  if (img) {
-    return '<div class="artimg cut"><span class="bed" style="background:linear-gradient(150deg,' + V + ',' + V2 + ' 55%,#2a0a49)"></span>' +
-           '<img src="' + esc(img) + '" alt="" loading="lazy" decoding="async"><span class="vig"></span></div>';
-  }
-  var body = '';
-  switch (variant) {
-    case 'movies': body =
-      '<g transform="rotate(-16 200 260)"><rect x="-40" y="200" width="480" height="118" rx="10" fill="#fff" opacity=".14"/>' +
-      rep(14,function(i){ return '<rect x="'+(-30+i*35)+'" y="210" width="17" height="13" rx="3" fill="#fff" opacity=".4"/>' +
-        '<rect x="'+(-30+i*35)+'" y="294" width="17" height="13" rx="3" fill="#fff" opacity=".4"/>'; }) + '</g>' +
-      '<circle cx="200" cy="258" r="50" fill="#fff" opacity=".95"/><path d="M186 236 226 258 186 280Z" fill="'+V+'"/>'; break;
-    case 'series': case 'series2': body =
-      rep(3,function(i){ return '<rect x="'+(64+i*24)+'" y="'+(178-i*15)+'" width="214" height="146" rx="16" fill="#fff" opacity="'+(.16+i*.12)+'"/>'; }) +
-      '<rect x="112" y="148" width="214" height="146" rx="16" fill="#fff" opacity=".95"/>' +
-      '<path d="M203 198 243 221 203 244Z" fill="'+V+'"/>'; break;
-    case 'football': body =
-      '<ellipse cx="200" cy="340" rx="228" ry="116" fill="#fff" opacity=".1"/>' +
-      '<ellipse cx="200" cy="340" rx="228" ry="116" fill="none" stroke="#fff" stroke-opacity=".35"/>' +
-      '<ellipse cx="200" cy="340" rx="116" ry="60" fill="none" stroke="#fff" stroke-opacity=".35"/>' +
-      '<path d="M-30 340h460" stroke="#fff" stroke-opacity=".35"/>' +
-      '<g transform="translate(200 182)"><circle r="60" fill="#fff"/>' +
-      '<path d="M0-36 32-13 19 25-19 25-32-13Z" fill="'+INK+'"/>' +
-      [0,72,144,216,288].map(function(d){ return '<path transform="rotate('+d+')" d="M0-60 15-41-15-41Z" fill="'+INK+'" opacity=".9"/>'; }).join('') +
-      '</g>'; break;
-    case 'sports': body =
-      rep(5,function(i){ return '<path d="M-20 '+(430-i*56)+' Q200 '+(340-i*60)+' 420 '+(410-i*56)+'" fill="none" stroke="#fff" stroke-opacity="'+(.4-i*.06)+'" stroke-width="'+(3.4-i*.4)+'"/>'; }) +
-      '<g transform="translate(200 246)"><path d="M-54 42-18-48 18-48 54 42Z" fill="#fff" opacity=".2" stroke="#fff" stroke-opacity=".7"/>' +
-      '<rect x="-11" y="42" width="22" height="36" fill="#fff"/><rect x="-36" y="76" width="72" height="13" rx="6.5" fill="#fff"/></g>'; break;
-    case 'kids': body =
-      [[92,186,54],[286,146,42],[318,304,60],[110,340,46],[200,244,80]].map(function(c,i){
-        return '<circle cx="'+c[0]+'" cy="'+c[1]+'" r="'+c[2]+'" fill="#fff" opacity="'+(i===4?.9:.22)+'"/>'; }).join('') +
-      '<path transform="translate(200 244)" d="M0-44 13-13 46-13 19 8 29 40 0 20-29 40-19 8-46-13-13-13Z" fill="'+O+'"/>'; break;
-    case 'anime': body =
-      rep(28,function(i){ var a=i/28*Math.PI*2;
-        return '<line x1="'+(200+Math.cos(a)*72).toFixed(1)+'" y1="'+(244+Math.sin(a)*72).toFixed(1)+'" x2="'+(200+Math.cos(a)*330).toFixed(1)+'" y2="'+(244+Math.sin(a)*330).toFixed(1)+'" stroke="#fff" stroke-opacity="'+(i%3===0?.36:.14)+'" stroke-width="'+(i%3===0?3:1.4)+'"/>'; }) +
-      '<ellipse cx="200" cy="244" rx="56" ry="37" fill="#fff"/><circle cx="200" cy="244" r="21" fill="'+V+'"/><circle cx="191" cy="236" r="7" fill="#fff"/>'; break;
-    case 'docs': body =
-      '<path d="M-20 410 112 258 202 336 302 196 420 306v254H-20Z" fill="#fff" opacity=".16"/>' +
-      '<path d="M-20 448 122 328 216 392 322 268 420 356" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="2.4"/>' +
-      '<circle cx="300" cy="136" r="44" fill="#fff" opacity=".9"/>' +
-      rep(18,function(i){ return '<circle cx="'+((i*97)%400)+'" cy="'+((i*53)%230)+'" r="1.7" fill="#fff" opacity=".55"/>'; }); break;
-    case 'news': body =
-      '<circle cx="200" cy="234" r="116" fill="none" stroke="#fff" stroke-opacity=".45"/>' +
-      '<ellipse cx="200" cy="234" rx="52" ry="116" fill="none" stroke="#fff" stroke-opacity=".38"/>' +
-      '<ellipse cx="200" cy="234" rx="98" ry="116" fill="none" stroke="#fff" stroke-opacity=".24"/>' +
-      '<path d="M84 234h232M96 178h208M96 290h208" stroke="#fff" stroke-opacity=".3"/>' +
-      '<rect x="62" y="386" width="276" height="44" rx="9" fill="'+O+'"/>' +
-      '<rect x="78" y="402" width="148" height="12" rx="6" fill="#fff"/><rect x="238" y="402" width="64" height="12" rx="6" fill="#fff" opacity=".6"/>'; break;
-    case 'live': body =
-      '<rect x="52" y="146" width="296" height="184" rx="18" fill="#fff" opacity=".14" stroke="#fff" stroke-opacity=".45"/>' +
-      rep(6,function(i){ return '<rect x="'+(70+(i%3)*94)+'" y="'+(162+Math.floor(i/3)*86)+'" width="78" height="70" rx="10" fill="#fff" opacity="'+(.2+(i%3)*.14)+'"/>'; }) +
-      '<rect x="176" y="330" width="48" height="30" fill="#fff" opacity=".4"/><rect x="128" y="360" width="144" height="12" rx="6" fill="#fff" opacity=".6"/>' +
-      '<circle cx="300" cy="124" r="10" fill="'+O+'"/>'; break;
-
-    /* Plan tiers — a numeral in a monumental ring */
-    case 'm1': case 'm3': case 'm6': case 'm12': {
-      var n = variant.slice(1);
-      body = rep(3,function(i){ return '<circle cx="200" cy="250" r="'+(74+i*30)+'" fill="none" stroke="#fff" stroke-opacity="'+(.32-i*.09)+'" stroke-width="2"/>'; }) +
-        '<circle cx="200" cy="250" r="74" fill="#fff" opacity=".12"/>' +
-        '<text x="200" y="' + (n.length>1?272:274) + '" text-anchor="middle" fill="#fff" font-family="Archivo,sans-serif" font-weight="900" font-size="' + (n.length>1?86:96) + '">' + n + '</text>';
-      break;
-    }
-    /* Hero composition — pitch, ball, floodlights */
-    case 'hero': body =
-      '<ellipse cx="200" cy="392" rx="250" ry="96" fill="#fff" opacity=".12"/>' +
-      '<ellipse cx="200" cy="392" rx="250" ry="96" fill="none" stroke="#fff" stroke-opacity=".3"/>' +
-      '<ellipse cx="200" cy="392" rx="118" ry="46" fill="none" stroke="#fff" stroke-opacity=".3"/>' +
-      rep(2,function(i){ var x = i? 330 : 70;
-        return '<rect x="'+(x-4)+'" y="120" width="8" height="180" rx="4" fill="#fff" opacity=".3"/>' +
-               '<rect x="'+(x-34)+'" y="96" width="68" height="30" rx="8" fill="#fff" opacity=".55"/>' +
-               '<path d="M'+(x-34)+' 126 L'+(x-120)+' 300 L'+(x+120)+' 300 L'+(x+34)+' 126Z" fill="#fff" opacity=".07"/>'; }) +
-      '<g transform="translate(200 236)"><circle r="76" fill="#fff"/>' +
-      '<path d="M0-46 41-17 24 32-24 32-41-17Z" fill="'+INK+'"/>' +
-      [0,72,144,216,288].map(function(d){ return '<path transform="rotate('+d+')" d="M0-76 19-52-19-52Z" fill="'+INK+'" opacity=".92"/>'; }).join('') +
-      '</g>' +
-      '<g transform="translate(200 384)"><ellipse rx="70" ry="14" fill="'+INK+'" opacity=".22"/></g>'; break;
-    default: body = '<circle cx="200" cy="250" r="90" fill="#fff" opacity=".2"/>';
-  }
-  return '<svg viewBox="0 0 400 560" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' +
-    '<defs><linearGradient id="'+id+'" x1=".1" y1="0" x2=".9" y2="1">' +
-    '<stop offset="0%" stop-color="'+V2+'"/><stop offset="55%" stop-color="'+V+'"/><stop offset="100%" stop-color="#2a0a49"/></linearGradient></defs>' +
-    '<rect width="400" height="560" fill="url(#'+id+')"/>' +
-    '<g>'+body+'</g></svg>';
-}
-
 var TICK = '<svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden><path d="m3 8.5 3.2 3.2L13 4.6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 var STAR = '<svg viewBox="0 0 20 20" width="15" height="15" aria-hidden><path d="M10 1.6l2.5 5.1 5.6.8-4 3.9 1 5.6L10 14.3l-5 2.7 1-5.6-4.1-3.9 5.6-.8Z" fill="'+O+'"/></svg>';
-var WHY_PATHS = [
-  'M12 3.2 13.9 9l5.9 1.9-5.9 1.9L12 18.8l-1.9-5.9L4.2 11 10.1 9Z',
-  'M13.2 2.5 5 13.4h5.5l-.8 8.1L18.9 10.4H13.4Z',
-  'm12 3 8.5 4.4L12 11.8 3.5 7.4ZM3.5 12l8.5 4.4 8.5-4.4M3.5 16.6 12 21l8.5-4.4',
-  'M2.5 5h13v10h-13ZM16.5 9h5v10h-5ZM6.5 18.5h5M9 15v3.5',
-  'M11.2 3.2H20v9.6l-7 7-9.8-9.8Z',
-  'M4.5 13v-1a7.5 7.5 0 0 1 15 0v1M2.6 12.6h4v6.4h-4ZM17.4 12.6h4v6.4h-4Z',
-  'M12 2.8 4.8 5.8v5.6c0 4.4 3 8.1 7.2 9.8 4.2-1.7 7.2-5.4 7.2-9.8V5.8Zm-3.2 9 2.3 2.3 4.1-4.6',
-  'M20.2 11.2a8.2 8.2 0 1 0-1.3 5.6M20.6 5.6v5.6H15'
-];
 
 /* ---------------- State ---------------- */
 try { var st = localStorage.getItem('moortv.lang'); if (st==='ar'||st==='fr') lang = st; } catch(e){}
@@ -457,17 +366,16 @@ function render() {
     return '<a href="'+l[1]+'" data-close>'+esc(d.nav[l[0]])+'<span>0'+(i+1)+'</span></a>'; }).join('');
 
   $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span><i></i>'+esc(p)+'</span>'; }).join('');
-  // Football in the middle, screen titles either side; a footballer and a
-  // character in front. The hero states both halves of the offer at once.
-  var star = photo('p-ronaldo-b'), star2 = photo('x-punisher');
-  var fan = ['m-breakingbad','po-ucl','m-batman'].map(photo).filter(Boolean);
+  // The wall is the whole library raked past at an angle, three rows at three
+  // speeds — the backdrop is the catalogue itself rather than three cards
+  // standing in for it. Each row is doubled so the -50% translate loops.
+  renderWall();
+  // The cast: a footballer and a screen character hold the bottom corners and
+  // are cropped by the frame. Both halves of the offer, stated at full height.
+  var castA = photo('p-ronaldo-b'), castB = photo('x-punisher');
   $('#heroStage').innerHTML =
-    (fan.length === 3
-      ? '<div class="fan">' + fan.map(function(src,i){
-          return '<span class="pc pc-'+(i+1)+'"><img src="'+src+'" alt="" decoding="async"></span>'; }).join('') + '</div>'
-      : '<div style="border-radius:26px;overflow:hidden;aspect-ratio:4/3.4;box-shadow:0 40px 80px -40px rgba(78,13,131,.55)">'+scene('hero')+'</div>') +
-    (star2 ? '<img class="star2" src="'+star2+'" alt="" decoding="async">' : '') +
-    (star ? '<img class="star" src="'+star+'" alt="" decoding="async">' : '');
+    (castB ? '<img class="castB" src="'+castB+'" alt="" decoding="async">' : '') +
+    (castA ? '<img class="castA" src="'+castA+'" alt="" decoding="async">' : '');
   $('#fromPrice').textContent = num(BASE);
 
   // Crests ride along in the marquee so the strip reads as football, not
@@ -486,31 +394,38 @@ function render() {
       '" data-post="'+esc(f.post)+'">'+esc(f.pre)+(f.to ? '0' : '')+esc(f.post)+'</span>'+
       '<span class="tx"><b>'+esc(s.l)+'</b><span>'+esc(s.h)+'</span></span></div>'; }).join('');
 
-  var leadPlan = PLANS.filter(function(p){ return p.best; })[0];
-  $('#leadPlan').innerHTML = leadPlanHtml(leadPlan, d);
-  $('#extrasGrid').innerHTML = EXTRAS.map(function(e){ return extraCard(e,d); }).join('');
-  $('#planCards').innerHTML = PLANS.filter(function(p){ return !p.best; })
-    .map(function(p){ return planRow(p,d); }).join('');
+  $('#planLadder').innerHTML = PLANS.map(function(p){ return tier(p,d); }).join('');
+  $('#planFeat').innerHTML = d.plans.features
+    .map(function(f){ return '<li>'+TICK+'<span>'+esc(f)+'</span></li>'; }).join('');
+  $('#extrasGrid').innerHTML = extrasPanel(d);
 
   pFan = undefined;   // the hero was just rebuilt; drop the parallax cache
 
   // Players anchoring the football, why and closing sections.
   setImg('#fbAnchor', 'p-yamal');
   setImg('#catAnchor', 'x-walter');
-  setImg('#whyAnchor', 'p-alvarez');
   setImg('#closeArt', 'p-messi');
 
-  $('#posterWall').innerHTML = POSTERS.map(function(po){
+  // The strip marches, so the list is laid down twice: the second pass is
+  // decoration and is hidden from assistive tech rather than read out again.
+  var poHtml = POSTERS.map(function(po, n){
     var shot = photo(po.shot); if (!shot) return '';
     var l = d.football.leagues[po.i], crest = photo(po.crest);
-    return '<a class="po" href="#plans" aria-label="'+esc(l[0])+'">'+
-      '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">'+
-      '<span class="scrim"></span>'+
-      '<span class="live keep"><i></i>'+esc(d.football.liveTag)+'</span>'+
-      '<span class="cap">'+
-        (crest ? '<img src="'+crest+'" alt="" loading="lazy" decoding="async">' : '')+
-        '<span><b class="keep" dir="ltr">'+esc(l[0])+'</b><s>'+esc(l[1])+'</s></span>'+
-      '</span></a>'; }).join('');
+    return function(dup){
+      return '<a class="po" href="#plans"'+
+        (dup ? ' tabindex="-1" aria-hidden="true"' : ' aria-label="'+esc(l[0])+'"')+'>'+
+        '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">'+
+        '<span class="scrim"></span>'+
+        '<span class="live keep"><i></i>'+esc(d.football.liveTag)+'</span>'+
+        '<span class="cap">'+
+          (crest ? '<img src="'+crest+'" alt="" loading="lazy" decoding="async">' : '')+
+          '<span><b class="keep" dir="ltr">'+esc(l[0])+'</b><s>'+esc(l[1])+'</s></span>'+
+        '</span></a>';
+    };
+  }).filter(Boolean);
+  $('#posterWall').innerHTML =
+    poHtml.map(function(f){ return f(false); }).join('') +
+    poHtml.map(function(f){ return f(true); }).join('');
 
   $('#leagueList').innerHTML = d.football.leagues.map(function(l,i){
     var crest = photo(LEAGUE_CRESTS[i]);
@@ -519,12 +434,16 @@ function render() {
       '<span class="nm keep" dir="ltr">'+esc(l[0])+'</span>'+
       '<span class="sub">'+esc(l[1])+'</span></div>'; }).join('');
 
-  $('#catA').innerHTML = CATS.slice(0,5).map(function(c,i){ return catCard(c,i); }).join('');
-  $('#catB').innerHTML = CATS.slice(5).map(function(c,i){ return catCard(c,i+5); }).join('');
+  $('#catGrid').innerHTML = CATS.map(function(c,i){ return catCard(c,i); }).join('');
 
   $('#whyGrid').innerHTML = d.why.items.map(function(w,i){
     return '<div class="feat"><span class="ix">'+(i<9?'0':'')+(i+1)+'</span>'+
-      '<div><h3>'+esc(w.t)+'</h3><p>'+esc(w.b)+'</p></div></div>'; }).join('');
+      '<h3>'+esc(w.t)+'</h3><p>'+esc(w.b)+'</p></div>'; }).join('') +
+    // The cell the eight reasons leave over, and the figure that fills it.
+    '<div class="feat whyCell"><img class="whyAnchor" id="whyAnchor" alt="" aria-hidden="true"></div>';
+  // The why anchor lives inside the grid, so it can only be filled in
+  // once that grid has been written.
+  setImg('#whyAnchor', 'p-alvarez');
 
   $('#rvRail').innerHTML = REVIEWS.map(function(r){
     var x = r[lang];
@@ -584,60 +503,55 @@ function planLabel(p, d) {
   return d.plans.months(p.months);
 }
 
-function extraCard(e, d) {
-  var money = '<span class="amt"><b dir="ltr">'+num(e.price)+'</b><s>MRU</s></span>';
-  var go = '<div class="go"><button class="btn '+(e.kind==='device'?'btn-o':'btn-v')+
-    ' btn-full" data-pick="'+e.id+'"><span>'+esc(d.plans.add)+'</span></button></div>';
-  if (e.kind === 'device') {
-    var shot = photo(e.photo);
-    return '<article class="xc dev">'+
-      (shot ? '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">' : '')+
-      '<div class="body"><span class="tag keep">'+esc(d.extras.device)+'</span>'+
-      '<h3>'+esc(d.extras.deviceName)+'</h3>'+
-      '<p>'+esc(d.extras.deviceBlurb)+'</p>'+
-      '<p style="margin-top:10px;font-weight:600;color:#fff">'+esc(d.extras.deviceTerm)+'</p>'+
-      money + go + '</div></article>';
-  }
-  return '<article class="xc">'+
-    '<span class="tag keep">'+esc(d.extras.windows)+'</span>'+
-    '<h3>'+esc(d.plans.months(e.months))+'</h3>'+
-    '<span class="panes" aria-hidden="true"><i></i><i></i></span>'+
-    '<p>'+esc(d.plans.perMonth(e.per))+'</p>'+
-    money + go + '</article>';
-}
-
-function leadPlanHtml(p, d) {
-  var src = photo(p.photo), src2 = photo(p.photo2);
-  return '<article class="lead">'+
-    '<span class="bgfill" aria-hidden="true"></span>'+
-    (src ? '<img class="hero-img" src="'+src+'" alt="" decoding="async">' : '')+
-    (src2 ? '<img class="hero-img2" src="'+src2+'" alt="" decoding="async">' : '')+
-    '<span class="tagline keep">'+esc(d.plans.best)+'</span>'+
-    '<h3 class="dur">'+esc(planLabel(p,d))+'</h3>'+
-    '<div class="amt"><b dir="ltr">'+num(p.price)+'</b><s>MRU</s></div>'+
-    '<div class="meta"><span>'+esc(d.plans.perMonth(p.per))+'</span>'+
-      '<span class="save">'+esc(d.plans.save(p.savePct))+'</span></div>'+
-    '<ul>'+d.plans.features.map(function(f){ return '<li>'+TICK+'<span>'+esc(f)+'</span></li>'; }).join('')+'</ul>'+
-    '<div class="go"><button class="btn btn-o btn-lg btn-full" data-pick="'+p.id+'">'+
+/* The extras are one split panel: the two-screen terms stack as rows on one
+   side, the hardware fills the other. Both halves come out of this function
+   so the section is still driven entirely by EXTRAS. */
+function extrasPanel(d) {
+  var rows = EXTRAS.filter(function(e){ return e.kind !== 'device'; });
+  var dev  = EXTRAS.filter(function(e){ return e.kind === 'device'; })[0];
+  var out = '<div class="xside">' + rows.map(function(e){
+    return '<div class="xrow">'+
+      '<div><span class="tag keep">'+esc(d.extras.windows)+'</span>'+
+      '<h3>'+esc(d.plans.months(e.months))+'</h3>'+
+      '<p>'+esc(d.plans.perMonth(e.per))+'</p></div>'+
+      '<span class="panes" aria-hidden="true"><i></i><i></i></span>'+
+      '<span class="amt" dir="ltr"><b>'+num(e.price)+'</b><s>MRU</s></span>'+
+      '<div class="go"><button class="btn btn-line btn-sm btn-full" data-pick="'+e.id+'">'+
+        '<span>'+esc(d.plans.add)+'</span></button></div>'+
+      '</div>'; }).join('') + '</div>';
+  if (!dev) return out;
+  var shot = photo(dev.photo);
+  return out + '<article class="xdev">'+
+    (shot ? '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">' : '')+
+    '<span class="tag keep">'+esc(d.extras.device)+'</span>'+
+    '<h3>'+esc(d.extras.deviceName)+'</h3>'+
+    '<p>'+esc(d.extras.deviceBlurb)+'</p>'+
+    '<p class="term">'+esc(d.extras.deviceTerm)+'</p>'+
+    '<div class="amt"><b dir="ltr">'+num(dev.price)+'</b><s>MRU</s></div>'+
+    '<div class="go"><button class="btn btn-o btn-full" data-pick="'+dev.id+'">'+
       '<span>'+esc(d.plans.add)+'</span></button></div>'+
     '</article>';
 }
 
-/* The shorter terms: one hairline row each, with a cropped player at the
-   head of the row so the imagery still runs through the section. */
-function planRow(p, d) {
-  var src = photo(p.photo);
-  return '<div class="prow">'+
-    '<span class="crop">'+(src ? '<img src="'+src+'" alt="" loading="lazy" decoding="async">' : '')+'</span>'+
-    '<span class="info"><b>'+esc(planLabel(p,d))+'</b>'+
-      '<span>'+esc(d.plans.perMonth(p.per))+
-      (p.badge==='popular' ? ' · <em class="pop" style="font-style:normal">'+esc(d.plans.popular)+'</em>' : '')+
-      (p.savePct>0 ? ' · '+esc(d.plans.save(p.savePct)) : '')+'</span></span>'+
-    '<span class="price" dir="ltr"><b>'+num(p.price)+'</b><span>MRU</span></span>'+
-    '<button class="plus" data-pick="'+p.id+'" aria-label="'+esc(d.plans.add)+'">'+
-      '<svg viewBox="0 0 16 16" width="15" height="15" fill="none" aria-hidden>'+
-      '<path d="M8 3.5v9M3.5 8h9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>'+
-    '</button></div>';
+/* One column of the ladder. Every term is built by the same function — the
+   featured one differs by a class and a second figure, not by a separate
+   layout, so the five stay comparable at a glance. */
+function tier(p, d) {
+  var src = photo(p.photo), src2 = p.best ? photo(p.photo2) : '';
+  var flag = p.best ? d.plans.best : (p.badge === 'popular' ? d.plans.popular : '');
+  return '<article class="tier'+(p.best ? ' top' : '')+'">'+
+    (flag ? '<span class="flag keep">'+esc(flag)+'</span>' : '')+
+    '<span class="ph" aria-hidden="true">'+
+      (src2 ? '<img class="b" src="'+src2+'" alt="" loading="lazy" decoding="async">' : '')+
+      (src ? '<img class="a" src="'+src+'" alt="" loading="lazy" decoding="async">' : '')+
+    '</span>'+
+    '<h3 class="dur">'+esc(planLabel(p,d))+'</h3>'+
+    '<p class="per">'+esc(d.plans.perMonth(p.per))+'</p>'+
+    '<div class="amt"><b dir="ltr">'+num(p.price)+'</b><s>MRU</s></div>'+
+    '<p class="save">'+(p.savePct > 0 ? esc(d.plans.save(p.savePct)) : '')+'</p>'+
+    '<div class="go"><button class="btn '+(p.best ? 'btn-o' : 'btn-line')+
+      ' btn-full" data-pick="'+p.id+'"><span>'+esc(d.plans.add)+'</span></button></div>'+
+    '</article>';
 }
 
 /* Shrinks each typographic poster's wordmark until it fits its tile.
@@ -688,7 +602,10 @@ function catCard(c, i) {
         '<span class="vig"></span></div>';
   // Tapping a genre opens the order sheet — every plan unlocks every genre,
   // so the sheet just names which one brought you there.
-  return '<button type="button" class="cat rev" data-cat="'+esc(x[0])+'">'+
+  // Two tiles run double width so the mosaic has a rhythm; football and live
+  // channels are the two the brand is bought for, so they get the width.
+  var big = (c.art === 'football' || c.art === 'live') ? ' big' : '';
+  return '<button type="button" class="cat'+big+'" data-cat="'+esc(x[0])+'">'+
     '<div class="fr">'+art+
     '<div class="meta"><h3>'+esc(x[0])+'</h3><p class="c">'+esc(x[1])+'</p></div></div></button>';
 }
@@ -706,6 +623,23 @@ function renderDrift(){
       return '<img src="'+src+'" alt="" loading="lazy" decoding="async">'; }).join('') + '</div>';
   }
   box.innerHTML = row(art.slice(0, half), '') + row(art.slice(half), ' b');
+}
+
+/* The hero backdrop: three raked rows of key art at three speeds. Each row is
+   doubled so the -50% translate loops, and each starts at a different offset
+   into the pool so the three never line up into a visible grid. */
+function renderWall(){
+  var box = $('#heroWall'); if (!box) return;
+  var art = WALL.map(photo).filter(Boolean);
+  if (art.length < 6){ box.innerHTML = ''; return; }
+  var out = '';
+  for (var r = 0; r < 3; r++){
+    var offset = Math.floor(art.length / 3) * r;
+    var list = art.slice(offset).concat(art.slice(0, offset));
+    out += '<div class="r">' + list.concat(list).map(function(src){
+      return '<img src="'+src+'" alt="" decoding="async">'; }).join('') + '</div>';
+  }
+  box.innerHTML = out;
 }
 
 /* ---------------- Order sheet ----------------
@@ -804,19 +738,19 @@ function counters(){
 }
 function paint(el, v){ el.textContent = el.dataset.pre + num(v) + el.dataset.post; }
 
-/* Slow parallax on the hero: the posters and the player drift at different
-   rates so the composition has depth as it leaves. */
+/* Slow parallax on the hero: the wall sinks, the cast holds back, so the
+   stage has depth as it leaves. The wall carries its rake in the transform,
+   so the scroll offset has to be composed onto it rather than replacing it. */
 var pFan, pStar, pTick = false;
 function parallax(y){
   if (REDUCED || pTick) return;
   pTick = true;
   requestAnimationFrame(function(){
     pTick = false;
-    if (pFan === undefined){ pFan = $('#heroStage .fan'); pStar = $('#heroStage .star'); }
-    if (!pFan || !pStar) return;
+    if (pFan === undefined){ pFan = $('#heroWall'); pStar = $('#heroStage .castA'); }
     if (y > window.innerHeight * 1.2) return;
-    pFan.style.transform = 'translate3d(0,' + (y * 0.11) + 'px,0)';
-    pStar.style.transform = 'translate3d(0,' + (y * -0.05) + 'px,0)';
+    if (pFan) pFan.style.transform = 'rotate(-9deg) translate3d(0,' + (y * 0.13) + 'px,0)';
+    if (pStar) pStar.style.transform = 'translate3d(0,' + (y * -0.06) + 'px,0)';
   });
 }
 
