@@ -28,7 +28,7 @@ ar: {
   dir:'rtl',
   nav:{ plans:'الاشتراكات', football:'كرة القدم', browse:'المحتوى', why:'لماذا نحن', faq:'الأسئلة',
         cta:'اشترك الآن', skip:'تخطَّ إلى المحتوى' },
-  hero:{ titleA:'الترفيه بلا حدود.', titleB:'في مكان واحد.',
+  hero:{ titleA:'ترفيه بلا حدود.', titleB:['مكان','واحد.'],
     subtitle:'أكثر من 20,000 قناة مباشرة وكل البطولات الكروية والأفلام والمسلسلات بجودة 4K — على شاشتك، أينما كنت.',
     from:'يبدأ من', ctaPrimary:'اختر اشتراكك', ctaSecondary:'شاهد البطولات',
     pills:['تفعيل خلال دقائق','حتى نافذتين معاً','جودة 4K فائقة'] },
@@ -123,7 +123,7 @@ fr: {
   dir:'ltr',
   nav:{ plans:'Abonnements', football:'Football', browse:'Contenu', why:'Pourquoi nous', faq:'FAQ',
         cta:'S’abonner', skip:'Aller au contenu' },
-  hero:{ titleA:'Le divertissement sans limites.', titleB:'En un seul endroit.',
+  hero:{ titleA:'Le divertissement sans limites.', titleB:['En un seul','endroit.'],
     subtitle:'Plus de 20 000 chaînes en direct, toutes les grandes compétitions de football, films et séries en 4K — sur votre écran, où que vous soyez.',
     from:'À partir de', ctaPrimary:'Choisir mon abonnement', ctaSecondary:'Voir les compétitions',
     pills:['Activation en minutes','Jusqu’à deux écrans','4K Ultra HD'] },
@@ -368,6 +368,11 @@ function render() {
   // The wall is the whole library raked past at an angle, three rows of
   // full-size posters. It is the hero: no figures stand in front of it.
   renderWall();
+  // The second headline line is set one word to a line, so it is a list of
+  // lines in the dictionary rather than a sentence — each language decides
+  // where it breaks. The data-i pass above skips it, being an array.
+  $('#heroL2').innerHTML = d.hero.titleB
+    .map(function(w){ return '<span>' + esc(w) + '</span>'; }).join('');
   $('#fromPrice').textContent = num(BASE);
 
   // Crests ride along in the marquee so the strip reads as football, not

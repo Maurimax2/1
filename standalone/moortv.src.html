@@ -229,7 +229,7 @@ nav.main a:hover{opacity:1;color:var(--orange)}
   background:
     radial-gradient(ellipse 62% 52% at 72% 8%,rgba(139,92,246,.42),transparent 68%),
     radial-gradient(ellipse 52% 46% at 14% 88%,rgba(47,107,255,.42),transparent 66%),
-    radial-gradient(ellipse 52% 46% at 50% 57%,rgba(6,7,14,.86),rgba(6,7,14,.32) 60%,transparent 88%),
+    radial-gradient(ellipse 54% 50% at 50% 54%,rgba(6,7,14,.86),rgba(6,7,14,.4) 58%,transparent 88%),
     linear-gradient(to top,rgba(6,7,14,.72),rgba(6,7,14,.1) 20%,transparent 34%),
     linear-gradient(rgba(6,7,14,.34),rgba(6,7,14,.34))}
 /* The raked wall — the whole hero. Three rows of key art at poster size,
@@ -273,15 +273,22 @@ nav.main a:hover{opacity:1;color:var(--orange)}
 
 /* — The statement — centred in the moving wall — */
 .heroInner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;
-  text-align:center;padding:120px 0 76px}
-@media(min-width:700px){.heroInner{padding:140px 0 90px}}
-@media(min-width:900px){.heroInner{padding:150px 0 100px}}
+  text-align:center;padding:96px 0 76px}
+@media(min-width:700px){.heroInner{padding:110px 0 90px}}
+@media(min-width:900px){.heroInner{padding:116px 0 100px}}
 /* The wordmark already sits in the header two lines above, so the headline
-   opens the section on its own. */
-#hero h1{font-size:clamp(2.2rem,8.4vw,5.6rem);font-weight:800;letter-spacing:-.025em;
+   opens the section on its own — and takes the room that frees up. */
+#hero h1{font-size:clamp(2.5rem,9.2vw,6.4rem);font-weight:800;letter-spacing:-.025em;
   max-width:16ch;text-shadow:0 6px 34px rgba(6,7,14,.9)}
-html[dir=rtl] #hero h1{letter-spacing:0;line-height:1.22}
-#hero h1 .l2{display:block;color:var(--orange-2)}
+html[dir=rtl] #hero h1{letter-spacing:0;line-height:1.18}
+/* Latin sets far wider than Arabic at the same size, and the French headline
+   is a longer sentence, so it takes a step down rather than running to five
+   lines. Same reason line-height and tracking are already scoped by dir. */
+html[dir=ltr] #hero h1{font-size:clamp(2.3rem,7.4vw,5rem)}
+/* Set one word to a line: stacked, it reads as a mark rather than a sentence,
+   so it sits tighter than the line above it. */
+#hero h1 .l2{display:block;margin-top:.1em;color:var(--orange-2);line-height:1.04}
+#hero h1 .l2 span{display:block}
 .heroSub{margin-top:18px;max-width:44ch;font-size:14.5px;color:rgba(255,255,255,.7)}
 @media(min-width:900px){.heroSub{font-size:16px}}
 .heroAct{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px}
@@ -849,7 +856,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
     <div class="heroWall" id="heroWall"></div><span class="glow"></span><span class="grain"></span>
   </div>
   <div class="wrap"><div class="heroInner">
-    <h1 class="rev"><span data-i="hero.titleA"></span><span class="l2" data-i="hero.titleB"></span></h1>
+    <h1 class="rev"><span data-i="hero.titleA"></span><span class="l2" id="heroL2"></span></h1>
     <p class="heroSub rev" data-i="hero.subtitle"></p>
     <div class="heroAct rev">
       <a href="#plans" class="btn btn-pill btn-lg"><span data-i="hero.ctaPrimary"></span></a>
