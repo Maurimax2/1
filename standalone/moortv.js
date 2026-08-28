@@ -26,8 +26,8 @@ var V = '#5b21b6', V2 = '#8b5cf6', O = '#2f6bff', O2 = '#6ba2ff', INK = '#06070e
 var T = {
 ar: {
   dir:'rtl',
-  nav:{ plans:'الاشتراكات', football:'كرة القدم', browse:'المحتوى', why:'لماذا نحن', faq:'الأسئلة',
-        cta:'اشترك الآن', skip:'تخطَّ إلى المحتوى' },
+  nav:{ plans:'الاشتراكات', device:'الجهاز', football:'كرة القدم', browse:'المحتوى',
+        why:'لماذا نحن', faq:'الأسئلة', cta:'اشترك الآن', skip:'تخطَّ إلى المحتوى' },
   hero:{ titleA:'ترفيه بلا حدود.', titleB:['مكان','واحد.'],
     subtitle:'أكثر من 20,000 قناة مباشرة وكل البطولات الكروية والأفلام والمسلسلات بجودة 4K — على شاشتك، أينما كنت.',
     from:'يبدأ من', ctaPrimary:'اختر اشتراكك', ctaSecondary:'شاهد البطولات',
@@ -53,12 +53,23 @@ ar: {
       'قنوات الأطفال والأخبار',
       'جودة 4K على كل الأجهزة',
       'دعم فوري على واتساب' ] },
-  /* Labels for the two offers in the grid that are not plain durations.
-     They lost their own section when everything moved into one grid, so all
-     that is left is what each tile calls itself. */
+  /* What the two-screen cards on the shelf call themselves. */
   extras:{ windows:'نافذتان في وقت واحد', device:'جهاز مع الاشتراك',
     deviceName:'جهاز مور تيفي', deviceTerm:'15 شهراً مع الجهاز',
     deviceBlurb:'جهاز أندرويد تي في مع جهاز التحكم، يصل مفعَّلاً وجاهزاً — تُوصله بالتلفاز وتشاهد.' },
+  /* The hardware has its own section. `specs` is a label/value list — the
+     rows restate what the offer includes, not manufacturer figures.
+     CONFIRM THE MODEL AND ITS REAL SPECIFICATION BEFORE PUBLISHING. */
+  device:{ eyebrow:'الجهاز', titleA:'جهاز مور تيفي،', titleB:'جاهز من الصندوق.',
+    subtitle:'لا إعداد ولا تطبيقات تُحمَّل. يصلك الجهاز مفعَّلاً باشتراك 15 شهراً — توصله بالتلفاز وتشاهد.',
+    specs:[
+      ['النظام','أندرويد تي في'],
+      ['التوصيل','منفذ HDMI — يعمل على أي تلفاز'],
+      ['الجودة','بث حتى 4K'],
+      ['التحكم','جهاز تحكم عن بُعد مرفق'],
+      ['الاشتراك','15 شهراً مشمولة في السعر'],
+      ['الحالة','يصل مفعَّلاً — لا إعداد'] ],
+    cta:'اطلب الجهاز' },
   football:{ eyebrow:'الرياضة', titleA:'كل مباراة تهمّك،', titleB:'مباشرة.',
     subtitle:'الدوريات الأوروبية الكبرى والبطولات القارية والدوري السعودي — بجودة عالية وبدون تقطيع.',
     bandTitle:'البطولات المتاحة', bandSub:'مباشرة وبجودة تصل إلى 4K',
@@ -110,7 +121,7 @@ ar: {
     ctaPrimary:'اختر اشتراكك', ctaWhatsApp:'راسلنا على واتساب', orderNow:'اطلب الآن',
     about:'مور تيفي يجمع أكثر من 20 ألف قناة مباشرة والأفلام والمسلسلات وكل البطولات الكروية الكبرى في اشتراك واحد — مصمَّم لموريتانيا.',
     explore:'تصفّح', support:'الدعم', contact:'تواصل معنا',
-    links:{plans:'الاشتراكات',football:'كرة القدم',cats:'المحتوى',why:'لماذا مور تيفي',
+    links:{plans:'الاشتراكات',device:'الجهاز',football:'كرة القدم',cats:'المحتوى',why:'لماذا مور تيفي',
       faq:'الأسئلة الشائعة',reviews:'آراء العملاء'},
     waLine:'واتساب — الطلبات والدعم', snapLine:'سناب شات — عروض يومية',
     country:'موريتانيا', countryLine:'خدمة في كل البلاد', rights:'جميع الحقوق محفوظة.',
@@ -121,8 +132,8 @@ ar: {
 },
 fr: {
   dir:'ltr',
-  nav:{ plans:'Abonnements', football:'Football', browse:'Contenu', why:'Pourquoi nous', faq:'FAQ',
-        cta:'S’abonner', skip:'Aller au contenu' },
+  nav:{ plans:'Abonnements', device:'L’appareil', football:'Football', browse:'Contenu',
+        why:'Pourquoi nous', faq:'FAQ', cta:'S’abonner', skip:'Aller au contenu' },
   hero:{ titleA:'Le divertissement sans limites.', titleB:['En un seul','endroit.'],
     subtitle:'Plus de 20 000 chaînes en direct, toutes les grandes compétitions de football, films et séries en 4K — sur votre écran, où que vous soyez.',
     from:'À partir de', ctaPrimary:'Choisir mon abonnement', ctaSecondary:'Voir les compétitions',
@@ -151,6 +162,16 @@ fr: {
   extras:{ windows:'Deux écrans simultanés', device:'Appareil avec l’abonnement',
     deviceName:'Boîtier MOOR TV', deviceTerm:'15 mois, appareil inclus',
     deviceBlurb:'Un appareil Android TV avec sa télécommande, livré déjà activé — vous le branchez au téléviseur et vous regardez.' },
+  device:{ eyebrow:'L’appareil', titleA:'Le boîtier MOOR TV,', titleB:'prêt à l’emploi.',
+    subtitle:'Rien à installer, aucune application à télécharger. L’appareil arrive activé avec 15 mois d’abonnement — branchez-le au téléviseur et regardez.',
+    specs:[
+      ['Système','Android TV'],
+      ['Branchement','Port HDMI — sur n’importe quel téléviseur'],
+      ['Qualité','Diffusion jusqu’en 4K'],
+      ['Commande','Télécommande fournie'],
+      ['Abonnement','15 mois inclus dans le prix'],
+      ['État','Livré activé — rien à régler'] ],
+    cta:'Commander l’appareil' },
   football:{ eyebrow:'Sport', titleA:'Chaque match qui compte,', titleB:'en direct.',
     subtitle:'Les grands championnats européens, les compétitions continentales et la Saudi Pro League — en haute qualité, sans coupure.',
     bandTitle:'Compétitions incluses', bandSub:'En direct, jusqu’à la 4K',
@@ -202,7 +223,7 @@ fr: {
     ctaPrimary:'Choisir mon abonnement', ctaWhatsApp:'Nous écrire sur WhatsApp', orderNow:'Commander',
     about:'MOOR TV réunit plus de 20 000 chaînes en direct, les films, les séries et toutes les grandes compétitions de football dans un seul abonnement — pensé pour la Mauritanie.',
     explore:'Explorer', support:'Assistance', contact:'Contact',
-    links:{plans:'Abonnements',football:'Football',cats:'Contenu',why:'Pourquoi MOOR TV',
+    links:{plans:'Abonnements',device:'L’appareil',football:'Football',cats:'Contenu',why:'Pourquoi MOOR TV',
       faq:'FAQ',reviews:'Avis'},
     waLine:'WhatsApp — commandes et assistance', snapLine:'Snapchat — offres du jour',
     country:'Mauritanie', countryLine:'Service dans tout le pays', rights:'Tous droits réservés.',
@@ -240,6 +261,21 @@ var EXTRAS = [
   { id:'dev', months:15, price:4500, kind:'device', photo:'d-stick' }
 ];
 EXTRAS.forEach(function (e) { e.per = Math.round(e.price / e.months); });
+
+/* How each offer looks on the shelf: the figure standing in it, and its two
+   colours. The colour is a ladder — blue at one month through violet at
+   fifteen — so the row reads as ascending; the two-screen terms break out
+   into cyan because they are a different product, not a longer one.
+   No figure holds the same slot here as on MAURIMAX; see the README table. */
+var OFFER_ART = {
+  p1:  { photo:'p-kane',      c1:'#12306e', c2:'#3b82f6' },
+  p3:  { photo:'x-homelander', c1:'#1b2f7a', c2:'#4f7cff' },
+  p6:  { photo:'x-jane',      c1:'#2b2a84', c2:'#6366f1' },
+  p12: { photo:'p-haaland',   c1:'#3d2490', c2:'#8b5cf6' },
+  p15: { photo:'p-messi-b', photo2:'x-tyrion', c1:'#4c1d95', c2:'#a855f7' },
+  w12: { panes:true, c1:'#0b3b52', c2:'#22d3ee', ct:'#06070e' },
+  w15: { panes:true, c1:'#0d4a5e', c2:'#38bdf8', ct:'#06070e' }
+};
 
 function findAny(id){
   var all = PLANS.concat(EXTRAS);
@@ -359,7 +395,8 @@ function render() {
     if (typeof v === 'string') el.textContent = v;
   });
 
-  var links = [['plans','#plans'],['football','#football'],['browse','#categories'],['why','#why'],['faq','#faq']];
+  var links = [['plans','#plans'],['device','#device'],['football','#football'],
+               ['browse','#categories'],['why','#why'],['faq','#faq']];
   $('#nav').innerHTML = links.map(function(l){ return '<a href="'+l[1]+'">'+esc(d.nav[l[0]])+'</a>'; }).join('');
   $('#menuList').innerHTML = links.map(function(l,i){
     return '<a href="'+l[1]+'" data-close>'+esc(d.nav[l[0]])+'<span>0'+(i+1)+'</span></a>'; }).join('');
@@ -391,11 +428,14 @@ function render() {
       '" data-post="'+esc(f.post)+'">'+esc(f.pre)+(f.to ? '0' : '')+esc(f.post)+'</span>'+
       '<span class="tx"><b>'+esc(s.l)+'</b><span>'+esc(s.h)+'</span></span></div>'; }).join('');
 
-  // Durations, two-screen terms and the hardware are all things you can buy,
-  // so they share one grid. The order is also the order of the picker.
-  $('#planLadder').innerHTML = PLANS.concat(EXTRAS).map(function(p){ return tier(p,d); }).join('');
+  // The shelf carries the subscriptions only. The hardware is not a longer
+  // subscription, so it has a section of its own further down.
+  $('#planRail').innerHTML = PLANS
+    .concat(EXTRAS.filter(function(e){ return e.kind !== 'device'; }))
+    .map(function(p){ return offerCard(p,d); }).join('');
   $('#planFeat').innerHTML = d.plans.features
     .map(function(f){ return '<li>'+TICK+'<span>'+esc(f)+'</span></li>'; }).join('');
+  renderDevice(d);
 
   pWall = undefined;  // the hero was just rebuilt; drop the parallax cache
 
@@ -461,7 +501,7 @@ function render() {
       '<div class="panel"><p>'+esc(x[1])+'</p></div></div>'; }).join('');
 
   var fl = d.footer.links;
-  $('#fExplore').innerHTML = [[fl.plans,'#plans'],[fl.football,'#football'],[fl.cats,'#categories'],[fl.why,'#why']]
+  $('#fExplore').innerHTML = [[fl.plans,'#plans'],[fl.device,'#device'],[fl.football,'#football'],[fl.cats,'#categories']]
     .map(function(x){ return '<li><a href="'+x[1]+'">'+esc(x[0])+'</a></li>'; }).join('');
   $('#fSupport').innerHTML = [[fl.faq,'#faq'],[fl.reviews,'#reviews']]
     .map(function(x){ return '<li><a href="'+x[1]+'">'+esc(x[0])+'</a></li>'; }).join('');
@@ -489,6 +529,7 @@ function render() {
   counters();
   accordions();
   railArrows();
+  offerDrift();
 }
 
 /* The one plan that carries the section: a dark block with the player
@@ -513,30 +554,90 @@ function meter(months){
   return '<span class="meter" aria-hidden="true">' + out + '</span>';
 }
 
-/* One tile of the offer grid. The five durations, the two two-screen terms
-   and the hardware all come out of here — they differ by a flag, a span and
-   whether there is a product to photograph, not by a separate layout. */
-function tier(p, d) {
-  var dev  = p.kind === 'device';
+/* One card on the shelf. Durations and two-screen terms are the same card —
+   they differ by a flag, a colour and whether a person or a pair of screens
+   stands in the art panel, not by a separate layout. */
+function offerCard(p, d) {
+  var art  = OFFER_ART[p.id] || {};
+  var win  = p.kind === 'windows';
   var flag = p.best ? d.plans.best
            : p.badge === 'popular' ? d.plans.popular
-           : p.kind === 'windows' ? d.extras.windows
-           : dev ? d.extras.device : '';
-  var body =
-    '<span class="flag keep'+(p.badge==='popular'?' pop':'')+'">'+esc(flag)+'</span>'+
-    '<h3 class="dur">'+esc(dev ? d.extras.deviceName : d.plans.months(p.months))+'</h3>'+
-    meter(p.months)+
-    '<p class="per">'+esc(dev ? d.extras.deviceTerm : d.plans.perMonth(p.per))+'</p>'+
-    (dev ? '<p class="blurb">'+esc(d.extras.deviceBlurb)+'</p>' : '')+
-    '<div class="amt"><b dir="ltr">'+num(p.price)+'</b><s>MRU</s></div>'+
-    '<p class="save">'+(p.savePct > 0 ? esc(d.plans.save(p.savePct)) : '')+'</p>'+
-    '<div class="go"><button class="btn '+(p.best || dev ? 'btn-o' : 'btn-line')+
-      ' btn-full" data-pick="'+p.id+'"><span>'+esc(d.plans.add)+'</span></button></div>';
-  if (!dev) return '<article class="tier'+(p.best ? ' top' : '')+'">'+body+'</article>';
-  var shot = photo(p.photo);
-  return '<article class="tier dev">'+
-    (shot ? '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">' : '')+
-    '<div class="body">'+body+'</div></article>';
+           : win ? d.extras.windows : '';
+  var shot = photo(art.photo), shot2 = photo(art.photo2);
+  var stage = art.panes
+    ? '<span class="panes"><i></i><i></i></span>'
+    : (shot2 ? '<img class="b" src="'+shot2+'" alt="" loading="lazy" decoding="async">' : '') +
+      (shot  ? '<img class="a" src="'+shot+'" alt="" loading="lazy" decoding="async">' : '');
+  return '<article class="oc'+(p.best ? ' top' : '')+'" style="--c1:'+art.c1+';--c2:'+art.c2+
+    (art.ct ? ';--ct:'+art.ct : '')+'">'+
+    '<span class="art" aria-hidden="true"><span class="lit"></span>'+stage+'<span class="fade"></span></span>'+
+    (flag ? '<span class="flag keep">'+esc(flag)+'</span>' : '')+
+    '<div class="body">'+
+      '<h3 class="dur">'+esc(d.plans.months(p.months))+'</h3>'+
+      '<p class="per">'+esc(d.plans.perMonth(p.per))+'</p>'+
+      meter(p.months)+
+      '<div class="amt"><b dir="ltr">'+num(p.price)+'</b><s>MRU</s></div>'+
+      '<p class="save">'+(p.savePct > 0 ? esc(d.plans.save(p.savePct)) : '')+'</p>'+
+      '<div class="go"><button class="btn btn-full" data-pick="'+p.id+'">'+
+        '<span>'+esc(d.plans.add)+'</span></button></div>'+
+    '</div></article>';
+}
+
+/* The hardware's own section: the product large, then what the offer
+   actually includes. The spec rows restate the offer, not the manufacturer's
+   datasheet — see the note on `device.specs` in the dictionary. */
+function renderDevice(d) {
+  var dev = EXTRAS.filter(function(e){ return e.kind === 'device'; })[0];
+  if (!dev) return;
+  setImg('#devShot', dev.photo);
+  $('#devSpecs').innerHTML = d.device.specs.map(function(row){
+    return '<div class="spec"><dt>'+esc(row[0])+'</dt><dd>'+esc(row[1])+'</dd></div>'; }).join('');
+  $('#devBuy').innerHTML =
+    '<span class="amt"><b dir="ltr">'+num(dev.price)+'</b><s>MRU</s></span>'+
+    '<button class="btn btn-o btn-lg" data-pick="'+dev.id+'">'+
+      '<span>'+esc(d.device.cta)+'</span></button>'+
+    '<span class="term">'+esc(d.extras.deviceTerm)+'</span>';
+}
+
+/* The shelf drifts on its own so the section is never static, and stops the
+   moment anyone reaches for it — pointer, keyboard or touch. It scrolls a
+   real scroll container rather than translating a track, so a drag, a swipe
+   and the arrow buttons all still work while it is moving. It reverses at
+   each end instead of jumping back, so there is never a seam.
+   scrollLeft only takes integers, so the sub-pixel step is accumulated. */
+function offerDrift() {
+  var rail = $('#planRail');
+  if (!rail || REDUCED || rail.dataset.drift) return;
+  rail.dataset.drift = '1';
+  var paused = false, dir = 1, hold = 90, pos = 0, settle = 0;
+  ['pointerenter','pointerdown','focusin'].forEach(function(ev){
+    rail.addEventListener(ev, function(){ paused = true; }); });
+  ['pointerleave','focusout'].forEach(function(ev){
+    rail.addEventListener(ev, function(){ paused = false; }); });
+  // A manual scroll wins until it stops; without this the drift fights the
+  // user's own swipe on a touch screen, where there is no pointerleave.
+  rail.addEventListener('scroll', function(){
+    if (Math.abs(Math.abs(rail.scrollLeft) - Math.abs(pos)) > 2) settle = 90;
+  }, { passive:true });
+  (function tick(){
+    requestAnimationFrame(tick);
+    // While the reader is in charge, follow the rail rather than drive it.
+    if (settle > 0) { settle--; pos = rail.scrollLeft; return; }
+    if (paused) { pos = rail.scrollLeft; return; }
+    var max = rail.scrollWidth - rail.clientWidth;
+    if (max < 8) return;
+    if (hold > 0) { hold--; return; }
+    // Under RTL a scroll container counts scrollLeft down from zero, so the
+    // sign of "forward" flips with the document direction.
+    var fwd = document.documentElement.dir === 'rtl' ? -1 : 1;
+    // The step has to accumulate in `pos`, not be added to `rail.scrollLeft`:
+    // the browser rounds the property to whole pixels, so reading it back
+    // each frame throws the sub-pixel remainder away and the rail never moves.
+    pos += fwd * dir * 0.45;
+    if (Math.abs(pos) >= max) { pos = fwd * max; dir = -1; hold = 110; }
+    else if (dir === -1 && Math.abs(pos) <= 0) { pos = 0; dir = 1; hold = 110; }
+    rail.scrollLeft = pos;
+  })();
 }
 
 /* Shrinks each typographic poster's wordmark until it fits its tile.

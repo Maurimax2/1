@@ -31,7 +31,8 @@ Every section is a different shape, not a recolour of the MAURIMAX one:
 | Ground | dark → white → dark | dark all the way down; sections separate by elevation (`--paper` base, `--paper-2` panel, a lit blue field) |
 | Hero | copy left, a fan of three cards right, two figures over it | no figures at all: centred type inside a raked wall of full-size posters, three rows filling the screen at three speeds |
 | Statistics | four stepped hairline rows in a 5/7 split | one scoreboard band, four figures read across |
-| Pricing | one dominant card plus four hairline rows, extras in a section of their own | one grid holding all eight offers, each carried by a duration meter rather than a photograph |
+| Pricing | one dominant card plus four hairline rows | a horizontal shelf that drifts on its own, each offer a card with a figure standing in a colour of its own |
+| Hardware | sold as one of the plan cards | a section of its own: the product large and lit, with what the offer includes beside it |
 | Football | a 2×2-lead poster grid | a full-bleed marquee, paused on hover or focus |
 | Content | two horizontal rails with arrows | a mosaic, everything on screen, two tiles double width |
 | Why | a two-column hairline list | eight numbered blocks; the ninth cell is where the figure stands |
@@ -43,26 +44,62 @@ And two differences of substance rather than form:
 
 - **Five durations, not four** — 500 / 1,000 / 1,700 / 2,500 / 3,000 MRU for
   1, 3, 6, 12 and 15 months, measured against a 500 monthly reference.
-- **Eight offers, one grid.** The five durations, the two two-screen terms and
-  the hardware are all things a customer can buy, so they stand together.
-  `EXTRAS` still exists as a separate list — `planLabel()` names its members
-  differently and the hardware has a product to photograph — but `tier()`
-  renders all eight and `find()` resolves ids across both lists, which is what
-  lets any of them be ordered through the same sheet.
+- **Seven subscriptions on a shelf, and the hardware on a stage.** The five
+  durations and the two two-screen terms are the same purchase in different
+  sizes, so they share one horizontal rail. The device is not a longer
+  subscription — it is a thing in a box — so it has `#device` to itself.
+  `EXTRAS` still holds all three, and `find()` resolves ids across both lists,
+  which is what lets any of them be ordered through the same sheet;
+  `render()` simply filters the device out of the shelf.
+
+### The offer shelf
+
+`OFFER_ART` is the whole look of the shelf in one table: which figure stands
+in each card and its two colours. The colour is a **ladder** — blue at one
+month through violet at fifteen — so the row reads as ascending, and the
+two-screen terms break out into cyan because they are a different product,
+not a longer one. Those two cards carry a drawn pair of screens rather than a
+person; a face would have said nothing about what makes them different.
+`--ct` is the text that sits on `--c2`, declared only by the cyan pair, where
+white would fail.
+
+**The drift.** The rail moves on its own and stops the moment anyone reaches
+for it — pointer, keyboard or touch. It scrolls a real scroll container rather
+than translating a track, so a drag, a swipe and the arrow buttons all still
+work while it is moving, and it reverses at each end rather than jumping back.
+Two things it gets wrong if rewritten carelessly:
+
+- **The step must accumulate in `pos`, not in `rail.scrollLeft`.** The browser
+  rounds that property to whole pixels, so reading it back each frame throws
+  the sub-pixel remainder away and the rail never moves at all.
+- **`scrollLeft` counts *down* from zero under RTL**, so the sign of "forward"
+  flips with the document direction.
+
+A manual scroll also sets a `settle` counter, without which the drift fights
+the reader's own swipe on a touch screen, where there is no `pointerleave`.
 
 ### The duration meter
 
-The offer tiles carry no photographs. Each one is headed by a meter of fifteen
-segments — one per month of the longest term — lit up to that offer's length,
-so a one-month term is *meant* to look short beside a fifteen-month one. Every
-offer on the page is measured in months, so one drawing compares all eight.
+Each card carries a meter of fifteen segments — one per month of the longest
+term — lit up to that offer's length, so a one-month term is *meant* to look
+short beside a fifteen-month one. Every offer is measured in months, so one
+drawing compares all seven.
 
 It draws off the section reveal rather than a scroll handler: the segments
-carry a paused animation and `.ladder.in` starts it, each waiting
-`--i × 46ms` so the bar reads as filling rather than appearing. Under
+carry a paused animation and `.railwrap.in` starts it, each waiting
+`--i × 40ms` so the bar reads as filling rather than appearing. Under
 `prefers-reduced-motion` the whole rule is absent and the segments simply
 render. `METER_MAX` is the segment count; raise it if a longer term is ever
 added, or the longest offer will sit at a full bar with nothing above it.
+
+### The device section
+
+`device.specs` is a label/value list in the dictionary. **Its rows restate
+what the offer includes — they are not the manufacturer's datasheet.** The
+supplied photograph is a Xiaomi TV stick, and the page sells it under the
+MOOR TV name; confirm the model, its real specification (the 4K claim in
+particular) and whether it may be resold under another name before this
+section goes live.
 
 ### Three things the all-dark page forces
 
@@ -72,14 +109,12 @@ added, or the longest offer will sit at a full bar with nothing above it.
 - **Half the competition marks are near-black artwork made for a white page.**
   `.lg .crest`, the marquee marks and the poster captions give them a plate to
   sit on; without it they disappear into the ground.
-- **The offer grid draws its dividers with the gap, not with borders.**
-  `.ladder` has `gap:1px` over a `var(--line)` ground and each tile paints its
-  own background over it, which keeps the hairlines correct at every column
-  count. The price of that trick is that an incomplete last row shows the
-  ground as a grey block, so the hardware tile's `grid-column` span is picked
-  per breakpoint to keep every row full: 1 at two columns, 2 at three, 3 at
-  five. Change the number of offers and those spans have to be rechecked.
-  `.whyGrid` uses the same trick, and fills its leftover cell with a figure.
+- **`.whyGrid` draws its dividers with the gap, not with borders.** It has
+  `gap:2px` over a `var(--line)` ground and each block paints its own
+  background over it, which keeps the hairlines correct at every column count.
+  The price of that trick is that an incomplete last row shows the ground as a
+  grey block, so the eight reasons' leftover ninth cell is where the figure
+  stands.
 
 ### The hero wall
 
@@ -117,7 +152,7 @@ wordmark.
 | Slot | MAURIMAX | MOOR TV |
 | --- | --- | --- |
 | Hero | Álvarez + Homelander over a fan of three posters | no figures — the whole `WALL` pool, raked and sliding |
-| Pricing | Messi, Walter White, Haaland, Tyrion, Punisher | no figures — a duration meter per offer |
+| Offer cards | Messi, Walter White, Haaland, Tyrion, Punisher | Kane, Homelander, Jane, Haaland, Messi (alt) + Tyrion — see `OFFER_ART` |
 | Football anchor | Ronaldo | Yamal |
 | Content anchor | Patrick Jane | Walter White |
 | Why anchor | Haaland | Álvarez |
@@ -129,11 +164,11 @@ The eight genre photographs — football, sports, kids, anime, news,
 documentaries, drama, live — have no alternates, so both sites use them. New
 images for any of those would separate the two further.
 
-MOOR TV now shows only four cut-out figures, all of them anchors. The rest of
-`images/` is still inlined into `moortv.html` because the build inlines the
-whole folder — about 150 KB of cut-outs the page never displays. `dist-moortv/`
-does not pay that cost, since it writes the files out and the browser only
-fetches what the markup asks for.
+Two figures are now unused by MOOR TV — the alternate Ronaldo render and the
+Punisher — but the build inlines the whole of `images/` into `moortv.html`
+regardless, so they still cost bytes there. `dist-moortv/` does not pay that,
+since it writes the files out and the browser fetches only what the markup
+asks for.
 
 ## The three source files
 

@@ -351,90 +351,140 @@ html[dir=rtl] .band .track{animation-name:marchR}
 .figRow .tx span{display:block;margin-top:3px;font-size:12.5px;color:var(--muted)}
 
 /* ==========================================================
-   PRICING — one grid, every offer in it. The five durations, the
-   two-screen terms and the hardware are all things you can buy, so
-   they stand together instead of the last three being filed into a
-   section of their own. No photographs: each tile is carried by a
-   meter that draws its own length, one segment per month, so the
-   thing you are choosing between is visible at a glance.
+   OFFERS — a shelf, not a table. The subscriptions sit in a
+   horizontal rail that drifts on its own and stops the moment
+   you touch it, each one a card with a figure standing in a
+   colour of its own. The colour is a ladder: blue at one month
+   through to violet at fifteen, with the two-screen terms in
+   cyan so they read as a different product rather than a
+   longer one.
    ========================================================== */
-.ladder{display:grid;gap:1px;margin-top:44px;background:var(--line);
-  border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
-@media(min-width:520px){.ladder{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(min-width:760px){.ladder{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(min-width:1080px){.ladder{grid-template-columns:repeat(5,minmax(0,1fr))}}
-/* The 1px grid gap is the hairline: each tile paints its own ground over the
-   grid's, which keeps the dividers correct at every column count without a
-   nth-child rule per breakpoint. The spans below are chosen so the last row
-   is always full — a hole would show the hairline ground as a grey block. */
-.tier{position:relative;display:flex;flex-direction:column;padding:22px 18px;
-  background:var(--paper-2);transition:background .3s}
-@media(max-width:479px){.tier{padding:20px 14px}}
-.tier:hover{background:#111737}
-.tier .flag{display:inline-flex;align-items:center;gap:6px;min-height:15px;font-size:10px;
-  font-weight:700;text-transform:uppercase;color:var(--orange-2)}
-.tier .flag.keep{letter-spacing:.12em}
-.tier .flag::before{content:'';width:5px;height:5px;background:currentColor;flex-shrink:0}
-.tier .flag:empty{visibility:hidden}
-.tier .flag.pop{color:var(--violet-2)}
-.tier .dur{margin-top:12px;font-size:16px;font-weight:700}
-.tier .per{margin-top:3px;font-size:12px;color:var(--muted)}
-.tier .blurb{margin-top:8px;font-size:12.5px;color:rgba(255,255,255,.66);max-width:36ch}
-.tier .amt{margin-top:14px;display:flex;align-items:baseline;gap:6px}
-.tier .amt b{font-family:var(--disp);font-weight:800;font-size:clamp(2.5rem,6.4vw,3.2rem);
-  line-height:.82;font-variant-numeric:tabular-nums}
-.tier .amt s{text-decoration:none;font-size:11px;font-weight:600;color:var(--muted)}
-.tier .save{margin-top:9px;font-size:11.5px;font-weight:700;color:var(--orange-2);min-height:17px}
-.tier .go{margin-top:auto;padding-top:18px}
+.railwrap{position:relative;margin-top:44px}
+.rail{display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;
+  padding:4px 2px 6px;-webkit-overflow-scrolling:touch}
+.rail::-webkit-scrollbar{display:none}
+.railbtn{position:absolute;top:44%;z-index:4;width:38px;height:38px;transform:translateY(-50%);
+  display:none;align-items:center;justify-content:center;background:rgba(6,7,14,.82);
+  backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:99px;color:#fff;
+  transition:opacity .2s,background .2s,border-color .2s}
+@media(min-width:900px){.railbtn{display:flex}}
+.railbtn:hover{background:#fff;border-color:#fff;color:var(--ink)}
+.railbtn.prev{inset-inline-start:-22px}
+.railbtn.next{inset-inline-end:-22px}
+.railbtn.off{opacity:0;pointer-events:none}
+html[dir=rtl] .railbtn svg{transform:scaleX(-1)}
+
+/* — One offer card — */
+.oc{--c1:#1e3a8a;--c2:#2f6bff;
+  position:relative;flex:0 0 246px;display:flex;flex-direction:column;
+  border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--paper-2);
+  transition:transform .4s cubic-bezier(.16,1,.3,1),border-color .3s,box-shadow .4s}
+@media(min-width:700px){.oc{flex-basis:286px}}
+.oc:hover{transform:translateY(-6px);border-color:var(--c2);
+  box-shadow:0 24px 46px -22px var(--c2)}
+/* The art panel: the figure stands in its own colour and is cropped by the
+   card, then fades into the body so there is no seam to line up. */
+.oc .art{position:relative;height:206px;overflow:hidden;
+  background:linear-gradient(168deg,var(--c1),#080b1c 76%)}
+@media(min-width:700px){.oc .art{height:238px}}
+.oc .art .lit{position:absolute;inset:0;
+  background:radial-gradient(ellipse 84% 64% at 50% 4%,var(--c2),transparent 68%);opacity:.5}
+.oc .art img{position:absolute;inset-inline:0;bottom:0;margin-inline:auto;
+  height:97%;width:auto;max-width:none;object-fit:contain;object-position:bottom center;
+  filter:drop-shadow(0 16px 22px rgba(0,0,0,.6))}
+/* The second figure on the best-value card stands a step behind and to one
+   side; it is sized, so it must not also be pinned to both edges. */
+.oc .art img.b{height:78%;inset-inline-start:-6%;inset-inline-end:auto;margin-inline:0;
+  z-index:0;opacity:.92}
+.oc .art img.a{z-index:1}
+.oc .art .fade{position:absolute;z-index:2;inset-inline:0;bottom:-1px;height:44%;
+  background:linear-gradient(to top,var(--paper-2) 12%,transparent)}
+/* Two screens, drawn: these cards sell a second window, not a person. */
+.oc .panes{position:absolute;inset:0;z-index:1;display:flex;align-items:center;
+  justify-content:center}
+.oc .panes i{position:absolute;width:104px;height:70px;border-radius:6px;
+  border:2px solid var(--c2);background:rgba(6,7,14,.5)}
+.oc .panes i:first-child{transform:translate(-22px,-16px) rotate(-4deg)}
+.oc .panes i:last-child{transform:translate(22px,16px) rotate(4deg);
+  background:linear-gradient(150deg,var(--c2),var(--c1));opacity:.9}
+html[dir=rtl] .oc .panes i:first-child{transform:translate(22px,-16px) rotate(4deg)}
+html[dir=rtl] .oc .panes i:last-child{transform:translate(-22px,16px) rotate(-4deg)}
+.oc .flag{position:absolute;top:12px;inset-inline-start:12px;z-index:3;
+  display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;
+  background:rgba(6,7,14,.72);backdrop-filter:blur(6px);border:1px solid var(--c2);
+  font-size:10px;font-weight:700;text-transform:uppercase;color:#fff}
+.oc .flag.keep{letter-spacing:.1em}
+.oc .body{position:relative;z-index:3;display:flex;flex-direction:column;flex:1;
+  margin-top:-30px;padding:0 18px 18px}
+.oc .dur{font-size:17px;font-weight:700}
+.oc .per{margin-top:3px;font-size:12px;color:var(--muted)}
+.oc .amt{margin-top:14px;display:flex;align-items:baseline;gap:6px}
+.oc .amt b{font-family:var(--disp);font-weight:800;font-size:3rem;line-height:.82;
+  font-variant-numeric:tabular-nums}
+.oc .amt s{text-decoration:none;font-size:11px;font-weight:600;color:var(--muted)}
+.oc .save{margin-top:9px;font-size:11.5px;font-weight:700;color:var(--c2);min-height:17px}
+.oc .go{margin-top:auto;padding-top:16px}
+/* --ct is the text that sits on --c2. White fails on the cyan pair, so those
+   two cards declare the ink instead; everything else inherits the default. */
+.oc .go .btn{background:var(--c2);color:var(--ct,#fff)}
+.oc .go .btn:hover{background:#fff;color:var(--ink)}
+/* The featured term keeps its ring at rest, not only on hover. */
+.oc.top{border-color:var(--c2);box-shadow:0 0 0 1px var(--c2) inset}
 
 /* ——— The duration meter ———
    Fifteen segments, one per month of the longest term, lit up to this
-   offer's length. It is the only artwork on the tile: a one-month term is
-   meant to look short next to a fifteen-month one. */
-.meter{display:flex;align-items:flex-end;gap:3px;height:30px;margin-top:14px}
-.meter i{flex:1;min-width:2px;height:10px;border-radius:1px;transform-origin:bottom;
-  background:rgba(255,255,255,.11)}
-.meter i.on{height:30px;background:linear-gradient(to top,var(--orange),var(--violet-2))}
-/* The draw runs off the section reveal rather than a scroll handler, and
-   each segment waits its turn so the bar reads as filling, not appearing. */
+   offer's length. A one-month term is meant to look short beside a
+   fifteen-month one. */
+.meter{display:flex;align-items:flex-end;gap:3px;height:22px;margin-top:14px}
+.meter i{flex:1;min-width:2px;height:7px;border-radius:1px;transform-origin:bottom;
+  background:rgba(255,255,255,.12)}
+.meter i.on{height:22px;background:linear-gradient(to top,var(--c2),#fff)}
+/* The draw runs off the section reveal rather than a scroll handler, and each
+   segment waits its turn so the bar reads as filling, not appearing. */
 @media(prefers-reduced-motion:no-preference){
-  .ladder .meter i{animation:seg .5s cubic-bezier(.16,1,.3,1) both;animation-play-state:paused}
-  .ladder.in .meter i{animation-play-state:running;
-    animation-delay:calc(var(--i) * 46ms + 120ms)}
+  .railwrap .meter i{animation:seg .5s cubic-bezier(.16,1,.3,1) both;animation-play-state:paused}
+  .railwrap.in .meter i{animation-play-state:running;
+    animation-delay:calc(var(--i) * 40ms + 120ms)}
   @keyframes seg{from{transform:scaleY(.18);opacity:0}to{transform:none;opacity:1}}
 }
 
-/* The featured term: a lit field and a rule along its top edge. */
-.tier.top{background:linear-gradient(to bottom,rgba(47,107,255,.22),rgba(47,107,255,.06) 60%,transparent);
-  box-shadow:inset 0 2px 0 var(--orange)}
-.tier.top:hover{background:linear-gradient(to bottom,rgba(47,107,255,.3),rgba(47,107,255,.09) 60%,transparent)}
-.tier.top .flag{color:var(--orange)}
-
-/* The hardware is the one offer with something to photograph, so it takes
-   the width the photograph needs and runs the tile sideways. */
-.tier.dev{background:
-  radial-gradient(ellipse 60% 70% at 78% 40%,rgba(47,107,255,.4),transparent 68%),
-  radial-gradient(ellipse 50% 60% at 6% 100%,rgba(139,92,246,.32),transparent 66%),var(--ink)}
-.tier.dev:hover{background:
-  radial-gradient(ellipse 60% 70% at 78% 40%,rgba(47,107,255,.5),transparent 68%),
-  radial-gradient(ellipse 50% 60% at 6% 100%,rgba(139,92,246,.38),transparent 66%),var(--ink)}
-.tier.dev .shot{width:100%;height:140px;object-fit:contain;object-position:center;
-  margin-bottom:6px;filter:drop-shadow(0 18px 26px rgba(0,0,0,.7))}
-.tier.dev .body{display:flex;flex-direction:column;flex:1;min-width:0}
-@media(min-width:760px){
-  .tier.dev{grid-column:span 2;flex-direction:row;align-items:center;gap:24px;padding:24px 26px}
-  .tier.dev .shot{width:38%;height:190px;margin-bottom:0;flex-shrink:0}
-}
-@media(min-width:1080px){.tier.dev{grid-column:span 3}
-  .tier.dev .shot{width:34%;height:210px}}
-
 .priceNote{margin-top:22px;font-size:12.5px;color:var(--muted);max-width:60ch}
 /* The feature list is common to every offer, so it is stated once beneath the
-   grid instead of being repeated inside every tile. */
+   shelf instead of being repeated inside every card. */
 .plansFeat{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px 26px}
 .plansFeat li{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.78);
   list-style:none}
 .plansFeat svg{flex-shrink:0;color:var(--orange-2)}
+
+/* ==========================================================
+   THE DEVICE — its own section. It is hardware, not a longer
+   subscription, so it gets a stage rather than a slot on the
+   shelf: the product large and lit, the details beside it.
+   ========================================================== */
+#device{border-bottom:1px solid var(--line)}
+.devWrap{display:grid;gap:30px;align-items:center}
+@media(min-width:900px){.devWrap{grid-template-columns:1.05fr 1fr;gap:56px}}
+.devShot{position:relative;display:flex;align-items:center;justify-content:center;
+  min-height:320px;padding:24px;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  background:
+    radial-gradient(ellipse 64% 58% at 50% 38%,rgba(47,107,255,.46),transparent 70%),
+    radial-gradient(ellipse 58% 50% at 10% 100%,rgba(139,92,246,.36),transparent 66%),var(--ink)}
+.devShot img{height:280px;width:auto;max-width:100%;object-fit:contain;
+  filter:drop-shadow(0 28px 36px rgba(0,0,0,.85))}
+@media(min-width:900px){.devShot{min-height:460px}.devShot img{height:410px}}
+.devHead h2{margin-top:16px;font-size:clamp(1.7rem,4vw,2.8rem)}
+.devHead>p{margin-top:14px;font-size:15px;color:var(--muted);max-width:46ch}
+.specs{margin-top:26px;border-top:1px solid var(--line)}
+.spec{display:grid;grid-template-columns:minmax(84px,auto) 1fr;gap:8px 20px;
+  padding:13px 0;border-bottom:1px solid var(--line)}
+.spec dt{font-size:12.5px;color:var(--muted)}
+.spec dd{font-size:13.5px;font-weight:600}
+.devBuy{margin-top:26px;display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.devBuy .amt{display:flex;align-items:baseline;gap:7px}
+.devBuy .amt b{font-family:var(--disp);font-weight:800;font-size:3.4rem;line-height:.82;
+  font-variant-numeric:tabular-nums}
+.devBuy .amt s{text-decoration:none;font-size:12px;font-weight:600;color:var(--muted)}
+.devBuy .term{width:100%;font-size:12.5px;color:var(--muted)}
 
 /* ==========================================================
    FOOTBALL — the poster wall
@@ -896,13 +946,29 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
       </div>
       <p style="max-width:36ch;font-size:14px;color:var(--muted)" data-i="plans.subtitle"></p>
     </div>
-    <div class="ladder rev" id="planLadder"></div>
+  </div>
+  <div class="wrap">
+    <div class="railwrap rev"><div class="rail" id="planRail"></div></div>
     <ul class="plansFeat rev" id="planFeat"></ul>
     <p class="priceNote rev" data-i="plans.footnote"></p>
   </div>
 </section>
 
-<!-- 5 — football -->
+<!-- 5 — the device, on its own stage -->
+<section id="device" class="pad" style="scroll-margin-top:84px">
+  <div class="wrap"><div class="devWrap">
+    <div class="devShot rev"><img id="devShot" alt="" loading="lazy" decoding="async"></div>
+    <div class="devHead rev">
+      <span class="lbl keep" data-i="device.eyebrow"></span>
+      <h2><span data-i="device.titleA"></span> <span class="hl" data-i="device.titleB"></span></h2>
+      <p data-i="device.subtitle"></p>
+      <dl class="specs" id="devSpecs"></dl>
+      <div class="devBuy" id="devBuy"></div>
+    </div>
+  </div></div>
+</section>
+
+<!-- 6 — football -->
 <section id="football" class="pad" style="scroll-margin-top:84px">
   <div class="wrap">
     <div class="fbHead rev">
@@ -923,7 +989,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   </div>
 </section>
 
-<!-- 6 — content -->
+<!-- 7 — content -->
 <section id="categories" class="pad tint" style="scroll-margin-top:84px">
   <div class="wrap">
     <div class="catHead rev">
@@ -940,7 +1006,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   </div>
 </section>
 
-<!-- 7 — why -->
+<!-- 8 — why -->
 <section id="why" class="pad dark" style="scroll-margin-top:84px">
   <div class="wrap"><div class="whyWrap">
     <div class="shead rev">
@@ -952,7 +1018,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   </div></div>
 </section>
 
-<!-- 8 — reviews -->
+<!-- 9 — reviews -->
 <section id="reviews" class="pad" style="scroll-margin-top:84px">
   <div class="wrap">
     <div class="shead rev">
@@ -963,7 +1029,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   </div>
 </section>
 
-<!-- 9 — faq -->
+<!-- 10 — faq -->
 <section id="faq" class="pad tint" style="scroll-margin-top:84px">
   <div class="wrap"><div class="faqWrap">
     <div class="rev">
@@ -986,7 +1052,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
 </section>
 </main>
 
-<!-- 10 — closing CTA -->
+<!-- 11 — closing CTA -->
 <section id="close" class="pad">
   <span class="glow" aria-hidden="true"></span>
   <div class="drift" id="drift" aria-hidden="true"></div>
