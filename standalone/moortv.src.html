@@ -221,33 +221,49 @@ nav.main a:hover{opacity:1;color:var(--orange)}
 @media(min-width:900px){#hero{min-height:100svh}}
 .heroBg{position:absolute;inset:0;z-index:0;pointer-events:none}
 /* Atmosphere: violet from above, blue from below, over violet-black. */
-/* A flat knock-back over the whole wall plus a soft centre vignette. A single
-   strong ellipse read as an empty band across the middle rather than as
-   depth, so the dimming is split: even everywhere, deeper where type sits. */
+/* A flat knock-back over the whole wall plus a pool of shadow under the type.
+   The pool is deliberately tight: a wide one blacked out the middle row and
+   the wall read as having a hole in it. Everything outside the type block
+   keeps its posters. */
 .heroBg .glow{position:absolute;inset:0;z-index:2;
   background:
     radial-gradient(ellipse 62% 52% at 72% 8%,rgba(139,92,246,.42),transparent 68%),
     radial-gradient(ellipse 52% 46% at 14% 88%,rgba(47,107,255,.42),transparent 66%),
-    radial-gradient(ellipse 70% 60% at 50% 50%,rgba(6,7,14,.7),rgba(6,7,14,.26) 64%,transparent 88%),
-    linear-gradient(rgba(6,7,14,.4),rgba(6,7,14,.4))}
-/* The raked wall — the whole hero. Four rows of key art at an angle, each
-   sliding at its own speed and in alternating directions, so the library
-   itself is the composition rather than something behind one. */
-/* The rows are taller than the frame on purpose and centred, so the wall is
-   continuous — sized to fit exactly, the gaps between rows line up into a
-   visible empty band once the rake tilts them. */
-.heroWall{position:absolute;inset:-22% -24%;z-index:1;display:grid;gap:10px;
+    radial-gradient(ellipse 52% 46% at 50% 57%,rgba(6,7,14,.86),rgba(6,7,14,.32) 60%,transparent 88%),
+    linear-gradient(to top,rgba(6,7,14,.72),rgba(6,7,14,.1) 20%,transparent 34%),
+    linear-gradient(rgba(6,7,14,.34),rgba(6,7,14,.34))}
+/* The raked wall — the whole hero. Three rows of key art at poster size,
+   sliding at three speeds in alternating directions, so the library itself
+   is the composition rather than something behind one.
+
+   The rows are deliberately taller than the frame and centred: sized to fit
+   exactly, the gaps between them line up into a visible empty band once the
+   rake tilts them. Overfilling crops the top and bottom rows instead, which
+   is what makes the wall read as continuous. `--pw` is the poster width and
+   everything else follows from it, so resizing the wall is one number. */
+.heroWall{--pw:190px;direction:ltr;
+  position:absolute;inset:-22% -24%;z-index:1;display:grid;gap:6px;
   align-content:center;transform:rotate(-9deg);opacity:.6;
-  -webkit-mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,#000 38%,transparent 86%);
-  mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,#000 38%,transparent 86%)}
-.heroWall .r{display:flex;gap:10px;width:max-content;animation:wallA 72s linear infinite}
-.heroWall .r:nth-child(2){animation-name:wallB;animation-duration:104s}
-.heroWall .r:nth-child(3){animation-duration:88s}
-.heroWall .r:nth-child(4){animation-name:wallB;animation-duration:124s}
-.heroWall .r:nth-child(5){animation-duration:96s}
-.heroWall img{width:116px;height:174px;object-fit:cover;border-radius:var(--r);flex-shrink:0;
-  background:#0a0f22}
-@media(min-width:900px){.heroWall img{width:170px;height:255px}}
+  -webkit-mask-image:radial-gradient(ellipse 92% 88% at 50% 50%,#000 46%,transparent 92%);
+  mask-image:radial-gradient(ellipse 92% 88% at 50% 50%,#000 46%,transparent 92%)}
+@media(min-width:700px){.heroWall{--pw:250px}}
+@media(min-width:1200px){.heroWall{--pw:310px}}
+/* Each row is laid down twice and travels exactly half its width, so the loop
+   closes on itself: the motion never stops and never jumps.
+   `direction:ltr` on the wall is load-bearing, not tidiness. Each row is
+   `max-content` wide — far wider than its grid area — so it is placed at the
+   area's inline start; under RTL that is the right edge, and a row translated
+   -50% then walks clean off the left of the screen and disappears. It has to
+   sit on the container, not the row: direction placed on the row governs its
+   contents, not where the grid puts it. The wall carries no text, so it
+   always lays out left-to-right and both keyframes behave the same either
+   way. */
+.heroWall .r{display:flex;gap:6px;width:max-content;
+  animation:wallA 96s linear infinite}
+.heroWall .r:nth-child(2){animation-name:wallB;animation-duration:132s}
+.heroWall .r:nth-child(3){animation-duration:112s}
+.heroWall img{width:var(--pw);height:calc(var(--pw) * 1.5);object-fit:cover;
+  border-radius:var(--r);flex-shrink:0;background:#0a0f22}
 @keyframes wallA{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes wallB{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){.heroWall .r{animation:none}}

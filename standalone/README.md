@@ -29,7 +29,7 @@ Every section is a different shape, not a recolour of the MAURIMAX one:
 | Section | MAURIMAX | MOOR TV |
 | --- | --- | --- |
 | Ground | dark → white → dark | dark all the way down; sections separate by elevation (`--paper` base, `--paper-2` panel, a lit blue field) |
-| Hero | copy left, a fan of three cards right, two figures over it | no figures at all: centred type inside a raked wall of key art, five rows sliding at five speeds |
+| Hero | copy left, a fan of three cards right, two figures over it | no figures at all: centred type inside a raked wall of full-size posters, three rows filling the screen at three speeds |
 | Statistics | four stepped hairline rows in a 5/7 split | one scoreboard band, four figures read across |
 | Pricing | one dominant card plus four hairline rows, extras in a section of their own | one grid holding all eight offers, each carried by a duration meter rather than a photograph |
 | Football | a 2×2-lead poster grid | a full-bleed marquee, paused on hover or focus |
@@ -80,6 +80,25 @@ added, or the longest offer will sit at a full bar with nothing above it.
   per breakpoint to keep every row full: 1 at two columns, 2 at three, 3 at
   five. Change the number of offers and those spans have to be rechecked.
   `.whyGrid` uses the same trick, and fills its leftover cell with a figure.
+
+### The hero wall
+
+Three rows of posters at `--pw` wide (190 / 250 / 310 by breakpoint), 6px
+apart, raked −9° and sliding at three speeds in two directions. Two details
+keep it working:
+
+- **The wall is `direction:ltr`, and that is load-bearing.** Each row is
+  `max-content` wide — far wider than its grid area — so it is placed at the
+  area's *inline start*. Under RTL that is the right edge, and a row
+  translated −50% then walks clean off the left of the screen and disappears.
+  It has to sit on the container, not the row: direction on the row governs
+  its contents, not where the grid puts it.
+- **The rows overflow the frame on purpose and are centred.** Sized to fit
+  exactly, the gaps between them line up into a visible empty band once the
+  rake tilts them. Overfilling crops the top and bottom rows instead.
+
+The type sits in a *tight* pool of shadow, not a wide vignette — a wide one
+blacked out the middle row and the wall read as having a hole in it.
 
 MOOR TV's mark is rendered from `images/moortv-logo.svg`, the cool colourway
 of the brand's retro-TV logo. Its bezel is the brand blue rather than the

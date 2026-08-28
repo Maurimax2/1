@@ -365,9 +365,8 @@ function render() {
     return '<a href="'+l[1]+'" data-close>'+esc(d.nav[l[0]])+'<span>0'+(i+1)+'</span></a>'; }).join('');
 
   $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span><i></i>'+esc(p)+'</span>'; }).join('');
-  // The wall is the whole library raked past at an angle, five rows at five
-  // speeds. It is the hero: no figures stand in front of it. Each row is
-  // doubled so the -50% translate loops.
+  // The wall is the whole library raked past at an angle, three rows of
+  // full-size posters. It is the hero: no figures stand in front of it.
   renderWall();
   $('#fromPrice').textContent = num(BASE);
 
@@ -606,16 +605,17 @@ function renderDrift(){
   box.innerHTML = row(art.slice(0, half), '') + row(art.slice(half), ' b');
 }
 
-/* The hero backdrop: five raked rows of key art at five speeds. Each row is
-   doubled so the -50% translate loops, and each starts at a different offset
-   into the pool so the rows never line up into a visible grid. */
+/* The hero backdrop: three raked rows of key art at poster size. Each row is
+   laid down twice so the -50% translate closes on itself and the motion runs
+   without a seam, and each starts at a different offset into the pool so the
+   rows never line up into a visible grid. */
 function renderWall(){
   var box = $('#heroWall'); if (!box) return;
   var art = WALL.map(photo).filter(Boolean);
   if (art.length < 6){ box.innerHTML = ''; return; }
   var out = '';
-  for (var r = 0; r < 5; r++){
-    var offset = Math.floor(art.length / 5) * r;
+  for (var r = 0; r < 3; r++){
+    var offset = Math.floor(art.length / 3) * r;
     var list = art.slice(offset).concat(art.slice(0, offset));
     out += '<div class="r">' + list.concat(list).map(function(src){
       return '<img src="'+src+'" alt="" decoding="async">'; }).join('') + '</div>';
