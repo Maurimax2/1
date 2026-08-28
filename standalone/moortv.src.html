@@ -276,16 +276,12 @@ nav.main a:hover{opacity:1;color:var(--orange)}
   text-align:center;padding:120px 0 76px}
 @media(min-width:700px){.heroInner{padding:140px 0 90px}}
 @media(min-width:900px){.heroInner{padding:150px 0 100px}}
-.heroKick{display:inline-flex;align-items:center;gap:9px;font-family:var(--disp);font-size:12px;
-  font-weight:700;letter-spacing:.22em;color:var(--orange-2);text-transform:uppercase}
-.heroKick::before,.heroKick::after{content:'';width:26px;height:1px;background:currentColor;opacity:.7}
-#hero h1{margin-top:20px;font-size:clamp(2.2rem,8.4vw,5.6rem);font-weight:800;letter-spacing:-.025em;
+/* The wordmark already sits in the header two lines above, so the headline
+   opens the section on its own. */
+#hero h1{font-size:clamp(2.2rem,8.4vw,5.6rem);font-weight:800;letter-spacing:-.025em;
   max-width:16ch;text-shadow:0 6px 34px rgba(6,7,14,.9)}
 html[dir=rtl] #hero h1{letter-spacing:0;line-height:1.22}
-/* The outlined line sits over poster art, so it carries a faint fill as well
-   as the stroke — an empty outline disappears into a busy frame. */
-#hero h1 .l2{display:block;color:rgba(107,162,255,.2);-webkit-text-stroke:1.4px var(--orange-2)}
-@supports not (-webkit-text-stroke:1px #000){#hero h1 .l2{color:var(--orange-2)}}
+#hero h1 .l2{display:block;color:var(--orange-2)}
 .heroSub{margin-top:18px;max-width:44ch;font-size:14.5px;color:rgba(255,255,255,.7)}
 @media(min-width:900px){.heroSub{font-size:16px}}
 .heroAct{margin-top:30px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:12px}
@@ -853,7 +849,6 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
     <div class="heroWall" id="heroWall"></div><span class="glow"></span><span class="grain"></span>
   </div>
   <div class="wrap"><div class="heroInner">
-    <span class="heroKick keep rev" data-i="hero.kicker">MOOR TV</span>
     <h1 class="rev"><span data-i="hero.titleA"></span><span class="l2" data-i="hero.titleB"></span></h1>
     <p class="heroSub rev" data-i="hero.subtitle"></p>
     <div class="heroAct rev">
