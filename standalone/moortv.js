@@ -39,8 +39,8 @@ ar: {
           {n:'4K UHD',l:'جودة البث',h:'وضوح تام على كل شاشة'} ],
   statsLead:{ eyebrow:'المكتبة', titleA:'اشتراك واحد', titleB:'يفتح كل هذا.',
     body:'قنوات العالم كلها وأضخم مكتبة أفلام ومسلسلات، تُحدَّث كل أسبوع — ويمكنك المشاهدة على نافذتين في وقت واحد.' },
-  plans:{ eyebrow:'الأسعار', titleA:'خمس مُدد،', titleB:'نفس المحتوى.',
-    subtitle:'كل الاشتراكات تفتح المكتبة كاملة — الفرق في المدة وحدها. كلما طالت المدة قلّت التكلفة الشهرية.',
+  plans:{ eyebrow:'الأسعار', titleA:'كل الخيارات،', titleB:'نفس المحتوى.',
+    subtitle:'كل الاشتراكات تفتح المكتبة كاملة — الفرق في المدة، وفي عدد الشاشات إن أردت نافذتين. كلما طالت المدة قلّت التكلفة الشهرية.',
     footnote:'الأسعار بالأوقية الموريتانية. التفعيل والدعم عبر واتساب، ولا يُخصم أي مبلغ عبر الموقع.',
     perMonth:function(n){ return num(n) + ' أوقية شهرياً'; },
     save:function(p){ return 'وفّر ' + p + '%'; },
@@ -53,9 +53,10 @@ ar: {
       'قنوات الأطفال والأخبار',
       'جودة 4K على كل الأجهزة',
       'دعم فوري على واتساب' ] },
-  extras:{ eyebrow:'خيارات إضافية', titleA:'نافذتان،', titleB:'أو جهاز جاهز.',
-    subtitle:'شاهد على شاشتين في وقت واحد، أو خذ الجهاز مفعَّلاً من عندنا.',
-    windows:'نافذتان في وقت واحد', device:'جهاز مع الاشتراك',
+  /* Labels for the two offers in the grid that are not plain durations.
+     They lost their own section when everything moved into one grid, so all
+     that is left is what each tile calls itself. */
+  extras:{ windows:'نافذتان في وقت واحد', device:'جهاز مع الاشتراك',
     deviceName:'جهاز مور تيفي', deviceTerm:'15 شهراً مع الجهاز',
     deviceBlurb:'جهاز أندرويد تي في مع جهاز التحكم، يصل مفعَّلاً وجاهزاً — تُوصله بالتلفاز وتشاهد.' },
   football:{ eyebrow:'الرياضة', titleA:'كل مباراة تهمّك،', titleB:'مباشرة.',
@@ -133,8 +134,8 @@ fr: {
           {n:'4K UHD',l:'Qualité de diffusion',h:'Une image nette sur chaque écran'} ],
   statsLead:{ eyebrow:'La bibliothèque', titleA:'Un seul abonnement', titleB:'ouvre tout cela.',
     body:'Les chaînes du monde entier et une immense bibliothèque de films et de séries, enrichie chaque semaine — avec la possibilité de regarder sur deux écrans à la fois.' },
-  plans:{ eyebrow:'Tarifs', titleA:'Cinq durées,', titleB:'le même contenu.',
-    subtitle:'Tous les abonnements ouvrent la bibliothèque complète — seule la durée change. Plus elle est longue, moins le mois revient cher.',
+  plans:{ eyebrow:'Tarifs', titleA:'Toutes les formules,', titleB:'le même contenu.',
+    subtitle:'Tous les abonnements ouvrent la bibliothèque complète — ce qui change, c’est la durée, et le nombre d’écrans si vous en voulez deux. Plus la durée est longue, moins le mois revient cher.',
     footnote:'Prix en ouguiya mauritanienne. Activation et assistance sur WhatsApp ; aucun montant n’est prélevé sur ce site.',
     perMonth:function(n){ return num(n) + ' MRU / mois'; },
     save:function(p){ return 'Économisez ' + p + ' %'; },
@@ -147,9 +148,7 @@ fr: {
       'Chaînes jeunesse et information',
       '4K sur tous vos appareils',
       'Assistance WhatsApp rapide' ] },
-  extras:{ eyebrow:'Options', titleA:'Deux écrans,', titleB:'ou un appareil prêt.',
-    subtitle:'Regardez sur deux écrans en même temps, ou recevez l’appareil déjà activé.',
-    windows:'Deux écrans simultanés', device:'Appareil avec l’abonnement',
+  extras:{ windows:'Deux écrans simultanés', device:'Appareil avec l’abonnement',
     deviceName:'Boîtier MOOR TV', deviceTerm:'15 mois, appareil inclus',
     deviceBlurb:'Un appareil Android TV avec sa télécommande, livré déjà activé — vous le branchez au téléviseur et vous regardez.' },
   football:{ eyebrow:'Sport', titleA:'Chaque match qui compte,', titleB:'en direct.',
@@ -219,12 +218,11 @@ fr: {
    savings percentages are measured against. */
 var BASE = 500;
 var PLANS = [
-  { id:'p1',  months:1,  price:500,  art:'m1',  photo:'p-kane' },
-  { id:'p3',  months:3,  price:1000, art:'m3',  photo:'x-homelander' },
-  { id:'p6',  months:6,  price:1700, art:'m6',  photo:'x-jane' },
-  { id:'p12', months:12, price:2500, art:'m12', photo:'p-haaland', badge:'popular' },
-  { id:'p15', months:15, price:3000, art:'m12', photo:'p-messi-b', photo2:'x-tyrion',
-    badge:'best', best:true }
+  { id:'p1',  months:1,  price:500 },
+  { id:'p3',  months:3,  price:1000 },
+  { id:'p6',  months:6,  price:1700 },
+  { id:'p12', months:12, price:2500, badge:'popular' },
+  { id:'p15', months:15, price:3000, badge:'best', best:true }
 ];
 PLANS.forEach(function (p) {
   p.ref = BASE * p.months;
@@ -232,9 +230,10 @@ PLANS.forEach(function (p) {
   p.savePct = Math.round((1 - p.price / p.ref) * 100);
 });
 
-/* Two-screen terms and the hardware bundle. They sit outside the ladder
-   because they are a different thing being bought, not a longer version of
-   the same thing — but they order through the same sheet. */
+/* Two-screen terms and the hardware bundle. They are kept in their own list
+   because `planLabel()` names them differently and the hardware has a product
+   to photograph — but they sit in the same grid as the durations and order
+   through the same sheet. */
 var EXTRAS = [
   { id:'w12', months:12, price:3000, kind:'windows' },
   { id:'w15', months:15, price:3500, kind:'windows' },
@@ -366,16 +365,10 @@ function render() {
     return '<a href="'+l[1]+'" data-close>'+esc(d.nav[l[0]])+'<span>0'+(i+1)+'</span></a>'; }).join('');
 
   $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span><i></i>'+esc(p)+'</span>'; }).join('');
-  // The wall is the whole library raked past at an angle, three rows at three
-  // speeds — the backdrop is the catalogue itself rather than three cards
-  // standing in for it. Each row is doubled so the -50% translate loops.
+  // The wall is the whole library raked past at an angle, five rows at five
+  // speeds. It is the hero: no figures stand in front of it. Each row is
+  // doubled so the -50% translate loops.
   renderWall();
-  // The cast: a footballer and a screen character hold the bottom corners and
-  // are cropped by the frame. Both halves of the offer, stated at full height.
-  var castA = photo('p-ronaldo-b'), castB = photo('x-punisher');
-  $('#heroStage').innerHTML =
-    (castB ? '<img class="castB" src="'+castB+'" alt="" decoding="async">' : '') +
-    (castA ? '<img class="castA" src="'+castA+'" alt="" decoding="async">' : '');
   $('#fromPrice').textContent = num(BASE);
 
   // Crests ride along in the marquee so the strip reads as football, not
@@ -394,12 +387,13 @@ function render() {
       '" data-post="'+esc(f.post)+'">'+esc(f.pre)+(f.to ? '0' : '')+esc(f.post)+'</span>'+
       '<span class="tx"><b>'+esc(s.l)+'</b><span>'+esc(s.h)+'</span></span></div>'; }).join('');
 
-  $('#planLadder').innerHTML = PLANS.map(function(p){ return tier(p,d); }).join('');
+  // Durations, two-screen terms and the hardware are all things you can buy,
+  // so they share one grid. The order is also the order of the picker.
+  $('#planLadder').innerHTML = PLANS.concat(EXTRAS).map(function(p){ return tier(p,d); }).join('');
   $('#planFeat').innerHTML = d.plans.features
     .map(function(f){ return '<li>'+TICK+'<span>'+esc(f)+'</span></li>'; }).join('');
-  $('#extrasGrid').innerHTML = extrasPanel(d);
 
-  pFan = undefined;   // the hero was just rebuilt; drop the parallax cache
+  pWall = undefined;  // the hero was just rebuilt; drop the parallax cache
 
   // Players anchoring the football, why and closing sections.
   setImg('#fbAnchor', 'p-yamal');
@@ -503,55 +497,42 @@ function planLabel(p, d) {
   return d.plans.months(p.months);
 }
 
-/* The extras are one split panel: the two-screen terms stack as rows on one
-   side, the hardware fills the other. Both halves come out of this function
-   so the section is still driven entirely by EXTRAS. */
-function extrasPanel(d) {
-  var rows = EXTRAS.filter(function(e){ return e.kind !== 'device'; });
-  var dev  = EXTRAS.filter(function(e){ return e.kind === 'device'; })[0];
-  var out = '<div class="xside">' + rows.map(function(e){
-    return '<div class="xrow">'+
-      '<div><span class="tag keep">'+esc(d.extras.windows)+'</span>'+
-      '<h3>'+esc(d.plans.months(e.months))+'</h3>'+
-      '<p>'+esc(d.plans.perMonth(e.per))+'</p></div>'+
-      '<span class="panes" aria-hidden="true"><i></i><i></i></span>'+
-      '<span class="amt" dir="ltr"><b>'+num(e.price)+'</b><s>MRU</s></span>'+
-      '<div class="go"><button class="btn btn-line btn-sm btn-full" data-pick="'+e.id+'">'+
-        '<span>'+esc(d.plans.add)+'</span></button></div>'+
-      '</div>'; }).join('') + '</div>';
-  if (!dev) return out;
-  var shot = photo(dev.photo);
-  return out + '<article class="xdev">'+
-    (shot ? '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">' : '')+
-    '<span class="tag keep">'+esc(d.extras.device)+'</span>'+
-    '<h3>'+esc(d.extras.deviceName)+'</h3>'+
-    '<p>'+esc(d.extras.deviceBlurb)+'</p>'+
-    '<p class="term">'+esc(d.extras.deviceTerm)+'</p>'+
-    '<div class="amt"><b dir="ltr">'+num(dev.price)+'</b><s>MRU</s></div>'+
-    '<div class="go"><button class="btn btn-o btn-full" data-pick="'+dev.id+'">'+
-      '<span>'+esc(d.plans.add)+'</span></button></div>'+
-    '</article>';
+/* The duration meter: fifteen segments, one per month of the longest term,
+   lit up to this offer's length. Every offer on the page is measured in
+   months, so one drawing compares all eight — and it replaces the portraits
+   the tiles used to carry, which said nothing about what was being bought. */
+var METER_MAX = 15;
+function meter(months){
+  var out = '';
+  for (var i = 0; i < METER_MAX; i++)
+    out += '<i class="' + (i < months ? 'on' : '') + '" style="--i:' + i + '"></i>';
+  return '<span class="meter" aria-hidden="true">' + out + '</span>';
 }
 
-/* One column of the ladder. Every term is built by the same function — the
-   featured one differs by a class and a second figure, not by a separate
-   layout, so the five stay comparable at a glance. */
+/* One tile of the offer grid. The five durations, the two two-screen terms
+   and the hardware all come out of here — they differ by a flag, a span and
+   whether there is a product to photograph, not by a separate layout. */
 function tier(p, d) {
-  var src = photo(p.photo), src2 = p.best ? photo(p.photo2) : '';
-  var flag = p.best ? d.plans.best : (p.badge === 'popular' ? d.plans.popular : '');
-  return '<article class="tier'+(p.best ? ' top' : '')+'">'+
-    (flag ? '<span class="flag keep">'+esc(flag)+'</span>' : '')+
-    '<span class="ph" aria-hidden="true">'+
-      (src2 ? '<img class="b" src="'+src2+'" alt="" loading="lazy" decoding="async">' : '')+
-      (src ? '<img class="a" src="'+src+'" alt="" loading="lazy" decoding="async">' : '')+
-    '</span>'+
-    '<h3 class="dur">'+esc(planLabel(p,d))+'</h3>'+
-    '<p class="per">'+esc(d.plans.perMonth(p.per))+'</p>'+
+  var dev  = p.kind === 'device';
+  var flag = p.best ? d.plans.best
+           : p.badge === 'popular' ? d.plans.popular
+           : p.kind === 'windows' ? d.extras.windows
+           : dev ? d.extras.device : '';
+  var body =
+    '<span class="flag keep'+(p.badge==='popular'?' pop':'')+'">'+esc(flag)+'</span>'+
+    '<h3 class="dur">'+esc(dev ? d.extras.deviceName : d.plans.months(p.months))+'</h3>'+
+    meter(p.months)+
+    '<p class="per">'+esc(dev ? d.extras.deviceTerm : d.plans.perMonth(p.per))+'</p>'+
+    (dev ? '<p class="blurb">'+esc(d.extras.deviceBlurb)+'</p>' : '')+
     '<div class="amt"><b dir="ltr">'+num(p.price)+'</b><s>MRU</s></div>'+
     '<p class="save">'+(p.savePct > 0 ? esc(d.plans.save(p.savePct)) : '')+'</p>'+
-    '<div class="go"><button class="btn '+(p.best ? 'btn-o' : 'btn-line')+
-      ' btn-full" data-pick="'+p.id+'"><span>'+esc(d.plans.add)+'</span></button></div>'+
-    '</article>';
+    '<div class="go"><button class="btn '+(p.best || dev ? 'btn-o' : 'btn-line')+
+      ' btn-full" data-pick="'+p.id+'"><span>'+esc(d.plans.add)+'</span></button></div>';
+  if (!dev) return '<article class="tier'+(p.best ? ' top' : '')+'">'+body+'</article>';
+  var shot = photo(p.photo);
+  return '<article class="tier dev">'+
+    (shot ? '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">' : '')+
+    '<div class="body">'+body+'</div></article>';
 }
 
 /* Shrinks each typographic poster's wordmark until it fits its tile.
@@ -625,16 +606,16 @@ function renderDrift(){
   box.innerHTML = row(art.slice(0, half), '') + row(art.slice(half), ' b');
 }
 
-/* The hero backdrop: three raked rows of key art at three speeds. Each row is
+/* The hero backdrop: five raked rows of key art at five speeds. Each row is
    doubled so the -50% translate loops, and each starts at a different offset
-   into the pool so the three never line up into a visible grid. */
+   into the pool so the rows never line up into a visible grid. */
 function renderWall(){
   var box = $('#heroWall'); if (!box) return;
   var art = WALL.map(photo).filter(Boolean);
   if (art.length < 6){ box.innerHTML = ''; return; }
   var out = '';
-  for (var r = 0; r < 3; r++){
-    var offset = Math.floor(art.length / 3) * r;
+  for (var r = 0; r < 5; r++){
+    var offset = Math.floor(art.length / 5) * r;
     var list = art.slice(offset).concat(art.slice(0, offset));
     out += '<div class="r">' + list.concat(list).map(function(src){
       return '<img src="'+src+'" alt="" decoding="async">'; }).join('') + '</div>';
@@ -738,19 +719,18 @@ function counters(){
 }
 function paint(el, v){ el.textContent = el.dataset.pre + num(v) + el.dataset.post; }
 
-/* Slow parallax on the hero: the wall sinks, the cast holds back, so the
-   stage has depth as it leaves. The wall carries its rake in the transform,
-   so the scroll offset has to be composed onto it rather than replacing it. */
-var pFan, pStar, pTick = false;
+/* Slow parallax on the hero: the wall sinks a little faster than the page, so
+   the type lifts off it as the section leaves. The wall carries its rake in
+   the transform, so the scroll offset is composed onto it, not substituted. */
+var pWall, pTick = false;
 function parallax(y){
   if (REDUCED || pTick) return;
   pTick = true;
   requestAnimationFrame(function(){
     pTick = false;
-    if (pFan === undefined){ pFan = $('#heroWall'); pStar = $('#heroStage .castA'); }
-    if (y > window.innerHeight * 1.2) return;
-    if (pFan) pFan.style.transform = 'rotate(-9deg) translate3d(0,' + (y * 0.13) + 'px,0)';
-    if (pStar) pStar.style.transform = 'translate3d(0,' + (y * -0.06) + 'px,0)';
+    if (pWall === undefined) pWall = $('#heroWall');
+    if (!pWall || y > window.innerHeight * 1.2) return;
+    pWall.style.transform = 'rotate(-9deg) translate3d(0,' + (y * 0.13) + 'px,0)';
   });
 }
 

@@ -29,10 +29,9 @@ Every section is a different shape, not a recolour of the MAURIMAX one:
 | Section | MAURIMAX | MOOR TV |
 | --- | --- | --- |
 | Ground | dark → white → dark | dark all the way down; sections separate by elevation (`--paper` base, `--paper-2` panel, a lit blue field) |
-| Hero | copy left, a fan of three cards right, two figures over it | centred type on a raked wall of key art at three speeds, the two figures holding the bottom corners |
+| Hero | copy left, a fan of three cards right, two figures over it | no figures at all: centred type inside a raked wall of key art, five rows sliding at five speeds |
 | Statistics | four stepped hairline rows in a 5/7 split | one scoreboard band, four figures read across |
-| Pricing | one dominant card plus four hairline rows | a five-across ladder, each term a column headed by a portrait |
-| Extras | three matching cards | one split panel: two-screen terms as rows, the hardware filling the other half |
+| Pricing | one dominant card plus four hairline rows, extras in a section of their own | one grid holding all eight offers, each carried by a duration meter rather than a photograph |
 | Football | a 2×2-lead poster grid | a full-bleed marquee, paused on hover or focus |
 | Content | two horizontal rails with arrows | a mosaic, everything on screen, two tiles double width |
 | Why | a two-column hairline list | eight numbered blocks; the ninth cell is where the figure stands |
@@ -44,15 +43,28 @@ And two differences of substance rather than form:
 
 - **Five durations, not four** — 500 / 1,000 / 1,700 / 2,500 / 3,000 MRU for
   1, 3, 6, 12 and 15 months, measured against a 500 monthly reference.
-- **An extras section.** Two-screen terms and the hardware bundle are a
-  different thing being bought, not a longer version of the same thing, so
-  they sit in `EXTRAS` outside the ladder. `planLabel()` is the single place
-  that names an offer, so the ladder, the order sheet and the WhatsApp message
-  always describe it the same way. `find()` resolves ids across both lists,
-  which is what lets an extra be ordered through the same sheet.
+- **Eight offers, one grid.** The five durations, the two two-screen terms and
+  the hardware are all things a customer can buy, so they stand together.
+  `EXTRAS` still exists as a separate list — `planLabel()` names its members
+  differently and the hardware has a product to photograph — but `tier()`
+  renders all eight and `find()` resolves ids across both lists, which is what
+  lets any of them be ordered through the same sheet.
 
-Three things in the MOOR TV CSS exist because the page never goes light, and
-are worth knowing before editing it:
+### The duration meter
+
+The offer tiles carry no photographs. Each one is headed by a meter of fifteen
+segments — one per month of the longest term — lit up to that offer's length,
+so a one-month term is *meant* to look short beside a fifteen-month one. Every
+offer on the page is measured in months, so one drawing compares all eight.
+
+It draws off the section reveal rather than a scroll handler: the segments
+carry a paused animation and `.ladder.in` starts it, each waiting
+`--i × 46ms` so the bar reads as filling rather than appearing. Under
+`prefers-reduced-motion` the whole rule is absent and the segments simply
+render. `METER_MAX` is the segment count; raise it if a longer term is ever
+added, or the longest offer will sit at a full bar with nothing above it.
+
+### Three things the all-dark page forces
 
 - **Nothing inverts to white-on-white.** Every icon button hover goes to
   `#fff` ground with `var(--ink)` text, not to `var(--ink-text)` — which is
@@ -60,12 +72,14 @@ are worth knowing before editing it:
 - **Half the competition marks are near-black artwork made for a white page.**
   `.lg .crest`, the marquee marks and the poster captions give them a plate to
   sit on; without it they disappear into the ground.
-- **The portrait bands crop, they do not contain.** A whole body is unreadable
-  at column width, so `.tier .ph` crops to head and shoulders and fades out
-  with a *mask*, not a gradient overlay — an overlay would have to match the
-  colour underneath it, and the featured column's ground is a different colour
-  from the other four. For the same reason the ladder never drops to one
-  column: a full-width tier turns that crop into a pair of eyes.
+- **The offer grid draws its dividers with the gap, not with borders.**
+  `.ladder` has `gap:1px` over a `var(--line)` ground and each tile paints its
+  own background over it, which keeps the hairlines correct at every column
+  count. The price of that trick is that an incomplete last row shows the
+  ground as a grey block, so the hardware tile's `grid-column` span is picked
+  per breakpoint to keep every row full: 1 at two columns, 2 at three, 3 at
+  five. Change the number of offers and those spans have to be rechecked.
+  `.whyGrid` uses the same trick, and fills its leftover cell with a figure.
 
 MOOR TV's mark is rendered from `images/moortv-logo.svg`, the cool colourway
 of the brand's retro-TV logo. Its bezel is the brand blue rather than the
@@ -83,10 +97,8 @@ wordmark.
 
 | Slot | MAURIMAX | MOOR TV |
 | --- | --- | --- |
-| Hero figures | Álvarez + Homelander | Ronaldo (alt) + the Punisher |
-| Hero backdrop | a fan of GoT · Premier League · Oppenheimer | the whole `WALL` pool, raked and sliding |
-| Featured term | Messi + Walter White | Messi (alt) + Tyrion |
-| Other terms | Haaland, Tyrion, Punisher | Kane, Homelander, Jane, Haaland |
+| Hero | Álvarez + Homelander over a fan of three posters | no figures — the whole `WALL` pool, raked and sliding |
+| Pricing | Messi, Walter White, Haaland, Tyrion, Punisher | no figures — a duration meter per offer |
 | Football anchor | Ronaldo | Yamal |
 | Content anchor | Patrick Jane | Walter White |
 | Why anchor | Haaland | Álvarez |
@@ -97,6 +109,12 @@ wordmark.
 The eight genre photographs — football, sports, kids, anime, news,
 documentaries, drama, live — have no alternates, so both sites use them. New
 images for any of those would separate the two further.
+
+MOOR TV now shows only four cut-out figures, all of them anchors. The rest of
+`images/` is still inlined into `moortv.html` because the build inlines the
+whole folder — about 150 KB of cut-outs the page never displays. `dist-moortv/`
+does not pay that cost, since it writes the files out and the browser only
+fetches what the markup asks for.
 
 ## The three source files
 

@@ -216,24 +216,33 @@ nav.main a:hover{opacity:1;color:var(--orange)}
 @media(min-width:900px){#hero{min-height:100svh}}
 .heroBg{position:absolute;inset:0;z-index:0;pointer-events:none}
 /* Atmosphere: violet from above, blue from below, over violet-black. */
+/* A flat knock-back over the whole wall plus a soft centre vignette. A single
+   strong ellipse read as an empty band across the middle rather than as
+   depth, so the dimming is split: even everywhere, deeper where type sits. */
 .heroBg .glow{position:absolute;inset:0;z-index:2;
   background:
-    radial-gradient(ellipse 62% 52% at 72% 8%,rgba(139,92,246,.5),transparent 68%),
-    radial-gradient(ellipse 52% 46% at 14% 88%,rgba(47,107,255,.5),transparent 66%),
-    radial-gradient(ellipse 76% 60% at 50% 62%,rgba(6,7,14,.9),rgba(6,7,14,.35) 70%)}
-/* The raked wall. Three rows of key art at an angle, sliding at three
-   different speeds — the library itself is the backdrop, rather than a
-   fan of three cards standing in for it. */
-.heroWall{position:absolute;inset:-14% -22%;z-index:1;display:grid;gap:16px;
-  align-content:center;transform:rotate(-9deg);opacity:.42;
-  -webkit-mask-image:radial-gradient(ellipse 80% 74% at 50% 50%,#000 30%,transparent 78%);
-  mask-image:radial-gradient(ellipse 80% 74% at 50% 50%,#000 30%,transparent 78%)}
-.heroWall .r{display:flex;gap:16px;width:max-content;animation:wallA 80s linear infinite}
-.heroWall .r:nth-child(2){animation-name:wallB;animation-duration:110s}
-.heroWall .r:nth-child(3){animation-duration:95s}
-.heroWall img{width:132px;height:198px;object-fit:cover;border-radius:var(--r);flex-shrink:0;
+    radial-gradient(ellipse 62% 52% at 72% 8%,rgba(139,92,246,.42),transparent 68%),
+    radial-gradient(ellipse 52% 46% at 14% 88%,rgba(47,107,255,.42),transparent 66%),
+    radial-gradient(ellipse 70% 60% at 50% 50%,rgba(6,7,14,.7),rgba(6,7,14,.26) 64%,transparent 88%),
+    linear-gradient(rgba(6,7,14,.4),rgba(6,7,14,.4))}
+/* The raked wall — the whole hero. Four rows of key art at an angle, each
+   sliding at its own speed and in alternating directions, so the library
+   itself is the composition rather than something behind one. */
+/* The rows are taller than the frame on purpose and centred, so the wall is
+   continuous — sized to fit exactly, the gaps between rows line up into a
+   visible empty band once the rake tilts them. */
+.heroWall{position:absolute;inset:-22% -24%;z-index:1;display:grid;gap:10px;
+  align-content:center;transform:rotate(-9deg);opacity:.6;
+  -webkit-mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,#000 38%,transparent 86%);
+  mask-image:radial-gradient(ellipse 88% 84% at 50% 50%,#000 38%,transparent 86%)}
+.heroWall .r{display:flex;gap:10px;width:max-content;animation:wallA 72s linear infinite}
+.heroWall .r:nth-child(2){animation-name:wallB;animation-duration:104s}
+.heroWall .r:nth-child(3){animation-duration:88s}
+.heroWall .r:nth-child(4){animation-name:wallB;animation-duration:124s}
+.heroWall .r:nth-child(5){animation-duration:96s}
+.heroWall img{width:116px;height:174px;object-fit:cover;border-radius:var(--r);flex-shrink:0;
   background:#0a0f22}
-@media(min-width:900px){.heroWall img{width:176px;height:264px}}
+@media(min-width:900px){.heroWall img{width:170px;height:255px}}
 @keyframes wallA{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes wallB{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @media(prefers-reduced-motion:reduce){.heroWall .r{animation:none}}
@@ -241,43 +250,20 @@ nav.main a:hover{opacity:1;color:var(--orange)}
 .heroBg .grain{position:absolute;inset:0;z-index:3;opacity:.4;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E")}
 
-/* — The cast — the two figures hold the bottom corners of the frame and
-     are cropped by it, so the section reads as a stage rather than a card. */
-.heroCast{position:absolute;inset-inline:0;bottom:0;height:100%;z-index:1;pointer-events:none}
-.heroCast img{position:absolute;bottom:0;width:auto;object-fit:contain;
-  object-position:bottom center;
-  -webkit-mask-image:linear-gradient(to top,transparent,#000 9%);
-  mask-image:linear-gradient(to top,transparent,#000 9%)}
-/* Narrow screens have no room beside the type, so the cast drops into a band
-   under it rather than standing either side of it. */
-.heroCast .castA{inset-inline-end:-4%;height:33%;filter:drop-shadow(0 30px 34px rgba(0,0,0,.6))}
-.heroCast .castB{inset-inline-start:-7%;height:28%;
-  filter:drop-shadow(0 26px 30px rgba(0,0,0,.65))}
-@media(min-width:700px){.heroCast .castA{height:66%;inset-inline-end:-1%}
-  .heroCast .castB{height:56%;inset-inline-start:-3%}}
-@media(min-width:1200px){.heroCast .castA{height:76%;inset-inline-end:2%}
-  .heroCast .castB{height:64%;inset-inline-start:1%}}
-@media(prefers-reduced-motion:no-preference){
-  /* The entrance moves them with `translate`, not `transform`: the parallax
-     writes `transform` on the same element, and a filling animation would
-     otherwise pin it back to none for good. */
-  .heroCast.in .castA{animation:castIn 1s .15s cubic-bezier(.16,1,.3,1) both}
-  .heroCast.in .castB{animation:castIn 1s .3s cubic-bezier(.16,1,.3,1) both}
-  @keyframes castIn{from{opacity:0;translate:0 30px}to{opacity:1;translate:none}}
-}
-
-/* — The statement — centred, between the two figures — */
+/* — The statement — centred in the moving wall — */
 .heroInner{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;
-  text-align:center;padding:108px 0 30svh}
-@media(min-width:700px){.heroInner{padding:130px 0 46px}}
-@media(min-width:900px){.heroInner{padding:140px 0 8vh}}
+  text-align:center;padding:120px 0 76px}
+@media(min-width:700px){.heroInner{padding:140px 0 90px}}
+@media(min-width:900px){.heroInner{padding:150px 0 100px}}
 .heroKick{display:inline-flex;align-items:center;gap:9px;font-family:var(--disp);font-size:12px;
   font-weight:700;letter-spacing:.22em;color:var(--orange-2);text-transform:uppercase}
 .heroKick::before,.heroKick::after{content:'';width:26px;height:1px;background:currentColor;opacity:.7}
 #hero h1{margin-top:20px;font-size:clamp(2.2rem,8.4vw,5.6rem);font-weight:800;letter-spacing:-.025em;
-  max-width:16ch}
+  max-width:16ch;text-shadow:0 6px 34px rgba(6,7,14,.9)}
 html[dir=rtl] #hero h1{letter-spacing:0;line-height:1.22}
-#hero h1 .l2{display:block;color:transparent;-webkit-text-stroke:1.4px var(--orange-2)}
+/* The outlined line sits over poster art, so it carries a faint fill as well
+   as the stroke — an empty outline disappears into a busy frame. */
+#hero h1 .l2{display:block;color:rgba(107,162,255,.2);-webkit-text-stroke:1.4px var(--orange-2)}
 @supports not (-webkit-text-stroke:1px #000){#hero h1 .l2{color:var(--orange-2)}}
 .heroSub{margin-top:18px;max-width:44ch;font-size:14.5px;color:rgba(255,255,255,.7)}
 @media(min-width:900px){.heroSub{font-size:16px}}
@@ -341,141 +327,90 @@ html[dir=rtl] .band .track{animation-name:marchR}
 .figRow .tx span{display:block;margin-top:3px;font-size:12.5px;color:var(--muted)}
 
 /* ==========================================================
-   PRICING — a ladder, read across. Five terms stand side by side
-   as columns of a single strip, each headed by a figure and
-   divided by a hairline: no cards, no dominant block with a list
-   of leftovers beside it. The chosen term is a lit blue field and
-   its figure walks up out of the top of the strip.
+   PRICING — one grid, every offer in it. The five durations, the
+   two-screen terms and the hardware are all things you can buy, so
+   they stand together instead of the last three being filed into a
+   section of their own. No photographs: each tile is carried by a
+   meter that draws its own length, one segment per month, so the
+   thing you are choosing between is visible at a glance.
    ========================================================== */
-/* Never one per row: a full-width tier turns its portrait band into a wide
-   letterbox, and the crop that reads as a face at column width becomes a
-   pair of eyes at page width. Two columns is the narrowest it goes. */
-.ladder{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));margin-top:44px;
-  border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-@media(min-width:1080px){.ladder{grid-template-columns:repeat(5,minmax(0,1fr));margin-top:130px}}
-.tier{--px:18px;--pt:20px;
-  position:relative;display:flex;flex-direction:column;padding:var(--pt) var(--px) 22px;
-  border-inline-start:1px solid var(--line);transition:background .3s}
-@media(max-width:479px){.tier{--px:12px;--pt:16px}}
-.tier:first-child{border-inline-start:0}
-@media(max-width:1079px){.tier{border-top:1px solid var(--line)}
-  .tier:nth-child(odd){border-inline-start:0}
-  .tier:first-child,.tier:nth-child(2){border-top:0}}
-.tier:hover{background:rgba(47,107,255,.05)}
-/* The figure heads the column, standing on the type rather than beside it.
-   A whole body is unreadable at this size, so the band crops to head and
-   shoulders, and it fades out with a mask rather than a gradient overlay —
-   an overlay would have to match the ground under it, and the featured
-   column's ground is a different colour from the other four. */
-.tier .ph{position:relative;display:block;height:138px;
-  margin:calc(var(--pt) * -1) calc(var(--px) * -1) 12px;
-  overflow:hidden;background:
-    radial-gradient(ellipse 90% 74% at 50% 100%,rgba(91,33,182,.42),transparent 72%);
-  -webkit-mask-image:linear-gradient(to bottom,#000 52%,transparent 96%);
-  mask-image:linear-gradient(to bottom,#000 52%,transparent 96%)}
-.tier .ph img{position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;object-position:50% 6%}
-.tier .dur{font-size:15px;font-weight:700}
+.ladder{display:grid;gap:1px;margin-top:44px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+@media(min-width:520px){.ladder{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(min-width:760px){.ladder{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:1080px){.ladder{grid-template-columns:repeat(5,minmax(0,1fr))}}
+/* The 1px grid gap is the hairline: each tile paints its own ground over the
+   grid's, which keeps the dividers correct at every column count without a
+   nth-child rule per breakpoint. The spans below are chosen so the last row
+   is always full — a hole would show the hairline ground as a grey block. */
+.tier{position:relative;display:flex;flex-direction:column;padding:22px 18px;
+  background:var(--paper-2);transition:background .3s}
+@media(max-width:479px){.tier{padding:20px 14px}}
+.tier:hover{background:#111737}
+.tier .flag{display:inline-flex;align-items:center;gap:6px;min-height:15px;font-size:10px;
+  font-weight:700;text-transform:uppercase;color:var(--orange-2)}
+.tier .flag.keep{letter-spacing:.12em}
+.tier .flag::before{content:'';width:5px;height:5px;background:currentColor;flex-shrink:0}
+.tier .flag:empty{visibility:hidden}
+.tier .flag.pop{color:var(--violet-2)}
+.tier .dur{margin-top:12px;font-size:16px;font-weight:700}
 .tier .per{margin-top:3px;font-size:12px;color:var(--muted)}
-.tier .amt{margin-top:16px;display:flex;align-items:baseline;gap:6px}
-.tier .amt b{font-family:var(--disp);font-weight:800;font-size:clamp(2.6rem,7vw,3.4rem);
+.tier .blurb{margin-top:8px;font-size:12.5px;color:rgba(255,255,255,.66);max-width:36ch}
+.tier .amt{margin-top:14px;display:flex;align-items:baseline;gap:6px}
+.tier .amt b{font-family:var(--disp);font-weight:800;font-size:clamp(2.5rem,6.4vw,3.2rem);
   line-height:.82;font-variant-numeric:tabular-nums}
 .tier .amt s{text-decoration:none;font-size:11px;font-weight:600;color:var(--muted)}
-.tier .save{margin-top:10px;font-size:11.5px;font-weight:700;color:var(--orange-2);min-height:17px}
-.tier .flag{position:absolute;top:12px;inset-inline-end:12px;z-index:2;font-size:10px;
-  font-weight:700;text-transform:uppercase;color:#fff;background:var(--violet);
-  padding:3px 8px;border-radius:99px}
-.tier .flag.keep{letter-spacing:.1em}
+.tier .save{margin-top:9px;font-size:11.5px;font-weight:700;color:var(--orange-2);min-height:17px}
 .tier .go{margin-top:auto;padding-top:18px}
-/* The featured term. A lit field, taller art, and the pair of figures
-   climbing out of the top of the strip. */
-.tier.top{background:linear-gradient(to bottom,rgba(47,107,255,.2),rgba(47,107,255,.05) 55%,transparent);
-  box-shadow:inset 0 2px 0 var(--orange)}
-.tier.top:hover{background:linear-gradient(to bottom,rgba(47,107,255,.26),rgba(47,107,255,.07) 55%,transparent)}
-.tier.top .flag{background:var(--orange)}
-@media(min-width:1080px){
-  /* The featured column gets the room for a whole figure, so it keeps
-     `contain` and climbs out of the top of the strip. */
-  .tier.top .ph{height:250px;margin-top:-116px}
-  .tier.top .ph img{object-fit:contain;object-position:bottom center;
-    filter:drop-shadow(0 18px 24px rgba(0,0,0,.55))}
-  .tier.top .ph .b{inset-inline-start:-22%;width:76%;height:80%;z-index:0;opacity:.92}
-  .tier.top .ph .a{z-index:1}
+
+/* ——— The duration meter ———
+   Fifteen segments, one per month of the longest term, lit up to this
+   offer's length. It is the only artwork on the tile: a one-month term is
+   meant to look short next to a fifteen-month one. */
+.meter{display:flex;align-items:flex-end;gap:3px;height:30px;margin-top:14px}
+.meter i{flex:1;min-width:2px;height:10px;border-radius:1px;transform-origin:bottom;
+  background:rgba(255,255,255,.11)}
+.meter i.on{height:30px;background:linear-gradient(to top,var(--orange),var(--violet-2))}
+/* The draw runs off the section reveal rather than a scroll handler, and
+   each segment waits its turn so the bar reads as filling, not appearing. */
+@media(prefers-reduced-motion:no-preference){
+  .ladder .meter i{animation:seg .5s cubic-bezier(.16,1,.3,1) both;animation-play-state:paused}
+  .ladder.in .meter i{animation-play-state:running;
+    animation-delay:calc(var(--i) * 46ms + 120ms)}
+  @keyframes seg{from{transform:scaleY(.18);opacity:0}to{transform:none;opacity:1}}
 }
-@media(max-width:1079px){.tier.top .ph .b{display:none}}
-/* The second figure is sized, so it must not also be pinned to both edges —
-   an over-constrained box drops a different inset in RTL than in LTR. */
-.tier .ph .b{position:absolute;bottom:0;inset-inline-end:auto;
-  object-fit:contain;object-position:bottom center}
+
+/* The featured term: a lit field and a rule along its top edge. */
+.tier.top{background:linear-gradient(to bottom,rgba(47,107,255,.22),rgba(47,107,255,.06) 60%,transparent);
+  box-shadow:inset 0 2px 0 var(--orange)}
+.tier.top:hover{background:linear-gradient(to bottom,rgba(47,107,255,.3),rgba(47,107,255,.09) 60%,transparent)}
+.tier.top .flag{color:var(--orange)}
+
+/* The hardware is the one offer with something to photograph, so it takes
+   the width the photograph needs and runs the tile sideways. */
+.tier.dev{background:
+  radial-gradient(ellipse 60% 70% at 78% 40%,rgba(47,107,255,.4),transparent 68%),
+  radial-gradient(ellipse 50% 60% at 6% 100%,rgba(139,92,246,.32),transparent 66%),var(--ink)}
+.tier.dev:hover{background:
+  radial-gradient(ellipse 60% 70% at 78% 40%,rgba(47,107,255,.5),transparent 68%),
+  radial-gradient(ellipse 50% 60% at 6% 100%,rgba(139,92,246,.38),transparent 66%),var(--ink)}
+.tier.dev .shot{width:100%;height:140px;object-fit:contain;object-position:center;
+  margin-bottom:6px;filter:drop-shadow(0 18px 26px rgba(0,0,0,.7))}
+.tier.dev .body{display:flex;flex-direction:column;flex:1;min-width:0}
+@media(min-width:760px){
+  .tier.dev{grid-column:span 2;flex-direction:row;align-items:center;gap:24px;padding:24px 26px}
+  .tier.dev .shot{width:38%;height:190px;margin-bottom:0;flex-shrink:0}
+}
+@media(min-width:1080px){.tier.dev{grid-column:span 3}
+  .tier.dev .shot{width:34%;height:210px}}
+
 .priceNote{margin-top:22px;font-size:12.5px;color:var(--muted);max-width:60ch}
-/* The feature list is common to every term, so it is stated once beneath the
-   ladder instead of being repeated inside one card. */
+/* The feature list is common to every offer, so it is stated once beneath the
+   grid instead of being repeated inside every tile. */
 .plansFeat{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px 26px}
 .plansFeat li{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.78);
   list-style:none}
 .plansFeat svg{flex-shrink:0;color:var(--orange-2)}
-
-/* ==========================================================
-   EXTRAS — two-screen terms and the hardware bundle. A different
-   thing being bought, so it sits apart from the duration ladder.
-   ========================================================== */
-/* One panel, split: the two-screen terms as rows on one side, the hardware
-   filling the other. Three matching cards would have said these were three
-   versions of one thing, which they are not. */
-.extras{display:grid;gap:0;margin-top:40px;border:1px solid var(--line);border-radius:var(--r);
-  overflow:hidden;background:var(--paper-2)}
-@media(min-width:900px){.extras{grid-template-columns:1fr 1.05fr}}
-.xside{display:flex;flex-direction:column;justify-content:center;padding:8px 22px}
-@media(min-width:700px){.xside{padding:14px 30px}}
-.xrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px 18px;align-items:center;
-  padding:24px 0;border-top:1px solid var(--line)}
-.xrow:first-child{border-top:0}
-.xrow .tag{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:700;
-  text-transform:uppercase;color:var(--orange-2)}
-.xrow .tag.keep{letter-spacing:.14em}
-.xrow h3{margin-top:8px;font-size:19px;font-weight:700}
-.xrow p{margin-top:5px;font-size:12.5px;color:var(--muted)}
-.xrow .amt{display:flex;align-items:baseline;gap:6px;justify-self:end}
-.xrow .amt b{font-family:var(--disp);font-weight:800;font-size:34px;line-height:1;
-  font-variant-numeric:tabular-nums}
-.xrow .amt s{text-decoration:none;font-size:11px;font-weight:600;color:var(--muted)}
-.xrow .go{grid-column:1/-1}
-@media(min-width:520px){.xrow{grid-template-columns:minmax(0,1fr) auto auto}
-  .xrow .go{grid-column:auto}}
-/* Two overlapping frames drawn beside the row: the idea, not an icon. */
-.xrow .panes{position:relative;width:74px;height:34px;flex-shrink:0}
-.xrow .panes i{position:absolute;top:0;width:34px;height:24px;border-radius:3px;
-  border:1.5px solid var(--orange-2);opacity:.55}
-.xrow .panes i:first-child{inset-inline-start:0;background:rgba(47,107,255,.18);opacity:1}
-.xrow .panes i:last-child{inset-inline-start:40px}
-
-/* The hardware fills its half of the panel and is lit from behind. */
-.xdev{position:relative;display:flex;flex-direction:column;justify-content:flex-end;
-  min-height:340px;padding:26px 22px 24px;overflow:hidden;isolation:isolate;
-  border-top:1px solid var(--line)}
-@media(min-width:900px){.xdev{border-top:0;border-inline-start:1px solid var(--line);padding:34px 30px 30px}}
-.xdev::before{content:'';position:absolute;inset:0;z-index:-1;
-  background:radial-gradient(ellipse 74% 56% at 66% 32%,rgba(47,107,255,.5),transparent 68%),
-             radial-gradient(ellipse 60% 50% at 8% 100%,rgba(139,92,246,.38),transparent 66%),
-             var(--ink)}
-.xdev .shot{position:absolute;z-index:-1;inset-inline-end:4%;top:6%;height:56%;width:auto;
-  object-fit:contain;pointer-events:none;filter:drop-shadow(0 22px 30px rgba(0,0,0,.75))}
-@media(min-width:900px){.xdev .shot{height:62%;inset-inline-end:6%}}
-/* Stacked, the hardware sits above the copy instead of beside it, so the
-   copy needs the room reserved rather than flowing under the image. */
-@media(max-width:899px){.xdev{min-height:0;padding-top:238px}
-  .xdev .shot{height:210px;top:16px;inset-inline-end:8%}}
-.xdev .tag{display:inline-flex;font-size:10.5px;font-weight:700;text-transform:uppercase;
-  color:var(--orange-2)}
-.xdev .tag.keep{letter-spacing:.14em}
-.xdev h3{margin-top:10px;font-size:22px;font-weight:700}
-.xdev p{margin-top:8px;font-size:13px;color:rgba(255,255,255,.7);max-width:38ch}
-.xdev .term{margin-top:10px;font-size:13px;font-weight:600;color:#fff}
-.xdev .amt{margin-top:16px;display:flex;align-items:baseline;gap:8px}
-.xdev .amt b{font-family:var(--disp);font-weight:800;font-size:44px;line-height:1;
-  font-variant-numeric:tabular-nums}
-.xdev .amt s{text-decoration:none;font-size:12px;font-weight:600;color:rgba(255,255,255,.6)}
-.xdev .go{margin-top:16px;max-width:280px}
 
 /* ==========================================================
    FOOTBALL — the poster wall
@@ -895,7 +830,6 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   <div class="heroBg" aria-hidden="true">
     <div class="heroWall" id="heroWall"></div><span class="glow"></span><span class="grain"></span>
   </div>
-  <div class="heroCast rev" id="heroStage" aria-hidden="true"></div>
   <div class="wrap"><div class="heroInner">
     <span class="heroKick keep rev" data-i="hero.kicker">MOOR TV</span>
     <h1 class="rev"><span data-i="hero.titleA"></span><span class="l2" data-i="hero.titleB"></span></h1>
@@ -936,7 +870,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
         <span class="lbl keep" data-i="plans.eyebrow"></span>
         <h2><span data-i="plans.titleA"></span> <span class="hl" data-i="plans.titleB"></span></h2>
       </div>
-      <p style="max-width:34ch;font-size:14px;color:var(--muted)" data-i="plans.subtitle"></p>
+      <p style="max-width:36ch;font-size:14px;color:var(--muted)" data-i="plans.subtitle"></p>
     </div>
     <div class="ladder rev" id="planLadder"></div>
     <ul class="plansFeat rev" id="planFeat"></ul>
@@ -944,21 +878,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   </div>
 </section>
 
-<!-- 5 — two-screen terms and the device -->
-<section id="extras" class="pad" style="scroll-margin-top:84px">
-  <div class="wrap">
-    <div class="sheadRow rev">
-      <div class="shead">
-        <span class="lbl keep" data-i="extras.eyebrow"></span>
-        <h2><span data-i="extras.titleA"></span> <span class="hl" data-i="extras.titleB"></span></h2>
-      </div>
-      <p style="max-width:32ch;font-size:14px;color:var(--muted)" data-i="extras.subtitle"></p>
-    </div>
-    <div class="extras rev" id="extrasGrid"></div>
-  </div>
-</section>
-
-<!-- 6 — football -->
+<!-- 5 — football -->
 <section id="football" class="pad" style="scroll-margin-top:84px">
   <div class="wrap">
     <div class="fbHead rev">
@@ -979,7 +899,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   </div>
 </section>
 
-<!-- 7 — content -->
+<!-- 6 — content -->
 <section id="categories" class="pad tint" style="scroll-margin-top:84px">
   <div class="wrap">
     <div class="catHead rev">
@@ -996,7 +916,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   </div>
 </section>
 
-<!-- 8 — why -->
+<!-- 7 — why -->
 <section id="why" class="pad dark" style="scroll-margin-top:84px">
   <div class="wrap"><div class="whyWrap">
     <div class="shead rev">
@@ -1008,7 +928,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   </div></div>
 </section>
 
-<!-- 9 — reviews -->
+<!-- 8 — reviews -->
 <section id="reviews" class="pad" style="scroll-margin-top:84px">
   <div class="wrap">
     <div class="shead rev">
@@ -1019,7 +939,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
   </div>
 </section>
 
-<!-- 10 — faq -->
+<!-- 9 — faq -->
 <section id="faq" class="pad tint" style="scroll-margin-top:84px">
   <div class="wrap"><div class="faqWrap">
     <div class="rev">
@@ -1042,7 +962,7 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
 </section>
 </main>
 
-<!-- 11 — closing CTA -->
+<!-- 10 — closing CTA -->
 <section id="close" class="pad">
   <span class="glow" aria-hidden="true"></span>
   <div class="drift" id="drift" aria-hidden="true"></div>
@@ -1215,8 +1135,8 @@ ar: {
           {n:'4K UHD',l:'جودة البث',h:'وضوح تام على كل شاشة'} ],
   statsLead:{ eyebrow:'المكتبة', titleA:'اشتراك واحد', titleB:'يفتح كل هذا.',
     body:'قنوات العالم كلها وأضخم مكتبة أفلام ومسلسلات، تُحدَّث كل أسبوع — ويمكنك المشاهدة على نافذتين في وقت واحد.' },
-  plans:{ eyebrow:'الأسعار', titleA:'خمس مُدد،', titleB:'نفس المحتوى.',
-    subtitle:'كل الاشتراكات تفتح المكتبة كاملة — الفرق في المدة وحدها. كلما طالت المدة قلّت التكلفة الشهرية.',
+  plans:{ eyebrow:'الأسعار', titleA:'كل الخيارات،', titleB:'نفس المحتوى.',
+    subtitle:'كل الاشتراكات تفتح المكتبة كاملة — الفرق في المدة، وفي عدد الشاشات إن أردت نافذتين. كلما طالت المدة قلّت التكلفة الشهرية.',
     footnote:'الأسعار بالأوقية الموريتانية. التفعيل والدعم عبر واتساب، ولا يُخصم أي مبلغ عبر الموقع.',
     perMonth:function(n){ return num(n) + ' أوقية شهرياً'; },
     save:function(p){ return 'وفّر ' + p + '%'; },
@@ -1229,9 +1149,10 @@ ar: {
       'قنوات الأطفال والأخبار',
       'جودة 4K على كل الأجهزة',
       'دعم فوري على واتساب' ] },
-  extras:{ eyebrow:'خيارات إضافية', titleA:'نافذتان،', titleB:'أو جهاز جاهز.',
-    subtitle:'شاهد على شاشتين في وقت واحد، أو خذ الجهاز مفعَّلاً من عندنا.',
-    windows:'نافذتان في وقت واحد', device:'جهاز مع الاشتراك',
+  /* Labels for the two offers in the grid that are not plain durations.
+     They lost their own section when everything moved into one grid, so all
+     that is left is what each tile calls itself. */
+  extras:{ windows:'نافذتان في وقت واحد', device:'جهاز مع الاشتراك',
     deviceName:'جهاز مور تيفي', deviceTerm:'15 شهراً مع الجهاز',
     deviceBlurb:'جهاز أندرويد تي في مع جهاز التحكم، يصل مفعَّلاً وجاهزاً — تُوصله بالتلفاز وتشاهد.' },
   football:{ eyebrow:'الرياضة', titleA:'كل مباراة تهمّك،', titleB:'مباشرة.',
@@ -1309,8 +1230,8 @@ fr: {
           {n:'4K UHD',l:'Qualité de diffusion',h:'Une image nette sur chaque écran'} ],
   statsLead:{ eyebrow:'La bibliothèque', titleA:'Un seul abonnement', titleB:'ouvre tout cela.',
     body:'Les chaînes du monde entier et une immense bibliothèque de films et de séries, enrichie chaque semaine — avec la possibilité de regarder sur deux écrans à la fois.' },
-  plans:{ eyebrow:'Tarifs', titleA:'Cinq durées,', titleB:'le même contenu.',
-    subtitle:'Tous les abonnements ouvrent la bibliothèque complète — seule la durée change. Plus elle est longue, moins le mois revient cher.',
+  plans:{ eyebrow:'Tarifs', titleA:'Toutes les formules,', titleB:'le même contenu.',
+    subtitle:'Tous les abonnements ouvrent la bibliothèque complète — ce qui change, c’est la durée, et le nombre d’écrans si vous en voulez deux. Plus la durée est longue, moins le mois revient cher.',
     footnote:'Prix en ouguiya mauritanienne. Activation et assistance sur WhatsApp ; aucun montant n’est prélevé sur ce site.',
     perMonth:function(n){ return num(n) + ' MRU / mois'; },
     save:function(p){ return 'Économisez ' + p + ' %'; },
@@ -1323,9 +1244,7 @@ fr: {
       'Chaînes jeunesse et information',
       '4K sur tous vos appareils',
       'Assistance WhatsApp rapide' ] },
-  extras:{ eyebrow:'Options', titleA:'Deux écrans,', titleB:'ou un appareil prêt.',
-    subtitle:'Regardez sur deux écrans en même temps, ou recevez l’appareil déjà activé.',
-    windows:'Deux écrans simultanés', device:'Appareil avec l’abonnement',
+  extras:{ windows:'Deux écrans simultanés', device:'Appareil avec l’abonnement',
     deviceName:'Boîtier MOOR TV', deviceTerm:'15 mois, appareil inclus',
     deviceBlurb:'Un appareil Android TV avec sa télécommande, livré déjà activé — vous le branchez au téléviseur et vous regardez.' },
   football:{ eyebrow:'Sport', titleA:'Chaque match qui compte,', titleB:'en direct.',
@@ -1395,12 +1314,11 @@ fr: {
    savings percentages are measured against. */
 var BASE = 500;
 var PLANS = [
-  { id:'p1',  months:1,  price:500,  art:'m1',  photo:'p-kane' },
-  { id:'p3',  months:3,  price:1000, art:'m3',  photo:'x-homelander' },
-  { id:'p6',  months:6,  price:1700, art:'m6',  photo:'x-jane' },
-  { id:'p12', months:12, price:2500, art:'m12', photo:'p-haaland', badge:'popular' },
-  { id:'p15', months:15, price:3000, art:'m12', photo:'p-messi-b', photo2:'x-tyrion',
-    badge:'best', best:true }
+  { id:'p1',  months:1,  price:500 },
+  { id:'p3',  months:3,  price:1000 },
+  { id:'p6',  months:6,  price:1700 },
+  { id:'p12', months:12, price:2500, badge:'popular' },
+  { id:'p15', months:15, price:3000, badge:'best', best:true }
 ];
 PLANS.forEach(function (p) {
   p.ref = BASE * p.months;
@@ -1408,9 +1326,10 @@ PLANS.forEach(function (p) {
   p.savePct = Math.round((1 - p.price / p.ref) * 100);
 });
 
-/* Two-screen terms and the hardware bundle. They sit outside the ladder
-   because they are a different thing being bought, not a longer version of
-   the same thing — but they order through the same sheet. */
+/* Two-screen terms and the hardware bundle. They are kept in their own list
+   because `planLabel()` names them differently and the hardware has a product
+   to photograph — but they sit in the same grid as the durations and order
+   through the same sheet. */
 var EXTRAS = [
   { id:'w12', months:12, price:3000, kind:'windows' },
   { id:'w15', months:15, price:3500, kind:'windows' },
@@ -1542,16 +1461,10 @@ function render() {
     return '<a href="'+l[1]+'" data-close>'+esc(d.nav[l[0]])+'<span>0'+(i+1)+'</span></a>'; }).join('');
 
   $('#heroPills').innerHTML = d.hero.pills.map(function(p){ return '<span><i></i>'+esc(p)+'</span>'; }).join('');
-  // The wall is the whole library raked past at an angle, three rows at three
-  // speeds — the backdrop is the catalogue itself rather than three cards
-  // standing in for it. Each row is doubled so the -50% translate loops.
+  // The wall is the whole library raked past at an angle, five rows at five
+  // speeds. It is the hero: no figures stand in front of it. Each row is
+  // doubled so the -50% translate loops.
   renderWall();
-  // The cast: a footballer and a screen character hold the bottom corners and
-  // are cropped by the frame. Both halves of the offer, stated at full height.
-  var castA = photo('p-ronaldo-b'), castB = photo('x-punisher');
-  $('#heroStage').innerHTML =
-    (castB ? '<img class="castB" src="'+castB+'" alt="" decoding="async">' : '') +
-    (castA ? '<img class="castA" src="'+castA+'" alt="" decoding="async">' : '');
   $('#fromPrice').textContent = num(BASE);
 
   // Crests ride along in the marquee so the strip reads as football, not
@@ -1570,12 +1483,13 @@ function render() {
       '" data-post="'+esc(f.post)+'">'+esc(f.pre)+(f.to ? '0' : '')+esc(f.post)+'</span>'+
       '<span class="tx"><b>'+esc(s.l)+'</b><span>'+esc(s.h)+'</span></span></div>'; }).join('');
 
-  $('#planLadder').innerHTML = PLANS.map(function(p){ return tier(p,d); }).join('');
+  // Durations, two-screen terms and the hardware are all things you can buy,
+  // so they share one grid. The order is also the order of the picker.
+  $('#planLadder').innerHTML = PLANS.concat(EXTRAS).map(function(p){ return tier(p,d); }).join('');
   $('#planFeat').innerHTML = d.plans.features
     .map(function(f){ return '<li>'+TICK+'<span>'+esc(f)+'</span></li>'; }).join('');
-  $('#extrasGrid').innerHTML = extrasPanel(d);
 
-  pFan = undefined;   // the hero was just rebuilt; drop the parallax cache
+  pWall = undefined;  // the hero was just rebuilt; drop the parallax cache
 
   // Players anchoring the football, why and closing sections.
   setImg('#fbAnchor', 'p-yamal');
@@ -1679,55 +1593,42 @@ function planLabel(p, d) {
   return d.plans.months(p.months);
 }
 
-/* The extras are one split panel: the two-screen terms stack as rows on one
-   side, the hardware fills the other. Both halves come out of this function
-   so the section is still driven entirely by EXTRAS. */
-function extrasPanel(d) {
-  var rows = EXTRAS.filter(function(e){ return e.kind !== 'device'; });
-  var dev  = EXTRAS.filter(function(e){ return e.kind === 'device'; })[0];
-  var out = '<div class="xside">' + rows.map(function(e){
-    return '<div class="xrow">'+
-      '<div><span class="tag keep">'+esc(d.extras.windows)+'</span>'+
-      '<h3>'+esc(d.plans.months(e.months))+'</h3>'+
-      '<p>'+esc(d.plans.perMonth(e.per))+'</p></div>'+
-      '<span class="panes" aria-hidden="true"><i></i><i></i></span>'+
-      '<span class="amt" dir="ltr"><b>'+num(e.price)+'</b><s>MRU</s></span>'+
-      '<div class="go"><button class="btn btn-line btn-sm btn-full" data-pick="'+e.id+'">'+
-        '<span>'+esc(d.plans.add)+'</span></button></div>'+
-      '</div>'; }).join('') + '</div>';
-  if (!dev) return out;
-  var shot = photo(dev.photo);
-  return out + '<article class="xdev">'+
-    (shot ? '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">' : '')+
-    '<span class="tag keep">'+esc(d.extras.device)+'</span>'+
-    '<h3>'+esc(d.extras.deviceName)+'</h3>'+
-    '<p>'+esc(d.extras.deviceBlurb)+'</p>'+
-    '<p class="term">'+esc(d.extras.deviceTerm)+'</p>'+
-    '<div class="amt"><b dir="ltr">'+num(dev.price)+'</b><s>MRU</s></div>'+
-    '<div class="go"><button class="btn btn-o btn-full" data-pick="'+dev.id+'">'+
-      '<span>'+esc(d.plans.add)+'</span></button></div>'+
-    '</article>';
+/* The duration meter: fifteen segments, one per month of the longest term,
+   lit up to this offer's length. Every offer on the page is measured in
+   months, so one drawing compares all eight — and it replaces the portraits
+   the tiles used to carry, which said nothing about what was being bought. */
+var METER_MAX = 15;
+function meter(months){
+  var out = '';
+  for (var i = 0; i < METER_MAX; i++)
+    out += '<i class="' + (i < months ? 'on' : '') + '" style="--i:' + i + '"></i>';
+  return '<span class="meter" aria-hidden="true">' + out + '</span>';
 }
 
-/* One column of the ladder. Every term is built by the same function — the
-   featured one differs by a class and a second figure, not by a separate
-   layout, so the five stay comparable at a glance. */
+/* One tile of the offer grid. The five durations, the two two-screen terms
+   and the hardware all come out of here — they differ by a flag, a span and
+   whether there is a product to photograph, not by a separate layout. */
 function tier(p, d) {
-  var src = photo(p.photo), src2 = p.best ? photo(p.photo2) : '';
-  var flag = p.best ? d.plans.best : (p.badge === 'popular' ? d.plans.popular : '');
-  return '<article class="tier'+(p.best ? ' top' : '')+'">'+
-    (flag ? '<span class="flag keep">'+esc(flag)+'</span>' : '')+
-    '<span class="ph" aria-hidden="true">'+
-      (src2 ? '<img class="b" src="'+src2+'" alt="" loading="lazy" decoding="async">' : '')+
-      (src ? '<img class="a" src="'+src+'" alt="" loading="lazy" decoding="async">' : '')+
-    '</span>'+
-    '<h3 class="dur">'+esc(planLabel(p,d))+'</h3>'+
-    '<p class="per">'+esc(d.plans.perMonth(p.per))+'</p>'+
+  var dev  = p.kind === 'device';
+  var flag = p.best ? d.plans.best
+           : p.badge === 'popular' ? d.plans.popular
+           : p.kind === 'windows' ? d.extras.windows
+           : dev ? d.extras.device : '';
+  var body =
+    '<span class="flag keep'+(p.badge==='popular'?' pop':'')+'">'+esc(flag)+'</span>'+
+    '<h3 class="dur">'+esc(dev ? d.extras.deviceName : d.plans.months(p.months))+'</h3>'+
+    meter(p.months)+
+    '<p class="per">'+esc(dev ? d.extras.deviceTerm : d.plans.perMonth(p.per))+'</p>'+
+    (dev ? '<p class="blurb">'+esc(d.extras.deviceBlurb)+'</p>' : '')+
     '<div class="amt"><b dir="ltr">'+num(p.price)+'</b><s>MRU</s></div>'+
     '<p class="save">'+(p.savePct > 0 ? esc(d.plans.save(p.savePct)) : '')+'</p>'+
-    '<div class="go"><button class="btn '+(p.best ? 'btn-o' : 'btn-line')+
-      ' btn-full" data-pick="'+p.id+'"><span>'+esc(d.plans.add)+'</span></button></div>'+
-    '</article>';
+    '<div class="go"><button class="btn '+(p.best || dev ? 'btn-o' : 'btn-line')+
+      ' btn-full" data-pick="'+p.id+'"><span>'+esc(d.plans.add)+'</span></button></div>';
+  if (!dev) return '<article class="tier'+(p.best ? ' top' : '')+'">'+body+'</article>';
+  var shot = photo(p.photo);
+  return '<article class="tier dev">'+
+    (shot ? '<img class="shot" src="'+shot+'" alt="" loading="lazy" decoding="async">' : '')+
+    '<div class="body">'+body+'</div></article>';
 }
 
 /* Shrinks each typographic poster's wordmark until it fits its tile.
@@ -1801,16 +1702,16 @@ function renderDrift(){
   box.innerHTML = row(art.slice(0, half), '') + row(art.slice(half), ' b');
 }
 
-/* The hero backdrop: three raked rows of key art at three speeds. Each row is
+/* The hero backdrop: five raked rows of key art at five speeds. Each row is
    doubled so the -50% translate loops, and each starts at a different offset
-   into the pool so the three never line up into a visible grid. */
+   into the pool so the rows never line up into a visible grid. */
 function renderWall(){
   var box = $('#heroWall'); if (!box) return;
   var art = WALL.map(photo).filter(Boolean);
   if (art.length < 6){ box.innerHTML = ''; return; }
   var out = '';
-  for (var r = 0; r < 3; r++){
-    var offset = Math.floor(art.length / 3) * r;
+  for (var r = 0; r < 5; r++){
+    var offset = Math.floor(art.length / 5) * r;
     var list = art.slice(offset).concat(art.slice(0, offset));
     out += '<div class="r">' + list.concat(list).map(function(src){
       return '<img src="'+src+'" alt="" decoding="async">'; }).join('') + '</div>';
@@ -1914,19 +1815,18 @@ function counters(){
 }
 function paint(el, v){ el.textContent = el.dataset.pre + num(v) + el.dataset.post; }
 
-/* Slow parallax on the hero: the wall sinks, the cast holds back, so the
-   stage has depth as it leaves. The wall carries its rake in the transform,
-   so the scroll offset has to be composed onto it rather than replacing it. */
-var pFan, pStar, pTick = false;
+/* Slow parallax on the hero: the wall sinks a little faster than the page, so
+   the type lifts off it as the section leaves. The wall carries its rake in
+   the transform, so the scroll offset is composed onto it, not substituted. */
+var pWall, pTick = false;
 function parallax(y){
   if (REDUCED || pTick) return;
   pTick = true;
   requestAnimationFrame(function(){
     pTick = false;
-    if (pFan === undefined){ pFan = $('#heroWall'); pStar = $('#heroStage .castA'); }
-    if (y > window.innerHeight * 1.2) return;
-    if (pFan) pFan.style.transform = 'rotate(-9deg) translate3d(0,' + (y * 0.13) + 'px,0)';
-    if (pStar) pStar.style.transform = 'translate3d(0,' + (y * -0.06) + 'px,0)';
+    if (pWall === undefined) pWall = $('#heroWall');
+    if (!pWall || y > window.innerHeight * 1.2) return;
+    pWall.style.transform = 'rotate(-9deg) translate3d(0,' + (y * 0.13) + 'px,0)';
   });
 }
 
