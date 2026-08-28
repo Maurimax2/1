@@ -262,19 +262,33 @@ var EXTRAS = [
 ];
 EXTRAS.forEach(function (e) { e.per = Math.round(e.price / e.months); });
 
-/* How each offer looks on the shelf: the figure standing in it, and its two
-   colours. The colour is a ladder — blue at one month through violet at
-   fifteen — so the row reads as ascending; the two-screen terms break out
+/* How each offer looks on the shelf. Every card carries a pair — a footballer
+   and a screen character — because that pairing is the whole offer stated in
+   one picture. The colour is a ladder: blue at one month through violet at
+   fifteen, so the row reads as ascending, and the two-screen terms break out
    into cyan because they are a different product, not a longer one.
+
+   Two constraints govern the casting, and both bite if it is re-cast:
+
+   - There are only five character cut-outs for seven cards, so two of them
+     appear twice. The repeats sit four cards apart, which is more than fits
+     on screen at once.
+   - The two-screen cards stand their figures inside a 112px frame, so they
+     need *narrow* renders. Yamal and Álvarez are wide (arms out, ~0.78 of
+     their height) and spill out of the frame; they belong on the plain cards.
+     Anything at or below ~0.6 fits.
+
    No figure holds the same slot here as on MAURIMAX; see the README table. */
 var OFFER_ART = {
-  p1:  { photo:'p-kane',      c1:'#12306e', c2:'#3b82f6' },
-  p3:  { photo:'x-homelander', c1:'#1b2f7a', c2:'#4f7cff' },
-  p6:  { photo:'x-jane',      c1:'#2b2a84', c2:'#6366f1' },
-  p12: { photo:'p-haaland',   c1:'#3d2490', c2:'#8b5cf6' },
-  p15: { photo:'p-messi-b', photo2:'x-tyrion', c1:'#4c1d95', c2:'#a855f7' },
-  w12: { panes:true, c1:'#0b3b52', c2:'#22d3ee', ct:'#06070e' },
-  w15: { panes:true, c1:'#0d4a5e', c2:'#38bdf8', ct:'#06070e' }
+  p1:  { player:'p-kane',      face:'x-jane',       c1:'#12306e', c2:'#3b82f6' },
+  p3:  { player:'p-haaland',   face:'x-homelander', c1:'#1b2f7a', c2:'#4f7cff' },
+  p6:  { player:'p-yamal',     face:'x-walter',     c1:'#2b2a84', c2:'#6366f1' },
+  p12: { player:'p-ronaldo',   face:'x-punisher',   c1:'#3d2490', c2:'#8b5cf6' },
+  p15: { player:'p-messi-b',   face:'x-tyrion',     c1:'#4c1d95', c2:'#a855f7' },
+  w12: { player:'p-ronaldo-b', face:'x-homelander', c1:'#0b3b52', c2:'#22d3ee',
+         ct:'#06070e', screens:true },
+  w15: { player:'p-messi',     face:'x-walter',     c1:'#0d4a5e', c2:'#38bdf8',
+         ct:'#06070e', screens:true }
 };
 
 function findAny(id){
@@ -563,12 +577,20 @@ function offerCard(p, d) {
   var flag = p.best ? d.plans.best
            : p.badge === 'popular' ? d.plans.popular
            : win ? d.extras.windows : '';
-  var shot = photo(art.photo), shot2 = photo(art.photo2);
-  var stage = art.panes
-    ? '<span class="panes"><i></i><i></i></span>'
-    : (shot2 ? '<img class="b" src="'+shot2+'" alt="" loading="lazy" decoding="async">' : '') +
-      (shot  ? '<img class="a" src="'+shot+'" alt="" loading="lazy" decoding="async">' : '');
-  return '<article class="oc'+(p.best ? ' top' : '')+'" style="--c1:'+art.c1+';--c2:'+art.c2+
+  var pl = photo(art.player), fc = photo(art.face);
+  function img(cls, src){
+    return src ? '<img class="'+cls+'" src="'+src+'" alt="" loading="lazy" decoding="async">' : '';
+  }
+  // On the two-screen cards each figure stands in a screen of its own; on the
+  // rest the pair stands together, the footballer forward.
+  var stage = art.screens
+    ? '<span class="screens">'+
+        '<span class="pane a"><span class="scr"></span>'+img('','' + pl)+'<span class="bez"></span></span>'+
+        '<span class="pane b"><span class="scr"></span>'+img('','' + fc)+'<span class="bez"></span></span>'+
+      '</span>'
+    : img('b', fc) + img('a', pl);
+  return '<article class="oc'+(p.best ? ' top' : '')+(art.screens ? ' win' : '')+
+    '" style="--c1:'+art.c1+';--c2:'+art.c2+
     (art.ct ? ';--ct:'+art.ct : '')+'">'+
     '<span class="art" aria-hidden="true"><span class="lit"></span>'+stage+'<span class="fade"></span></span>'+
     (flag ? '<span class="flag keep">'+esc(flag)+'</span>' : '')+

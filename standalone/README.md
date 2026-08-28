@@ -54,14 +54,46 @@ And two differences of substance rather than form:
 
 ### The offer shelf
 
-`OFFER_ART` is the whole look of the shelf in one table: which figure stands
-in each card and its two colours. The colour is a **ladder** — blue at one
-month through violet at fifteen — so the row reads as ascending, and the
-two-screen terms break out into cyan because they are a different product,
-not a longer one. Those two cards carry a drawn pair of screens rather than a
-person; a face would have said nothing about what makes them different.
-`--ct` is the text that sits on `--c2`, declared only by the cyan pair, where
-white would fail.
+`OFFER_ART` is the whole look of the shelf in one table: the pair standing in
+each card and its two colours. **Every card carries a footballer and a screen
+character**, because that pairing is the whole offer stated in one picture.
+The colour is a **ladder** — blue at one month through violet at fifteen — so
+the row reads as ascending, and the two-screen terms break out into cyan
+because they are a different product, not a longer one. `--ct` is the text
+that sits on `--c2`, declared only by the cyan pair, where white would fail.
+
+Two constraints govern the casting, and both bite if it is re-cast:
+
+- **There are only five character cut-outs for seven cards**, so two of them
+  appear twice. The repeats sit four cards apart, which is more than fits on
+  screen at once. More character images would remove the repeats entirely.
+- **The two-screen cards need narrow renders.** They stand their figures
+  inside a 152px frame; Yamal and Álvarez are wide (arms out, about 0.78 of
+  their height) and spill out of it, so they belong on the plain cards.
+  Anything at or below ~0.6 fits.
+
+On the plain cards the pair is **laid out, not positioned**: the renders run
+from 0.30 to 0.78 of their height, so any fixed inset that frames one pairing
+crops another. Centring the two as flex items keeps every pairing inside the
+card whatever their widths, and a negative margin is what makes them stand
+together rather than apart.
+
+### Someone stepping out of each screen
+
+The two-screen cards draw the second window literally. Each screen holds one
+figure: feet on the screen floor, head clear above the top bezel, and **the
+bezel painted after the figure so the frame crosses in front of it** — that
+last part is the whole illusion. Three numbers keep it working, and it breaks
+visibly if any of them drifts:
+
+- **The screens are wide and the figures modest.** A figure taller than about
+  1.6× its frame stops reading as inside it and starts reading as standing
+  next to a floating rectangle.
+- **The screens must clear the art panel's bottom fade**, or they dissolve
+  into the card body and read as open brackets. `.oc.win` fades shorter for
+  exactly this reason.
+- **The flag swaps sides on these cards.** The raised screen sits under the
+  corner the flag normally takes, and its figure's head lands behind the pill.
 
 **The drift.** The rail moves on its own and stops the moment anyone reaches
 for it — pointer, keyboard or touch. It scrolls a real scroll container rather
@@ -152,7 +184,7 @@ wordmark.
 | Slot | MAURIMAX | MOOR TV |
 | --- | --- | --- |
 | Hero | Álvarez + Homelander over a fan of three posters | no figures — the whole `WALL` pool, raked and sliding |
-| Offer cards | Messi, Walter White, Haaland, Tyrion, Punisher | Kane, Homelander, Jane, Haaland, Messi (alt) + Tyrion — see `OFFER_ART` |
+| Offer cards | Messi, Walter White, Haaland, Tyrion, Punisher | a footballer and a character on every card — see `OFFER_ART` |
 | Football anchor | Ronaldo | Yamal |
 | Content anchor | Patrick Jane | Walter White |
 | Why anchor | Haaland | Álvarez |
@@ -164,11 +196,13 @@ The eight genre photographs — football, sports, kids, anime, news,
 documentaries, drama, live — have no alternates, so both sites use them. New
 images for any of those would separate the two further.
 
-Two figures are now unused by MOOR TV — the alternate Ronaldo render and the
-Punisher — but the build inlines the whole of `images/` into `moortv.html`
-regardless, so they still cost bytes there. `dist-moortv/` does not pay that,
-since it writes the files out and the browser fetches only what the markup
-asks for.
+Between them the shelf and the anchors now use every cut-out in `images/`:
+seven of the eight footballers and all five characters, with Homelander and
+Walter White appearing twice on the shelf. Álvarez is the one figure the shelf
+does not carry — he is too wide for a screen frame, and he anchors the *why*
+section instead. Yamal, Walter White and Messi appear both on the shelf and as
+a section anchor, which is far enough apart to read as a cast rather than a
+repeat.
 
 ## The three source files
 
