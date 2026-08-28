@@ -398,9 +398,16 @@ html[dir=rtl] .railbtn svg{transform:scaleX(-1)}
    negative margin is what makes them stand together rather than apart. */
 .oc .art>img{position:relative;z-index:2;flex:0 0 auto;width:auto;max-width:none;
   object-fit:contain;object-position:bottom center}
-.oc .art>img.a{z-index:3;height:94%;filter:drop-shadow(0 16px 22px rgba(0,0,0,.65))}
-.oc .art>img.b{height:80%;margin-inline-end:-8%;opacity:.95;
-  filter:drop-shadow(0 14px 18px rgba(0,0,0,.6))}
+/* Both stand at the same height. Sizing the character down read as the
+   screen half of the offer mattering less than the football half. */
+/* Both stand at the same *apparent* size, which is not the same box height —
+   see FIGURE_FIT. `--h` scales against the base and `--dy` drops the figure
+   so the crop lands on the chest instead of lopping off the head; the
+   transform is layout-neutral, so the flex line is unaffected by it. */
+.oc .art>img{height:calc(94% * var(--h,1));transform:translateY(var(--dy,0%));
+  filter:drop-shadow(0 16px 22px rgba(0,0,0,.65))}
+.oc .art>img.a{z-index:3}
+.oc .art>img.b{margin-inline-end:-7%}
 .oc .art .fade{position:absolute;z-index:5;inset-inline:0;bottom:-1px;height:44%;
   background:linear-gradient(to top,var(--paper-2) 12%,transparent)}
 
@@ -413,18 +420,20 @@ html[dir=rtl] .railbtn svg{transform:scaleX(-1)}
 /* The screens are wide and the figures modest, not the other way round: a
    figure taller than about 1.6× its frame stops reading as inside it and
    starts reading as standing next to a floating rectangle. */
-.oc .pane{position:absolute;width:132px;height:92px}
-@media(min-width:700px){.oc .pane{width:152px;height:106px}}
+.oc .pane{position:absolute;width:146px;height:100px}
+@media(min-width:700px){.oc .pane{width:166px;height:114px}}
 .oc .pane .scr{position:absolute;inset:0;border-radius:8px;
   background:linear-gradient(155deg,var(--c1),#04060e);
   box-shadow:inset 0 0 34px -6px var(--c2)}
 .oc .pane img{position:absolute;inset-inline:0;margin-inline:auto;bottom:4%;
   height:134%;width:auto;max-width:none;object-fit:contain;object-position:bottom center;
   filter:drop-shadow(0 10px 14px rgba(0,0,0,.8))}
-.oc .pane .bez{position:absolute;inset:0;border:2px solid var(--c2);border-radius:8px;
-  box-shadow:0 14px 28px -12px var(--c2)}
-.oc .pane.a{inset-inline-start:1%;bottom:26%;transform:rotate(-5deg)}
-.oc .pane.b{inset-inline-end:1%;bottom:20%;transform:rotate(5deg);z-index:2}
+.oc .pane .bez{position:absolute;inset:0;border:2.5px solid var(--c2);border-radius:9px;
+  box-shadow:0 16px 32px -12px var(--c2),0 0 0 1px rgba(255,255,255,.06) inset}
+/* Flush to the card edges: the two screens are the whole point of these cards,
+   so they take every pixel of width the card has and overlap in the middle. */
+.oc .pane.a{inset-inline-start:0;bottom:25%;transform:rotate(-5deg)}
+.oc .pane.b{inset-inline-end:0;bottom:18%;transform:rotate(5deg);z-index:2}
 /* The screens have to clear the fade or they dissolve into the card body and
    read as open brackets rather than as screens, so these cards fade shorter.
    The flag also swaps sides here: the raised screen sits under the corner the

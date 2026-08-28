@@ -31,16 +31,16 @@ ar: {
   hero:{ titleA:'ترفيه بلا حدود.', titleB:['مكان','واحد.'],
     subtitle:'أكثر من 20,000 قناة مباشرة وكل البطولات الكروية والأفلام والمسلسلات بجودة 4K — على شاشتك، أينما كنت.',
     from:'يبدأ من', ctaPrimary:'اختر اشتراكك', ctaSecondary:'شاهد البطولات',
-    pills:['تفعيل خلال دقائق','حتى نافذتين معاً','جودة 4K فائقة'] },
+    pills:['تفعيل خلال دقائق','حتى جهازين معاً','جودة 4K فائقة'] },
   band:['كل البطولات الكروية','أفلام ومسلسلات','20,000 قناة مباشرة','جودة 4K','تفعيل فوري','دعم على واتساب'],
   stats:[ {n:'20,000+',l:'قناة مباشرة',h:'من كل قارات العالم'},
           {n:'20,000+',l:'فيلم',h:'من أضخم الأعمال إلى الكنوز المخفية'},
           {n:'15,000+',l:'مسلسل',h:'مواسم كاملة، تُحدَّث دائماً'},
           {n:'4K UHD',l:'جودة البث',h:'وضوح تام على كل شاشة'} ],
   statsLead:{ eyebrow:'المكتبة', titleA:'اشتراك واحد', titleB:'يفتح كل هذا.',
-    body:'قنوات العالم كلها وأضخم مكتبة أفلام ومسلسلات، تُحدَّث كل أسبوع — ويمكنك المشاهدة على نافذتين في وقت واحد.' },
+    body:'قنوات العالم كلها وأضخم مكتبة أفلام ومسلسلات، تُحدَّث كل أسبوع — ويمكنك المشاهدة على جهازين في آن واحد.' },
   plans:{ eyebrow:'الأسعار', titleA:'كل الخيارات،', titleB:'نفس المحتوى.',
-    subtitle:'كل الاشتراكات تفتح المكتبة كاملة — الفرق في المدة، وفي عدد الشاشات إن أردت نافذتين. كلما طالت المدة قلّت التكلفة الشهرية.',
+    subtitle:'كل الاشتراكات تفتح المكتبة كاملة — الفرق في المدة، وفي عدد الأجهزة إن أردت جهازين. كلما طالت المدة قلّت التكلفة الشهرية.',
     footnote:'الأسعار بالأوقية الموريتانية. التفعيل والدعم عبر واتساب، ولا يُخصم أي مبلغ عبر الموقع.',
     perMonth:function(n){ return num(n) + ' أوقية شهرياً'; },
     save:function(p){ return 'وفّر ' + p + '%'; },
@@ -54,7 +54,7 @@ ar: {
       'جودة 4K على كل الأجهزة',
       'دعم فوري على واتساب' ] },
   /* What the two-screen cards on the shelf call themselves. */
-  extras:{ windows:'نافذتان في وقت واحد', device:'جهاز مع الاشتراك',
+  extras:{ windows:'جهازين في آن واحد', device:'جهاز مع الاشتراك',
     deviceName:'جهاز مور تيفي', deviceTerm:'15 شهراً مع الجهاز',
     deviceBlurb:'جهاز أندرويد تي في مع جهاز التحكم، يصل مفعَّلاً وجاهزاً — تُوصله بالتلفاز وتشاهد.' },
   /* The hardware has its own section. `specs` is a label/value list — the
@@ -90,7 +90,7 @@ ar: {
     subtitle:'ليست مجرد قنوات أكثر — بل خدمة أفضل من البداية إلى النهاية.',
     items:[
       {t:'20 ألف قناة',b:'قنوات من كل قارة: رياضة وأفلام وأطفال وأخبار ودراما، عربية وعالمية.'},
-      {t:'نافذتان معاً',b:'اختر باقة النافذتين وشاهد أنت والعائلة قناتين مختلفتين في نفس الوقت.'},
+      {t:'جهازان معاً',b:'اختر باقة الجهازين وشاهد أنت والعائلة قناتين مختلفتين في نفس الوقت.'},
       {t:'تفعيل خلال دقائق',b:'اطلب عبر واتساب ويُفعَّل اشتراكك في الحال — لا انتظار حتى الغد.'},
       {t:'جهاز جاهز',b:'إن أردت، يصلك جهاز أندرويد تي في مفعَّلاً بالكامل. توصيل وتشغيل.'},
       {t:'جودة فائقة',b:'بث 4K مع معدل متكيّف، فتبقى الصورة واضحة حتى عندما يضعف الاتصال.'},
@@ -137,16 +137,16 @@ fr: {
   hero:{ titleA:'Le divertissement sans limites.', titleB:['En un seul','endroit.'],
     subtitle:'Plus de 20 000 chaînes en direct, toutes les grandes compétitions de football, films et séries en 4K — sur votre écran, où que vous soyez.',
     from:'À partir de', ctaPrimary:'Choisir mon abonnement', ctaSecondary:'Voir les compétitions',
-    pills:['Activation en minutes','Jusqu’à deux écrans','4K Ultra HD'] },
+    pills:['Activation en minutes','Jusqu’à deux appareils','4K Ultra HD'] },
   band:['Toutes les ligues de football','Films et séries','20 000 chaînes en direct','Qualité 4K','Activation immédiate','Assistance WhatsApp'],
   stats:[ {n:'20,000+',l:'Chaînes en direct',h:'De tous les continents'},
           {n:'20,000+',l:'Films',h:'Des blockbusters aux pépites'},
           {n:'15,000+',l:'Séries',h:'Saisons complètes, toujours à jour'},
           {n:'4K UHD',l:'Qualité de diffusion',h:'Une image nette sur chaque écran'} ],
   statsLead:{ eyebrow:'La bibliothèque', titleA:'Un seul abonnement', titleB:'ouvre tout cela.',
-    body:'Les chaînes du monde entier et une immense bibliothèque de films et de séries, enrichie chaque semaine — avec la possibilité de regarder sur deux écrans à la fois.' },
+    body:'Les chaînes du monde entier et une immense bibliothèque de films et de séries, enrichie chaque semaine — avec la possibilité de regarder sur deux appareils à la fois.' },
   plans:{ eyebrow:'Tarifs', titleA:'Toutes les formules,', titleB:'le même contenu.',
-    subtitle:'Tous les abonnements ouvrent la bibliothèque complète — ce qui change, c’est la durée, et le nombre d’écrans si vous en voulez deux. Plus la durée est longue, moins le mois revient cher.',
+    subtitle:'Tous les abonnements ouvrent la bibliothèque complète — ce qui change, c’est la durée, et le nombre d’appareils si vous en voulez deux. Plus la durée est longue, moins le mois revient cher.',
     footnote:'Prix en ouguiya mauritanienne. Activation et assistance sur WhatsApp ; aucun montant n’est prélevé sur ce site.',
     perMonth:function(n){ return num(n) + ' MRU / mois'; },
     save:function(p){ return 'Économisez ' + p + ' %'; },
@@ -159,7 +159,7 @@ fr: {
       'Chaînes jeunesse et information',
       '4K sur tous vos appareils',
       'Assistance WhatsApp rapide' ] },
-  extras:{ windows:'Deux écrans simultanés', device:'Appareil avec l’abonnement',
+  extras:{ windows:'Deux appareils à la fois', device:'Appareil avec l’abonnement',
     deviceName:'Boîtier MOOR TV', deviceTerm:'15 mois, appareil inclus',
     deviceBlurb:'Un appareil Android TV avec sa télécommande, livré déjà activé — vous le branchez au téléviseur et vous regardez.' },
   device:{ eyebrow:'L’appareil', titleA:'Le boîtier MOOR TV,', titleB:'prêt à l’emploi.',
@@ -192,7 +192,7 @@ fr: {
     subtitle:'Pas seulement plus de chaînes — un meilleur service, du début à la fin.',
     items:[
       {t:'20 000 chaînes',b:'Des chaînes de tous les continents : sport, cinéma, jeunesse, info et séries, arabes et internationales.'},
-      {t:'Deux écrans',b:'Choisissez la formule deux écrans et regardez deux chaînes différentes en même temps.'},
+      {t:'Deux appareils',b:'Choisissez la formule deux appareils et regardez deux chaînes différentes en même temps.'},
       {t:'Actif en quelques minutes',b:'Commandez sur WhatsApp et votre accès est activé aussitôt — sans attendre demain.'},
       {t:'Appareil prêt',b:'Si vous le souhaitez, vous recevez un appareil Android TV entièrement activé. Branchez et regardez.'},
       {t:'Qualité Ultra HD',b:'4K à débit adaptatif : l’image reste nette même quand la connexion faiblit.'},
@@ -261,6 +261,28 @@ var EXTRAS = [
   { id:'dev', months:15, price:4500, kind:'device', photo:'d-stick' }
 ];
 EXTRAS.forEach(function (e) { e.per = Math.round(e.price / e.months); });
+
+/* The renders are framed differently — some are head-to-toe, some stop at the
+   waist — so giving them all the same box height gives them wildly different
+   head sizes, and the full-body ones read as small. This is the correction:
+   `h` scales a figure against the card's base height and `dy` pushes it back
+   down so the crop lands on the chest rather than lopping off the head.
+   It applies to the plain cards only. Inside the two-screen frames every
+   figure is meant to be seen head to toe, so they are left alone there.
+   Tuned by eye against the whole shelf; re-check the row after re-casting. */
+var FIGURE_FIT = {
+  'p-yamal':      [0.84, 0],    // tight waist-up
+  'p-haaland':    [0.94, 0],
+  'x-jane':       [0.88, 0],    // waist-up, the largest head of the set
+  'x-punisher':   [1.16, 7],
+  'x-tyrion':     [1.08, 3],
+  'x-homelander': [1.58, 38],   // head to toe: scaled up and dropped to the chest
+  'x-walter':     [1.52, 37]
+};
+function fit(key){
+  var f = FIGURE_FIT[key];
+  return f ? ' style="--h:'+f[0]+';--dy:'+f[1]+'%"' : '';
+}
 
 /* How each offer looks on the shelf. Every card carries a pair — a footballer
    and a screen character — because that pairing is the whole offer stated in
@@ -578,8 +600,9 @@ function offerCard(p, d) {
            : p.badge === 'popular' ? d.plans.popular
            : win ? d.extras.windows : '';
   var pl = photo(art.player), fc = photo(art.face);
-  function img(cls, src){
-    return src ? '<img class="'+cls+'" src="'+src+'" alt="" loading="lazy" decoding="async">' : '';
+  function img(cls, src, key){
+    return src ? '<img class="'+cls+'" src="'+src+'"'+(key ? fit(key) : '')+
+      ' alt="" loading="lazy" decoding="async">' : '';
   }
   // On the two-screen cards each figure stands in a screen of its own; on the
   // rest the pair stands together, the footballer forward.
@@ -588,7 +611,7 @@ function offerCard(p, d) {
         '<span class="pane a"><span class="scr"></span>'+img('','' + pl)+'<span class="bez"></span></span>'+
         '<span class="pane b"><span class="scr"></span>'+img('','' + fc)+'<span class="bez"></span></span>'+
       '</span>'
-    : img('b', fc) + img('a', pl);
+    : img('b', fc, art.face) + img('a', pl, art.player);
   return '<article class="oc'+(p.best ? ' top' : '')+(art.screens ? ' win' : '')+
     '" style="--c1:'+art.c1+';--c2:'+art.c2+
     (art.ct ? ';--ct:'+art.ct : '')+'">'+

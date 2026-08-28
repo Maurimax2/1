@@ -78,6 +78,18 @@ crops another. Centring the two as flex items keeps every pairing inside the
 card whatever their widths, and a negative margin is what makes them stand
 together rather than apart.
 
+**`FIGURE_FIT` is why they look the same size.** The renders are framed
+differently — Homelander and Walter White are head-to-toe, Yamal and Jane stop
+at the waist — so an equal box height gives wildly *unequal* heads, and the
+full-body ones read as small next to the footballers. Each entry scales a
+figure against the card's base height and then drops it back down so the crop
+lands on the chest instead of lopping off the head. The transform is
+layout-neutral, so the flex line is unaffected. It applies to the plain cards
+only: inside a screen frame every figure is meant to be seen head to toe.
+The table is tuned by eye against the whole shelf — re-check the row after any
+re-casting, and watch the widest pairing (Yamal with Walter White) against the
+card width.
+
 ### Someone stepping out of each screen
 
 The two-screen cards draw the second window literally. Each screen holds one
@@ -88,7 +100,9 @@ visibly if any of them drifts:
 
 - **The screens are wide and the figures modest.** A figure taller than about
   1.6× its frame stops reading as inside it and starts reading as standing
-  next to a floating rectangle.
+  next to a floating rectangle. The frames run flush to the card edges and
+  overlap in the middle: they are the whole point of these two cards, so they
+  take every pixel of width there is.
 - **The screens must clear the art panel's bottom fade**, or they dissolve
   into the card body and read as open brackets. `.oc.win` fades shorter for
   exactly this reason.
