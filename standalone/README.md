@@ -370,19 +370,62 @@ Two rules govern that panel:
   rather than being recoloured — which is also the safer thing to do with
   someone else's trademark.
 
-**Why the order is sent in two parts.** A `wa.me` link can carry text but
-never a file; the Web Share sheet can carry a file but drops the text on some
-platforms. So step three sends the details first, guaranteed, and offers the
-screenshot as a second, separate gesture through `navigator.share`. Merging
-them risks the merchant receiving a photo with no idea which order it belongs
-to. On a desktop browser nothing can hand a file to WhatsApp at all, so the
-step says so and asks the customer to attach it in the conversation.
+**Where the order goes.** It is filed first, then WhatsApp opens carrying the
+reference. The screenshot is downscaled to 1400px in the browser before it is
+uploaded — a phone screenshot is 2–5 MB, which is slow on mobile data and over
+the function's body limit once base64'd, while 1400px of a bank receipt is
+still perfectly readable.
 
-**There is no order database.** Nothing on this page stores an order: it is a
-static site, and the record of a sale is the WhatsApp conversation. An admin
-page listing submitted orders and their payment proofs needs a server —
-a Vercel function plus blob storage would do it, or a form service that
-accepts attachments. That is a decision about hosting and keys, not markup.
+**The fallback matters.** A `wa.me` link can carry text but never a file, and
+the Web Share sheet can carry a file but drops the text on some platforms.
+Where the API is not running — the preview build, the single-file copy, any
+static host — the POST fails and the flow reverts to what it did before:
+details over WhatsApp, screenshot by a second share gesture. Nothing breaks,
+it is just more work for the merchant.
+
+## The order log
+
+Three functions in `/api`, and `/admin` to read them.
+
+| Route | What it does |
+| --- | --- |
+| `POST /api/order` | files one order; public, called by the checkout |
+| `POST /api/orders` | admin login — sets an HttpOnly cookie if the key matches |
+| `GET /api/orders` | the order list, newest first |
+| `DELETE /api/orders` | log out |
+| `GET /api/proof?p=` | streams one payment screenshot |
+
+**Both the record and the screenshot are written `access:'private'`.** They
+carry the customer's name, phone and a picture of their bank app, so a public
+URL — even an unguessable one — is the wrong default. They come back only
+through the admin routes.
+
+That privacy choice is what shapes the login. A private blob cannot be linked
+to directly, and an `<img>` cannot send an `Authorization` header, so the
+admin page logs in once and the server sets an **HttpOnly** cookie; the images
+then load through `/api/proof` on the strength of that cookie. Keeping the key
+in JavaScript and putting it in the image URLs would have leaked it into
+history and logs.
+
+`api/*.mjs`, not `.js`: the root `package.json` has no `"type": "module"`, so
+a `.js` function would be read as CommonJS and its `import` statements would
+fail. The build installs `@vercel/blob` on its own with `--no-save` rather
+than adding it to that `package.json`, whose dependencies are an unrelated
+Next.js project the static build must never pull in.
+
+### Setting it up
+
+1. Vercel → **Storage** → create a **Blob** store → connect it to the project.
+   That sets `BLOB_READ_WRITE_TOKEN` by itself.
+2. Vercel → **Settings → Environment Variables** → add **`ADMIN_KEY`**, any
+   long random string. Without it `/admin` refuses every login.
+3. Redeploy.
+
+**What this is not.** `ADMIN_KEY` is one shared password, not accounts — anyone
+who has it sees every order. Rotate it by changing the variable and
+redeploying. And the store keeps customer names, phone numbers and pictures of
+their banking apps: delete what is no longer needed, and tell customers you
+hold it.
 
 ### Ordering: no cart
 

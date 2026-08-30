@@ -92,12 +92,18 @@ let distHtml = readFileSync(join(here, 'moortv.src.html'), 'utf8')
 
 writeFileSync(join(dist, 'index.html'), distHtml);
 writeFileSync(join(dist, '.nojekyll'), '');
+
+/* The order log. It only does anything where the /api functions are running —
+   on a plain static host it shows its own error rather than a blank page. */
+writeFileSync(join(dist, 'admin.html'),
+  readFileSync(join(here, 'admin.src.html'), 'utf8')
+    .split('__LOGO_URI__').join('assets/logo.png'));
 cpSync(join(imgDir, 'moortv-logo.png'), join(dist, 'assets', 'logo.png'));
 for (const f of photos) cpSync(join(imgDir, f), join(dist, 'assets', f));
 
 console.log(
   dist + '/index.html — ' + (Buffer.byteLength(distHtml) / 1024).toFixed(1) +
-    ' KB + ' + (photos.length + 1) + ' asset files\n' +
+    ' KB + admin.html + ' + (photos.length + 1) + ' asset files\n' +
   'moortv.html — ' + (Buffer.byteLength(html) / 1024).toFixed(1) + ' KB\n' +
     '  logo   ' + (logo.length / 1024).toFixed(1) + ' KB\n' +
     '  photos ' + photos.length + ' files, ' + (photoBytes / 1024).toFixed(1) + ' KB\n' +

@@ -66,6 +66,9 @@ a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 input,textarea{font:inherit}
 img,svg{display:block;max-width:100%}
+/* Any element given a display keeps it when [hidden] is set, so the attribute
+   silently stops working on buttons and flex items. Make it authoritative. */
+[hidden]{display:none!important}
 ::selection{background:var(--orange);color:#fff}
 :focus-visible{outline:2px solid var(--orange);outline-offset:3px}
 ::-webkit-scrollbar{width:10px;height:10px}
@@ -960,6 +963,9 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
 .dropIn .ok small{display:block;margin-top:2px;font-size:11.5px;font-weight:500;color:var(--muted)}
 
 /* ——— Step three ——— */
+.sentRef{margin-top:14px;padding:11px 14px;border-radius:var(--r);
+  background:rgba(47,107,255,.16);border:1px solid rgba(47,107,255,.42);
+  font-family:var(--disp);font-weight:800;font-size:17px;letter-spacing:.08em;color:#fff}
 .sentArt{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:var(--r);
   display:flex;align-items:center;gap:12px;font-size:12.5px;color:var(--muted)}
 .sentArt img{max-height:110px;width:auto;border-radius:6px;flex-shrink:0}
@@ -1273,7 +1279,8 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
     <div class="step" id="stepSent">
       <span class="lbl keep" data-i="checkout.done"></span>
       <h2 data-i="checkout.sentTitle"></h2>
-      <p class="lede" data-i="checkout.sentBody"></p>
+      <p class="lede" id="sentBody" data-i="checkout.sentBody"></p>
+      <p class="sentRef" id="sentRef" hidden></p>
       <div class="sentArt" id="sentArt"></div>
       <button type="button" class="btn btn-wa btn-lg btn-full" id="sendProof">
         <span data-i="checkout.sendProof"></span></button>

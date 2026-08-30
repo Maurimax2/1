@@ -128,10 +128,12 @@ ar: {
     sendProof:'إرسال صورة التأكيد', 
     sendProofManual:'أرسل صورة التأكيد في نفس محادثة واتساب من معرض صورك.',
     reopen:'إعادة فتح واتساب', done:'تم — شكراً لك',
+    ref:'رقم الطلب', filedBody:'وصل طلبك إلى مور تيفي مع صورة التأكيد. فتحنا واتساب برسالة فيها رقم طلبك — أرسلها وسنؤكد التفعيل.',
     msg:{greeting:'مرحباً مور تيفي،',intro:'طلب اشتراك جديد.',name:'الاسم',phone:'الهاتف',
       device:'الجهاز',payMethod:'طريقة الدفع',payNum:'رقم التحويل',
       plan:'الاشتراك',total:'الإجمالي',notes:'ملاحظات',
       proof:'سأرفق صورة تأكيد الدفع في هذه المحادثة.',
+      ref:'رقم الطلب', filed:'صورة التأكيد مرفوعة مع الطلب.',
       closing:'الرجاء تأكيد الطلب.'} },
   devices:{ iphone:'آيفون أو آيباد', androidphone:'هاتف أندرويد', androidtv:'جهاز أندرويد تي في',
     samsung:'تلفاز سامسونج', lg:'تلفاز إل جي', hisense:'تلفاز هايسنس', starsat:'ستارسات' },
@@ -247,10 +249,12 @@ fr: {
     sendProof:'Envoyer la preuve',
     sendProofManual:'Envoyez la capture depuis votre galerie dans la même conversation WhatsApp.',
     reopen:'Rouvrir WhatsApp', done:'Terminé — merci',
+    ref:'N° de commande', filedBody:'Votre commande est arrivée chez MOOR TV avec la preuve de paiement. WhatsApp s’est ouvert avec votre numéro de commande — envoyez-le et nous confirmons l’activation.',
     msg:{greeting:'Bonjour MOOR TV,',intro:'Nouvelle commande d’abonnement.',name:'Nom',phone:'Téléphone',
       device:'Appareil',payMethod:'Moyen de paiement',payNum:'Numéro du transfert',
       plan:'Abonnement',total:'Total',notes:'Remarques',
       proof:'Je joins la preuve de paiement dans cette conversation.',
+      ref:'N° de commande', filed:'La preuve de paiement est déjà jointe à la commande.',
       closing:'Merci de confirmer la commande.'} },
   devices:{ iphone:'iPhone ou iPad', androidphone:'Téléphone Android', androidtv:'Boîtier Android TV',
     samsung:'TV Samsung', lg:'TV LG', hisense:'TV Hisense', starsat:'StarSat' },
@@ -935,7 +939,8 @@ function orderMessage(){
   if (chosenPay) out.push('', m.payMethod+': '+d.payNames[chosenPay],
                               m.payNum+': '+WA_DISPLAY);
   if (notes) out.push('', m.notes+': '+notes);
-  if (proofFile) out.push('', m.proof);
+  if (orderRef) out.push('', m.ref+': '+orderRef, m.filed);
+  else if (proofFile) out.push('', m.proof);
   out.push('', m.closing);
   return out.join('\n');
 }
@@ -1217,18 +1222,69 @@ $('#coForm').addEventListener('submit', function(e){
   $('#'+id).addEventListener('input', function(){ this.closest('.field').classList.remove('bad'); });
 });
 
-/* The order goes out in two parts, and that is deliberate. A wa.me link can
-   carry text but never a file, and the share sheet can carry a file but drops
-   the text on some platforms. Sending the details first guarantees they
-   arrive; the screenshot follows from a second, separate gesture. */
+/* Downscale before upload. A phone screenshot is 2–5 MB, which is a slow
+   upload on mobile data and over the function's body limit once base64'd;
+   1400px of a bank receipt is still perfectly readable. */
+function shrink(file, cb){
+  if (!file || !/^image\//.test(file.type) || !window.FileReader) return cb(null);
+  var img = new Image(), url = URL.createObjectURL(file);
+  img.onload = function(){
+    try {
+      var max = 1400, w = img.width, h = img.height;
+      var k = Math.min(1, max / Math.max(w, h));
+      var c = document.createElement('canvas');
+      c.width = Math.round(w * k); c.height = Math.round(h * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(url);
+      cb(c.toDataURL('image/jpeg', 0.82));
+    } catch (e) { URL.revokeObjectURL(url); cb(null); }
+  };
+  img.onerror = function(){ URL.revokeObjectURL(url); cb(null); };
+  img.src = url;
+}
+
+/* The order is filed first, then WhatsApp is opened with the reference in it.
+   If the site is running somewhere without the API behind it — the preview
+   build, the single-file copy, any static host — the POST fails and the flow
+   falls back to what it did before: details over WhatsApp, screenshot by
+   hand. Nothing is lost, it is just more work for the merchant. */
+var orderRef = null;
 function sendOrder(){
-  window.open(wa(orderMessage()), '_blank', 'noopener');
-  var d = t();
-  $('#sentArt').innerHTML = proofFile
-    ? '<img src="'+proofPreview()+'" alt=""><span>'+esc(proofFile.name)+'</span>'
-    : '';
-  $('#sentArt').hidden = !proofFile;
-  step('sent');
+  var btn = $('#coForm button[type=submit]');
+  btn.disabled = true;
+  shrink(proofFile, function(dataUrl){
+    var d = t(), p = find(chosen);
+    var payload = {
+      name: $('#cName').value.trim(), phone: $('#cPhone').value.trim(),
+      device: chosenDevice ? T.ar.devices[chosenDevice] : '',
+      plan: planLabel(p, T.ar), months: p.months, price: p.price,
+      pay: chosenPay || '', notes: $('#cNotes').value.trim(),
+      lang: lang, proof: dataUrl || ''
+    };
+    var done = function(ref){
+      orderRef = ref || null;
+      btn.disabled = false;
+      $('#sentArt').innerHTML = proofFile
+        ? '<img src="'+proofPreview()+'" alt=""><span>'+esc(proofFile.name)+'</span>'
+        : '';
+      $('#sentArt').hidden = !proofFile;
+      // Filed successfully: the screenshot is already with the merchant, so
+      // the second share step would only duplicate it.
+      var filed = !!ref;
+      $('#sendProof').hidden = filed;
+      $('#sentBody').textContent = filed ? d.checkout.filedBody : d.checkout.sentBody;
+      $('#sentRef').textContent = filed ? d.checkout.ref + ' ' + ref : '';
+      $('#sentRef').hidden = !filed;
+      window.open(wa(orderMessage()), '_blank', 'noopener');
+      step('sent');
+    };
+    fetch('/api/order', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    }).then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(j){ done(j && j.ok ? j.ref : null); })
+      .catch(function(){ done(null); });
+  });
 }
 
 $('#sendProof').addEventListener('click', function(){
