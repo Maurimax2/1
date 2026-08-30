@@ -354,8 +354,10 @@ surface.
 The sheet runs in three steps: pick a term, fill in the order, send it.
 
 Step two collects the name, the phone, **which device they will watch on**
-(`DEVICES`) and **which of the four mobile-money services they paid with**
-(`PAY`) — Bankily, Masrvi, Sedad and Click, all on the same MOOR TV number.
+(`DEVICES`, a closed dropdown — seven options laid out flat took more of the
+form than the payment step did, for the least important choice on it) and
+**which of the four mobile-money services they paid with** (`PAY`) — Bankily,
+Masrvi, Sedad and Click, all on the same MOOR TV number.
 
 Two rules govern that panel:
 

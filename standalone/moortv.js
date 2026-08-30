@@ -114,7 +114,7 @@ ar: {
     notes:'ملاحظات', optional:'اختياري', submit:'أرسل الطلب عبر واتساب',
     note:function(p){ return 'لا يُخصم منك شيء على هذا الموقع. يُفتح طلبك كرسالة واتساب جاهزة إلى '+p+'، حيث نؤكّد الدفع ونفعّل اشتراكك.'; },
     ph:{name:'محمد ولد أحمد',phone:'44 00 00 00',notes:'أي شيء ينبغي أن نعرفه…'},
-    device:'الجهاز الذي ستشاهد عليه', deviceError:'اختر نوع جهازك.',
+    device:'الجهاز الذي ستشاهد عليه', devicePick:'اختيار الجهاز', deviceError:'اختر نوع جهازك.',
     pay:'طريقة الدفع', payError:'اختر طريقة الدفع.',
     payTo:'حوّل المبلغ إلى هذا الرقم', payAmount:'المبلغ', copy:'نسخ', copied:'تم النسخ',
     payNote:'نفس الرقم يعمل مع الأربعة. بعد التحويل أرفق صورة التأكيد بالأسفل.',
@@ -236,7 +236,7 @@ fr: {
     notes:'Remarques', optional:'Facultatif', submit:'Envoyer la commande sur WhatsApp',
     note:function(p){ return 'Aucun montant n’est prélevé sur ce site. Votre commande s’ouvre dans WhatsApp vers le '+p+', déjà rédigée — nous y confirmons le paiement et activons votre accès.'; },
     ph:{name:'Mohamed Ould Ahmed',phone:'44 00 00 00',notes:'Quelque chose à nous signaler…'},
-    device:'Appareil de visionnage', deviceError:'Choisissez votre type d’appareil.',
+    device:'Appareil de visionnage', devicePick:'Choisir l’appareil', deviceError:'Choisissez votre type d’appareil.',
     pay:'Moyen de paiement', payError:'Choisissez un moyen de paiement.',
     payTo:'Transférez le montant à ce numéro', payAmount:'Montant', copy:'Copier', copied:'Copié',
     payNote:'Le même numéro fonctionne pour les quatre. Après le transfert, joignez la preuve ci-dessous.',
@@ -865,9 +865,13 @@ function renderChosen(){
 /* The device chips and the four payment services. Re-run on a language
    switch, so the current selections are re-applied rather than lost. */
 function renderCheckout(d){
-  $('#deviceChips').innerHTML = DEVICES.map(function(k){
-    return '<button type="button" class="chip'+(chosenDevice===k?' on':'')+
-      '" role="radio" aria-checked="'+(chosenDevice===k)+'" data-device="'+k+'">'+
+  // A closed control that opens on tap, not seven chips laid out at once.
+  var btn = $('#deviceBtn');
+  btn.classList.toggle('ph', !chosenDevice);
+  $('#deviceLabel').textContent = chosenDevice ? d.devices[chosenDevice] : d.checkout.devicePick;
+  $('#deviceList').innerHTML = DEVICES.map(function(k){
+    return '<button type="button" role="option" aria-selected="'+(chosenDevice===k)+
+      '" class="'+(chosenDevice===k?'on':'')+'" data-device="'+k+'">'+
       esc(d.devices[k])+'</button>'; }).join('');
   $('#payGrid').innerHTML = PAY.map(function(m){
     var logo = photo(m.logo);
@@ -908,6 +912,13 @@ function renderProof(d){
   if (!proofFile){ face.innerHTML = esc(d.checkout.proofPick); return; }
   face.innerHTML = '<span class="ok"><img src="'+proofPreview()+'" alt="">'+
     '<span>'+esc(proofFile.name)+'<small>'+esc(d.checkout.proofChange)+'</small></span></span>';
+}
+
+function closeDeviceList(){
+  var sel = $('#deviceSel'); if (!sel) return;
+  sel.classList.remove('open');
+  $('#deviceBtn').setAttribute('aria-expanded','false');
+  $('#deviceList').hidden = true;
 }
 
 function payMethod(){
@@ -1144,8 +1155,24 @@ document.addEventListener('click', function(e){
     chosenDevice = el.getAttribute('data-device');
     $('#fDevice').classList.remove('bad');
     renderCheckout(t());
+    closeDeviceList();
     return;
   }
+  if (e.target.closest('#deviceBtn')){
+    var sel = $('#deviceSel');
+    if (sel.classList.contains('open')) closeDeviceList();
+    else {
+      sel.classList.add('open');
+      $('#deviceBtn').setAttribute('aria-expanded','true');
+      $('#deviceList').hidden = false;
+      // The sheet scrolls, so a list opened near its foot would fall out of view.
+      setTimeout(function(){
+        $('#deviceList').scrollIntoView({ block:'nearest', behavior:'smooth' }); }, 40);
+    }
+    return;
+  }
+  // Any click that is not on the control closes it.
+  if (!e.target.closest('#deviceSel')) closeDeviceList();
   if ((el = e.target.closest('[data-pay]'))){
     chosenPay = el.getAttribute('data-pay');
     $('#fPay').classList.remove('bad');

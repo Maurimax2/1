@@ -898,12 +898,26 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
 .field.bad .err{display:block}
 .field .hint{margin-top:6px;font-size:12px;color:var(--muted)}
 
-/* ——— Device chips ——— */
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{padding:9px 13px;border:1px solid var(--line);border-radius:99px;font-size:12.5px;
-  font-weight:600;color:rgba(255,255,255,.72);transition:background .2s,border-color .2s,color .2s}
-.chip:hover{border-color:var(--orange-2);color:#fff}
-.chip.on{background:var(--orange);border-color:var(--orange);color:#fff}
+/* ——— Device picker ———
+   Closed until asked. Seven options laid out flat took more of the form than
+   the payment step did, for the least important choice on it. */
+.sel{position:relative}
+.selBtn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:13px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--ink);
+  color:var(--ink-text);font-size:14.5px;text-align:start;transition:border-color .2s}
+.selBtn:hover{border-color:var(--orange-2)}
+.selBtn.ph{color:rgba(255,255,255,.4)}
+.sel.open .selBtn{border-color:var(--orange)}
+.selBtn svg{flex-shrink:0;opacity:.7;transition:transform .25s}
+.sel.open .selBtn svg{transform:rotate(180deg)}
+.selList{position:absolute;z-index:6;inset-inline:0;top:calc(100% + 6px);overflow:hidden auto;
+  max-height:262px;background:#0b1024;border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:0 26px 50px -18px rgba(0,0,0,.92)}
+.selList button{display:block;width:100%;padding:12px 14px;text-align:start;font-size:14px;
+  color:rgba(255,255,255,.82);transition:background .15s,color .15s}
+.selList button+button{border-top:1px solid rgba(255,255,255,.06)}
+.selList button:hover{background:rgba(47,107,255,.18);color:#fff}
+.selList button.on{background:var(--orange);color:#fff;font-weight:600}
 
 /* ——— Payment services ———
    Each logo is drawn for a light background, so it sits on a white plate
@@ -1217,7 +1231,16 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
         </div>
         <div class="field" id="fDevice">
           <div class="lb"><label><span data-i="checkout.device"></span> <span style="color:var(--orange)">*</span></label></div>
-          <div class="chips" id="deviceChips" role="radiogroup"></div>
+          <div class="sel" id="deviceSel">
+            <button type="button" class="selBtn ph" id="deviceBtn"
+                    aria-haspopup="listbox" aria-expanded="false">
+              <span id="deviceLabel"></span>
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden>
+                <path d="M3.5 6 8 10.5 12.5 6" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="selList" id="deviceList" role="listbox" hidden></div>
+          </div>
           <p class="err" data-i="checkout.deviceError"></p>
         </div>
         <div class="field" id="fPay">
@@ -1426,7 +1449,7 @@ ar: {
     notes:'ملاحظات', optional:'اختياري', submit:'أرسل الطلب عبر واتساب',
     note:function(p){ return 'لا يُخصم منك شيء على هذا الموقع. يُفتح طلبك كرسالة واتساب جاهزة إلى '+p+'، حيث نؤكّد الدفع ونفعّل اشتراكك.'; },
     ph:{name:'محمد ولد أحمد',phone:'44 00 00 00',notes:'أي شيء ينبغي أن نعرفه…'},
-    device:'الجهاز الذي ستشاهد عليه', deviceError:'اختر نوع جهازك.',
+    device:'الجهاز الذي ستشاهد عليه', devicePick:'اختيار الجهاز', deviceError:'اختر نوع جهازك.',
     pay:'طريقة الدفع', payError:'اختر طريقة الدفع.',
     payTo:'حوّل المبلغ إلى هذا الرقم', payAmount:'المبلغ', copy:'نسخ', copied:'تم النسخ',
     payNote:'نفس الرقم يعمل مع الأربعة. بعد التحويل أرفق صورة التأكيد بالأسفل.',
@@ -1548,7 +1571,7 @@ fr: {
     notes:'Remarques', optional:'Facultatif', submit:'Envoyer la commande sur WhatsApp',
     note:function(p){ return 'Aucun montant n’est prélevé sur ce site. Votre commande s’ouvre dans WhatsApp vers le '+p+', déjà rédigée — nous y confirmons le paiement et activons votre accès.'; },
     ph:{name:'Mohamed Ould Ahmed',phone:'44 00 00 00',notes:'Quelque chose à nous signaler…'},
-    device:'Appareil de visionnage', deviceError:'Choisissez votre type d’appareil.',
+    device:'Appareil de visionnage', devicePick:'Choisir l’appareil', deviceError:'Choisissez votre type d’appareil.',
     pay:'Moyen de paiement', payError:'Choisissez un moyen de paiement.',
     payTo:'Transférez le montant à ce numéro', payAmount:'Montant', copy:'Copier', copied:'Copié',
     payNote:'Le même numéro fonctionne pour les quatre. Après le transfert, joignez la preuve ci-dessous.',
@@ -2177,9 +2200,13 @@ function renderChosen(){
 /* The device chips and the four payment services. Re-run on a language
    switch, so the current selections are re-applied rather than lost. */
 function renderCheckout(d){
-  $('#deviceChips').innerHTML = DEVICES.map(function(k){
-    return '<button type="button" class="chip'+(chosenDevice===k?' on':'')+
-      '" role="radio" aria-checked="'+(chosenDevice===k)+'" data-device="'+k+'">'+
+  // A closed control that opens on tap, not seven chips laid out at once.
+  var btn = $('#deviceBtn');
+  btn.classList.toggle('ph', !chosenDevice);
+  $('#deviceLabel').textContent = chosenDevice ? d.devices[chosenDevice] : d.checkout.devicePick;
+  $('#deviceList').innerHTML = DEVICES.map(function(k){
+    return '<button type="button" role="option" aria-selected="'+(chosenDevice===k)+
+      '" class="'+(chosenDevice===k?'on':'')+'" data-device="'+k+'">'+
       esc(d.devices[k])+'</button>'; }).join('');
   $('#payGrid').innerHTML = PAY.map(function(m){
     var logo = photo(m.logo);
@@ -2220,6 +2247,13 @@ function renderProof(d){
   if (!proofFile){ face.innerHTML = esc(d.checkout.proofPick); return; }
   face.innerHTML = '<span class="ok"><img src="'+proofPreview()+'" alt="">'+
     '<span>'+esc(proofFile.name)+'<small>'+esc(d.checkout.proofChange)+'</small></span></span>';
+}
+
+function closeDeviceList(){
+  var sel = $('#deviceSel'); if (!sel) return;
+  sel.classList.remove('open');
+  $('#deviceBtn').setAttribute('aria-expanded','false');
+  $('#deviceList').hidden = true;
 }
 
 function payMethod(){
@@ -2456,8 +2490,24 @@ document.addEventListener('click', function(e){
     chosenDevice = el.getAttribute('data-device');
     $('#fDevice').classList.remove('bad');
     renderCheckout(t());
+    closeDeviceList();
     return;
   }
+  if (e.target.closest('#deviceBtn')){
+    var sel = $('#deviceSel');
+    if (sel.classList.contains('open')) closeDeviceList();
+    else {
+      sel.classList.add('open');
+      $('#deviceBtn').setAttribute('aria-expanded','true');
+      $('#deviceList').hidden = false;
+      // The sheet scrolls, so a list opened near its foot would fall out of view.
+      setTimeout(function(){
+        $('#deviceList').scrollIntoView({ block:'nearest', behavior:'smooth' }); }, 40);
+    }
+    return;
+  }
+  // Any click that is not on the control closes it.
+  if (!e.target.closest('#deviceSel')) closeDeviceList();
   if ((el = e.target.closest('[data-pay]'))){
     chosenPay = el.getAttribute('data-pay');
     $('#fPay').classList.remove('bad');

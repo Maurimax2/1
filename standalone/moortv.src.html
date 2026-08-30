@@ -898,12 +898,26 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
 .field.bad .err{display:block}
 .field .hint{margin-top:6px;font-size:12px;color:var(--muted)}
 
-/* ——— Device chips ——— */
-.chips{display:flex;flex-wrap:wrap;gap:7px}
-.chip{padding:9px 13px;border:1px solid var(--line);border-radius:99px;font-size:12.5px;
-  font-weight:600;color:rgba(255,255,255,.72);transition:background .2s,border-color .2s,color .2s}
-.chip:hover{border-color:var(--orange-2);color:#fff}
-.chip.on{background:var(--orange);border-color:var(--orange);color:#fff}
+/* ——— Device picker ———
+   Closed until asked. Seven options laid out flat took more of the form than
+   the payment step did, for the least important choice on it. */
+.sel{position:relative}
+.selBtn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:13px 14px;border:1px solid var(--line);border-radius:var(--r);background:var(--ink);
+  color:var(--ink-text);font-size:14.5px;text-align:start;transition:border-color .2s}
+.selBtn:hover{border-color:var(--orange-2)}
+.selBtn.ph{color:rgba(255,255,255,.4)}
+.sel.open .selBtn{border-color:var(--orange)}
+.selBtn svg{flex-shrink:0;opacity:.7;transition:transform .25s}
+.sel.open .selBtn svg{transform:rotate(180deg)}
+.selList{position:absolute;z-index:6;inset-inline:0;top:calc(100% + 6px);overflow:hidden auto;
+  max-height:262px;background:#0b1024;border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:0 26px 50px -18px rgba(0,0,0,.92)}
+.selList button{display:block;width:100%;padding:12px 14px;text-align:start;font-size:14px;
+  color:rgba(255,255,255,.82);transition:background .15s,color .15s}
+.selList button+button{border-top:1px solid rgba(255,255,255,.06)}
+.selList button:hover{background:rgba(47,107,255,.18);color:#fff}
+.selList button.on{background:var(--orange);color:#fff;font-weight:600}
 
 /* ——— Payment services ———
    Each logo is drawn for a light background, so it sits on a white plate
@@ -1217,7 +1231,16 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
         </div>
         <div class="field" id="fDevice">
           <div class="lb"><label><span data-i="checkout.device"></span> <span style="color:var(--orange)">*</span></label></div>
-          <div class="chips" id="deviceChips" role="radiogroup"></div>
+          <div class="sel" id="deviceSel">
+            <button type="button" class="selBtn ph" id="deviceBtn"
+                    aria-haspopup="listbox" aria-expanded="false">
+              <span id="deviceLabel"></span>
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" aria-hidden>
+                <path d="M3.5 6 8 10.5 12.5 6" stroke="currentColor" stroke-width="1.8"
+                      stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="selList" id="deviceList" role="listbox" hidden></div>
+          </div>
           <p class="err" data-i="checkout.deviceError"></p>
         </div>
         <div class="field" id="fPay">
