@@ -349,6 +349,39 @@ surface.
   crossing rows behind the closing call to action and fill the hero fan. The
   page never presents them as a catalogue of titles.
 
+### Checkout
+
+The sheet runs in three steps: pick a term, fill in the order, send it.
+
+Step two collects the name, the phone, **which device they will watch on**
+(`DEVICES`) and **which of the four mobile-money services they paid with**
+(`PAY`) — Bankily, Masrvi, Sedad and Click, all on the same MOOR TV number.
+
+Two rules govern that panel:
+
+- **The number is revealed only once a service is picked.** Before that there
+  is nothing to pay to, and a number on screen is just noise.
+- **The field is painted in the service's own colours.** `bg`/`fg` in `PAY`
+  are taken from each logo, so a customer who has just come out of Bankily
+  recognises the Bankily field without reading it. The logos themselves are
+  supplied artwork drawn for light backgrounds, so they sit on a white plate
+  rather than being recoloured — which is also the safer thing to do with
+  someone else's trademark.
+
+**Why the order is sent in two parts.** A `wa.me` link can carry text but
+never a file; the Web Share sheet can carry a file but drops the text on some
+platforms. So step three sends the details first, guaranteed, and offers the
+screenshot as a second, separate gesture through `navigator.share`. Merging
+them risks the merchant receiving a photo with no idea which order it belongs
+to. On a desktop browser nothing can hand a file to WhatsApp at all, so the
+step says so and asks the customer to attach it in the conversation.
+
+**There is no order database.** Nothing on this page stores an order: it is a
+static site, and the record of a sale is the WhatsApp conversation. An admin
+page listing submitted orders and their payment proofs needs a server —
+a Vercel function plus blob storage would do it, or a form service that
+accepts attachments. That is a decision about hosting and keys, not markup.
+
 ### Ordering: no cart
 
 Nobody buys two subscriptions, so there is no cart to maintain. Tapping a

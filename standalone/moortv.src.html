@@ -898,6 +898,58 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
 .field.bad .err{display:block}
 .field .hint{margin-top:6px;font-size:12px;color:var(--muted)}
 
+/* ——— Device chips ——— */
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{padding:9px 13px;border:1px solid var(--line);border-radius:99px;font-size:12.5px;
+  font-weight:600;color:rgba(255,255,255,.72);transition:background .2s,border-color .2s,color .2s}
+.chip:hover{border-color:var(--orange-2);color:#fff}
+.chip.on{background:var(--orange);border-color:var(--orange);color:#fff}
+
+/* ——— Payment services ———
+   Each logo is drawn for a light background, so it sits on a white plate
+   rather than being recoloured; the selected one is ringed in its own brand
+   colour, which is also the colour the number field takes below. */
+.payGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.payBtn{position:relative;display:flex;align-items:center;justify-content:center;height:62px;
+  padding:9px 12px;background:#fff;border:2px solid transparent;border-radius:9px;
+  box-shadow:0 0 0 1px var(--line);transition:box-shadow .2s,transform .15s}
+.payBtn:hover{transform:translateY(-2px)}
+.payBtn img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.payBtn.on{border-color:var(--pc);box-shadow:0 0 0 3px color-mix(in srgb,var(--pc) 45%,transparent)}
+@supports not (color: color-mix(in srgb,red 50%,blue)){.payBtn.on{box-shadow:0 0 0 3px var(--pc)}}
+.payBtn.on::after{content:'✓';position:absolute;top:-8px;inset-inline-end:-8px;width:22px;height:22px;
+  display:flex;align-items:center;justify-content:center;border-radius:99px;
+  background:var(--pc);color:var(--pf);font-size:12px;font-weight:800}
+
+/* ——— The number to pay, in the service's own colours ——— */
+.payBox{margin:16px 0 18px;padding:16px;border-radius:10px;background:var(--pc);color:var(--pf)}
+.payBox .cap{font-size:11.5px;font-weight:600;opacity:.78}
+.payBox .row{margin-top:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.payBox .no{font-family:var(--disp);font-weight:800;font-size:32px;line-height:1;
+  letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.payBox .copy{margin-inline-start:auto;padding:8px 14px;border-radius:99px;font-size:12px;
+  font-weight:700;background:rgba(0,0,0,.16);color:inherit;transition:background .2s}
+.payBox .copy:hover{background:rgba(0,0,0,.28)}
+.payBox .amt{margin-top:12px;padding-top:11px;border-top:1px solid rgba(0,0,0,.16);
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:13px}
+.payBox .amt b{font-family:var(--disp);font-weight:800;font-size:22px}
+.payBox .note{margin-top:10px;font-size:11.5px;line-height:1.5;opacity:.82}
+
+/* ——— Payment proof ——— */
+.drop{display:block;cursor:pointer}
+.dropIn{display:flex;align-items:center;justify-content:center;gap:9px;min-height:76px;padding:14px;
+  border:1px dashed var(--line);border-radius:var(--r);font-size:13px;font-weight:600;
+  color:var(--muted);text-align:center;transition:border-color .2s,color .2s,background .2s}
+.drop:hover .dropIn{border-color:var(--orange);color:#fff}
+.dropIn img{max-height:150px;width:auto;border-radius:6px}
+.dropIn .ok{display:flex;align-items:center;gap:10px;color:#fff}
+.dropIn .ok small{display:block;margin-top:2px;font-size:11.5px;font-weight:500;color:var(--muted)}
+
+/* ——— Step three ——— */
+.sentArt{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:var(--r);
+  display:flex;align-items:center;gap:12px;font-size:12.5px;color:var(--muted)}
+.sentArt img{max-height:110px;width:auto;border-radius:6px;flex-shrink:0}
+
 /* ——— Preloader ——— */
 #pre{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;align-items:center;
   justify-content:center;gap:16px;background:var(--ink);transition:opacity .6s,transform .6s}
@@ -1163,6 +1215,27 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
           <input id="cPhone" type="tel" inputmode="tel" dir="ltr" autocomplete="tel">
           <p class="hint" data-i="checkout.phoneHint"></p><p class="err" data-i="checkout.phoneError"></p>
         </div>
+        <div class="field" id="fDevice">
+          <div class="lb"><label><span data-i="checkout.device"></span> <span style="color:var(--orange)">*</span></label></div>
+          <div class="chips" id="deviceChips" role="radiogroup"></div>
+          <p class="err" data-i="checkout.deviceError"></p>
+        </div>
+        <div class="field" id="fPay">
+          <div class="lb"><label><span data-i="checkout.pay"></span> <span style="color:var(--orange)">*</span></label></div>
+          <div class="payGrid" id="payGrid" role="radiogroup"></div>
+          <p class="err" data-i="checkout.payError"></p>
+        </div>
+        <!-- Revealed only once a service is picked: before that there is
+             nothing to pay to, and a number on screen would just be noise. -->
+        <div class="payBox" id="payBox" hidden></div>
+        <div class="field" id="fProof">
+          <div class="lb"><label><span data-i="checkout.proof"></span> <span style="color:var(--orange)">*</span></label></div>
+          <label class="drop" id="proofDrop">
+            <input type="file" id="cProof" accept="image/*" hidden>
+            <span class="dropIn" id="proofFace"></span>
+          </label>
+          <p class="hint" data-i="checkout.proofHint"></p><p class="err" data-i="checkout.proofError"></p>
+        </div>
         <div class="field">
           <div class="lb"><label for="cNotes" data-i="checkout.notes"></label><span class="opt" data-i="checkout.optional"></span></div>
           <textarea id="cNotes" rows="3"></textarea>
@@ -1170,6 +1243,20 @@ html[dir=rtl] .backBtn i{transform:scaleX(-1);display:inline-block}
         <button type="submit" class="btn btn-wa btn-lg btn-full"><span data-i="checkout.submit"></span></button>
         <p style="margin-top:12px;font-size:12px;color:var(--muted)" id="coNote"></p>
       </form>
+    </div>
+
+    <!-- Step three. A wa.me link carries text but never a file, so the order
+         details go first and the screenshot follows from the share sheet. -->
+    <div class="step" id="stepSent">
+      <span class="lbl keep" data-i="checkout.done"></span>
+      <h2 data-i="checkout.sentTitle"></h2>
+      <p class="lede" data-i="checkout.sentBody"></p>
+      <div class="sentArt" id="sentArt"></div>
+      <button type="button" class="btn btn-wa btn-lg btn-full" id="sendProof">
+        <span data-i="checkout.sendProof"></span></button>
+      <p class="hint" id="sendProofNote" style="margin-top:10px" hidden data-i="checkout.sendProofManual"></p>
+      <button type="button" class="btn btn-line btn-full" style="margin-top:10px" id="reopenWa">
+        <span data-i="checkout.reopen"></span></button>
     </div>
   </div>
 </div>

@@ -114,8 +114,28 @@ ar: {
     notes:'ملاحظات', optional:'اختياري', submit:'أرسل الطلب عبر واتساب',
     note:function(p){ return 'لا يُخصم منك شيء على هذا الموقع. يُفتح طلبك كرسالة واتساب جاهزة إلى '+p+'، حيث نؤكّد الدفع ونفعّل اشتراكك.'; },
     ph:{name:'محمد ولد أحمد',phone:'44 00 00 00',notes:'أي شيء ينبغي أن نعرفه…'},
-    msg:{greeting:'مرحباً مور تيفي،',intro:'أرغب في الاشتراك.',name:'الاسم',phone:'الهاتف',
-      plan:'الاشتراك',total:'الإجمالي',notes:'ملاحظات',closing:'الرجاء التواصل معي.'} },
+    device:'الجهاز الذي ستشاهد عليه', deviceError:'اختر نوع جهازك.',
+    pay:'طريقة الدفع', payError:'اختر طريقة الدفع.',
+    payTo:'حوّل المبلغ إلى هذا الرقم', payAmount:'المبلغ', copy:'نسخ', copied:'تم النسخ',
+    payNote:'نفس الرقم يعمل مع الأربعة. بعد التحويل أرفق صورة التأكيد بالأسفل.',
+    proof:'صورة تأكيد الدفع', proofHint:'لقطة شاشة من تطبيق الدفع بعد إتمام التحويل.',
+    proofPick:'اختر صورة', proofChange:'تغيير الصورة', proofError:'أرفق صورة تأكيد الدفع.',
+    /* Two steps on purpose: a WhatsApp link can carry text but never a file,
+       so the order details are sent first and the image follows from the
+       share sheet. Merging them risks the details never arriving. */
+    sentTitle:'بقيت خطوة واحدة', 
+    sentBody:'فتحنا واتساب برسالة طلبك — أرسلها أولاً، ثم أرفق صورة التأكيد بالزر أدناه.',
+    sendProof:'إرسال صورة التأكيد', 
+    sendProofManual:'أرسل صورة التأكيد في نفس محادثة واتساب من معرض صورك.',
+    reopen:'إعادة فتح واتساب', done:'تم — شكراً لك',
+    msg:{greeting:'مرحباً مور تيفي،',intro:'طلب اشتراك جديد.',name:'الاسم',phone:'الهاتف',
+      device:'الجهاز',payMethod:'طريقة الدفع',payNum:'رقم التحويل',
+      plan:'الاشتراك',total:'الإجمالي',notes:'ملاحظات',
+      proof:'سأرفق صورة تأكيد الدفع في هذه المحادثة.',
+      closing:'الرجاء تأكيد الطلب.'} },
+  devices:{ iphone:'آيفون أو آيباد', androidphone:'هاتف أندرويد', androidtv:'جهاز أندرويد تي في',
+    samsung:'تلفاز سامسونج', lg:'تلفاز إل جي', hisense:'تلفاز هايسنس', starsat:'ستارسات' },
+  payNames:{ bankily:'بنكيلي', masrvi:'مصرفي', sedad:'السداد', click:'كليك' },
   footer:{ ctaEyebrow:'ابدأ الآن', ctaA:'جاهز للمشاهدة؟', ctaB:'ابدأ اليوم.',
     ctaSub:'اشتراك واحد يفتح لك كل المحتوى — من 500 أوقية.',
     ctaPrimary:'اختر اشتراكك', ctaWhatsApp:'راسلنا على واتساب', orderNow:'اطلب الآن',
@@ -216,8 +236,25 @@ fr: {
     notes:'Remarques', optional:'Facultatif', submit:'Envoyer la commande sur WhatsApp',
     note:function(p){ return 'Aucun montant n’est prélevé sur ce site. Votre commande s’ouvre dans WhatsApp vers le '+p+', déjà rédigée — nous y confirmons le paiement et activons votre accès.'; },
     ph:{name:'Mohamed Ould Ahmed',phone:'44 00 00 00',notes:'Quelque chose à nous signaler…'},
-    msg:{greeting:'Bonjour MOOR TV,',intro:'Je souhaite m’abonner.',name:'Nom',phone:'Téléphone',
-      plan:'Abonnement',total:'Total',notes:'Remarques',closing:'Merci de me recontacter.'} },
+    device:'Appareil de visionnage', deviceError:'Choisissez votre type d’appareil.',
+    pay:'Moyen de paiement', payError:'Choisissez un moyen de paiement.',
+    payTo:'Transférez le montant à ce numéro', payAmount:'Montant', copy:'Copier', copied:'Copié',
+    payNote:'Le même numéro fonctionne pour les quatre. Après le transfert, joignez la preuve ci-dessous.',
+    proof:'Preuve de paiement', proofHint:'Capture d’écran de l’application après le transfert.',
+    proofPick:'Choisir une image', proofChange:'Changer l’image', proofError:'Joignez la preuve de paiement.',
+    sentTitle:'Encore une étape',
+    sentBody:'WhatsApp s’est ouvert avec votre commande — envoyez-la d’abord, puis joignez la preuve avec le bouton ci-dessous.',
+    sendProof:'Envoyer la preuve',
+    sendProofManual:'Envoyez la capture depuis votre galerie dans la même conversation WhatsApp.',
+    reopen:'Rouvrir WhatsApp', done:'Terminé — merci',
+    msg:{greeting:'Bonjour MOOR TV,',intro:'Nouvelle commande d’abonnement.',name:'Nom',phone:'Téléphone',
+      device:'Appareil',payMethod:'Moyen de paiement',payNum:'Numéro du transfert',
+      plan:'Abonnement',total:'Total',notes:'Remarques',
+      proof:'Je joins la preuve de paiement dans cette conversation.',
+      closing:'Merci de confirmer la commande.'} },
+  devices:{ iphone:'iPhone ou iPad', androidphone:'Téléphone Android', androidtv:'Boîtier Android TV',
+    samsung:'TV Samsung', lg:'TV LG', hisense:'TV Hisense', starsat:'StarSat' },
+  payNames:{ bankily:'Bankily', masrvi:'Masrvi', sedad:'Sedad', click:'Click' },
   footer:{ ctaEyebrow:'Commencer', ctaA:'Prêt à regarder ?', ctaB:'Commencez aujourd’hui.',
     ctaSub:'Un seul abonnement débloque tout — à partir de 500 MRU.',
     ctaPrimary:'Choisir mon abonnement', ctaWhatsApp:'Nous écrire sur WhatsApp', orderNow:'Commander',
@@ -389,6 +426,23 @@ function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').rep
 var MXIMG = window.MXIMG || {};
 function photo(key){ return (key && MXIMG[key]) || ''; }
 
+/* ---------------- Payment ----------------
+   Mauritania's four mobile-money services, all on the same MOOR TV number.
+   `bg`/`fg` are each service's own colours, taken from its logo: the field
+   that shows the number is painted in them, so a customer who has just opened
+   Bankily recognises the Bankily field without reading it. The number is only
+   revealed once a service is picked — before that there is nothing to pay to.
+   The logos are supplied artwork, shown on a white plate: they are made for
+   light backgrounds and would disappear into this page otherwise. */
+var PAY = [
+  { id:'bankily', logo:'pay-bankily', bg:'#f5be00', fg:'#0a1020' },
+  { id:'masrvi',  logo:'pay-masrvi',  bg:'#2a0a78', fg:'#ffffff' },
+  { id:'sedad',   logo:'pay-sedad',   bg:'#00903f', fg:'#ffffff' },
+  { id:'click',   logo:'pay-click',   bg:'#00a0c0', fg:'#06131c' }
+];
+/* The order matters: it is the order they appear in the sheet. */
+var DEVICES = ['iphone','androidphone','androidtv','samsung','lg','hisense','starsat'];
+
 /* Parallel to football.leagues in the dictionaries; '' where no mark exists. */
 var LEAGUE_CRESTS = ['l-epl-text','l-ucl','l-laliga','l-seriea','l-bundesliga','l-ligue1','l-spl',''];
 
@@ -410,7 +464,10 @@ var STAR = '<svg viewBox="0 0 20 20" width="15" height="15" aria-hidden><path d=
 try { var st = localStorage.getItem('moortv.lang'); if (st==='ar'||st==='fr') lang = st; } catch(e){}
 // One subscription per order, so there is nothing to accumulate — just the
 // plan the visitor picked in the order sheet.
-var chosen = null;
+var chosen = null;        // plan id
+var chosenPay = null;     // payment service id
+var chosenDevice = null;  // device key
+var proofFile = null;     // the payment screenshot, kept in memory only
 
 function t(){ return T[lang]; }
 function $(s,r){ return (r||document).querySelector(s); }
@@ -559,6 +616,7 @@ function render() {
 
   renderDrift();
   renderPicker(d);
+  renderCheckout(d);
   fitWordmarks();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitWordmarks);
   reveal();
@@ -804,13 +862,69 @@ function renderChosen(){
     '<span class="cnum" dir="ltr">'+num(p.price)+'<s>MRU</s></span>';
 }
 
+/* The device chips and the four payment services. Re-run on a language
+   switch, so the current selections are re-applied rather than lost. */
+function renderCheckout(d){
+  $('#deviceChips').innerHTML = DEVICES.map(function(k){
+    return '<button type="button" class="chip'+(chosenDevice===k?' on':'')+
+      '" role="radio" aria-checked="'+(chosenDevice===k)+'" data-device="'+k+'">'+
+      esc(d.devices[k])+'</button>'; }).join('');
+  $('#payGrid').innerHTML = PAY.map(function(m){
+    var logo = photo(m.logo);
+    return '<button type="button" class="payBtn'+(chosenPay===m.id?' on':'')+
+      '" role="radio" aria-checked="'+(chosenPay===m.id)+'" data-pay="'+m.id+'"'+
+      ' aria-label="'+esc(d.payNames[m.id])+'" style="--pc:'+m.bg+';--pf:'+m.fg+'">'+
+      (logo ? '<img src="'+logo+'" alt="'+esc(d.payNames[m.id])+'" loading="lazy" decoding="async">'
+            : '<span style="color:#0a1020;font-weight:800">'+esc(d.payNames[m.id])+'</span>')+
+      '</button>'; }).join('');
+  renderPayBox(d);
+  renderProof(d);
+}
+
+/* The number, in the chosen service's colours. Hidden until one is chosen. */
+function renderPayBox(d){
+  var box = $('#payBox'), m = payMethod();
+  if (!m){ box.hidden = true; box.innerHTML = ''; return; }
+  var p = find(chosen);
+  box.hidden = false;
+  box.setAttribute('style', '--pc:' + m.bg + ';--pf:' + m.fg);
+  box.innerHTML =
+    '<div class="cap">'+esc(d.checkout.payTo)+' — '+esc(d.payNames[m.id])+'</div>'+
+    '<div class="row"><span class="no" dir="ltr">'+WA_DISPLAY+'</span>'+
+      '<button type="button" class="copy" id="payCopy">'+esc(d.checkout.copy)+'</button></div>'+
+    (p ? '<div class="amt"><span>'+esc(d.checkout.payAmount)+'</span>'+
+         '<b dir="ltr">'+money(p.price)+'</b></div>' : '')+
+    '<div class="note">'+esc(d.checkout.payNote)+'</div>';
+}
+
+var proofUrl = null;
+function proofPreview(){
+  if (proofUrl) URL.revokeObjectURL(proofUrl);
+  proofUrl = proofFile ? URL.createObjectURL(proofFile) : null;
+  return proofUrl;
+}
+function renderProof(d){
+  var face = $('#proofFace');
+  if (!proofFile){ face.innerHTML = esc(d.checkout.proofPick); return; }
+  face.innerHTML = '<span class="ok"><img src="'+proofPreview()+'" alt="">'+
+    '<span>'+esc(proofFile.name)+'<small>'+esc(d.checkout.proofChange)+'</small></span></span>';
+}
+
+function payMethod(){
+  for (var i=0;i<PAY.length;i++) if (PAY[i].id === chosenPay) return PAY[i];
+  return null;
+}
+
 function orderMessage(){
   var d=t(), m=d.checkout.msg, p=find(chosen);
   var name=$('#cName').value.trim(), phone=$('#cPhone').value.trim(), notes=$('#cNotes').value.trim();
-  var out=[m.greeting,'',m.intro,'',m.name+': '+(name||'—'),m.phone+': '+(phone||'—'),'',
-           m.plan+': '+planLabel(p,d),
-           m.total+': '+money(p.price)];
+  var out=[m.greeting,'',m.intro,'',m.name+': '+(name||'—'),m.phone+': '+(phone||'—')];
+  if (chosenDevice) out.push(m.device+': '+d.devices[chosenDevice]);
+  out.push('', m.plan+': '+planLabel(p,d), m.total+': '+money(p.price));
+  if (chosenPay) out.push('', m.payMethod+': '+d.payNames[chosenPay],
+                              m.payNum+': '+WA_DISPLAY);
   if (notes) out.push('', m.notes+': '+notes);
+  if (proofFile) out.push('', m.proof);
   out.push('', m.closing);
   return out.join('\n');
 }
@@ -951,6 +1065,8 @@ function preloader(){
 function step(which){
   $('#stepPick').classList.toggle('on', which === 'pick');
   $('#stepForm').classList.toggle('on', which === 'form');
+  $('#stepSent').classList.toggle('on', which === 'sent');
+  var sh = $('#modal .sheet'); if (sh) sh.scrollTop = 0;
 }
 function openSheet(planId, catName){
   var forCat = $('#forCat');
@@ -967,6 +1083,12 @@ function openSheet(planId, catName){
   setTimeout(function(){ (planId ? $('#cName') : $('.pk')).focus(); }, 90);
 }
 function closeSheet(){
+  // Closing from the last step ends that order: the next one must not inherit
+  // the previous customer's payment screenshot.
+  if ($('#stepSent').classList.contains('on')){
+    proofFile = null; $('#cProof').value = ''; $('#sendProofNote').hidden = true;
+    renderProof(t());
+  }
   $('#modal').classList.remove('on');
   document.body.style.overflow = '';
 }
@@ -1013,19 +1135,89 @@ $('#lang').addEventListener('click', function(){
   render();
   if (chosen) renderChosen();
 });
+/* Device and payment selection, and the copy button inside the number panel.
+   Delegated, because renderCheckout() replaces this markup on a language
+   switch and directly bound handlers would go with it. */
+document.addEventListener('click', function(e){
+  var el;
+  if ((el = e.target.closest('[data-device]'))){
+    chosenDevice = el.getAttribute('data-device');
+    $('#fDevice').classList.remove('bad');
+    renderCheckout(t());
+    return;
+  }
+  if ((el = e.target.closest('[data-pay]'))){
+    chosenPay = el.getAttribute('data-pay');
+    $('#fPay').classList.remove('bad');
+    renderCheckout(t());
+    return;
+  }
+  if (e.target.closest('#payCopy')){
+    var btn = $('#payCopy'), d = t();
+    var write = navigator.clipboard && navigator.clipboard.writeText
+      ? navigator.clipboard.writeText(WA_E164.replace(/^222/, ''))
+      : Promise.reject();
+    write.then(function(){ btn.textContent = d.checkout.copied; })
+         .catch(function(){ btn.textContent = d.checkout.copied; })
+         .then(function(){ setTimeout(function(){
+           if ($('#payCopy')) $('#payCopy').textContent = d.checkout.copy; }, 1600); });
+  }
+});
+
+$('#cProof').addEventListener('change', function(){
+  proofFile = this.files && this.files[0] ? this.files[0] : null;
+  $('#fProof').classList.remove('bad');
+  renderProof(t());
+});
+
 $('#coForm').addEventListener('submit', function(e){
   e.preventDefault();
   if (!find(chosen)) { step('pick'); return; }
-  var ok=true;
-  var bad = $('#cName').value.trim().length < 2;
-  $('#fName').classList.toggle('bad', bad); if (bad) ok=false;
-  var digits = $('#cPhone').value.replace(/\D/g,'');
-  $('#fPhone').classList.toggle('bad', digits.length<8); if (digits.length<8) ok=false;
-  if (!ok) return;
-  window.open(wa(orderMessage()), '_blank', 'noopener');
+  var ok = true, first = null;
+  function mark(sel, bad){
+    $(sel).classList.toggle('bad', bad);
+    if (bad){ ok = false; if (!first) first = $(sel); }
+  }
+  mark('#fName', $('#cName').value.trim().length < 2);
+  mark('#fPhone', $('#cPhone').value.replace(/\D/g,'').length < 8);
+  mark('#fDevice', !chosenDevice);
+  mark('#fPay', !chosenPay);
+  mark('#fProof', !proofFile);
+  if (!ok){ if (first) first.scrollIntoView({ block:'center', behavior:'smooth' }); return; }
+  sendOrder();
 });
 ['cName','cPhone'].forEach(function(id){
   $('#'+id).addEventListener('input', function(){ this.closest('.field').classList.remove('bad'); });
+});
+
+/* The order goes out in two parts, and that is deliberate. A wa.me link can
+   carry text but never a file, and the share sheet can carry a file but drops
+   the text on some platforms. Sending the details first guarantees they
+   arrive; the screenshot follows from a second, separate gesture. */
+function sendOrder(){
+  window.open(wa(orderMessage()), '_blank', 'noopener');
+  var d = t();
+  $('#sentArt').innerHTML = proofFile
+    ? '<img src="'+proofPreview()+'" alt=""><span>'+esc(proofFile.name)+'</span>'
+    : '';
+  $('#sentArt').hidden = !proofFile;
+  step('sent');
+}
+
+$('#sendProof').addEventListener('click', function(){
+  var d = t(), note = $('#sendProofNote');
+  if (!proofFile) return;
+  if (navigator.canShare && navigator.canShare({ files:[proofFile] })){
+    navigator.share({ files:[proofFile], text: orderMessage() })
+      .then(function(){ closeSheet(); })
+      .catch(function(err){ if (!err || err.name !== 'AbortError') note.hidden = false; });
+  } else {
+    // Desktop, mostly: nothing can hand a file to WhatsApp from a web page.
+    note.hidden = false;
+  }
+});
+$('#reopenWa').addEventListener('click', function(){
+  window.open(wa(orderMessage()), '_blank', 'noopener');
 });
 
 var fitTimer;

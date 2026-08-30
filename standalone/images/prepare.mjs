@@ -92,6 +92,14 @@ const JOBS = {
   'l-ligue1':      ['IMG_5248', 240, 80],
   'l-epl-text':    ['england_english-premier-league_3000', 240, 80],
 
+  /* Mobile-money marks for the checkout. Supplied artwork, drawn for light
+     backgrounds — the page sits them on a white plate rather than recolouring
+     them. Sources are the four logos supplied by the brand. */
+  'pay-bankily':   ['pay/bankily', 'w300', 74],
+  'pay-masrvi':    ['pay/masrvi',  'w340', 76],
+  'pay-sedad':     ['pay/sedad',   'w340', 76],
+  'pay-click':     ['pay/click',   'w300', 74],
+
   /* Nature photography for the documentaries tile. */
   'c-docs':        ['ng_nature.png', 430, 56],
 };
